@@ -1,0 +1,20 @@
+Use case: compositing edit / Korean UI tutorial step 2.
+Image 1 = AUTHORITATIVE approved main screen: compact song thumbs feedback, no language settings, four song rows, whole-playlist rating. Image 2 = OLD tutorial step 2, use only spotlight/bubble arrangement; its obsolete language controls and descriptions must not return. Image 3 = updated STEP 1 style reference for bubble/penguin/buttons/overlay. Image 4 = exact approved transparent penguin asset.
+
+Rebuild STEP 2 on the exact page of Image 1, 1536x1024. Dim the whole page with the same blue-gray translucent overlay as Image 3, except highlight the complete left music-choice panel x48..404,y330..903 with luminous fine white-blue rounded outline. The highlighted panel has original 보컬, 빠르기, 테마·장르 and bottom 선곡표 받기 only. Absolutely NO language heading, pills, expand button, language help copy or language settings anywhere.
+
+Place white rounded tutorial bubble around x511..1063,y385..785, with the same navy typography, progress layout and thin blue outlined footer controls as Image 3. Reuse exact approved penguin at lower-right of bubble; do not introduce another character. Use a tail pointing to the highlighted left panel. Exact Korean copy:
+step label "음악 선택 · 2 / 3"
+heading "취향은 원하는 만큼만 선택해요."
+body line 1 "선택하지 않아도 날씨에 맞춰 추천해요."
+body line 2 "보컬과 빠르기를 원하는 대로 선택해요."
+body line 3 "테마·장르는 여러 개 선택할 수 있어요."
+body line 4 "선택한 설정은 다시 요청해도 유지돼요."
+body line 5 "준비가 되면 선곡표 받기를 눌러 주세요."
+small gray badge "안내용 예시"
+small helper "안내 중에는 실제 추천이 실행되지 않아요."
+footer outlined buttons "이전" and "건너뛰기"
+footer helper "화면을 클릭하면 다음 안내로 넘어가요."
+Top-right bubble X and three progress dots, ONLY second dot active.
+
+Keep original example selections unselected/default and all page geometry, central album/photo, both ads, weather band/penguin widget, FOUR-row compact feedback playlist and separate whole-playlist rating from Image 1 behind the overlay. Do not add language instructions, notifications, total/per-track times, free text, AI workflow or implementation text. Keep footer helper entirely readable and place penguin away from the footer text.

@@ -1,0 +1,949 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cafe-weather:phase3:contracts:20261014-1",
+  "title": "3차 확정 API 입력·공통 응답·평가 이벤트 계약",
+  "description": "문서 계약입니다. 업무 소유·멱등·ACTIVE 날씨 정책·등록 곡·시간·신규 곡 수의 의미 검증은 서버에서 수행합니다. 실제 음악 스냅샷 규격·날씨 조회 전체 응답은 자료 대기입니다.",
+  "$defs": {
+    "BasicRequest": {
+      "type": "object",
+      "properties": {
+        "region_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "option_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "vocal_option": {
+          "type": "string",
+          "enum": [
+            "any",
+            "instrumental_only"
+          ]
+        },
+        "tempo_preference": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "slow",
+            "fast"
+          ]
+        },
+        "selected_theme_codes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "selected_genre_codes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "excluded_track_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "maxItems": 0
+        }
+      },
+      "required": [
+        "region_id"
+      ],
+      "additionalProperties": false
+    },
+    "RegenerationRequest": {
+      "type": "object",
+      "properties": {
+        "exclusion_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "option_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "vocal_option": {
+          "type": "string",
+          "enum": [
+            "any",
+            "instrumental_only"
+          ]
+        },
+        "tempo_preference": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "slow",
+            "fast"
+          ]
+        },
+        "selected_theme_codes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "selected_genre_codes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "exclusion_revision"
+      ],
+      "additionalProperties": false
+    },
+    "ExclusionReplaceRequest": {
+      "type": "object",
+      "properties": {
+        "source_playlist_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "excluded_track_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "source_playlist_id",
+        "expected_revision",
+        "excluded_track_ids"
+      ],
+      "additionalProperties": false
+    },
+    "ReactionPutRequest": {
+      "type": "object",
+      "properties": {
+        "reaction": {
+          "enum": [
+            "LIKE",
+            "DISLIKE",
+            null
+          ]
+        },
+        "expected_revision": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "reaction",
+        "expected_revision"
+      ],
+      "additionalProperties": false
+    },
+    "RatingPutRequest": {
+      "type": "object",
+      "properties": {
+        "rating": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1,
+          "maximum": 5
+        },
+        "expected_revision": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "rating",
+        "expected_revision"
+      ],
+      "additionalProperties": false
+    },
+    "ApprovalRequest": {
+      "type": "object",
+      "properties": {
+        "approval_revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "exclusion_revision": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "approval_revision",
+        "exclusion_revision"
+      ],
+      "additionalProperties": false
+    },
+    "JobAcceptedResponse": {
+      "type": "object",
+      "properties": {
+        "job_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "const": "QUEUED"
+        },
+        "poll_url": {
+          "type": "string",
+          "pattern": "^/api/recommendation-jobs/[^/]+$"
+        }
+      },
+      "required": [
+        "job_id",
+        "status",
+        "poll_url"
+      ],
+      "additionalProperties": false
+    },
+    "ErrorResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_]*$"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "details": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "code",
+        "message",
+        "request_id"
+      ],
+      "additionalProperties": false
+    },
+    "FeedbackReadResponse": {
+      "type": "object",
+      "properties": {
+        "source_playlist_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "track_reactions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "track_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "reaction": {
+                "enum": [
+                  "LIKE",
+                  "DISLIKE",
+                  null
+                ]
+              },
+              "revision": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "track_id",
+              "reaction",
+              "revision"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "playlist_rating": {
+          "type": "object",
+          "properties": {
+            "rating": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 1,
+              "maximum": 5
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "rating",
+            "revision"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "source_playlist_id",
+        "track_reactions",
+        "playlist_rating"
+      ],
+      "additionalProperties": false
+    },
+    "WeatherMeasurement": {
+      "type": "object",
+      "properties": {
+        "raw": {
+          "type": [
+            "string",
+            "number",
+            "null"
+          ]
+        },
+        "value": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "valid",
+            "missing",
+            "invalid_code",
+            "out_of_range",
+            "invalid_value"
+          ]
+        }
+      },
+      "required": [
+        "raw",
+        "value",
+        "unit",
+        "status"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "valid"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "value": {
+                "type": "number"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "value": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "GeminiProposal": {
+      "type": "object",
+      "properties": {
+        "track_ids": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "summary": {
+          "type": "string"
+        },
+        "track_reasons": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "track_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "track_id",
+              "reason"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "track_ids",
+        "summary",
+        "track_reasons"
+      ],
+      "additionalProperties": false
+    },
+    "FeedbackEventEnvelope": {
+      "type": "object",
+      "properties": {
+        "event_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "event_type": {
+          "enum": [
+            "TRACK_REACTION_CHANGED",
+            "TRACK_REACTION_CLEARED",
+            "PLAYLIST_RATING_CHANGED",
+            "PLAYLIST_RATING_CLEARED"
+          ]
+        },
+        "contract_version": {
+          "const": "phase3-20261014.1"
+        },
+        "request_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "owner_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_playlist_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target_kind": {
+          "enum": [
+            "TRACK_REACTION",
+            "PLAYLIST_RATING"
+          ]
+        },
+        "target_revision": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "track_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "previous_value": {
+          "type": [
+            "string",
+            "integer",
+            "null"
+          ]
+        },
+        "new_value": {
+          "type": [
+            "string",
+            "integer",
+            "null"
+          ]
+        },
+        "related_feedback_event_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "occurred_at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "Z$"
+        },
+        "is_test": {
+          "type": "boolean"
+        },
+        "context_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "track_snapshot_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "event_id",
+        "event_type",
+        "contract_version",
+        "request_id",
+        "owner_id",
+        "family_id",
+        "source_playlist_id",
+        "target_kind",
+        "target_revision",
+        "previous_value",
+        "new_value",
+        "related_feedback_event_id",
+        "occurred_at",
+        "is_test",
+        "context_id"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "target_kind": {
+                "const": "TRACK_REACTION"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "track_id",
+              "track_snapshot_ref"
+            ],
+            "properties": {
+              "event_type": {
+                "enum": [
+                  "TRACK_REACTION_CHANGED",
+                  "TRACK_REACTION_CLEARED"
+                ]
+              },
+              "previous_value": {
+                "enum": [
+                  "LIKE",
+                  "DISLIKE",
+                  null
+                ]
+              },
+              "new_value": {
+                "enum": [
+                  "LIKE",
+                  "DISLIKE",
+                  null
+                ]
+              }
+            }
+          },
+          "else": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "track_id"
+                  ]
+                },
+                {
+                  "required": [
+                    "track_snapshot_ref"
+                  ]
+                }
+              ]
+            },
+            "properties": {
+              "event_type": {
+                "enum": [
+                  "PLAYLIST_RATING_CHANGED",
+                  "PLAYLIST_RATING_CLEARED"
+                ]
+              },
+              "previous_value": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 1,
+                "maximum": 5
+              },
+              "new_value": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 1,
+                "maximum": 5
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "event_type": {
+                "enum": [
+                  "TRACK_REACTION_CLEARED",
+                  "PLAYLIST_RATING_CLEARED"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "new_value": {
+                "type": "null"
+              },
+              "previous_value": {
+                "not": {
+                  "type": "null"
+                }
+              },
+              "related_feedback_event_id": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "new_value": {
+                "not": {
+                  "type": "null"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "JobStatusResponse": {
+      "type": "object",
+      "properties": {
+        "job_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "QUEUED",
+            "RUNNING",
+            "SUCCEEDED",
+            "FAILED",
+            "EXPIRED"
+          ]
+        },
+        "playlist_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "error": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ErrorResponse"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "job_id",
+        "status",
+        "playlist_id",
+        "error"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "QUEUED",
+                  "RUNNING"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "playlist_id": {
+                "type": "null"
+              },
+              "error": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "SUCCEEDED"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "playlist_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "error": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "enum": [
+                  "FAILED",
+                  "EXPIRED"
+                ]
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "playlist_id": {
+                "type": "null"
+              },
+              "error": {
+                "$ref": "#/$defs/ErrorResponse"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "FeedbackPutResponse": {
+      "type": "object",
+      "properties": {
+        "source_playlist_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target_kind": {
+          "enum": [
+            "TRACK_REACTION",
+            "PLAYLIST_RATING"
+          ]
+        },
+        "track_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "value": {
+          "type": [
+            "string",
+            "integer",
+            "null"
+          ]
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "updated_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time",
+          "pattern": "Z$"
+        },
+        "event_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        }
+      },
+      "required": [
+        "source_playlist_id",
+        "target_kind",
+        "track_id",
+        "value",
+        "revision",
+        "updated_at",
+        "event_id"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "target_kind": {
+                "const": "TRACK_REACTION"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "track_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "value": {
+                "enum": [
+                  "LIKE",
+                  "DISLIKE",
+                  null
+                ]
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "track_id": {
+                "type": "null"
+              },
+              "value": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 1,
+                "maximum": 5
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ExclusionWriteResponse": {
+      "type": "object",
+      "properties": {
+        "family_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "excluded_track_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "family_id",
+        "excluded_track_ids",
+        "revision"
+      ],
+      "additionalProperties": false
+    },
+    "ExclusionReadResponse": {
+      "type": "object",
+      "properties": {
+        "family_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "excluded_track_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "track_id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "track_name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "artists_name": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "track_id",
+              "track_name",
+              "artists_name"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "family_id",
+        "excluded_track_ids",
+        "revision",
+        "items"
+      ],
+      "additionalProperties": false
+    },
+    "ApprovalResponse": {
+      "type": "object",
+      "properties": {
+        "family_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "approved_playlist_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "approval_revision": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "family_id",
+        "approved_playlist_id",
+        "approval_revision"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
+

@@ -1,0 +1,21 @@
+Use case: compositing edit / Korean UI tutorial mockup.
+Image 1 = AUTHORITATIVE main-screen background, the newly approved compact-feedback/no-language main. Copy this exact screen layout, colors, contents and panel geometry as the underlying page. Image 2 = OLD tutorial step 1, reference only for spotlight, bubble and instructional arrangement; its old page contents and text are obsolete. Image 3 = approved transparent penguin asset; reuse this character identity/pose faithfully, do not design another character.
+
+Produce updated tutorial STEP 1 on Image 1, 1536x1024. Add a translucent dark blue-gray overlay dimming the entire page except the weather band at x48..1193,y196..315. Highlight that weather band with a fine luminous white/blue rounded outline. Keep the upper-right resting guide widget under the dim overlay. Preserve the new main's FOUR song rows, tiny "좋아요"/"싫어요" plus unchanged "제외" buttons, whole-playlist five empty stars/미평가/평가 취소, both bottom actions, and left panel without ANY language controls.
+
+Place the white rounded tutorial speech bubble at approximately x389..969,y340..750 as in Image 2, with a tail toward highlighted region and the approved blue-scarf penguin near its lower-right edge. Match existing navy typography and thin blue outline buttons.
+Exact Korean copy:
+step label "지역 · 날씨 · 1 / 3"
+heading "동만 선택하면 준비 끝!"
+body line 1 "시·도 → 시·군·구 → 동을 선택해요."
+body line 2 "지역을 고르면 현재 날씨와"
+body line 3 "앞으로 3시간 예보를 확인해요."
+body line 4 "날씨 패널을 참고해 선곡표를 받아보세요."
+small gray badge "안내용 예시"
+small helper "서울 성동구 성수동의 날씨 예시예요."
+last body "로그인 없이 바로 이용할 수 있어요."
+footer outlined button "건너뛰기"
+footer helper "화면을 클릭하면 다음 안내로 넘어가요."
+Top-right bubble X. Three progress dots with ONLY first dot bright blue. Step 1 has no 이전 button.
+
+DO NOT mention 6-hour rain alerts, rain cards, weather notification X, language preferences, durations, AI, implementation details or automatic changes. Keep ads, all main-panel geometry, exact compact feedback controls and the base page visible through dimming. This is a crisp finished UI tutorial screenshot, not a new product layout. No watermark.

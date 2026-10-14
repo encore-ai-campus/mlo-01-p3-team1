@@ -1,0 +1,23 @@
+Use case: compositing edit / Korean tutorial STEP 3.
+Image 1 = approved MAIN background, authoritative page geometry and contents. Image 2 = old step-3 tutorial only as placement/spotlight reference; replace obsolete underlying page and prose. Image 3 = updated step2 style for consistent overlay/bubble/buttons/penguin. Image 4 = original approved transparent penguin asset, exact reusable character identity/pose.
+
+On exact Image1 1536x1024, make tutorial step3. Dim everything except the RIGHT playlist panel x990..1491,y330..903 with the same translucent blue-gray overlay as updated step2. Highlight the ENTIRE right panel including four song rows, SMALL LIKE/DISLIKE controls, independent EXCLUDE buttons, whole-playlist "이 선곡표 만족도", five empty outline stars/미평가/평가 취소, and two bottom actions with a thin luminous white-blue rounded outline. Keep Image1 content/layout exactly: four song rows, no language-settings panel, preserved ads/weather/central photo and approved resting guide widget behind dimming.
+
+Place a white rounded speech bubble LEFT of the highlighted playlist, approximately x486..973,y330..783. Place the approved penguin outside the bubble's bottom-left as in oldstep3, away from text/buttons. Speech bubble tail points toward playlist. Navy Korean text, fine pale border; same thin blue outlined footer navigation buttons as steps1/2.
+Exact copy, ensure all lines fit clearly:
+label "선곡표 확인 · 3 / 3"
+heading line1 "선곡표를 확인하고"
+heading line2 "승인해 주세요."
+body line1 "곡마다 좋아요·싫어요를 표시할 수 있어요."
+body line2 "별점 1~5점은 선곡표 전체 만족도예요."
+body line3 "평가는 선택이며, 곡 제외와는 별개예요."
+body line4 "제외한 곡은 다음 선곡표에 반영돼요."
+body line5 "다른 선곡표를 요청해 새 결과를 확인하고,"
+body line6 "마음에 들면 이 선곡표를 승인해 주세요."
+small gray badge "안내용 예시"
+small helper "안내에서는 실제 평가가 저장되지 않아요."
+footer buttons "이전" and "안내 마치기" (both white with slim blue outlines)
+footer helper "화면을 클릭하면 안내가 끝나요."
+bubble X top-right. Three progress dots ONLY third active. No 건너뛰기 on final step.
+
+Do not add language instructions, rain alerts, times, automatic exclusion from dislike, automatic API calls, actual player controls, account save or payment. Whole-playlist star rating is outside list and separate from approval. Keep text, penguin, footer and highlighted playlist from overlapping each other. No watermark.

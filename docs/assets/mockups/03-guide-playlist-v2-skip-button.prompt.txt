@@ -1,0 +1,6 @@
+보관 프롬프트 — 이전 단계/평가 추가 전 시안의 이력이며 현행 화면 기준이 아닙니다. 현행 3번 안내는 03-guide-playlist-3step.png와 대응 프롬프트를 따릅니다.
+
+Use case: precise-object-edit / UI button styling edit.
+Input image 1 is the exact EDIT TARGET: tutorial guide step 3. Input image 2 is the STYLE REFERENCE: tutorial guide step 2.
+Change ONLY the "건너뛰기" control inside the LEFT white tutorial speech bubble in image 1. Currently it is an underlined text link. Convert it to the SAME outlined secondary button used for "건너뛰기" in image 2: white fill, thin bright blue outline, modest rounded corners, centered navy Korean label "건너뛰기", no underline. Approximately 96px wide and 44px high. Keep its current center/location in the footer between "이전" and the blue next-instruction text; resize only the control footprint as needed within existing whitespace.
+STRICT INVARIANTS: Do not change the adjacent "이전" button at all, including its gray fill. Do not change any wording, typography elsewhere, footer instruction text, bubble position/size, step indicator, penguin pose/appearance/position, underlying page geometry, song list, buttons, photo ads, forecast card, overlay dimness or highlighted rectangle. Preserve the exact 1536x1024 landscape composition. This is a tiny localized styling edit, not a redesign. Only the 건너뛰기 button has a new outline/background and loses its underline. No extra labels or new controls.

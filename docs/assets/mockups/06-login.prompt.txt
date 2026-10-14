@@ -1,0 +1,18 @@
+Use case: style-transfer edit / Korean login UI mockup.
+Image 1 = EXISTING login screen edit target. Preserve its login purpose, fields, actions and exact Korean wording. Image 2 = APPROVED main-screen style reference. Match its white surfaces, navy headings, crisp Korean typography, bright blue buttons, thin pale borders, modest rounded corners and very subtle shadow; this reference is the new visual system.
+
+Update login screenshot at1536x1024 to look like a companion page of Image2. Replace the large blue gradient/cloud/wave background with a clean white background with only very faint pale-blue ambience. Use the main page's white header, dark navy brand text "날씨 기반 음악 선곡" at top-left and a thin pale-blue bottom border; retain top-right small blue home icon/link "선곡 페이지로". Do not copy public ads or main playlist into login.
+Keep centered white login card with fine pale border/subtle shadow, around x450..1085,y185..907. Preserve the existing small blue cloud/music illustration, scaled down to be understated. Navy login heading. Exact card copy:
+"로그인"
+"계정으로 로그인해 주세요."
+"아이디"
+placeholder "아이디를 입력해 주세요"
+"비밀번호"
+placeholder "비밀번호를 입력해 주세요"
+password-eye icon at right of password field
+filled bright blue "로그인" button
+small home icon/link "로그인 없이 선곡 이용하기"
+footer "관리자 계정은 광고 관리 페이지로 이동합니다."
+Fields and submit button should be about48px high, fine borders and restrained corner radius, with all Korean text clean/readable. Main's brightblue is the exact reference for button color, with navy/blue link typography. Avoid overly large headings or tall heavy buttons. Keep sufficient whitespace and consistent alignment.
+
+Do not add signup/social-login/user-versus-admin choice/role selector, language settings, thumbs reactions, stars, weather alerts, ads, payment or any new function. This is a restyle of the existing login page to match the approved main, not a changed authentication flow. No watermark or fake code.

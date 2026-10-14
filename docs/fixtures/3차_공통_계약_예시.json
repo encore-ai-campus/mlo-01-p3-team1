@@ -1,0 +1,1436 @@
+{
+  "contract_version": "phase3-20261014.1",
+  "data_mode": "FIXTURE",
+  "is_test": true,
+  "description": "모든 값은 가상 자료입니다. 실제 음악/날씨 원문·승인 카탈로그·실측 만족도 자료가 아닙니다.",
+  "schema_cases": [
+    {
+      "id": "basic_region_only",
+      "definition": "BasicRequest",
+      "data": {
+        "region_id": "fixture-region-001"
+      },
+      "expected_valid": true
+    },
+    {
+      "id": "basic_all_preferences",
+      "definition": "BasicRequest",
+      "data": {
+        "region_id": "fixture-region-001",
+        "option_version": "fixture-options-v1",
+        "vocal_option": "instrumental_only",
+        "tempo_preference": "slow",
+        "selected_theme_codes": [
+          "fixture-calm"
+        ],
+        "selected_genre_codes": [
+          "fixture-jazz"
+        ],
+        "excluded_track_ids": []
+      },
+      "expected_valid": true
+    },
+    {
+      "id": "basic_language_rejected",
+      "definition": "BasicRequest",
+      "data": {
+        "region_id": "fixture-region-001",
+        "language": "ko"
+      },
+      "expected_valid": false
+    },
+    {
+      "id": "basic_owner_rejected",
+      "definition": "BasicRequest",
+      "data": {
+        "region_id": "fixture-region-001",
+        "account_id": "forged"
+      },
+      "expected_valid": false
+    },
+    {
+      "id": "basic_nonempty_exclusion_rejected",
+      "definition": "BasicRequest",
+      "data": {
+        "region_id": "fixture-region-001",
+        "excluded_track_ids": [
+          "fixture-track-001"
+        ]
+      },
+      "expected_valid": false
+    },
+    {
+      "id": "regeneration_latest_revision",
+      "definition": "RegenerationRequest",
+      "data": {
+        "exclusion_revision": 2
+      },
+      "expected_valid": true
+    },
+    {
+      "id": "regeneration_extra_exclusion_rejected",
+      "definition": "RegenerationRequest",
+      "data": {
+        "exclusion_revision": 2,
+        "excluded_track_ids": [
+          "fixture-track-001"
+        ]
+      },
+      "expected_valid": false
+    },
+    {
+      "id": "reaction_like",
+      "definition": "ReactionPutRequest",
+      "data": {
+        "reaction": "LIKE",
+        "expected_revision": 0
+      },
+      "expected_valid": true
+    },
+    {
+      "id": "reaction_clear",
+      "definition": "ReactionPutRequest",
+      "data": {
+        "reaction": null,
+        "expected_revision": 1
+      },
+      "expected_valid": true
+    },
+    {
+      "id": "reaction_missing_value",
+      "definition": "ReactionPutRequest",
+      "data": {
+        "expected_revision": 0
+      },
+      "expected_valid": false
+    },
+    {
+      "id": "revision_boolean_rejected",
+      "definition": "ReactionPutRequest",
+      "data": {
+        "reaction": "LIKE",
+        "expected_revision": true
+      },
+      "expected_valid": false
+    },
+    {
+      "id": "rating_1",
+      "definition": "RatingPutRequest",
+      "data": {
+        "rating": 1,
+        "expected_revision": 0
+      },
+      "expected_valid": true
+    },
+    {
+      "id": "rating_5",
+      "definition": "RatingPutRequest",
+      "data": {
+        "rating": 5,
+        "expected_revision": 0
+      },
+      "expected_valid": true
+    },
+    {
+      "id": "rating_null",
+      "definition": "RatingPutRequest",
+      "data": {
+        "rating": null,
+        "expected_revision": 0
+      },
+      "expected_valid": true
+    },
+    {
+      "id": "rating_invalid_0",
+      "definition": "RatingPutRequest",
+      "data": {
+        "rating": 0,
+        "expected_revision": 0
+      },
+      "expected_valid": false
+    },
+    {
+      "id": "rating_invalid_6",
+      "definition": "RatingPutRequest",
+      "data": {
+        "rating": 6,
+        "expected_revision": 0
+      },
+      "expected_valid": false
+    },
+    {
+      "id": "rating_invalid_1.5",
+      "definition": "RatingPutRequest",
+      "data": {
+        "rating": 1.5,
+        "expected_revision": 0
+      },
+      "expected_valid": false
+    },
+    {
+      "id": "rating_invalid_5",
+      "definition": "RatingPutRequest",
+      "data": {
+        "rating": "5",
+        "expected_revision": 0
+      },
+      "expected_valid": false
+    },
+    {
+      "id": "rating_invalid_true",
+      "definition": "RatingPutRequest",
+      "data": {
+        "rating": true,
+        "expected_revision": 0
+      },
+      "expected_valid": false
+    },
+    {
+      "id": "exclusion_clear_all",
+      "definition": "ExclusionReplaceRequest",
+      "data": {
+        "source_playlist_id": "fixture-playlist-001",
+        "expected_revision": 2,
+        "excluded_track_ids": []
+      },
+      "expected_valid": true
+    },
+    {
+      "id": "approval_revision",
+      "definition": "ApprovalRequest",
+      "data": {
+        "approval_revision": 0,
+        "exclusion_revision": 2
+      },
+      "expected_valid": true
+    },
+    {
+      "id": "feedback_unrated",
+      "definition": "FeedbackReadResponse",
+      "data": {
+        "source_playlist_id": "fixture-playlist-001",
+        "track_reactions": [
+          {
+            "track_id": "fixture-track-001",
+            "reaction": null,
+            "revision": 0
+          }
+        ],
+        "playlist_rating": {
+          "rating": null,
+          "revision": 0
+        }
+      },
+      "expected_valid": true
+    },
+    {
+      "id": "weather_actual_zero",
+      "definition": "WeatherMeasurement",
+      "data": {
+        "raw": "0.00",
+        "value": 0,
+        "unit": "mm",
+        "status": "valid"
+      },
+      "expected_valid": true
+    },
+    {
+      "id": "weather_missing",
+      "definition": "WeatherMeasurement",
+      "data": {
+        "raw": "-99.00",
+        "value": null,
+        "unit": "mm",
+        "status": "missing"
+      },
+      "expected_valid": true
+    },
+    {
+      "id": "weather_missing_is_not_zero",
+      "definition": "WeatherMeasurement",
+      "data": {
+        "raw": "-99.00",
+        "value": 0,
+        "unit": "mm",
+        "status": "missing"
+      },
+      "expected_valid": false
+    },
+    {
+      "id": "gemini_structure",
+      "definition": "GeminiProposal",
+      "data": {
+        "track_ids": [
+          "fixture-track-001",
+          "fixture-track-002"
+        ],
+        "summary": "구조 확인용 가상 설명",
+        "track_reasons": [
+          {
+            "track_id": "fixture-track-001",
+            "reason": "구조 확인용"
+          },
+          {
+            "track_id": "fixture-track-002",
+            "reason": "구조 확인용 두 번째 설명"
+          }
+        ]
+      },
+      "expected_valid": true
+    },
+    {
+      "id": "gemini_duplicate_id",
+      "definition": "GeminiProposal",
+      "data": {
+        "track_ids": [
+          "fixture-track-001",
+          "fixture-track-001"
+        ],
+        "summary": "",
+        "track_reasons": []
+      },
+      "expected_valid": false
+    },
+    {
+      "id": "reaction_event",
+      "definition": "FeedbackEventEnvelope",
+      "data": {
+        "event_id": "fixture-event-001",
+        "event_type": "TRACK_REACTION_CHANGED",
+        "contract_version": "phase3-20261014.1",
+        "request_id": "fixture-request-001",
+        "owner_id": "fixture-owner-001",
+        "family_id": "fixture-family-001",
+        "source_playlist_id": "fixture-playlist-001",
+        "target_kind": "TRACK_REACTION",
+        "target_revision": 1,
+        "track_id": "fixture-track-001",
+        "previous_value": null,
+        "new_value": "LIKE",
+        "related_feedback_event_id": null,
+        "occurred_at": "2026-10-14T00:00:00Z",
+        "is_test": true,
+        "context_id": "fixture-context-001",
+        "track_snapshot_ref": "fixture-snapshot-001"
+      },
+      "expected_valid": true
+    },
+    {
+      "id": "reaction_clear_event",
+      "definition": "FeedbackEventEnvelope",
+      "data": {
+        "event_id": "fixture-event-002",
+        "event_type": "TRACK_REACTION_CLEARED",
+        "contract_version": "phase3-20261014.1",
+        "request_id": "fixture-request-001",
+        "owner_id": "fixture-owner-001",
+        "family_id": "fixture-family-001",
+        "source_playlist_id": "fixture-playlist-001",
+        "target_kind": "TRACK_REACTION",
+        "target_revision": 2,
+        "track_id": "fixture-track-001",
+        "previous_value": "LIKE",
+        "new_value": null,
+        "related_feedback_event_id": "fixture-event-001",
+        "occurred_at": "2026-10-14T00:00:00Z",
+        "is_test": true,
+        "context_id": "fixture-context-001",
+        "track_snapshot_ref": "fixture-snapshot-001"
+      },
+      "expected_valid": true
+    },
+    {
+      "id": "reaction_missing_track_snapshot_ref",
+      "definition": "FeedbackEventEnvelope",
+      "data": {
+        "event_id": "fixture-event-001",
+        "event_type": "TRACK_REACTION_CHANGED",
+        "contract_version": "phase3-20261014.1",
+        "request_id": "fixture-request-001",
+        "owner_id": "fixture-owner-001",
+        "family_id": "fixture-family-001",
+        "source_playlist_id": "fixture-playlist-001",
+        "target_kind": "TRACK_REACTION",
+        "target_revision": 1,
+        "track_id": "fixture-track-001",
+        "previous_value": null,
+        "new_value": "LIKE",
+        "related_feedback_event_id": null,
+        "occurred_at": "2026-10-14T00:00:00Z",
+        "is_test": true,
+        "context_id": "fixture-context-001"
+      },
+      "expected_valid": false
+    },
+    {
+      "id": "rating_event",
+      "definition": "FeedbackEventEnvelope",
+      "data": {
+        "event_id": "fixture-event-003",
+        "event_type": "PLAYLIST_RATING_CHANGED",
+        "contract_version": "phase3-20261014.1",
+        "request_id": "fixture-request-001",
+        "owner_id": "fixture-owner-001",
+        "family_id": "fixture-family-001",
+        "source_playlist_id": "fixture-playlist-001",
+        "target_kind": "PLAYLIST_RATING",
+        "target_revision": 1,
+        "previous_value": null,
+        "new_value": 4,
+        "related_feedback_event_id": null,
+        "occurred_at": "2026-10-14T00:00:00Z",
+        "is_test": true,
+        "context_id": "fixture-context-001"
+      },
+      "expected_valid": true
+    },
+    {
+      "id": "rating_event_track_rejected",
+      "definition": "FeedbackEventEnvelope",
+      "data": {
+        "event_id": "fixture-event-003",
+        "event_type": "PLAYLIST_RATING_CHANGED",
+        "contract_version": "phase3-20261014.1",
+        "request_id": "fixture-request-001",
+        "owner_id": "fixture-owner-001",
+        "family_id": "fixture-family-001",
+        "source_playlist_id": "fixture-playlist-001",
+        "target_kind": "PLAYLIST_RATING",
+        "target_revision": 1,
+        "previous_value": null,
+        "new_value": 4,
+        "related_feedback_event_id": null,
+        "occurred_at": "2026-10-14T00:00:00Z",
+        "is_test": true,
+        "context_id": "fixture-context-001",
+        "track_id": "fixture-track-001"
+      },
+      "expected_valid": false
+    },
+    {
+      "id": "clear_event_requires_related",
+      "definition": "FeedbackEventEnvelope",
+      "data": {
+        "event_id": "fixture-event-001",
+        "event_type": "TRACK_REACTION_CLEARED",
+        "contract_version": "phase3-20261014.1",
+        "request_id": "fixture-request-001",
+        "owner_id": "fixture-owner-001",
+        "family_id": "fixture-family-001",
+        "source_playlist_id": "fixture-playlist-001",
+        "target_kind": "TRACK_REACTION",
+        "target_revision": 1,
+        "track_id": "fixture-track-001",
+        "previous_value": "LIKE",
+        "new_value": null,
+        "related_feedback_event_id": null,
+        "occurred_at": "2026-10-14T00:00:00Z",
+        "is_test": true,
+        "context_id": "fixture-context-001",
+        "track_snapshot_ref": "fixture-snapshot-001"
+      },
+      "expected_valid": false
+    },
+    {
+      "id": "job_queued",
+      "definition": "JobStatusResponse",
+      "data": {
+        "job_id": "fixture-job",
+        "status": "QUEUED",
+        "playlist_id": null,
+        "error": null
+      },
+      "expected_valid": true
+    },
+    {
+      "id": "job_success",
+      "definition": "JobStatusResponse",
+      "data": {
+        "job_id": "fixture-job",
+        "status": "SUCCEEDED",
+        "playlist_id": "fixture-playlist",
+        "error": null
+      },
+      "expected_valid": true
+    },
+    {
+      "id": "job_success_missing_result",
+      "definition": "JobStatusResponse",
+      "data": {
+        "job_id": "fixture-job",
+        "status": "SUCCEEDED",
+        "playlist_id": null,
+        "error": null
+      },
+      "expected_valid": false
+    },
+    {
+      "id": "job_failed",
+      "definition": "JobStatusResponse",
+      "data": {
+        "job_id": "fixture-job",
+        "status": "FAILED",
+        "playlist_id": null,
+        "error": {
+          "code": "NO_MEANINGFUL_CHANGE",
+          "message": "fixture",
+          "request_id": "fixture-request"
+        }
+      },
+      "expected_valid": true
+    },
+    {
+      "id": "job_failed_with_result",
+      "definition": "JobStatusResponse",
+      "data": {
+        "job_id": "fixture-job",
+        "status": "FAILED",
+        "playlist_id": "fixture-playlist",
+        "error": {
+          "code": "NO_MEANINGFUL_CHANGE",
+          "message": "fixture",
+          "request_id": "fixture-request"
+        }
+      },
+      "expected_valid": false
+    },
+    {
+      "id": "rating_put_noop",
+      "definition": "FeedbackPutResponse",
+      "data": {
+        "source_playlist_id": "fixture-playlist",
+        "target_kind": "PLAYLIST_RATING",
+        "track_id": null,
+        "value": null,
+        "revision": 0,
+        "updated_at": null,
+        "event_id": null
+      },
+      "expected_valid": true
+    },
+    {
+      "id": "reaction_put",
+      "definition": "FeedbackPutResponse",
+      "data": {
+        "source_playlist_id": "fixture-playlist",
+        "target_kind": "TRACK_REACTION",
+        "track_id": "fixture-track",
+        "value": "LIKE",
+        "revision": 1,
+        "updated_at": "2026-10-14T00:00:00Z",
+        "event_id": "fixture-event"
+      },
+      "expected_valid": true
+    },
+    {
+      "id": "rating_put_wrong_target",
+      "definition": "FeedbackPutResponse",
+      "data": {
+        "source_playlist_id": "fixture-playlist",
+        "target_kind": "PLAYLIST_RATING",
+        "track_id": "fixture-track",
+        "value": 5,
+        "revision": 1,
+        "updated_at": "2026-10-14T00:00:00Z",
+        "event_id": "fixture-event"
+      },
+      "expected_valid": false
+    },
+    {
+      "id": "exclusion_read_previous_track",
+      "definition": "ExclusionReadResponse",
+      "data": {
+        "family_id": "fixture-family",
+        "excluded_track_ids": [
+          "fixture-old-track"
+        ],
+        "revision": 2,
+        "items": [
+          {
+            "track_id": "fixture-old-track",
+            "track_name": "가상 곡",
+            "artists_name": "가상 연주자"
+          }
+        ]
+      },
+      "expected_valid": true
+    },
+    {
+      "id": "exclusion_write_empty",
+      "definition": "ExclusionWriteResponse",
+      "data": {
+        "family_id": "fixture-family",
+        "excluded_track_ids": [],
+        "revision": 3
+      },
+      "expected_valid": true
+    },
+    {
+      "id": "approval_success",
+      "definition": "ApprovalResponse",
+      "data": {
+        "family_id": "fixture-family",
+        "approved_playlist_id": "fixture-playlist",
+        "approval_revision": 1
+      },
+      "expected_valid": true
+    }
+  ],
+  "calculation_cases": [
+    {
+      "kind": "score",
+      "W": 0.8,
+      "matches": [
+        1,
+        0
+      ],
+      "expected": 72.5
+    },
+    {
+      "kind": "score",
+      "W": 0.8,
+      "matches": [],
+      "expected": 80
+    },
+    {
+      "kind": "score",
+      "W": 0.8,
+      "matches": [
+        1,
+        0,
+        0
+      ],
+      "expected": 68.33333333333333
+    },
+    {
+      "kind": "novelty",
+      "N": 1,
+      "added": 0,
+      "expected": false
+    },
+    {
+      "kind": "novelty",
+      "N": 1,
+      "added": 1,
+      "expected": true
+    },
+    {
+      "kind": "novelty",
+      "N": 49,
+      "added": 8,
+      "expected": false
+    },
+    {
+      "kind": "novelty",
+      "N": 49,
+      "added": 9,
+      "expected": true
+    },
+    {
+      "kind": "novelty",
+      "N": 50,
+      "added": 9,
+      "expected": false
+    },
+    {
+      "kind": "novelty",
+      "N": 50,
+      "added": 10,
+      "expected": true
+    },
+    {
+      "kind": "novelty",
+      "N": 53,
+      "added": 10,
+      "expected": true
+    },
+    {
+      "kind": "standard_duration",
+      "total_ms": 10559999,
+      "expected": false
+    },
+    {
+      "kind": "standard_duration",
+      "total_ms": 10560000,
+      "expected": true
+    },
+    {
+      "kind": "standard_duration",
+      "total_ms": 10800000,
+      "expected": true
+    },
+    {
+      "kind": "standard_duration",
+      "total_ms": 11040000,
+      "expected": true
+    },
+    {
+      "kind": "standard_duration",
+      "total_ms": 11040001,
+      "expected": false
+    },
+    {
+      "kind": "ad_usage",
+      "placement": "top",
+      "view": 1,
+      "click": 1,
+      "expected": 23
+    },
+    {
+      "kind": "ad_usage",
+      "placement": "bottom",
+      "view": 1,
+      "click": 1,
+      "expected": 20
+    },
+    {
+      "kind": "ad_usage",
+      "placement": "top",
+      "view": 0,
+      "click": 1,
+      "expected": 15
+    },
+    {
+      "kind": "score",
+      "W": 0.8,
+      "matches": [
+        1
+      ],
+      "expected": 85
+    },
+    {
+      "kind": "score",
+      "W": 0.8,
+      "matches": [
+        0
+      ],
+      "expected": 60
+    },
+    {
+      "kind": "novelty_ids",
+      "parent_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "result_ids": [
+        "C",
+        "B",
+        "A"
+      ],
+      "expected": false
+    },
+    {
+      "kind": "novelty_ids",
+      "parent_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "result_ids": [
+        "A",
+        "B"
+      ],
+      "expected": false
+    },
+    {
+      "kind": "novelty_ids",
+      "parent_ids": [
+        "A",
+        "B",
+        "C"
+      ],
+      "result_ids": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "expected": true
+    },
+    {
+      "kind": "reaction_transition",
+      "current": null,
+      "clicked": "LIKE",
+      "expected": "LIKE"
+    },
+    {
+      "kind": "reaction_transition",
+      "current": "LIKE",
+      "clicked": "LIKE",
+      "expected": null
+    },
+    {
+      "kind": "reaction_transition",
+      "current": "LIKE",
+      "clicked": "DISLIKE",
+      "expected": "DISLIKE"
+    },
+    {
+      "kind": "reaction_transition",
+      "current": "DISLIKE",
+      "clicked": "LIKE",
+      "expected": "LIKE"
+    },
+    {
+      "kind": "reaction_transition",
+      "current": "DISLIKE",
+      "clicked": "DISLIKE",
+      "expected": null
+    },
+    {
+      "kind": "rating_transition",
+      "current": 4,
+      "action": "choose",
+      "selected": 4,
+      "expected": 4
+    },
+    {
+      "kind": "rating_transition",
+      "current": 4,
+      "action": "clear",
+      "expected": null
+    },
+    {
+      "kind": "time_priority",
+      "candidates": [
+        {
+          "id": "below",
+          "total_ms": 10799999,
+          "quality": 95
+        },
+        {
+          "id": "above",
+          "total_ms": 10800001,
+          "quality": 20
+        }
+      ],
+      "expected": "above"
+    },
+    {
+      "kind": "time_priority",
+      "candidates": [
+        {
+          "id": "exact",
+          "total_ms": 10800000,
+          "quality": 20
+        },
+        {
+          "id": "above",
+          "total_ms": 10800001,
+          "quality": 95
+        }
+      ],
+      "expected": "exact"
+    },
+    {
+      "kind": "time_priority",
+      "candidates": [
+        {
+          "id": "closer",
+          "total_ms": 10800001,
+          "quality": 20
+        },
+        {
+          "id": "farther",
+          "total_ms": 10860000,
+          "quality": 95
+        }
+      ],
+      "expected": "closer"
+    },
+    {
+      "kind": "rule_order",
+      "tracks": [
+        {
+          "track_id": "fixture-b",
+          "score": 80
+        },
+        {
+          "track_id": "fixture-a",
+          "score": 80
+        },
+        {
+          "track_id": "fixture-c",
+          "score": 85
+        }
+      ],
+      "expected": [
+        "fixture-c",
+        "fixture-a",
+        "fixture-b"
+      ]
+    },
+    {
+      "kind": "shortened_duration",
+      "total_ms": 8099999,
+      "expected": false
+    },
+    {
+      "kind": "shortened_duration",
+      "total_ms": 8100000,
+      "expected": true
+    },
+    {
+      "kind": "shortened_duration",
+      "total_ms": 10499999,
+      "expected": true
+    },
+    {
+      "kind": "shortened_duration",
+      "total_ms": 10500000,
+      "expected": true
+    },
+    {
+      "kind": "shortened_duration",
+      "total_ms": 10559999,
+      "expected": true
+    },
+    {
+      "kind": "shortened_duration",
+      "total_ms": 10560000,
+      "expected": false
+    },
+    {
+      "kind": "shortened_stage_range",
+      "target_min": 175,
+      "expected": {
+        "min_ms": 10260000,
+        "max_ms": 10559999
+      }
+    },
+    {
+      "kind": "shortened_stage_range",
+      "target_min": 135,
+      "expected": {
+        "min_ms": 8100000,
+        "max_ms": 8340000
+      }
+    },
+    {
+      "kind": "ad_rotation_sequence",
+      "eligible_ad_ids": [
+        "fixture-ad-a",
+        "fixture-ad-b",
+        "fixture-ad-c"
+      ],
+      "start_cursor": 0,
+      "new_deliveries": 4,
+      "expected": [
+        "fixture-ad-a",
+        "fixture-ad-b",
+        "fixture-ad-c",
+        "fixture-ad-a"
+      ]
+    },
+    {
+      "kind": "ad_repeat_interval",
+      "event_type": "VIEWABLE_IMPRESSION",
+      "elapsed_ms": 59999,
+      "delivery_processed": false,
+      "expected": false
+    },
+    {
+      "kind": "ad_repeat_interval",
+      "event_type": "VIEWABLE_IMPRESSION",
+      "elapsed_ms": 60000,
+      "delivery_processed": false,
+      "expected": true
+    },
+    {
+      "kind": "ad_repeat_interval",
+      "event_type": "CLICK",
+      "elapsed_ms": 299999,
+      "delivery_processed": false,
+      "expected": false
+    },
+    {
+      "kind": "ad_repeat_interval",
+      "event_type": "CLICK",
+      "elapsed_ms": 300000,
+      "delivery_processed": false,
+      "expected": true
+    },
+    {
+      "kind": "ad_repeat_interval",
+      "event_type": "CLICK",
+      "elapsed_ms": 600000,
+      "delivery_processed": true,
+      "expected": false
+    },
+    {
+      "kind": "ad_repeat_interval",
+      "event_type": "VIEWABLE_IMPRESSION",
+      "elapsed_ms": 120000,
+      "delivery_processed": true,
+      "expected": false
+    },
+    {
+      "kind": "ad_report_delay",
+      "delay_ms": 0,
+      "expected": true
+    },
+    {
+      "kind": "ad_report_delay",
+      "delay_ms": 300000,
+      "expected": true
+    },
+    {
+      "kind": "ad_report_delay",
+      "delay_ms": 300001,
+      "expected": false
+    },
+    {
+      "kind": "ad_report_delay",
+      "delay_ms": -1,
+      "expected": false
+    },
+    {
+      "kind": "ad_image_policy",
+      "format": "PNG",
+      "static_image": true,
+      "bytes": 2000000,
+      "expected": true
+    },
+    {
+      "kind": "ad_image_policy",
+      "format": "PNG",
+      "static_image": true,
+      "bytes": 2000001,
+      "expected": false
+    },
+    {
+      "kind": "ad_image_policy",
+      "format": "WEBP",
+      "static_image": true,
+      "bytes": 1500000,
+      "expected": true
+    },
+    {
+      "kind": "ad_image_policy",
+      "format": "JPEG",
+      "static_image": true,
+      "bytes": 1500000,
+      "expected": true
+    },
+    {
+      "kind": "ad_image_policy",
+      "format": "GIF",
+      "static_image": true,
+      "bytes": 500000,
+      "expected": false
+    },
+    {
+      "kind": "ad_image_policy",
+      "format": "WEBP",
+      "static_image": false,
+      "bytes": 500000,
+      "expected": false
+    },
+    {
+      "kind": "ad_stat_date",
+      "occurred_at": "2026-10-14T14:59:59Z",
+      "received_at": "2026-10-14T15:00:03Z",
+      "expected": "2026-10-14"
+    },
+    {
+      "kind": "ad_retention_eligibility",
+      "record_kind": "raw_event",
+      "age_ms": 7775999999,
+      "reference_required": false,
+      "expected": false
+    },
+    {
+      "kind": "ad_retention_eligibility",
+      "record_kind": "raw_event",
+      "age_ms": 7776000000,
+      "reference_required": false,
+      "expected": true
+    },
+    {
+      "kind": "ad_retention_eligibility",
+      "record_kind": "delivery",
+      "age_ms": 7776000000,
+      "reference_required": false,
+      "expected": true
+    },
+    {
+      "kind": "ad_retention_eligibility",
+      "record_kind": "estimated_ledger",
+      "age_ms": 31535999999,
+      "reference_required": false,
+      "expected": false
+    },
+    {
+      "kind": "ad_retention_eligibility",
+      "record_kind": "estimated_ledger",
+      "age_ms": 31536000000,
+      "reference_required": false,
+      "expected": true
+    },
+    {
+      "kind": "ad_retention_eligibility",
+      "record_kind": "raw_event",
+      "age_ms": 7776000000,
+      "reference_required": true,
+      "expected": false
+    },
+    {
+      "kind": "ad_production_size",
+      "width_px": 1536,
+      "height_px": 120,
+      "scale": 2,
+      "expected": {
+        "width_px": 3072,
+        "height_px": 240
+      }
+    },
+    {
+      "kind": "ad_production_size",
+      "width_px": 1536,
+      "height_px": 104,
+      "scale": 2,
+      "expected": {
+        "width_px": 3072,
+        "height_px": 208
+      }
+    }
+  ],
+  "behavior_cases": [
+    {
+      "id": "region_missing_error",
+      "given": {
+        "request": {},
+        "authenticated_guest": true
+      },
+      "expected": {
+        "http": 400,
+        "code": "REGION_REQUIRED",
+        "new_job": false
+      }
+    },
+    {
+      "id": "regen_missing_exclusion_revision",
+      "given": {
+        "request": {
+          "vocal_option": "any"
+        },
+        "owned_parent": true
+      },
+      "expected": {
+        "http": 400,
+        "code": "EXCLUSION_REVISION_REQUIRED",
+        "new_job": false
+      }
+    },
+    {
+      "id": "regen_inherit_and_clear",
+      "given": {
+        "parent": {
+          "vocal_option": "instrumental_only",
+          "tempo_preference": "slow",
+          "selected_theme_codes": [
+            "calm"
+          ],
+          "selected_genre_codes": [
+            "jazz"
+          ]
+        },
+        "request": {
+          "exclusion_revision": 2,
+          "selected_theme_codes": []
+        }
+      },
+      "expected": {
+        "vocal_option": "instrumental_only",
+        "tempo_preference": "slow",
+        "selected_theme_codes": [],
+        "selected_genre_codes": [
+          "jazz"
+        ]
+      }
+    },
+    {
+      "id": "idempotent_success_after_revision_changed",
+      "given": {
+        "same_key": true,
+        "same_body": true,
+        "owned_unexpired": true,
+        "current_revision": 4,
+        "original_revision": 2,
+        "original_response_saved": true
+      },
+      "expected": {
+        "return_original_response": true,
+        "new_event": false,
+        "revision_check_preempts_replay": false
+      }
+    },
+    {
+      "id": "idempotent_different_body",
+      "given": {
+        "same_key": true,
+        "same_body": false,
+        "owned_unexpired": true
+      },
+      "expected": {
+        "http": 409,
+        "code": "IDEMPOTENCY_CONFLICT",
+        "new_event": false
+      }
+    },
+    {
+      "id": "no_policy",
+      "given": {
+        "active_W_policy": false
+      },
+      "expected": {
+        "http": 503,
+        "code": "POLICY_NOT_READY",
+        "new_job": false,
+        "mock_success": false
+      }
+    },
+    {
+      "id": "no_gemini",
+      "given": {
+        "request_kind": "regeneration",
+        "configured_provider": false
+      },
+      "expected": {
+        "http": 503,
+        "code": "RECONFIGURATION_UNAVAILABLE",
+        "preserve_parent": true,
+        "basic_rule_blocked": false
+      }
+    },
+    {
+      "id": "no_meaningful_change",
+      "given": {
+        "parent_count": 50,
+        "added_count": 9,
+        "other_conditions_valid": true
+      },
+      "expected": {
+        "job_status": "FAILED",
+        "code": "NO_MEANINGFUL_CHANGE",
+        "preserve_parent": true,
+        "preserve_feedback": true,
+        "new_success_result": false
+      }
+    },
+    {
+      "id": "exclusion_save_failed",
+      "given": {
+        "exclusion_save": "failed"
+      },
+      "expected": {
+        "preserve_edit": true,
+        "regenerate_enabled": false,
+        "approve_enabled": false,
+        "new_event": false
+      }
+    },
+    {
+      "id": "feedback_save_failed",
+      "given": {
+        "feedback_save": "failed",
+        "valid_result_and_clean_exclusions": true
+      },
+      "expected": {
+        "preserve_edit": true,
+        "regenerate_enabled": true,
+        "approve_enabled": true,
+        "new_event": false
+      }
+    },
+    {
+      "id": "new_result_feedback_empty",
+      "given": {
+        "new_success_result": true,
+        "parent_liked_track": "fixture-track",
+        "same_track_in_new": true
+      },
+      "expected": {
+        "new_reaction": null,
+        "new_rating": null,
+        "revision": 0,
+        "preserve_parent_feedback": true
+      }
+    },
+    {
+      "id": "foreign_result",
+      "given": {
+        "result_exists": true,
+        "owned": false,
+        "revision_stale": true
+      },
+      "expected": {
+        "http": 404,
+        "code": "NOT_FOUND",
+        "expose_revision": false
+      }
+    },
+    {
+      "id": "weather_changed",
+      "given": {
+        "new_weather_bundle": true,
+        "existing_success_result": true
+      },
+      "expected": {
+        "panel_updates": true,
+        "automatic_track_change": false,
+        "original_context_immutable": true
+      }
+    },
+    {
+      "id": "tutorial_example",
+      "given": {
+        "tutorial_open": true,
+        "example_rating_click": true
+      },
+      "expected": {
+        "real_feedback_request": false,
+        "real_ad_click": false,
+        "real_recommendation_request": false
+      }
+    },
+    {
+      "id": "ad_unavailable",
+      "given": {
+        "ad": null,
+        "valid_recommendation_inputs": true
+      },
+      "expected": {
+        "recommendation_blocked": false
+      }
+    },
+    {
+      "id": "shortened_configuration_missing",
+      "given": {
+        "eligible_shortage_confirmed": true,
+        "shortened_policy": false,
+        "phase": "worker"
+      },
+      "expected": {
+        "job_status": "FAILED",
+        "code": "POLICY_NOT_READY",
+        "short_success": false
+      }
+    },
+    {
+      "id": "ad_parallel_tabs_same_guest",
+      "given": {
+        "same_guest": true,
+        "same_ad": true,
+        "same_event_type": "VIEWABLE_IMPRESSION",
+        "new_deliveries": 2,
+        "both_viewable": true,
+        "simultaneous": true
+      },
+      "expected": {
+        "accepted_count": 1,
+        "total_estimated_usage": 8,
+        "requires_atomic_server_guard": true
+      }
+    },
+    {
+      "id": "ad_refresh_keeps_cooldown",
+      "given": {
+        "last_counted_view_ms_ago": 30000,
+        "same_guest": true,
+        "same_ad": true,
+        "new_delivery": true,
+        "viewable": true
+      },
+      "expected": {
+        "counted": false,
+        "reason": "REPEAT_SUPPRESSED",
+        "estimated_usage": 0,
+        "link_navigation_allowed": true,
+        "cooldown_extended": false
+      }
+    },
+    {
+      "id": "ad_no_guest_measurement",
+      "given": {
+        "valid_guest_context": false,
+        "ad_image_loaded": true,
+        "link_clicked": true
+      },
+      "expected": {
+        "counted": false,
+        "reason": "MEASUREMENT_UNAVAILABLE",
+        "link_navigation_allowed": true,
+        "recommendation_blocked": false
+      }
+    },
+    {
+      "id": "ad_before_stop_reported_late",
+      "given": {
+        "occurred_before_stop": true,
+        "delay_ms": 4000,
+        "then_ad_and_delivery_valid": true,
+        "duplicate": false,
+        "cooldown_active": false,
+        "event_type": "CLICK"
+      },
+      "expected": {
+        "counted": true,
+        "estimated_usage": 15,
+        "check_historical_validity": true
+      }
+    },
+    {
+      "id": "ad_after_stop_visible_briefly",
+      "given": {
+        "occurred_before_stop": false,
+        "ad_stopped": true,
+        "delay_ms": 1000,
+        "event_type": "CLICK"
+      },
+      "expected": {
+        "counted": false,
+        "reason": "DELIVERY_INVALID",
+        "estimated_usage": 0,
+        "link_navigation_allowed": true
+      }
+    }
+  ],
+  "ad_policy": {
+    "policy_version": "phase3-ads-20261014.1",
+    "is_test": true,
+    "impression_repeat_window_ms": 60000,
+    "click_repeat_window_ms": 300000,
+    "max_event_delay_ms": 300000,
+    "max_image_bytes": 2000000,
+    "allowed_image_formats": [
+      "WEBP",
+      "JPEG",
+      "PNG"
+    ],
+    "image_static_required": true,
+    "link_scheme": "https",
+    "link_target": "_blank",
+    "link_rel": [
+      "noopener",
+      "noreferrer"
+    ],
+    "stat_timezone": "Asia/Seoul",
+    "retention_days": {
+      "raw_event": 90,
+      "delivery": 90,
+      "daily_metric": 365,
+      "estimated_ledger": 365,
+      "admin_change": 365
+    },
+    "display": {
+      "max_width_px": 1536,
+      "top_height_px": 120,
+      "bottom_height_px": 104,
+      "mobile_reference_width_px": 390,
+      "production_scale": 2
+    }
+  }
+}
+

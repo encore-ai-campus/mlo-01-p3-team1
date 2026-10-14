@@ -1,0 +1,12 @@
+Use case: localized style-transfer edit / Korean advertising administration UI.
+Image1 = existing advertising admin screen EDIT TARGET. Image2 = APPROVED main page visual reference (compact-feedback/no-language). Image3 = updated login companion page style reference.
+
+Restyle Image1 into the same product family as Image2 at1536x1024. Preserve the ENTIRE admin functionality, information architecture, text, values, rows, thumbnails and controls. Use mostly white background, white panels with thin pale-blue/gray borders and modest radii, navy Korean headings/body and the exact brightblue from main. Keep header white with fine pale bottom divider. Reduce the broad pale-blue background wash; avoid colored section-header strips/heavy shadows. Keep the left main column and right edit column geometry.
+
+Header remains "날씨 기반 음악 선곡" + small blue "관리자" badge; top-right "관리자 계정" and "로그아웃".
+Page "광고 관리", subtitle "상·하단 배너 게시 상태를 관리하세요."
+Top metrics unchanged: "게시 중" "2개"; "예약" "1개"; "오늘 노출" "10,240"; "오늘 클릭" "186".
+Left upper panel "광고 목록"; placement filters "전체" "상단" "하단", dropdown "전체 상태", blue "+ 새 광고 등록". Table headings and all rows stay exact. Preserve ad titles "카페 운영을 위한 추천 상품", "매장 운영에 도움이 되는 서비스", "겨울 원두 기획전"; first two 게시 중 and third 예약; counts6240/112,4000/74,0/0 and existing periods. Keep row buttons "수정", "게시 중단", but make them consistently compact ~34px tall with fine borders, navy text and restrained icons. Do not make stop a huge/destructive red control.
+Left lower "배너 미리보기", filters 상단/하단,PC/모바일, existing warm coffee banner and disclaimer "미리보기는 노출·클릭 집계에 포함되지 않아요." Retain same campaign content and warm coffee/beans look as main's top ad.
+Right panel "광고 등록·수정"; preserve "제목", "배너 이미지", "이미지 변경", "이동 링크", "노출 위치", "게시 기간", "우선순위"; values and existing placeholder URL exactly. Keep top/bottom radio, date pickers and priority1. Bottom "저장" blue filled and "게시 중단" white outline, matching main's primary/secondary action style, around44px tall.
+All Korean labels/values must be sharp and readable and retain good spacing. No new language settings, public playlist/feedback stars/thumbs, weather alerts, payments, budget/token metrics, extra forms or functions. This is a cohesive styling update of the existing admin page, not a redesign of policy or behavior. No watermark.
