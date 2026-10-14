@@ -4,6 +4,11 @@
 - 수정일: 2026-10-14
 - 상태: 인계 자료 연결입니다. 실제 서비스 배치·AWS 생성·설치·운영 검증 완료를 뜻하지 않습니다.
 
+## 2026-10-14 저장소 결정과 광고 인계
+
+2026-10-14 새 음악 문서 우선 지시로 음악 기준 저장은 **RDB 4개 테이블**과 추천·표시18개/검수 보조1개로 변경합니다. 음악 원본 CSV·백업/불변 내보내기는 로컬/S3 보관 가능하며 S3만을 음악 기준 DB로 사용하지 않습니다. 로그·피드백/공통 업무 상태는 PostgreSQL, 광고는 MongoDB, 날씨 MongoDB/Elasticsearch·원문 로컬/S3는 유지합니다. 3차 음원 파일·직접 재생은 추가하지 않습니다. [저장 경계와 발행 계약](../../product/3차_저장소_경계와_발행_계약.md)과 [ADS 인계](../ads/README.md)를 적용하며 실제 설치·접속·운영 검증 완료와 구분합니다.
+
+
 ## 1. 읽는 순서
 
 1. [로컬 개발 인프라 가이드](./local%20infra%20guide.md): Windows PC 3대·Hyper-V Ubuntu VM 9대, WireGuard·WinNAT·SSH ProxyJump 기반 개발 접속 구조입니다.
@@ -27,13 +32,15 @@ AWS 원문 출처는 사용자가 제공한 `AWS 인프라 구축 계획서 (1).
 
 ## 3. 서비스 연결 전에 조율할 사항
 
+광고는 [ADS 인계](../ads/README.md)의 MongoDB replica set·광고/날씨 DB 권한 분리·PostgreSQL 로그 relay로 연결합니다. AWS 원문의 MongoDB EC2 한 대를 transaction 지원/HA 완료로 간주하지 않습니다. 음악RDB4개·원본/백업로컬/S3와PostgreSQL로그/피드백은최신음악/저장계약이며 원문은 수정하지 않습니다.
+
 | 항목 | 원문과 현재 서비스 계약의 차이 | 인계/검증 담당 |
 |---|---|---|
-| 앱 프레임워크 | 원문은 Django 통합을 명시하고 프로젝트는 FastAPI 기준. 원문 보관만으로 프레임워크를 변경하지 않음 | INF·B/C: 실행 명령·ASGI 운영·포트·health check 합의 |
+| 앱 프레임워크 | 2026-10-14 사용자 결정으로 서비스도 Django·DRF로 통일. 프레임워크 차이는 해소 | INF·B/C: Django WSGI/Gunicorn·systemd 실행 명령·포트·health check·실제 호환 버전 검증 |
 | Spark→MongoDB | Spark는 예시 계정2~4, MongoDB는5. 5↔2~4 직접 Peering 없음. 현재 날씨 저장 경로의 쓰기 주체/연결을 확정해야 함 | INF·A: 실제 writer 위치와 도달/반환 경로 검증. 계정1 경유를 자동 가정하지 않음 |
-| 저장소 | artifact/checkpoint S3 외 날씨 원문·피드백 Delta·음악 RDB·광고 이미지 저장/권한이 부족 | INF·A/B/C: 경로·버킷·제품/DDL·보관/백업 인계 |
+| 저장소 | artifact/checkpoint S3 외 음악RDB4개/불변카탈로그·원본/백업S3·로그/피드백 PostgreSQL·광고 MongoDB·날씨 원문·광고 이미지의 접속/권한 보완 필요 | INF·A/B/C: 객체/manifest·로그 스키마·replica set·보관/백업 인계 |
 | 서비스 배치 | 광고 독립 EC2와 Control HA는 추가 구체화. 추천 작업자/outbox 위치·실행 수·연결 계약 필요 | INF·B/C: API/작업자·인증·소유·중복 실행 차단 검증 |
-| 버전/연동 | Delta 호환 버전·Spark→ES connector, DB/앱 설치 버전 미완료 | INF·A/B/C: 설치 및 실제 처리 경로 검증 |
+| 버전/연동 | Spark→PostgreSQL/ES connector, DB/앱 설치 버전 미완료 | INF·A/B/C: 설치 및 실제 처리 경로 검증 |
 | 삭제/재생성 | 전체 새 세대는 offset/checkpoint 초기화 허용. 일반 재시작/승계는 초기화 금지 | INF·A/B/C·PL: 시험 데이터와 보존할 업무/피드백/원문을 구분하고 삭제 allowlist·복구 계약 확정 |
 
 Control 두 대가 전체 서비스의 이중화를 뜻하지 않습니다. PostgreSQL/MongoDB 단일 노드와 NAT 장애 수용 범위, 서비스별 복구 목표를 별도로 검증합니다. 비용 추정은 원문 수령값이며 가격 재검증은 하지 않았습니다.

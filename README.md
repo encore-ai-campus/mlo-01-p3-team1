@@ -5,6 +5,15 @@
 - 수정일: 2026-10-14
 - 현재 단계: 제품 설계·데이터 인계·개발 계약 정리. 애플리케이션 코드는 구현 전입니다.
 
+## 2026-10-14 음악 담당 수령 문서 우선 적용
+
+[음악 통합 계약](./docs/product/3차_음악_정책_통합_계약.md)을 적용합니다. 추천·표시18개 + 검수 보조1개·RDB4개·원본 변환·날씨50:45:5/전체75:25·장르/speed 필수 필터·사이클 고정·PTY6/7·시간176~184분을 기준으로 합니다. 새 자료의 미정은 유지하며 수동 전용16개·음악 S3 기준 저장·자동25% 단축과 동시에 적용하지 않습니다.
+
+## 2026-10-14 저장소 결정과 광고 인계
+
+2026-10-14 새 음악 문서 우선 지시로 음악 기준 저장은 **RDB 4개 테이블**과 추천·표시18개/검수 보조1개로 변경합니다. 음악 원본 CSV·백업/불변 내보내기는 로컬/S3 보관 가능하며 S3만을 음악 기준 DB로 사용하지 않습니다. 로그·피드백/공통 업무 상태는 PostgreSQL, 광고는 MongoDB, 날씨 MongoDB/Elasticsearch·원문 로컬/S3는 유지합니다. 3차 음원 파일·직접 재생은 추가하지 않습니다. [저장 경계와 발행 계약](./docs/product/3차_저장소_경계와_발행_계약.md)과 [ADS 인계](./docs/handoff/ads/README.md)를 적용하며 실제 설치·접속·운영 검증 완료와 구분합니다.
+
+
 ## 1. 프로젝트 소개
 
 운영자가 동 단위 지역을 선택하면 현재 날씨와 예보를 확인하고 매장 분위기에 맞는 선곡표를 받을 수 있습니다. 보컬·빠르기·테마·장르는 선택 사항이며 기본 추천은 비로그인으로 이용합니다.
@@ -24,7 +33,7 @@
 | 관리자 | 로그인·음악 등록/검수·제외 피드백 조회·광고 운영/통계 |
 | 광고 | 상하단 배너·별도 측정. 익명 문맥/광고별 노출60초·클릭5분 제한, 지연5분·발생일KST, 광고 원본/delivery90일·집계/예상 원장/관리 변경 이력365일 |
 
-표준 선곡 목표는 180분이며 후보 부족이 확인되면 최대 25% 자동 단축 정책을 적용합니다. 메인에는 재생시간을 표시하지 않고 서버에서 검증합니다. 날씨 적합도 W·음악 입력 보강 등 남은 사항은 [확인·인계 목록](./docs/product/3차_사용자_확인과_담당자_인계_목록.md)에서 관리합니다.
+표준선곡목표는180분/허용176~184분이며새음악규칙우선으로자동시간단축은미사용입니다. 메인에는 재생시간을 표시하지 않고 서버에서 검증합니다. 혼합최초speed·테마정렬·실제분류/환경 등 남은사항은 [확인·인계 목록](./docs/product/3차_사용자_확인과_담당자_인계_목록.md)에서 관리합니다.
 
 화면 참고: [메인](./docs/assets/mockups/05-main-v8-compact-feedback-no-language.png) · [로그인](./docs/assets/mockups/06-login.png) · [광고 관리자](./docs/assets/mockups/07-admin-ads.png)
 
@@ -35,17 +44,19 @@
 | 영역 | 기술/구성 |
 |---|---|
 | 프론트엔드 | React · TypeScript · Vite |
-| API | Python · FastAPI · Pydantic |
-| 온라인 업무 DB | PostgreSQL · SQLAlchemy · Alembic |
+| API | Python · Django · Django REST Framework |
+| 온라인 업무 DB | PostgreSQL · Django ORM · Django migrations |
 | 규칙 추천 작업자 | Python · OR-Tools CP-SAT |
 | 명시 재설정 | Gemini 3.8 Flash (`gemini-3.8-flash`) · Google Gen AI Python SDK (`google-genai`) |
 | 이벤트 처리 | Kafka · Spark |
-| 피드백 장기 데이터 | Delta Lake |
+| 음악 메타데이터·카탈로그 | RDB4개·18개/검수보조·불변카탈로그·원본/백업은로컬/S3 |
+| 로그·피드백 원본/정제/집계 | PostgreSQL |
+| 광고 업무 데이터 | MongoDB · 광고 전용 논리 DB/트랜잭션 |
 | 날씨 이력·최신 조회 | MongoDB · Elasticsearch |
 | 날씨 원문 보관 | 로컬 파일 · S3 |
 | 환경 | 로컬 클러스터 연결 검증 후 AWS 이전 |
 
-음악은 보유 CSV와 16개 관리 컬럼 기준으로 정제·검수하며 음악 RDB 제품/DDL은 별도 인계 사항입니다. 기술 상세는 [공통 개발 계약](./docs/product/3차_공통_개발_계약과_검증_기준.md)을 따릅니다.
+음악은 보유 CSV와 18개 추천·표시 컬럼 기준으로 정제·검수하며 음악 RDB 제품/DDL·불변 발행 규격은 별도 인계 사항입니다. 기술 상세는 [공통 개발 계약](./docs/product/3차_공통_개발_계약과_검증_기준.md)을 따릅니다.
 
 ## 4. 시스템 구성도
 
@@ -54,8 +65,8 @@
 ```mermaid
 flowchart TB
     subgraph DATA[데이터 준비]
-        CSV[음악 CSV] --> REVIEW[정제·수동 검수]
-        REVIEW --> MUSIC[검증된 음악 RDB 카탈로그]
+        CSV[음악 CSV] --> REVIEW[원본변환·분류검수]
+        REVIEW --> MUSIC[검증된 음악RDB4개·불변카탈로그]
         KMA[기상청 API허브] --> COLLECT[날씨 수집]
         COLLECT --> RAW[원문: 로컬·S3]
         COLLECT --> WK[Kafka]
@@ -64,7 +75,7 @@ flowchart TB
         MONGO --> ES[Elasticsearch 최신 조회]
     end
     subgraph SERVICE[추천 서비스]
-        WEB[공개 화면·지역/취향 선택] --> API[FastAPI]
+        WEB[공개 화면·지역/취향 선택] --> API[Django]
         ES --> API
         API --> WORKER[추천 작업자]
         MUSIC --> WORKER
@@ -80,11 +91,25 @@ flowchart TB
         RESULT --> SAVE[API 상태·피드백·outbox 원자 저장]
         SAVE --> FK[Kafka]
         FK --> FS[Spark 정제·집계]
-        FS --> DELTA[Delta Lake]
+        FS --> LOGDB[PostgreSQL 피드백 원본·정제·집계]
     end
+    subgraph ADS[광고 관리·제공·측정]
+        LOGIN[공통 로그인·ADMIN 권한 확인] --> ADADMIN[광고 관리·등록/수정·게시 중단·미리보기]
+        ADADMIN --> ADSTORE[MongoDB 광고 자료·기간·위치·게시 상태]
+        ADSTORE --> DELIVERY[위치별 광고 제공 API]
+        DELIVERY --> BANNERS[공개 화면 상단·하단 배너]
+        BANNERS --> ADEVENT[광고 전용 노출·클릭 수신/검증]
+        ADEVENT --> ADMETRICS[MongoDB 광고 판정·집계·예상 원장]
+        ADMETRICS --> ADSTATS[오늘 요약·광고별 누적 노출/클릭]
+        ADSTATS --> ADADMIN
+        ADSTORE --> ADOUTBOX[MongoDB 광고 로그 outbox]
+        ADMETRICS --> ADOUTBOX
+        ADOUTBOX --> ADLOG[PostgreSQL 광고 로그·진단]
+    end
+    BANNERS -.-> WEB
 ```
 
-광고는 별도 도메인에서 관리해 공개 화면의 상하단 배너에 연결합니다. 광고 지표는 음악 피드백과 분리합니다. 상세 API·저장·예외 흐름은 [구현 설계도](./docs/product/카페_음악_서비스_구현_설계도.md)를 참조합니다.
+광고는 별도 도메인에서 관리해 공개 화면의 상하단 배너에 연결합니다. 광고 지표는 음악 피드백과 분리합니다. 미리보기·화면 밖·배경 탭·이미지 로딩 실패는 실제 노출로 집계하지 않으며, 광고 없음·지연·실패가 기본 추천을 막지 않도록 처리합니다. B는 광고 관리 화면·API·제공·측정/집계를, C는 공개 배너 배치·반응형·추천 조작과의 격리를 담당합니다. 상세 API·저장·예외 흐름은 [구현 설계도](./docs/product/카페_음악_서비스_구현_설계도.md)를 참조합니다.
 
 ## 5. 폴더 구조와 담당 분야
 
@@ -101,6 +126,7 @@ flowchart TB
    ├─ contracts/             기계 판독 계약
    ├─ fixtures/              문서 단계의 고정 검증 자료
    ├─ handoff/
+   │  ├─ ads/                광고 화면/API·MongoDB·로그/검증 인계
    │  ├─ infra/              인프라 인계
    │  ├─ music/              음악 규격 인계
    │  └─ weather/            날씨 수집·정제·저장 인계
@@ -115,7 +141,7 @@ flowchart TB
 |---|---|
 | A | 날씨 수집·지역 매핑·정규화·저장/조회 코드와 검증 |
 | B | 공통 백엔드·피드백·광고 API/집계·광고 관리 화면·통합 조율 |
-| C | 공개 프론트엔드·공통 로그인/음악/피드백 화면·추천·음악 데이터 |
+| C | 공개 프론트엔드·공통 로그인/음악/피드백 화면·공개 상하단 광고 배너 배치·추천·음악 데이터 |
 | INF | 설치·접속·운영 환경·CI/보호·배포/복구 |
 | PL | 기획·UX·분류/수용 기준·일정·검수/시연 취합 |
 
@@ -135,20 +161,24 @@ flowchart TB
 
 ## 7. 협업 방법과 상세 문서
 
-브랜치 기본안은 `main`(검증된 기준/릴리스)·`develop`(통합)·작업별 브랜치입니다. develop에서 분기해 PR·리뷰로 통합하고 검증 후 main에 반영합니다. 현재 원격 저장소·main/develop·보호 설정·CI는 구성 전이며 상세 절차는 [CONTRIBUTING.md](./CONTRIBUTING.md)를 따릅니다.
+광고는 [통합·추가 인계](./docs/handoff/ads/05_광고_간소화_통합과_추가_인계.md)를 기준으로 합니다. 3차는 카페 전용으로 세 컬렉션·MongoDB 이미지 Binary·관리 기능을 구현한 뒤 공개 배치/측정·주기 통계/예산을 연결합니다. 업종 선택·태그·업종별 매칭은 [4차 확장 가이드](./docs/handoff/ads/06_4차_광고_업종매칭_확장_가이드.md)로 분리합니다.
+
+브랜치 기본안은 `main`(검증된 기준/릴리스)·`develop`(통합)·작업별 브랜치입니다. develop에서 분기해 PR·리뷰로 통합하고 검증 후 main에 반영합니다. 2026-10-14 확인 기준으로 origin과 로컬/원격 main·develop은 구성되어 있으며 GitHub 기본 브랜치는 main입니다. `.github` 파일은 없고 실제 팀 계정/병합 권한·보호·CI·배포는 검증 대기입니다. 확인 상태와 상세 절차는 [CONTRIBUTING.md](./CONTRIBUTING.md#2-브랜치-구성과-작업-시작)를 따릅니다.
 
 | 문서 | 확인할 내용 |
 |---|---|
 | [서비스 기능 및 사용자 흐름](./docs/product/카페_음악_서비스_기능_및_사용자_흐름_정리.md) | 기능·화면·3차/4차 범위 |
 | [구현 설계도](./docs/product/카페_음악_서비스_구현_설계도.md) | API·저장·작업 처리·예외 |
-| [추천 로직 가이드](./docs/product/카페_음악_추천_서비스_3차_컬럼_기반_추천_로직_가이드.md) | 음악16개·기본 규칙·시간·검증 |
+| [추천 로직 가이드](./docs/product/카페_음악_추천_서비스_3차_컬럼_기반_추천_로직_가이드.md) | 음악18개·기본 규칙·시간·검증 |
 | [Gemini 재설정 설계](./docs/product/카페_음악_서비스_3차_Gemini_API_추천_설계.md) | 외부 응답·후보 제한·실패/부모 보존 |
 | [구현 태스크](./docs/product/카페_음악_추천_서비스_3차_구현_태스크.md) | 작업 ID·선행 관계·완료 조건 |
 | [공통 개발 계약](./docs/product/3차_공통_개발_계약과_검증_기준.md) | 기술·입출력·상태·공통 검증 |
 | [확인·인계 목록](./docs/product/3차_사용자_확인과_담당자_인계_목록.md) | 남은 결정·담당 자료·보완 사항 |
 | [구현 결정과 원문 보관](./docs/product/3차_구현_결정과_익명문맥_원문보관_가이드.md) | 최신 결정·익명 소유·로컬/S3·인프라 수령 상태 |
 | [광고 정책과 결정사항](./docs/product/3차_광고_운영_회의_결정사항_목록.md) | 광고 운영·측정·초기 정책과 남은 결정 |
-| [음악 컬럼 정의](./docs/handoff/music/음악_분류_컬럼_정의.md) | 음악16개·수동 특성·검수 입력 |
+| [ADS 인계](./docs/handoff/ads/README.md) | 관리/공개 연결·MongoDB 저장·PostgreSQL 로그·환경/검증 |
+| [저장 경계와 발행 계약](./docs/product/3차_저장소_경계와_발행_계약.md) | 음악RDB4개·원본/백업S3·로그 PostgreSQL·광고 MongoDB |
+| [음악 컬럼 정의](./docs/handoff/music/음악_분류_컬럼_정의.md) | 음악18개·변환·검수 특성·검수 입력 |
 | [날씨 인계 자료](./docs/handoff/weather/01_날씨_수집과_지역매핑.md) | 수집/지역 매핑부터 정제·저장·분류로 연결 |
 | [인프라 인계 안내](./docs/handoff/infra/README.md) · [AWS 구축 계획](./docs/handoff/infra/AWS_인프라_구축_계획서.md) | 로컬 개발에서 AWS 이전으로 연결·원문 수령 상태·서비스 조율 사항 |
 

@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:cafe-weather:phase3:contracts:20261014-1",
+  "$id": "urn:cafe-weather:phase3:contracts:20261014-2",
   "title": "3차 확정 API 입력·공통 응답·평가 이벤트 계약",
-  "description": "문서 계약입니다. 업무 소유·멱등·ACTIVE 날씨 정책·등록 곡·시간·신규 곡 수의 의미 검증은 서버에서 수행합니다. 실제 음악 스냅샷 규격·날씨 조회 전체 응답은 자료 대기입니다.",
+  "description": "문서 계약입니다. 음악 수령18개/검수보조·RDB4개·날씨W/P/S0~100·family사이클을 적용합니다. 소유·멱등·READY·필수/사이클/시간·20% 의미 검증은 서버에서 수행하며 실제 구현 완료는 아닙니다.",
   "$defs": {
     "BasicRequest": {
       "type": "object",
@@ -102,7 +102,8 @@
       "required": [
         "exclusion_revision"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "동일 시작 조건의 명시 재설정입니다. 선택 생략은 부모 상속, 동일 명시값만 허용하며 변경은 CYCLE_CONDITIONS_CHANGED/409·새 BasicRequest입니다."
     },
     "ExclusionReplaceRequest": {
       "type": "object",
@@ -943,6 +944,439 @@
         "approval_revision"
       ],
       "additionalProperties": false
+    },
+    "MusicNormalizedTrack": {
+      "type": "object",
+      "description": "수령18개 추천/표시+검수보조1개의 논리행입니다. 저장duration0은 허용하지만 추천에서는양수만. 원본20개+인덱스 입력과 구분하여 이중변환하지 않습니다.",
+      "properties": {
+        "track_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "track_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "artists_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "artists_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "album_id": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "album_name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "album_release_date": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$"
+        },
+        "duration_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "explicit": {
+          "type": "boolean"
+        },
+        "genre": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "energy": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 10
+        },
+        "mode": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "acousticness": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 100
+        },
+        "mood": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "speed": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "slow",
+            "medium",
+            "fast",
+            "fastest",
+            null
+          ]
+        },
+        "main_inst": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "instrumental": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "play_url": {
+          "type": "string",
+          "pattern": "^https://open\\.spotify\\.com/track/[^/\\s?#]+$"
+        },
+        "instrumental_review_value": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "track_id",
+        "track_name",
+        "artists_id",
+        "artists_name",
+        "album_id",
+        "album_name",
+        "album_release_date",
+        "duration_ms",
+        "explicit",
+        "genre",
+        "energy",
+        "mode",
+        "acousticness",
+        "mood",
+        "speed",
+        "main_inst",
+        "instrumental",
+        "play_url",
+        "instrumental_review_value"
+      ],
+      "additionalProperties": false
+    },
+    "MusicCycleSnapshot": {
+      "type": "object",
+      "description": "family를 수령음악사이클로 대응합니다. 초기선택·허용집합·버전은동일사이클에서불변입니다.",
+      "properties": {
+        "family_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "vocal_option": {
+          "enum": [
+            "any",
+            "instrumental_only"
+          ]
+        },
+        "tempo_preference": {
+          "enum": [
+            "auto",
+            "slow",
+            "fast"
+          ]
+        },
+        "selected_theme_codes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "selected_genre_codes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "allowed_genre_group_codes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        },
+        "allowed_speed_codes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "slow",
+              "medium",
+              "fast",
+              "fastest"
+            ]
+          }
+        },
+        "option_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "policy_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mapping_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "duration_policy_version": {
+          "const": "phase3-duration-20261014.2"
+        },
+        "duration_mode": {
+          "const": "STANDARD"
+        },
+        "effective_target_ms": {
+          "const": 10800000
+        },
+        "effective_min_ms": {
+          "const": 10560000
+        },
+        "effective_max_ms": {
+          "const": 11040000
+        }
+      },
+      "required": [
+        "family_id",
+        "vocal_option",
+        "tempo_preference",
+        "selected_theme_codes",
+        "selected_genre_codes",
+        "allowed_genre_group_codes",
+        "allowed_speed_codes",
+        "option_version",
+        "policy_version",
+        "mapping_version",
+        "duration_policy_version",
+        "duration_mode",
+        "effective_target_ms",
+        "effective_min_ms",
+        "effective_max_ms"
+      ],
+      "additionalProperties": false
+    },
+    "MusicTrackSnapshot": {
+      "type": "object",
+      "description": "结果에사용한당시곡/값/코드/명칭/점수·버전입니다. raw값 또는읽기가능한불변변환근거참조를보존하고현재테이블조회로대체하지않습니다.",
+      "properties": {
+        "music": {
+          "$ref": "#/$defs/MusicNormalizedTrack"
+        },
+        "instrumental_source": {
+          "enum": [
+            "REVIEW",
+            "AUTO",
+            "PRESERVED",
+            "UNKNOWN"
+          ]
+        },
+        "genre_group_codes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "theme_codes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "genre_group_labels": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "theme_labels": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "source_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "schema_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "catalog_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "review_version": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "policy_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "mapping_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "raw_values": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": true
+        },
+        "raw_snapshot_ref": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "source_version": {
+              "type": "string",
+              "minLength": 1
+            },
+            "path": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[a-fA-F0-9]{64}$"
+            }
+          },
+          "required": [
+            "source_version",
+            "path",
+            "sha256"
+          ],
+          "additionalProperties": false
+        },
+        "W": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "P": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 100
+        },
+        "S": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        }
+      },
+      "required": [
+        "music",
+        "instrumental_source",
+        "genre_group_codes",
+        "theme_codes",
+        "genre_group_labels",
+        "theme_labels",
+        "source_version",
+        "schema_version",
+        "catalog_version",
+        "review_version",
+        "policy_version",
+        "mapping_version",
+        "raw_values",
+        "raw_snapshot_ref",
+        "W",
+        "P",
+        "S"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "properties": {
+            "music": {
+              "properties": {
+                "duration_ms": {
+                  "minimum": 1
+                }
+              },
+              "required": [
+                "duration_ms"
+              ]
+            }
+          }
+        }
+      ],
+      "anyOf": [
+        {
+          "properties": {
+            "raw_values": {
+              "type": "object"
+            }
+          },
+          "required": [
+            "raw_values"
+          ]
+        },
+        {
+          "properties": {
+            "raw_snapshot_ref": {
+              "type": "object"
+            }
+          },
+          "required": [
+            "raw_snapshot_ref"
+          ]
+        }
+      ]
     }
   }
 }
