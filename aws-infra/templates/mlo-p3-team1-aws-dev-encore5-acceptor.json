@@ -1,0 +1,73 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Administrator binds peering acceptance to one actual project VPC; requester trust lives in bootstrap.",
+  "Metadata": {
+    "ProjectCodeVersion": "0.3.2",
+    "AWSToolsMetrics": {
+      "AWSAgentToolkit": "aws-cloudformation@3"
+    },
+    "com.aws.cloudformation.Context": {
+      "ref": [
+        "../README.md",
+        "../SECURITY.md",
+        "../../docs/handoff/infra/README.md"
+      ],
+      "must": [
+        "Five independent accounts; 14 private EC2 nodes; three physical AZ IDs.",
+        "No local VM operations. No secrets or CA private key in templates."
+      ]
+    }
+  },
+  "Parameters": {
+    "VpcId": {
+      "Type": "String",
+      "AllowedPattern": "vpc-[0-9a-f]+"
+    }
+  },
+  "Resources": {
+    "AccepterPolicy": {
+      "Type": "AWS::IAM::Policy",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Limits both required acceptance resources to the actual created VPC.",
+          "must": [
+            "Apply with account admin after network stack; operator cannot grant this to itself."
+          ]
+        }
+      },
+      "Properties": {
+        "PolicyName": "mlo-p3-team1-aws-dev-accept-project-vpc",
+        "Roles": [
+          "mlo-p3-team1-aws-dev-peering-accepter"
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": "ec2:AcceptVpcPeeringConnection",
+              "Resource": {
+                "Fn::Sub": "arn:${AWS::Partition}:ec2:${AWS::Region}:${AWS::AccountId}:vpc/${VpcId}"
+              }
+            },
+            {
+              "Effect": "Allow",
+              "Action": "ec2:AcceptVpcPeeringConnection",
+              "Resource": {
+                "Fn::Sub": "arn:${AWS::Partition}:ec2:${AWS::Region}:${AWS::AccountId}:vpc-peering-connection/*"
+              },
+              "Condition": {
+                "StringEquals": {
+                  "ec2:AccepterVpc": {
+                    "Fn::Sub": "arn:${AWS::Partition}:ec2:${AWS::Region}:${AWS::AccountId}:vpc/${VpcId}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "Outputs": {}
+}

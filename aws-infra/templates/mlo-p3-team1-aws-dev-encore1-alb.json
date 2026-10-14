@@ -1,0 +1,350 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Restricted ALB and two Control targets; explicit temporary HTTP on default DNS, ACM HTTPS after domain selection.",
+  "Metadata": {
+    "ProjectCodeVersion": "0.3.2",
+    "AWSToolsMetrics": {
+      "AWSAgentToolkit": "aws-cloudformation@3"
+    },
+    "com.aws.cloudformation.Context": {
+      "ref": [
+        "../README.md",
+        "../SECURITY.md",
+        "../../docs/handoff/infra/README.md"
+      ],
+      "must": [
+        "Five independent accounts; 14 private EC2 nodes; three physical AZ IDs.",
+        "No local VM operations. No secrets or CA private key in templates."
+      ]
+    }
+  },
+  "Parameters": {
+    "VpcId": {
+      "Type": "String"
+    },
+    "PublicSubnetA": {
+      "Type": "String"
+    },
+    "PublicSubnetB": {
+      "Type": "String"
+    },
+    "SecurityGroupId": {
+      "Type": "String"
+    },
+    "ControlAId": {
+      "Type": "String"
+    },
+    "ControlBId": {
+      "Type": "String"
+    },
+    "ClientCidr": {
+      "Type": "String",
+      "AllowedPattern": "(?:[0-9]{1,3}\\.){3}[0-9]{1,3}/(?:[1-9]|[12][0-9]|3[0-2])"
+    },
+    "HealthPath": {
+      "Type": "String"
+    },
+    "Protocol": {
+      "Type": "String",
+      "Default": "HTTPS",
+      "AllowedValues": [
+        "HTTP",
+        "HTTPS"
+      ]
+    },
+    "CertificateArn": {
+      "Type": "String",
+      "Default": ""
+    },
+    "TargetPort": {
+      "Type": "Number",
+      "MinValue": 1,
+      "MaxValue": 65535
+    }
+  },
+  "Resources": {
+    "Ingress": {
+      "Type": "AWS::EC2::SecurityGroupIngress",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Selected HTTP/HTTPS port is restricted on the dedicated ALB SG; changing port replaces only this ingress rule.",
+          "must": [
+            "Never use an unrestricted client CIDR.",
+            "HTTP is an explicit temporary choice; use ACM HTTPS with an owned domain later."
+          ]
+        }
+      },
+      "Properties": {
+        "GroupId": {
+          "Ref": "SecurityGroupId"
+        },
+        "IpProtocol": "tcp",
+        "FromPort": {
+          "Fn::If": [
+            "UseHttps",
+            443,
+            80
+          ]
+        },
+        "ToPort": {
+          "Fn::If": [
+            "UseHttps",
+            443,
+            80
+          ]
+        },
+        "CidrIp": {
+          "Ref": "ClientCidr"
+        }
+      }
+    },
+    "LoadBalancer": {
+      "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "One public entry point in two physical AZs; stable identity during protocol changes.",
+          "must": []
+        }
+      },
+      "Properties": {
+        "Name": "mlo-p3-team1-aws-dev-web",
+        "Type": "application",
+        "Scheme": "internet-facing",
+        "IpAddressType": "ipv4",
+        "Subnets": [
+          {
+            "Ref": "PublicSubnetA"
+          },
+          {
+            "Ref": "PublicSubnetB"
+          }
+        ],
+        "SecurityGroups": [
+          {
+            "Ref": "SecurityGroupId"
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "shared"
+          },
+          {
+            "Key": "Role",
+            "Value": "infrastructure"
+          }
+        ]
+      }
+    },
+    "Targets": {
+      "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Traffic targets both Control web applications; ASGI runtime is team-owned and driver leadership remains separate.",
+          "must": [
+            "Target health is not proof of Control fencing or application data flow."
+          ]
+        }
+      },
+      "Properties": {
+        "Name": "mlo-p3-team1-aws-dev-web",
+        "VpcId": {
+          "Ref": "VpcId"
+        },
+        "Protocol": "HTTP",
+        "Port": {
+          "Ref": "TargetPort"
+        },
+        "TargetType": "instance",
+        "HealthCheckPath": {
+          "Ref": "HealthPath"
+        },
+        "Targets": [
+          {
+            "Id": {
+              "Ref": "ControlAId"
+            }
+          },
+          {
+            "Id": {
+              "Ref": "ControlBId"
+            }
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "shared"
+          },
+          {
+            "Key": "Role",
+            "Value": "infrastructure"
+          }
+        ]
+      }
+    },
+    "Listener": {
+      "Type": "AWS::ElasticLoadBalancingV2::Listener",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "One stable listener: temporary default-DNS HTTP can be updated to ACM HTTPS; no EC2 or data replacement.",
+          "must": [
+            "HTTPS requests must use a domain covered by the certificate; the AWS-owned default DNS cannot have our ACM public certificate."
+          ]
+        }
+      },
+      "Properties": {
+        "LoadBalancerArn": {
+          "Ref": "LoadBalancer"
+        },
+        "Port": {
+          "Fn::If": [
+            "UseHttps",
+            443,
+            80
+          ]
+        },
+        "Protocol": {
+          "Ref": "Protocol"
+        },
+        "Certificates": {
+          "Fn::If": [
+            "UseHttps",
+            [
+              {
+                "CertificateArn": {
+                  "Ref": "CertificateArn"
+                }
+              }
+            ],
+            {
+              "Ref": "AWS::NoValue"
+            }
+          ]
+        },
+        "SslPolicy": {
+          "Fn::If": [
+            "UseHttps",
+            "ELBSecurityPolicy-TLS13-1-2-2021-06",
+            {
+              "Ref": "AWS::NoValue"
+            }
+          ]
+        },
+        "DefaultActions": [
+          {
+            "Type": "forward",
+            "TargetGroupArn": {
+              "Ref": "Targets"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "Outputs": {
+    "LoadBalancerArn": {
+      "Value": {
+        "Ref": "LoadBalancer"
+      },
+      "Description": "Owned ALB ARN"
+    },
+    "DnsName": {
+      "Value": {
+        "Fn::GetAtt": [
+          "LoadBalancer",
+          "DNSName"
+        ]
+      },
+      "Description": "ALB DNS name"
+    },
+    "DefaultDnsUrl": {
+      "Value": {
+        "Fn::Join": [
+          "",
+          [
+            {
+              "Fn::If": [
+                "UseHttps",
+                "https://",
+                "http://"
+              ]
+            },
+            {
+              "Fn::GetAtt": [
+                "LoadBalancer",
+                "DNSName"
+              ]
+            }
+          ]
+        ]
+      },
+      "Description": "Use default DNS with HTTP; for HTTPS use your own certificate-covered domain instead."
+    },
+    "TargetGroupArn": {
+      "Value": {
+        "Ref": "Targets"
+      },
+      "Description": "Control target group ARN"
+    }
+  },
+  "Conditions": {
+    "UseHttps": {
+      "Fn::Equals": [
+        {
+          "Ref": "Protocol"
+        },
+        "HTTPS"
+      ]
+    }
+  },
+  "Rules": {
+    "HttpsNeedsCertificate": {
+      "Assertions": [
+        {
+          "Assert": {
+            "Fn::Or": [
+              {
+                "Fn::Equals": [
+                  {
+                    "Ref": "Protocol"
+                  },
+                  "HTTP"
+                ]
+              },
+              {
+                "Fn::Not": [
+                  {
+                    "Fn::Equals": [
+                      {
+                        "Ref": "CertificateArn"
+                      },
+                      ""
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "AssertDescription": "HTTPS requires a certificate from encore1 in Seoul."
+        }
+      ]
+    }
+  }
+}

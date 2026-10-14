@@ -1,0 +1,391 @@
+{
+  "schema_version": 1,
+  "project": "mlo-p3-team1",
+  "environment": "aws-dev",
+  "generation": null,
+  "region": "ap-northeast-2",
+  "az_ids": {
+    "a": null,
+    "b": null,
+    "c": null
+  },
+  "budget": {
+    "duration_hours": 96,
+    "total_usd_cap": 200,
+    "per_account_usd_cap": 45,
+    "daily_ec2_hours": 24,
+    "estimate_accepted": true,
+    "account_usd_caps": {
+      "encore1": 45,
+      "encore2": 45,
+      "encore3": 45,
+      "encore4": 45,
+      "encore5": 20
+    }
+  },
+  "network_reviewed": false,
+  "ami_id": null,
+  "accounts": [
+    {
+      "profile": "encore1",
+      "account_id": "111111111111",
+      "admin_profile": null,
+      "cidr": "10.80.0.0/16",
+      "nat_slot": "a",
+      "nodes": [
+        {
+          "name": "control-a",
+          "role": "control",
+          "az_slot": "a",
+          "private_ip": "10.80.16.10",
+          "instance_type": "t3.large",
+          "root_gib": 32,
+          "data_gib": 20,
+          "cpu": 2,
+          "memory_mib": 8192,
+          "min_free_disk_gib": 8,
+          "heap": null,
+          "worker_cores": null,
+          "worker_memory": null,
+          "reserved_memory_mib": null,
+          "es_heap": null,
+          "credit_mode": "standard"
+        },
+        {
+          "name": "control-b",
+          "role": "control",
+          "az_slot": "b",
+          "private_ip": "10.80.17.11",
+          "instance_type": "t3.large",
+          "root_gib": 32,
+          "data_gib": 20,
+          "cpu": 2,
+          "memory_mib": 8192,
+          "min_free_disk_gib": 8,
+          "heap": null,
+          "worker_cores": null,
+          "worker_memory": null,
+          "reserved_memory_mib": null,
+          "es_heap": null,
+          "credit_mode": "standard"
+        },
+        {
+          "name": "postgresql",
+          "role": "postgresql",
+          "az_slot": "a",
+          "private_ip": "10.80.16.20",
+          "instance_type": "t3.small",
+          "root_gib": 32,
+          "data_gib": 20,
+          "cpu": 2,
+          "memory_mib": 2048,
+          "min_free_disk_gib": 8,
+          "heap": null,
+          "worker_cores": null,
+          "worker_memory": null,
+          "reserved_memory_mib": null,
+          "es_heap": null,
+          "credit_mode": "standard"
+        }
+      ]
+    },
+    {
+      "profile": "encore2",
+      "account_id": "222222222222",
+      "admin_profile": null,
+      "cidr": "10.81.0.0/16",
+      "nat_slot": "a",
+      "nodes": [
+        {
+          "name": "kafka-01",
+          "role": "kafka",
+          "az_slot": "a",
+          "private_ip": "10.81.16.10",
+          "instance_type": "t3.medium",
+          "root_gib": 32,
+          "data_gib": 60,
+          "cpu": 2,
+          "memory_mib": 4096,
+          "min_free_disk_gib": 8,
+          "heap": "1g",
+          "worker_cores": null,
+          "worker_memory": null,
+          "reserved_memory_mib": null,
+          "es_heap": null,
+          "credit_mode": "standard"
+        },
+        {
+          "name": "spark-01",
+          "role": "spark",
+          "az_slot": "a",
+          "private_ip": "10.81.16.20",
+          "instance_type": "t3.large",
+          "root_gib": 32,
+          "data_gib": 30,
+          "cpu": 2,
+          "memory_mib": 8192,
+          "min_free_disk_gib": 8,
+          "heap": null,
+          "worker_cores": 1,
+          "worker_memory": "4g",
+          "reserved_memory_mib": 4096,
+          "es_heap": null,
+          "credit_mode": "standard"
+        },
+        {
+          "name": "es-01",
+          "role": "es",
+          "az_slot": "a",
+          "private_ip": "10.81.16.30",
+          "instance_type": "t3.large",
+          "root_gib": 32,
+          "data_gib": 60,
+          "cpu": 2,
+          "memory_mib": 8192,
+          "min_free_disk_gib": 8,
+          "heap": null,
+          "worker_cores": null,
+          "worker_memory": null,
+          "reserved_memory_mib": null,
+          "es_heap": "4g",
+          "credit_mode": "standard"
+        }
+      ]
+    },
+    {
+      "profile": "encore3",
+      "account_id": "333333333333",
+      "admin_profile": null,
+      "cidr": "10.82.0.0/16",
+      "nat_slot": "b",
+      "nodes": [
+        {
+          "name": "kafka-02",
+          "role": "kafka",
+          "az_slot": "b",
+          "private_ip": "10.82.17.10",
+          "instance_type": "t3.medium",
+          "root_gib": 32,
+          "data_gib": 60,
+          "cpu": 2,
+          "memory_mib": 4096,
+          "min_free_disk_gib": 8,
+          "heap": "1g",
+          "worker_cores": null,
+          "worker_memory": null,
+          "reserved_memory_mib": null,
+          "es_heap": null,
+          "credit_mode": "standard"
+        },
+        {
+          "name": "spark-02",
+          "role": "spark",
+          "az_slot": "b",
+          "private_ip": "10.82.17.20",
+          "instance_type": "t3.large",
+          "root_gib": 32,
+          "data_gib": 30,
+          "cpu": 2,
+          "memory_mib": 8192,
+          "min_free_disk_gib": 8,
+          "heap": null,
+          "worker_cores": 1,
+          "worker_memory": "4g",
+          "reserved_memory_mib": 4096,
+          "es_heap": null,
+          "credit_mode": "standard"
+        },
+        {
+          "name": "es-02",
+          "role": "es",
+          "az_slot": "b",
+          "private_ip": "10.82.17.30",
+          "instance_type": "t3.large",
+          "root_gib": 32,
+          "data_gib": 60,
+          "cpu": 2,
+          "memory_mib": 8192,
+          "min_free_disk_gib": 8,
+          "heap": null,
+          "worker_cores": null,
+          "worker_memory": null,
+          "reserved_memory_mib": null,
+          "es_heap": "4g",
+          "credit_mode": "standard"
+        }
+      ]
+    },
+    {
+      "profile": "encore4",
+      "account_id": "444444444444",
+      "admin_profile": null,
+      "cidr": "10.83.0.0/16",
+      "nat_slot": "c",
+      "nodes": [
+        {
+          "name": "kafka-03",
+          "role": "kafka",
+          "az_slot": "c",
+          "private_ip": "10.83.18.10",
+          "instance_type": "t3.medium",
+          "root_gib": 32,
+          "data_gib": 60,
+          "cpu": 2,
+          "memory_mib": 4096,
+          "min_free_disk_gib": 8,
+          "heap": "1g",
+          "worker_cores": null,
+          "worker_memory": null,
+          "reserved_memory_mib": null,
+          "es_heap": null,
+          "credit_mode": "standard"
+        },
+        {
+          "name": "spark-03",
+          "role": "spark",
+          "az_slot": "c",
+          "private_ip": "10.83.18.20",
+          "instance_type": "t3.large",
+          "root_gib": 32,
+          "data_gib": 30,
+          "cpu": 2,
+          "memory_mib": 8192,
+          "min_free_disk_gib": 8,
+          "heap": null,
+          "worker_cores": 1,
+          "worker_memory": "4g",
+          "reserved_memory_mib": 4096,
+          "es_heap": null,
+          "credit_mode": "standard"
+        },
+        {
+          "name": "es-03",
+          "role": "es",
+          "az_slot": "c",
+          "private_ip": "10.83.18.30",
+          "instance_type": "t3.large",
+          "root_gib": 32,
+          "data_gib": 60,
+          "cpu": 2,
+          "memory_mib": 8192,
+          "min_free_disk_gib": 8,
+          "heap": null,
+          "worker_cores": null,
+          "worker_memory": null,
+          "reserved_memory_mib": null,
+          "es_heap": "4g",
+          "credit_mode": "standard"
+        }
+      ]
+    },
+    {
+      "profile": "encore5",
+      "account_id": "555555555555",
+      "admin_profile": null,
+      "cidr": "10.84.0.0/16",
+      "nat_slot": "c",
+      "nodes": [
+        {
+          "name": "advertising",
+          "role": "advertising",
+          "az_slot": "c",
+          "private_ip": "10.84.18.10",
+          "instance_type": "t3.small",
+          "root_gib": 32,
+          "data_gib": 16,
+          "cpu": 2,
+          "memory_mib": 2048,
+          "min_free_disk_gib": 8,
+          "heap": null,
+          "worker_cores": null,
+          "worker_memory": null,
+          "reserved_memory_mib": null,
+          "es_heap": null,
+          "credit_mode": "standard"
+        },
+        {
+          "name": "mongodb",
+          "role": "mongodb",
+          "az_slot": "c",
+          "private_ip": "10.84.18.20",
+          "instance_type": "t3.medium",
+          "root_gib": 32,
+          "data_gib": 30,
+          "cpu": 2,
+          "memory_mib": 4096,
+          "min_free_disk_gib": 8,
+          "heap": null,
+          "worker_cores": null,
+          "worker_memory": null,
+          "reserved_memory_mib": null,
+          "es_heap": null,
+          "credit_mode": "standard"
+        }
+      ]
+    }
+  ],
+  "peering_pairs": [
+    [
+      "encore1",
+      "encore2"
+    ],
+    [
+      "encore1",
+      "encore3"
+    ],
+    [
+      "encore1",
+      "encore4"
+    ],
+    [
+      "encore1",
+      "encore5"
+    ],
+    [
+      "encore2",
+      "encore3"
+    ],
+    [
+      "encore2",
+      "encore4"
+    ],
+    [
+      "encore3",
+      "encore4"
+    ]
+  ],
+  "service_ports": {
+    "postgresql": 5432,
+    "mongodb": 27017,
+    "web": 8000
+  },
+  "alb": {
+    "certificate_arn": null,
+    "allowed_client_cidr": null,
+    "health_path": "/health/",
+    "protocol": "HTTPS"
+  },
+  "installer": {
+    "scope": "infrastructure-services"
+  },
+  "example_only": true,
+  "operator_principal_arn": "arn:aws:iam::111111111111:user/REPLACE_ME",
+  "applications": {
+    "deployment_owner": "team",
+    "health_path_contract": "/health/",
+    "control_ha_contract": "single active Collector/Driver/scheduler with fencing; team lifecycle integration required"
+  },
+  "databases": {
+    "postgresql": {
+      "major": 16,
+      "database": "music",
+      "user": "music_app"
+    },
+    "mongodb": {
+      "series": "8.0",
+      "database": "advertising",
+      "user": "advertising_app",
+      "admin_user": "music_db_admin"
+    }
+  }
+}

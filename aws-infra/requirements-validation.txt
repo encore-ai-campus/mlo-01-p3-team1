@@ -1,0 +1,10 @@
+# Pinned local CloudFormation validation environment.
+cfn-lint==1.57.2
+jsonpatch==1.35
+jsonpointer==3.2.1
+mpmath==1.3.0
+networkx==3.7
+PyYAML==6.0.3
+regex==2026.9.29
+sympy==1.14.0
+typing_extensions==4.16.0
