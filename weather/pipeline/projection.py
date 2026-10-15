@@ -20,6 +20,11 @@ def fields(rows, categories):
 
 
 def project_grid(rows):
+    """한 격자의 정제 행 목록 → observation, forecast, sky_context를 가진 dict.
+
+    observation에는 완성된 실황 한 회차, forecast에는 선택한 예보 회차의 대상별 값.
+    rows는 merge_rows로 중복·최신 회차를 정리한 비어 있지 않은 목록.
+    """
     nx, ny = rows[0]['nx'], rows[0]['ny']
     obs = [r for r in rows if r['source'] == 'odam']
     fc = [r for r in rows if r['source'] == 'vsrt']

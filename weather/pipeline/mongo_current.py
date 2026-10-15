@@ -1,5 +1,4 @@
 """격자 한 개를 문서 하나로 저장. MongoDB 쓰기는 Spark Driver에서 실행."""
-import json
 import os
 from datetime import datetime, timezone
 from functools import lru_cache
@@ -7,11 +6,10 @@ from pymongo import MongoClient, ReadPreference
 from pymongo.errors import DuplicateKeyError
 from pymongo.read_concern import ReadConcern
 from pymongo.write_concern import WriteConcern
-from weather.pipeline.common import digest, normalize_event
+from weather.pipeline.common import digest
 from weather.pipeline.latest_state import merge_rows
 from weather.pipeline.projection import project_grid
 from weather.pipeline.service_view import enrich
-from weather.pipeline.collection_logs import append, flush_if_configured
 
 
 def setting(name):
@@ -67,14 +65,20 @@ def validate_document(document):
 
 
 def write_grid(store, nx, ny, incoming):
+    """한 격자의 정제 행을 병합해 저장. 변경하면 True, 같은 내용이면 False.
+
+    incoming은 normalize_event의 행 목록. revision 조건으로 동시 덮어쓰기 방지.
+    """
     identifier = grid_id(nx, ny)
     if any((r['nx'], r['ny']) != (nx, ny) for r in incoming):
         raise ValueError('mixed_weather_grids')
+    # 다른 writer가 먼저 저장하면 다시 읽고 병합. 최대 8회 충돌 재시도.
     for _ in range(8):
         previous = store.find_one({'_id': identifier})
         if previous:
             validate_document(previous)
-        rows = merge_rows(previous['rows'] if previous else [], incoming)
+        previous_rows = previous['rows'] if previous else []
+        rows = merge_rows(previous_rows, incoming)
         rows.sort(key=lambda r: (r['source'], r['issued_at'], r['target_at'], r['category']))
         state_hash = digest(rows)
         if previous and previous['state_hash'] == state_hash:
@@ -82,10 +86,18 @@ def write_grid(store, nx, ny, incoming):
         if not rows:
             return False
         revision = previous['revision'] + 1 if previous else 1
-        document = dict(_id=identifier, schema_version=1, revision=revision,
-                        state_hash=state_hash, rows=rows, view=enrich(project_grid(rows)),
-                        stored_at=datetime.now(timezone.utc).isoformat(),
-                        admin_pending=True)
+        weather_view = project_grid(rows)
+        service_view = enrich(weather_view)
+        document = dict(
+            _id=identifier,
+            schema_version=1,
+            revision=revision,
+            state_hash=state_hash,
+            rows=rows,
+            view=service_view,
+            stored_at=datetime.now(timezone.utc).isoformat(),
+            admin_pending=True,
+        )
         if previous:
             result = store.replace_one({'_id': identifier, 'revision': previous['revision']}, document)
             if not result.acknowledged:
@@ -104,32 +116,9 @@ def write_grid(store, nx, ny, incoming):
 
 
 def read_grid(nx, ny):
+    """예: (58, 125) → observation/forecast 등이 담긴 사용자 조회용 dict."""
     document = collection('read').find_one({'_id': grid_id(nx, ny)}, {'rows': 0})
     if document is None:
         raise KeyError('weather_not_found')
     validate_document(document)
     return document['view']
-
-
-def write_batch(batch, batch_id, grid_broadcast):
-    store = collection('write')
-    normalized = batch.rdd.flatMap(
-        lambda item: normalize_event(json.loads(item.value), grid_broadcast.value))
-    # executor는 정제·격자 묶음만 수행. DB 접속은 아래 Driver 반복문에서만 수행.
-    grouped = normalized.map(lambda row: ((row['nx'], row['ny']), row)).groupByKey().mapValues(list)
-    row_count = grid_count = changed_count = 0
-    request_ids = set()
-    for (nx, ny), rows in grouped.toLocalIterator():
-        changed_count += int(write_grid(store, nx, ny, rows))
-        grid_count += 1
-        row_count += len(rows)
-        request_ids.update(r['request_id'] for r in rows if r.get('request_id'))
-    path = os.environ.get('WEATHER_PROCESS_LOG_PATH', '')
-    if path:
-        append(path, dict(stage='mongo_projection', ok=True, batch_id=batch_id,
-                         normalized_rows=row_count, grids=grid_count,
-                         request_ids=sorted(request_ids),
-                         requested_at=datetime.now(timezone.utc).isoformat()))
-        flush_if_configured(path)
-    print(json.dumps(dict(batch_id=batch_id, normalized_rows=row_count, grids=grid_count,
-                          changed_grids=changed_count, sink='mongodb_latest')), flush=True)

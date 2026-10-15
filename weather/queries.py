@@ -41,6 +41,10 @@ def search_regions(query):
     return sorted(matches, key=priority)
 
 def read_weather(region):
+    """nx/ny가 있는 지역 dict → region/weather/guidance/music_weather 응답.
+
+    DB에서 읽은 자료의 유효성을 현재 조회 시각으로 다시 판단.
+    """
     document = read_grid(region.get('nx'), region.get('ny'))
     now = datetime.now(KST)
     from weather.pipeline.service_view import enrich

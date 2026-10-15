@@ -33,6 +33,11 @@ def recommendation_type(values, sky_result=None):
 
 
 def music_weather(document, now=None, duration_minutes=180, config=None):
+    """격자별 조회 자료 → 음악 담당에게 전달할 날씨·유효성 dict.
+
+    document는 project_grid의 결과. forecast와 required_targets를 비교해 ready 판단.
+    예: 요청 구간에 필요한 예보가 빠지면 ready=False, missing_targets에 대상 시각 기록.
+    """
     now = now or datetime.now(KST)
     if now.tzinfo is None or not 0 < duration_minutes <= 184:
         raise ValueError('invalid_weather_window')

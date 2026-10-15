@@ -17,6 +17,11 @@ def korea_time(stamp, source_zone):
 
 
 def normalize_value(category, raw, source, kind, sno_encoding=None):
+    """원래 값 문자열 → raw/value/unit/status를 가진 dict.
+
+    예: ('T1H', '21.8', 'odam', 'observation') → value=21.8, unit='degC'.
+    결측과 오류는 value=None으로 반환하며 status로 사유 구분.
+    """
     result = {'raw': raw, 'value': None, 'unit': None, 'status': 'invalid_value'}
     try:
         number = float(raw)

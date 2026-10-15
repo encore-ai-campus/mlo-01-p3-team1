@@ -3,12 +3,67 @@ import json
 import os
 from datetime import datetime, timezone
 from importlib.resources import files
-from pyspark.sql import SparkSession
-from weather.pipeline.mongo_current import write_batch
+from weather.pipeline.common import normalize_event
+from weather.pipeline.mongo_current import collection, write_grid
 from weather.pipeline.collection_logs import append, flush_if_configured
 
+
+def write_batch(batch, batch_id, grid_broadcast):
+    """Kafka value 열의 JSON을 정제·격자별 묶기 → Driver에서 MongoDB 저장.
+
+    batch는 Spark DataFrame, grid_broadcast.value는 {(nx, ny): 지역 정보} 매핑.
+    저장 실패는 호출자에게 전달해 Spark가 같은 배치를 재처리할 수 있게 함.
+    """
+    store = collection('write')
+
+    def normalize_message(message):
+        event = json.loads(message.value)
+        return normalize_event(event, grid_broadcast.value)
+
+    def attach_grid_key(row):
+        return (row['nx'], row['ny']), row
+
+    # Executor: 메시지 정제 후 같은 격자의 행을 묶음.
+    normalized_rows = batch.rdd.flatMap(normalize_message)
+    keyed_rows = normalized_rows.map(attach_grid_key)
+    grouped_rows = keyed_rows.groupByKey().mapValues(list)
+
+    # Driver: 격자별 저장. Executor에 DB 연결 객체를 전달하지 않음.
+    row_count = 0
+    grid_count = 0
+    changed_count = 0
+    request_ids = set()
+    for (nx, ny), rows in grouped_rows.toLocalIterator():
+        changed = write_grid(store, nx, ny, rows)
+        if changed:
+            changed_count += 1
+        grid_count += 1
+        row_count += len(rows)
+        request_ids.update(row['request_id'] for row in rows if row.get('request_id'))
+
+    log_path = os.environ.get('WEATHER_PROCESS_LOG_PATH', '')
+    if log_path:
+        append(log_path, dict(
+            stage='mongo_projection', ok=True, batch_id=batch_id,
+            normalized_rows=row_count, grids=grid_count,
+            request_ids=sorted(request_ids),
+            requested_at=datetime.now(timezone.utc).isoformat(),
+        ))
+        flush_if_configured(log_path)
+    print(json.dumps(dict(
+        batch_id=batch_id, normalized_rows=row_count, grids=grid_count,
+        changed_grids=changed_count, sink='mongodb_latest',
+    )), flush=True)
+
+
 def main():
-    for name in ('KAFKA_BOOTSTRAP', 'WEATHER_MONGODB_WRITE_URI', 'WEATHER_MONGODB_DATABASE', 'WEATHER_MONGODB_COLLECTION', 'CHECKPOINT_PATH'):
+    from pyspark.sql import SparkSession
+
+    required_settings = (
+        'KAFKA_BOOTSTRAP', 'WEATHER_MONGODB_WRITE_URI', 'WEATHER_MONGODB_DATABASE',
+        'WEATHER_MONGODB_COLLECTION', 'CHECKPOINT_PATH',
+    )
+    for name in required_settings:
         if not os.environ.get(name):
             raise RuntimeError(name + '_missing')
     mapping = json.loads(files('weather.pipeline').joinpath('mapping.json').read_text(encoding='utf-8'))
