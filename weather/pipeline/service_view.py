@@ -1,4 +1,4 @@
-"""ES에 공통 특징을 저장하고 조회 시 만료/요청 범위를 재평가."""
+"""저장소 공통 특징을 구성하고 조회 시 만료/요청 범위를 재평가."""
 import json
 from datetime import datetime
 from importlib.resources import files

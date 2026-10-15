@@ -1,8 +1,6 @@
 """공통 API에서 호출할 지역 검색·최신 날씨 조회. 화면·HTTP 서버 없음."""
-import json
-import os
 from datetime import datetime
-from urllib.request import urlopen
+from weather.pipeline.mongo_current import read_grid
 from weather.pipeline.common import KST
 from weather.pipeline.mapping_postgres import load_regions, connection
 from weather import road_lookup
@@ -43,22 +41,13 @@ def search_regions(query):
     return sorted(matches, key=priority)
 
 def read_weather(region):
-    ES_URL=os.environ['ES_URL'].rstrip('/')
-    INDEX=os.environ.get('WEATHER_INDEX','weather-current-v1')
-    if not (isinstance(region.get('nx'),int) and isinstance(region.get('ny'),int)):
-        raise ValueError('invalid_grid')
-    url = f"{ES_URL}/{INDEX}/_doc/{region['nx']}_{region['ny']}"
-    with urlopen(url, timeout=8) as response:
-        data = json.load(response)
-    if not data.get('found'):
-        raise KeyError('weather_not_found')
-    data['_source'].pop('stream_state', None)
+    document = read_grid(region.get('nx'), region.get('ny'))
     now = datetime.now(KST)
     from weather.pipeline.service_view import enrich
-    current = enrich(data['_source'], now)
+    current = enrich(document, now)
     return dict(region=region, weather=current, guidance=current['guidance'],
                 music_weather=current['music_weather'],
-                viewed_at=now.isoformat(), source='Elasticsearch 저장 자료')
+                viewed_at=now.isoformat(), source='MongoDB 저장 자료')
 
 def lookup_region(identifier):
     if identifier.startswith('road:'):
