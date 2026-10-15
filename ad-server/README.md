@@ -6,6 +6,8 @@
 
 광고 서버 코드와 실행 환경 설정을 이 폴더에 모읍니다.
 
+사용자 요청으로 [로컬 임시 관리 도구](../docs/development/ads/임시_광고_관리_도구.md)를 별도 추가합니다. 기존 관리 API·5분 예산/통계를 테스트 DB와 `127.0.0.1:8001/dev/ads/`에서 확인합니다. 아래의 관리자 화면 제외는 정식 화면 범위이며 이 도구는 로컬 확인용 예외입니다. 공유 계정/guest·PostgreSQL sink·정식 React 관리자·공개/운영 연결 완료를 뜻하지 않습니다.
+
 ```text
 ad-server/
 ├─ backend/                  Django/DRF API·광고 로직·MongoDB 저장·테스트

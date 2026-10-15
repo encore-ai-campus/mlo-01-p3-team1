@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>광고 로컬 시험실</title>
+  <style nonce="{{ csp_nonce }}">
+    :root{color-scheme:light;--ink:#193334;--muted:#55706f;--line:#d8e3df;--paper:#fff;--bg:#f3f6f2;--green:#12664f;--soft:#e9f4ed;--amber:#7e500b;--red:#a12c27;font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink)}button,input,select{font:inherit}button,a,input,select{outline-offset:3px}button{cursor:pointer;border:1px solid #b8ccc2;border-radius:9px;background:#fff;color:var(--ink);padding:.55rem .85rem;font-weight:650}button:hover:enabled{background:var(--soft)}button:disabled{cursor:default;opacity:.48}.primary{background:var(--green);color:#fff;border-color:var(--green)}.primary:hover:enabled{background:#0d503e}.danger{color:var(--red);border-color:#e4bdb8}.quiet{background:transparent}.tag{display:inline-block;padding:.16rem .55rem;border-radius:20px;background:var(--soft);color:var(--green);font-size:.78rem;font-weight:750;white-space:nowrap}.warning{background:#fff3d9;color:var(--amber)}.stopped{background:#fcebe8;color:var(--red)}
+    header{background:#153d34;color:white;padding:1.35rem max(1.2rem,calc((100vw - 1420px)/2));display:flex;align-items:center;justify-content:space-between;gap:1rem}header h1{font-size:1.45rem;margin:0}header p{margin:.25rem 0 0;color:#d4e6dd;font-size:.9rem}header button{background:transparent;color:white;border-color:#719185}.eyebrow{font-size:.73rem;letter-spacing:.12em;font-weight:800;color:#b9dbcb;margin-bottom:.2rem}main{max-width:1460px;margin:auto;padding:1.25rem 1.2rem 3rem}.notice{border:1px solid #e4d7b5;background:#fff9e9;border-radius:11px;padding:.8rem 1rem;font-size:.88rem;color:#6e541c}.notice strong{color:#543b09}.toolbar,.actions,.filters,.inline{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}.toolbar{justify-content:space-between;margin:1rem 0}.muted{color:var(--muted);font-size:.84rem}.cards{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.8rem;margin:1rem 0}.card,.panel{border:1px solid var(--line);background:var(--paper);border-radius:13px}.card{padding:1rem}.card .value{font-size:1.65rem;line-height:1.3;font-weight:750;margin:.25rem 0}.card .label{font-size:.8rem;color:var(--muted)}.workspace{display:grid;grid-template-columns:minmax(0,1fr) minmax(350px,440px);gap:1rem;align-items:start}.panel{padding:1.15rem;min-width:0}.panel h2{font-size:1.08rem;margin:0}.panel-title{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin-bottom:1rem}.panel-title p{margin:.2rem 0 0}.table-wrap{overflow:auto}table{border-collapse:collapse;width:100%;font-size:.85rem}th{text-align:left;font-size:.76rem;color:var(--muted);font-weight:700;border-bottom:1px solid var(--line);padding:.65rem .5rem;white-space:nowrap}td{padding:.8rem .5rem;border-bottom:1px solid #edf1ed;vertical-align:top}tbody tr:last-child td{border-bottom:0}.ad-title{font-weight:700;max-width:240px;overflow-wrap:anywhere}.subline{color:var(--muted);font-size:.75rem;margin-top:.17rem}.row-actions{display:flex;gap:.35rem;flex-wrap:wrap}.row-actions button{font-size:.77rem;padding:.32rem .55rem}.empty{padding:2.5rem 1rem;text-align:center;color:var(--muted)}.pagination{display:flex;justify-content:space-between;align-items:center;margin-top:.9rem}.filters{margin-bottom:.9rem}.filters label{font-size:.8rem}.filters select{margin-left:.25rem;padding:.35rem .5rem}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}.field{display:flex;flex-direction:column;gap:.3rem;min-width:0}.field label{font-size:.8rem;font-weight:700}.field input,.field select{width:100%;border:1px solid #becfc5;border-radius:8px;padding:.55rem .6rem;background:white;min-width:0;color:var(--ink)}.field input:read-only{background:#f3f6f3;color:var(--muted)}.span-2{grid-column:1/-1}.hint{font-size:.75rem;color:var(--muted);margin:0}.form-section{font-size:.78rem;font-weight:750;color:var(--green);margin:1.1rem 0 .55rem;border-top:1px solid var(--line);padding-top:.8rem}.form-actions{margin-top:1rem;display:flex;flex-wrap:wrap;gap:.5rem}.asset-image{width:100%;height:120px;object-fit:contain;background:#f2f5f2;border:1px solid var(--line);border-radius:7px}.message{border-radius:9px;padding:.7rem .85rem;margin:.8rem 0;font-size:.85rem;background:var(--soft);color:var(--green);overflow-wrap:anywhere}.message.error{color:var(--red);background:#fff0ec}.message:empty{display:none}.metrics-note{font-size:.78rem;color:var(--muted);margin:.9rem 0 0}.preview-box{margin-top:1rem;border-top:1px solid var(--line);padding-top:1rem}.preview-viewport{border:1px dashed #a9bdb1;background:#f1f5f1;padding:.65rem;overflow:auto;max-width:100%;margin-top:.6rem}.preview-viewport.mobile{width:390px;max-width:100%}.preview-viewport img{width:100%;height:120px;object-fit:contain;background:#fff;display:block}.preview-viewport.bottom img{height:104px}.preview-label{font-size:.74rem;color:var(--muted);margin:.35rem 0}.test-panel{margin-top:1rem}.test-panel summary{cursor:pointer;font-size:1rem;font-weight:700;list-style-position:inside}.test-content{margin-top:.8rem}.test-banner{border:1px dashed #87aa98;border-radius:10px;padding:.75rem;background:#f4faf5;margin:.9rem 0;max-width:100%;min-height:100px}.test-banner img{display:block;max-width:100%;height:120px;object-fit:contain;margin:auto}.test-banner.bottom img{height:104px}.test-title{font-size:.82rem;font-weight:700;margin-top:.45rem;text-align:center}.test-state{font-size:.83rem;min-height:1.5rem;color:var(--muted)}.worker-line{font-size:.8rem}.dot{display:inline-block;width:7px;height:7px;background:#768f83;border-radius:50%;margin-right:.3rem}.dot.running{background:#25976a}.footer-note{font-size:.77rem;color:var(--muted);margin-top:1rem}.metrics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem}.metric-small{font-size:.75rem;color:var(--muted)}.metric-small strong{font-size:1rem;color:var(--ink);display:block}.end-reason{display:block;color:var(--red);font-size:.74rem;margin-top:.2rem}a{color:var(--green)}[hidden]{display:none!important}
+    @media(max-width:1100px){.workspace{grid-template-columns:minmax(0,1fr) minmax(320px,380px)}.cards{grid-template-columns:repeat(3,1fr)}.cards .card:last-child{grid-column:span 2}}
+    @media(max-width:850px){.workspace{grid-template-columns:1fr}.cards{grid-template-columns:repeat(2,1fr)}.cards .card:last-child{grid-column:span 2}header{align-items:flex-start}main{padding:1rem .75rem}.panel{padding:1rem}.toolbar{align-items:flex-start}.form-grid{gap:.7rem}}
+    @media(prefers-reduced-motion:no-preference){button{transition:background .15s}}
+  </style>
+</head>
+<body>
+<header>
+  <div><div class="eyebrow">ADS · LOCAL SANDBOX</div><h1>광고 로컬 시험실</h1><p>등록부터 공개 배달·예산 검증까지, 광고 서버의 동작을 확인합니다.</p></div>
+  <button id="logout" type="button">로그아웃</button>
+</header>
+<main>
+  <div class="notice"><strong>로컬 시험 환경 · 실제 서비스 관리자 화면이 아닙니다.</strong> 모든 데이터는 시험용으로 저장됩니다. 공유 PostgreSQL 로그는 연결되지 않았으며, 실제 과금은 발생하지 않습니다.</div>
+  <div class="toolbar">
+    <div><div class="worker-line"><span id="worker-dot" class="dot"></span><span id="worker-status">개발 환경 확인 중</span></div><div id="worker-detail" class="muted"></div></div>
+    <div class="actions"><button id="reload" type="button">목록·통계 새로고침</button><button id="refresh-policy" class="primary" type="button">지금 예산 검증·집계</button></div>
+  </div>
+  <div id="global-message" class="message" role="status" aria-live="polite"></div>
+  <section class="cards" aria-label="광고 및 오늘의 집계 요약">
+    <div class="card"><div class="label">진행 중</div><div class="value" id="count-active">—</div><div class="label">기간·중단·예산 검증 기준</div></div>
+    <div class="card"><div class="label">게시 대기</div><div class="value" id="count-reserved">—</div><div class="label">게시 시작 전</div></div>
+    <div class="card"><div class="label">종료 / 수동 중단</div><div class="value" id="count-ended">—</div><div class="label" id="count-stopped">수동 중단 —건</div></div>
+    <div class="card"><div class="label">오늘 유효 노출 / 클릭</div><div class="value" id="today-events">—</div><div class="label">서버의 주기 집계 결과</div></div>
+    <div class="card"><div class="label">오늘 예상 사용 토큰</div><div class="value" id="today-tokens">—</div><div class="label" id="summary-status">집계 확인 중</div></div>
+  </section>
+  <div class="workspace">
+    <section class="panel" aria-labelledby="list-title">
+      <div class="panel-title"><div><h2 id="list-title">광고 목록</h2><p class="muted">변경할 광고의 [수정]을 누르면 오른쪽 입력란에 불러옵니다.</p></div><span class="tag">TEST DATA</span></div>
+      <form class="filters" id="filter-form">
+        <label>위치 <select id="filter-placement"><option value="">전체</option><option value="top">상단</option><option value="bottom">하단</option></select></label>
+        <label>상태 <select id="filter-status"><option value="">전체</option><option value="ACTIVE">진행 중</option><option value="RESERVED">게시 대기</option><option value="ENDED">종료</option><option value="STOPPED">수동 중단</option></select></label>
+        <button type="submit">적용</button>
+      </form>
+      <div class="table-wrap"><table><thead><tr><th>광고 · 게시 기간</th><th>상태</th><th>예산 토큰</th><th>누적 집계</th><th>제어</th></tr></thead><tbody id="ad-rows"></tbody></table></div>
+      <p class="empty" id="list-empty" hidden>등록된 광고가 없습니다. 이미지를 올리고 첫 시험 광고를 등록해 보세요.</p>
+      <div class="pagination"><span id="page-label" class="muted">목록 확인 중</span><div class="actions"><button type="button" id="page-prev" disabled>이전</button><button type="button" id="page-next" disabled>다음</button></div></div>
+      <p class="metrics-note" id="metrics-note">통계·예산은 5분마다 검증합니다. 예산 미설정·검증 대기인 광고는 공개 제공되지 않을 수 있습니다.</p>
+    </section>
+    <section class="panel" aria-labelledby="editor-title">
+      <div class="panel-title"><div><h2 id="editor-title">새 광고 등록</h2><p class="muted" id="editor-context">새로운 시험 광고를 작성합니다.</p></div><button id="new-ad" type="button" class="quiet">입력 초기화</button></div>
+      <form id="ad-form">
+        <div class="form-grid">
+          <div class="field span-2"><label for="title">광고 제목</label><input id="title" name="title" required autocomplete="off"></div>
+          <div class="field"><label for="placement">배너 위치</label><select id="placement" name="placement"><option value="top">상단</option><option value="bottom">하단</option></select></div>
+          <div class="field"><label for="priority">선정 우선순위</label><input id="priority" name="priority" inputmode="numeric" value="0" required><p class="hint">높은 정수가 우선입니다. 동률은 순환합니다.</p></div>
+          <div class="field span-2"><label for="link-url">광고 연결 URL</label><input id="link-url" name="link_url" type="url" placeholder="https://example.com" required autocomplete="off"></div>
+          <div class="field"><label for="starts-at">게시 시작</label><input id="starts-at" type="datetime-local" step="0.001" required></div>
+          <div class="field"><label for="ends-at">게시 종료</label><input id="ends-at" type="datetime-local" step="0.001" required></div>
+          <p class="hint span-2" id="timezone-note"></p>
+        </div>
+        <div class="form-section">광고 이미지</div>
+        <div class="form-grid">
+          <div class="field span-2"><label for="image-file">PNG · JPEG · WebP / 정적 이미지 최대 2MB</label><input id="image-file" type="file" accept="image/png,image/jpeg,image/webp"><button id="upload-image" type="button">선택한 이미지 업로드</button></div>
+          <div class="field span-2"><label for="asset-id">저장된 이미지 ID</label><input id="asset-id" name="asset_id" readonly required><p class="hint" id="asset-info">이미지를 업로드하면 MongoDB에 원본을 저장합니다.</p></div>
+          <img id="asset-image" class="asset-image span-2" alt="선택한 광고 이미지" hidden>
+        </div>
+        <div class="form-section">토큰 예산</div>
+        <div class="form-grid">
+          <div class="field"><label for="daily-budget">일일 예산 토큰</label><input id="daily-budget" inputmode="numeric" placeholder="직접 입력"></div>
+          <div class="field"><label for="total-budget">총 예산 토큰</label><input id="total-budget" inputmode="numeric" placeholder="직접 입력"></div>
+          <p class="hint span-2">두 값을 함께 입력하세요. 모두 비우면 등록은 가능하지만 공개 제공 대상에서 제외됩니다. 수정 중 모두 비우면 기존 예산을 보존합니다. 이 화면은 9,007,199,254,740,991 이하의 정수만 입력할 수 있습니다.</p>
+        </div>
+        <div class="form-actions"><button id="save-ad" class="primary" type="submit">광고 등록</button><button id="preview-ad" type="button">PC·모바일 미리보기</button></div>
+      </form>
+      <div id="form-message" class="message" role="status" aria-live="polite"></div>
+      <div id="preview-section" class="preview-box" hidden>
+        <div class="inline"><strong>관리용 미리보기</strong><span class="tag">측정 없음</span></div>
+        <p class="hint" id="preview-description"></p>
+        <p class="preview-label">PC · 이미지 전체 맞춤</p><div id="preview-desktop" class="preview-viewport"><img id="preview-desktop-image" alt="PC 광고 미리보기"></div>
+        <p class="preview-label">모바일 · 최대 390px</p><div id="preview-mobile" class="preview-viewport mobile"><img id="preview-mobile-image" alt="모바일 광고 미리보기"></div>
+      </div>
+    </section>
+  </div>
+  <details class="panel test-panel" id="public-panel">
+    <summary>공개 배너·측정 API 시험 <span class="tag warning">수동 시험</span></summary>
+    <div class="test-content">
+      <p class="muted">시험용 guest·배달로 공개 광고 API를 호출합니다. 배너 확인과 재확인은 자동으로 측정하지 않습니다. 아래 시험 버튼만 이벤트를 전송하며 실제 고객에게 노출되는 화면은 아닙니다. <strong>시험 배달은 노출·클릭 집계와 토큰 합계에 반영되지 않습니다.</strong></p>
+      <div class="actions"><label for="test-placement">위치</label><select id="test-placement"><option value="top">상단</option><option value="bottom">하단</option></select><button id="provide-ad" type="button">새 배달 받기</button><button id="reconfirm-ad" type="button" disabled>현재 배달 재확인</button><button id="clear-delivery" type="button">시험 배너 비우기</button></div>
+      <p class="hint">처음에는 상단에서 방문자 문맥을 만드세요. 통신 실패 뒤에는 같은 발급 키로 재시도합니다. 별도 새 배달은 [시험 배너 비우기] 후 요청하세요. 표시 중에는 같은 배달을 1초마다 재확인하며 서버의 표시 유효 시각을 넘기면 배너를 숨깁니다. 배달 수명 30분과 표시 재확인 3초는 서로 다른 기준입니다.</p>
+      <div id="test-banner" class="test-banner" hidden><img id="test-image" alt="공개 API가 제공한 시험 광고"><div id="test-title" class="test-title"></div></div>
+      <p id="test-state" class="test-state">아직 공개 배달을 요청하지 않았습니다.</p>
+      <div class="actions"><button id="test-impression" type="button" disabled>유효 노출 이벤트 시험</button><button id="test-click" type="button" disabled>클릭 이벤트 시험</button></div>
+      <p class="hint">노출 시험은 이미지가 화면에 50% 이상 연속 1초 보인 뒤 가능합니다. 클릭 시험은 외부 링크로 이동하지 않고 CLICK 판정만 확인합니다. is_test=true 배달의 측정 제외 동작을 확인하며, 예산 소진·초과 판정은 별도 자동 테스트에서 검증합니다.</p>
+      <div id="test-message" class="message" role="status" aria-live="polite"></div>
+    </div>
+  </details>
+  <p class="footer-note">자동 종료: 토큰 소진 확인 또는 게시 기간 종료. 수동 중단은 별도이며 이 시험실에는 재개 기능이 없습니다. 운영용 공유 인증·PostgreSQL 로그·AWS 배포 검증은 별도로 진행합니다.</p>
+</main>
+<script nonce="{{ csp_nonce }}">
+"use strict";
+(() => {
+  const $ = id => document.getElementById(id);
+  const state = {rows: [], editing: null, editingTimes: null, cursor: null, nextCursor: null, previous: [], filters: {placement: "", status: ""}, listBusy: false, listRequest: 0, delivery: null, pendingDeliveryRequest: null, publicBusy: false, publicGeneration: 0, publicOperation: 0, activePublicOperation: null, expiryTimer: null, visibleSince: null, imageLoaded: false, intersecting: false};
+  const pendingKeys = new Map();
+  const numberFormat = new Intl.NumberFormat("ko-KR");
+  const statusText = {ACTIVE: "진행 중", RESERVED: "게시 대기", ENDED: "종료", STOPPED: "수동 중단"};
+  const metricText = {READY: "집계 완료", PARTIAL: "일부 집계", PENDING: "집계 대기"};
+  const resultText = {COUNTED: "인정", DELIVERY_DUPLICATE: "같은 배달의 중복 이벤트", REPEAT_SUPPRESSED: "반복 제한으로 제외", LATE_EVENT: "지연 허용 시간 초과", DELIVERY_INVALID: "유효하지 않은 배달", MEASUREMENT_UNAVAILABLE: "측정 불가"};
+  const fmt = value => value === null || value === undefined ? "—" : (Number.isSafeInteger(value) ? numberFormat.format(value) : "정밀도 범위 초과");
+  const dateText = value => {const date = new Date(value); return value && !Number.isNaN(date.getTime()) ? date.toLocaleString("ko-KR", {hour12: false}) : "—";};
+  const message = (id, text, error = false) => {$(id).textContent = text; $(id).classList.toggle("error", error);};
+  const csrf = () => {const item = document.cookie.split(";").map(value => value.trim()).find(value => value.startsWith("ads_sandbox_csrf=")); return item ? decodeURIComponent(item.slice("ads_sandbox_csrf=".length)) : "";};
+  const keyFor = fingerprint => {if (!pendingKeys.has(fingerprint)) pendingKeys.set(fingerprint, crypto.randomUUID()); return pendingKeys.get(fingerprint);};
+  async function api(path, options = {}) {
+    const headers = new Headers(options.headers || {});
+    const method = options.method || "GET";
+    if (!["GET", "HEAD"].includes(method)) headers.set("X-CSRFToken", csrf());
+    if (options.json !== undefined) {headers.set("Content-Type", "application/json"); options.body = JSON.stringify(options.json);}
+    const fingerprint = options.mutation ? method + path + (options.fingerprint || options.body || "") : null;
+    if (fingerprint) headers.set("Idempotency-Key", keyFor(fingerprint));
+    let response;
+    try {response = await fetch(path, {method, headers, body: options.body, credentials: "same-origin", cache: "no-store", redirect: "error"});}
+    catch {throw new Error("서버에 연결할 수 없습니다. 입력을 유지한 채 같은 작업을 다시 시도할 수 있습니다.");}
+    let body;
+    try {body = await response.json();} catch {throw new Error("서버 응답을 확인할 수 없습니다. 로그인 또는 서버 상태를 확인해 주세요.");}
+    if (!response.ok) {const fields = body.details && Array.isArray(body.details.fields) ? " · 필드: " + body.details.fields.join(", ") : ""; const error = new Error((body.message || "요청을 처리할 수 없습니다.") + (body.code ? " [" + body.code + "]" : "") + fields); error.status = response.status; throw error;}
+    if (fingerprint) pendingKeys.delete(fingerprint);
+    return body;
+  }
+  function integer(id, positive = false) {
+    const value = $(id).value.trim();
+    if (!(positive ? /^[1-9]\d*$/ : /^-?\d+$/).test(value) || !Number.isSafeInteger(Number(value))) throw new Error((positive ? "예산" : "우선순위") + "은 이 화면에서 정확히 표현할 수 있는 정수로 입력해 주세요.");
+    return Number(value);
+  }
+  function formData() {
+    const startValue = $("starts-at").value, endValue = $("ends-at").value;
+    const start = new Date(state.editing && startValue === state.editingTimes.start ? state.editing.starts_at : startValue), end = new Date(state.editing && endValue === state.editingTimes.end ? state.editing.ends_at : endValue);
+    if (!$("ad-form").reportValidity()) throw new Error("필수 입력을 확인해 주세요.");
+    if (!$("asset-id").value) throw new Error("먼저 광고 이미지를 업로드해 주세요.");
+    if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime()) || end <= start) throw new Error("게시 종료 시각은 시작 시각보다 늦어야 합니다.");
+    const body = {title: $("title").value, asset_id: $("asset-id").value, link_url: $("link-url").value, placement: $("placement").value, starts_at: start.toISOString(), ends_at: end.toISOString(), priority: integer("priority")};
+    if ($("daily-budget").value.trim() || $("total-budget").value.trim()) {body.daily_budget_tokens = integer("daily-budget", true); body.total_budget_tokens = integer("total-budget", true);}
+    return body;
+  }
+  function localInput(value) {const date = new Date(value); return new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().slice(0,23);}
+  function clearForm() {
+    state.editing = null; state.editingTimes = null; $("ad-form").reset(); $("asset-id").value = "";
+    $("starts-at").value = localInput(new Date()); $("ends-at").value = localInput(new Date(Date.now() + 86400000));
+    $("editor-title").textContent = "새 광고 등록"; $("editor-context").textContent = "새로운 시험 광고를 작성합니다."; $("save-ad").textContent = "광고 등록";
+    $("asset-image").hidden = true; $("asset-image").removeAttribute("src"); $("preview-section").hidden = true;
+    $("asset-info").textContent = "이미지를 업로드하면 MongoDB에 원본을 저장합니다."; message("form-message", "");
+  }
+  function edit(row) {
+    if (![row.version, row.priority, row.daily_budget_tokens, row.total_budget_tokens].filter(value => value !== null && value !== undefined).every(Number.isSafeInteger)) {message("global-message", "이 광고에는 브라우저 정밀도 범위를 넘는 정수가 있습니다. 정확한 값을 보존하기 위해 이 화면에서 수정할 수 없습니다.", true); return;}
+    state.editing = row; $("title").value = row.title; $("placement").value = row.placement; $("priority").value = String(row.priority); $("link-url").value = row.link_url;
+    $("starts-at").value = localInput(row.starts_at); $("ends-at").value = localInput(row.ends_at); $("asset-id").value = row.asset_id;
+    state.editingTimes = {start: $("starts-at").value, end: $("ends-at").value};
+    $("daily-budget").value = row.daily_budget_tokens == null ? "" : String(row.daily_budget_tokens); $("total-budget").value = row.total_budget_tokens == null ? "" : String(row.total_budget_tokens);
+    $("image-file").value = ""; $("asset-image").src = "/api/admin/ad-assets/" + encodeURIComponent(row.asset_id); $("asset-image").hidden = false;
+    $("asset-info").textContent = "기존 이미지입니다. 교체하려면 새 파일을 업로드하세요."; $("preview-section").hidden = true;
+    $("editor-title").textContent = "광고 수정"; $("editor-context").textContent = "버전 " + row.version + " · " + statusText[row.status]; $("save-ad").textContent = "수정 저장";
+    message("form-message", row.paused ? "수동 중단 상태를 유지한 채 내용을 수정합니다. 재개 기능은 제공하지 않습니다." : "기존 예산을 바꾸면 다음 예산 검증 후 공개 제공이 가능합니다.");
+    $("editor-title").scrollIntoView({block: "start", behavior: "auto"}); $("title").focus({preventScroll: true});
+  }
+  function textNode(tag, text, className) {const element = document.createElement(tag); element.textContent = text; if (className) element.className = className; return element;}
+  function drawRows() {
+    $("ad-rows").replaceChildren(); $("list-empty").hidden = state.rows.length > 0;
+    for (const row of state.rows) {
+      const tr = document.createElement("tr"), title = document.createElement("td"), status = document.createElement("td"), budget = document.createElement("td"), metrics = document.createElement("td"), controls = document.createElement("td");
+      title.append(textNode("div", row.title, "ad-title"), textNode("div", (row.placement === "top" ? "상단" : "하단") + " · 우선순위 " + fmt(row.priority), "subline"), textNode("div", dateText(row.starts_at) + " ~", "subline"), textNode("div", dateText(row.ends_at), "subline"));
+      status.append(textNode("span", statusText[row.status] || row.status, "tag" + (row.status === "STOPPED" ? " stopped" : row.status === "ENDED" ? " warning" : "")));
+      if (row.end_reason) status.append(textNode("span", row.end_reason === "BUDGET_EXHAUSTED" ? "토큰 소진" : "게시 기간 종료", "end-reason"));
+      if (!row.budget_version) status.append(textNode("div", "예산 미설정 · 공개 부적격", "subline"));
+      budget.append(textNode("div", "일일 " + fmt(row.daily_budget_tokens)), textNode("div", "총 " + fmt(row.total_budget_tokens), "subline"));
+      const m = row.measurement || {}; metrics.append(textNode("div", "노출 " + fmt(m.impressions) + " · 클릭 " + fmt(m.clicks)), textNode("div", fmt(m.estimated_tokens) + " 토큰", "subline"), textNode("div", (metricText[m.status] || "집계 대기") + (m.is_stale ? " · 오래됨" : ""), "subline"));
+      const buttons = document.createElement("div"); buttons.className = "row-actions";
+      const modify = textNode("button", "수정"); modify.type = "button"; modify.addEventListener("click", () => edit(row));
+      const stop = textNode("button", row.paused ? "중단됨" : "수동 중단", "danger"); stop.type = "button"; stop.disabled = row.paused; stop.addEventListener("click", () => stopAd(row, stop)); buttons.append(modify, stop); controls.append(buttons);
+      tr.append(title, status, budget, metrics, controls); $("ad-rows").append(tr);
+    }
+    syncPagination();
+  }
+  function syncPagination() {$("page-prev").disabled = state.listBusy || state.previous.length === 0; $("page-next").disabled = state.listBusy || !state.nextCursor; $("page-label").textContent = (state.previous.length + 1) + "페이지 · " + state.rows.length + "건";}
+  async function loadList() {
+    const request = ++state.listRequest; state.listBusy = true; syncPagination();
+    const query = new URLSearchParams({page_size: "10"});
+    if (state.filters.placement) query.set("placement", state.filters.placement); if (state.filters.status) query.set("status", state.filters.status); if (state.cursor) query.set("cursor", state.cursor);
+    try {const body = await api("/api/admin/ads?" + query); if (request !== state.listRequest) return; state.rows = body.items; state.nextCursor = body.next_cursor; drawRows();}
+    catch (error) {if (request === state.listRequest) throw error;}
+    finally {if (request === state.listRequest) {state.listBusy = false; syncPagination();}}
+  }
+  async function loadSummary() {
+    const body = await api("/api/admin/ads/summary"), counts = body.counts || {}, m = body.measurement || {};
+    $("count-active").textContent = fmt(counts.ACTIVE); $("count-reserved").textContent = fmt(counts.RESERVED); $("count-ended").textContent = fmt(counts.ENDED); $("count-stopped").textContent = "수동 중단 " + fmt(counts.STOPPED) + "건";
+    $("today-events").textContent = fmt(m.impressions) + " / " + fmt(m.clicks); $("today-tokens").textContent = fmt(m.estimated_tokens); $("summary-status").textContent = (metricText[m.status] || "집계 대기") + (m.is_stale ? " · 오래된 집계" : "");
+    $("metrics-note").textContent = "KST 집계일 " + (m.metric_date_kst || "—") + " · 마지막 집계 " + dateText(m.as_of) + " · 5분 주기. 진행 중 상태만으로 공개 제공을 보장하지 않습니다. 예산 설정·최근 검증도 필요합니다.";
+  }
+  async function loadStatus() {
+    const body = await api("/dev/ads/status"), worker = body.budget_worker || {};
+    $("worker-dot").classList.toggle("running", worker.running === true); $("worker-status").textContent = (worker.running ? "5분 예산 검증 작업 실행 중" : "예산 검증 작업 정지") + " · " + body.database + " · TEST";
+    $("worker-detail").textContent = "마지막 성공 " + dateText(worker.last_succeeded_at) + " · 공유 PostgreSQL 로그 미연결" + (worker.last_error ? " · 최근 집계 실패: " + worker.last_error : "");
+  }
+  async function reload(reset = false) {if (reset) {state.cursor = null; state.previous = [];} const results = await Promise.allSettled([loadList(), loadSummary(), loadStatus()]); const failed = results.find(result => result.status === "rejected"); if (failed) throw failed.reason;}
+  async function stopAd(row, button) {
+    if (!Number.isSafeInteger(row.version)) {message("global-message", "버전 값이 브라우저 정밀도 범위를 넘어서 이 화면에서 중단할 수 없습니다.", true); return;}
+    button.disabled = true;
+    try {await api("/api/admin/ads/" + encodeURIComponent(row.ad_id) + "/stop", {method: "POST", json: {version: row.version}, mutation: true}); message("global-message", "광고를 수동 중단했습니다. 기존 배달의 새 표시도 차단됩니다."); await reload(true); if (state.editing && state.editing.ad_id === row.ad_id) clearForm();}
+    catch (error) {message("global-message", error.message + " 버전 충돌이면 목록을 새로고침한 뒤 다시 확인해 주세요.", true); button.disabled = row.paused;}
+  }
+  async function action(button, id, operation) {if (button.disabled) return; button.disabled = true; try {await operation();} catch (error) {message(id, error.message, true);} finally {button.disabled = false;}}
+  $("ad-form").addEventListener("submit", event => {event.preventDefault(); action($("save-ad"), "form-message", async () => {
+    const body = formData(), editing = state.editing; if (editing) body.version = editing.version;
+    const result = await api("/api/admin/ads" + (editing ? "/" + encodeURIComponent(editing.ad_id) : ""), {method: editing ? "PUT" : "POST", json: body, mutation: true});
+    clearForm(); message("form-message", (editing ? "수정했습니다." : "등록했습니다.") + " 공개 확인 전 [지금 예산 검증·집계]를 실행하세요."); message("global-message", "광고 저장 완료 · 현재 상태 " + (statusText[result.status] || result.status)); await reload(true);
+  });});
+  $("upload-image").addEventListener("click", () => action($("upload-image"), "form-message", async () => {
+    const file = $("image-file").files[0]; if (!file) throw new Error("업로드할 이미지 파일을 선택해 주세요."); if (file.size > 2000000) throw new Error("이미지 원본은 최대 2,000,000바이트입니다.");
+    const data = new FormData(); data.append("image", file);
+    const asset = await api("/api/admin/ad-assets", {method: "POST", body: data, mutation: true, fingerprint: [file.name, file.size, file.lastModified].join(":")});
+    $("asset-id").value = asset.asset_id; $("asset-info").textContent = asset.width + " × " + asset.height + " · " + asset.mime_type + " · " + numberFormat.format(asset.byte_size) + "바이트";
+    $("asset-image").src = "/api/admin/ad-assets/" + encodeURIComponent(asset.asset_id); $("asset-image").hidden = false; $("preview-section").hidden = true; message("form-message", "이미지 원본을 MongoDB에 저장했습니다. 광고를 저장하면 연결됩니다.");
+  }));
+  $("preview-ad").addEventListener("click", () => action($("preview-ad"), "form-message", async () => {
+    const preview = await api("/api/admin/ads/preview", {method: "POST", json: formData()});
+    const image = "/api/admin/ad-assets/" + encodeURIComponent(preview.asset_id); $("preview-desktop-image").src = image; $("preview-mobile-image").src = image;
+    $("preview-desktop").classList.toggle("bottom", preview.placement === "bottom"); $("preview-mobile").classList.toggle("bottom", preview.placement === "bottom");
+    $("preview-description").textContent = preview.title + " · " + (preview.placement === "top" ? "상단 120px" : "하단 104px") + " · 공개 배달·측정 없음"; $("preview-section").hidden = false; message("form-message", "서버에서 입력·이미지 원본을 확인했습니다.");
+  }));
+  $("new-ad").addEventListener("click", clearForm);
+  $("reload").addEventListener("click", () => action($("reload"), "global-message", async () => {await reload(true); message("global-message", "목록과 집계 상태를 새로 불러왔습니다.");}));
+  $("refresh-policy").addEventListener("click", () => action($("refresh-policy"), "global-message", async () => {
+    const counts = await api("/dev/ads/refresh", {method: "POST", json: {}}); await reload(true); message("global-message", "예산 검증·집계 완료 · 확인 광고 " + fmt(counts.ads_checked) + "건 · 신규 소진 판정 " + fmt(counts.blocked) + "건 · 집계 행 " + fmt(counts.metrics_rows) + "개");
+  }));
+  $("filter-form").addEventListener("submit", event => {event.preventDefault(); state.filters = {placement: $("filter-placement").value, status: $("filter-status").value}; reload(true).catch(error => message("global-message", error.message, true));});
+  $("page-next").addEventListener("click", () => {if (state.listBusy || !state.nextCursor) return; const before = state.cursor; state.previous.push(before); state.cursor = state.nextCursor; loadList().catch(error => {state.cursor = state.previous.pop(); syncPagination(); message("global-message", error.message, true);});});
+  $("page-prev").addEventListener("click", () => {if (state.listBusy || !state.previous.length) return; const before = state.cursor; state.cursor = state.previous.pop(); loadList().catch(error => {state.previous.push(state.cursor); state.cursor = before; syncPagination(); message("global-message", error.message, true);});});
+  $("logout").addEventListener("click", () => action($("logout"), "global-message", async () => {await api("/dev/ads/logout", {method: "POST", json: {}}); window.location.assign("/dev/ads/login");}));
+  function hideBanner() {$("test-banner").hidden = true; $("test-image").removeAttribute("src"); state.imageLoaded = false; state.visibleSince = null; updateTestButtons();}
+  function invalidatePublicRequest() {state.publicGeneration += 1; state.publicBusy = false; state.activePublicOperation = null; if (state.pendingDeliveryRequest) $("provide-ad").textContent = "배달 요청 재시도";}
+  function clearDelivery() {invalidatePublicRequest(); clearTimeout(state.expiryTimer); hideBanner(); state.delivery = null; state.pendingDeliveryRequest = null; $("provide-ad").textContent = "새 배달 받기"; $("reconfirm-ad").disabled = true; $("test-state").textContent = "시험 배너를 비웠습니다."; message("test-message", "");}
+  function updateTestButtons() {
+    const showing = !!state.delivery && !$("test-banner").hidden && state.imageLoaded && document.visibilityState === "visible" && Date.now() < Date.parse(state.delivery.valid_until);
+    if (showing && state.intersecting) {if (state.visibleSince === null) state.visibleSince = performance.now();} else state.visibleSince = null;
+    $("test-impression").disabled = !showing || state.publicBusy || !state.delivery.measurement_available || state.visibleSince === null || performance.now() - state.visibleSince < 1000;
+    $("test-click").disabled = !showing || state.publicBusy || !state.delivery.measurement_available;
+  }
+  function localImagePath(urlValue, deliveryId) {
+    const url = new URL(urlValue), expected = "/api/ad-deliveries/" + encodeURIComponent(deliveryId) + "/image";
+    if (url.protocol !== "https:" || !["127.0.0.1", "localhost", "[::1]"].includes(url.hostname) || url.hostname !== window.location.hostname || url.port !== window.location.port || url.pathname !== expected || url.username || url.password || url.hash || Array.from(url.searchParams.keys()).some(key => key !== "delivery_token") || url.searchParams.getAll("delivery_token").length !== 1) throw new Error("시험 이미지의 서버 주소 또는 경로가 로컬 환경과 일치하지 않습니다.");
+    return url.pathname + url.search;
+  }
+  function acceptDelivery(body) {
+    clearTimeout(state.expiryTimer);
+    if (!body.ad) {clearDelivery(); $("test-state").textContent = "제공 가능한 광고가 없습니다. 예산·게시 기간·최근 검증 상태를 확인하세요."; return;}
+    const until = Date.parse(body.valid_until); if (!Number.isFinite(until) || until <= Date.now()) {hideBanner(); $("test-state").textContent = "표시 유효 시각이 지났습니다. 다시 확인해 주세요."; return;}
+    const imagePath = localImagePath(body.ad.image_url, body.ad.delivery_id);
+    const same = state.delivery && state.delivery.ad.delivery_id === body.ad.delivery_id && $("test-image").getAttribute("src") === imagePath;
+    state.delivery = body; $("reconfirm-ad").disabled = false; $("test-banner").classList.toggle("bottom", body.ad.placement === "bottom"); $("test-title").textContent = body.ad.title; $("test-banner").hidden = false;
+    if (!same) {state.imageLoaded = false; state.visibleSince = null; $("test-image").src = imagePath;}
+    $("test-state").textContent = (body.ad.placement === "top" ? "상단" : "하단") + " 시험 배달 · 표시 확인 " + dateText(body.evaluated_at) + " · " + (body.measurement_available ? "시험 측정 가능" : "측정 불가");
+    state.expiryTimer = setTimeout(() => {hideBanner(); $("test-state").textContent = "표시 유효 시각이 지나 배너를 숨겼습니다. 현재 배달을 재확인할 수 있습니다.";}, Math.max(0, until - Date.now())); updateTestButtons();
+  }
+  async function provide(reconfirm = false, quiet = false) {
+    if (state.publicBusy || !$("public-panel").open || (reconfirm && !state.delivery)) return;
+    const generation = state.publicGeneration, operation = ++state.publicOperation;
+    let pending = null;
+    state.activePublicOperation = operation; state.publicBusy = true; updateTestButtons();
+    try {
+      const query = new URLSearchParams({placement: reconfirm ? state.delivery.ad.placement : $("test-placement").value}), headers = {};
+      if (reconfirm) {query.set("delivery_id", state.delivery.ad.delivery_id); headers["X-Ad-Delivery-Token"] = state.delivery.ad.delivery_token;}
+      else {if (!state.pendingDeliveryRequest || state.pendingDeliveryRequest.placement !== query.get("placement")) state.pendingDeliveryRequest = {placement: query.get("placement"), key: crypto.randomUUID()}; pending = state.pendingDeliveryRequest; headers["Idempotency-Key"] = pending.key;}
+      const body = await api("/api/ads?" + query, {headers});
+      if (generation !== state.publicGeneration || !$("public-panel").open || document.visibilityState !== "visible") return;
+      if (pending === state.pendingDeliveryRequest) {state.pendingDeliveryRequest = null; $("provide-ad").textContent = "새 배달 받기";}
+      acceptDelivery(body); if (!quiet) message("test-message", body.ad ? "시험 배달을 확인했습니다. 아직 이벤트는 전송하지 않았습니다." : "광고가 제공되지 않았습니다.");
+    } catch (error) {
+      if (generation !== state.publicGeneration || !$("public-panel").open || document.visibilityState !== "visible") return;
+      if (pending && pending === state.pendingDeliveryRequest && error.status >= 400 && error.status < 500) state.pendingDeliveryRequest = null;
+      $("provide-ad").textContent = state.pendingDeliveryRequest ? "배달 요청 재시도" : "새 배달 받기"; hideBanner(); message("test-message", error.message, true);
+    } finally {if (state.activePublicOperation === operation) {state.publicBusy = false; state.activePublicOperation = null; updateTestButtons();}}
+  }
+  async function sendEvent(type) {
+    if (state.publicBusy || !state.delivery) return;
+    const button = $(type === "CLICK" ? "test-click" : "test-impression"); if (button.disabled) return;
+    const delivery = state.delivery, generation = state.publicGeneration, operation = ++state.publicOperation; state.activePublicOperation = operation; state.publicBusy = true; updateTestButtons();
+    try {
+      const body = await api("/api/ad-events", {method: "POST", headers: {"X-Ad-Delivery-Token": delivery.ad.delivery_token}, json: {event_id: crypto.randomUUID(), delivery_id: delivery.ad.delivery_id, event_type: type, occurred_at: new Date().toISOString()}});
+      if (generation === state.publicGeneration && $("public-panel").open && document.visibilityState === "visible") message("test-message", (type === "CLICK" ? "클릭" : "노출") + " 시험 결과: " + (resultText[body.result] || body.result) + " · 인정 " + (body.counted ? "예" : "아니요") + ". 시험 배달은 집계·토큰 합계에서 제외됩니다.");
+    } catch (error) {if (generation === state.publicGeneration && $("public-panel").open && document.visibilityState === "visible") message("test-message", error.message, true);} finally {if (state.activePublicOperation === operation) {state.publicBusy = false; state.activePublicOperation = null; updateTestButtons();}}
+  }
+  $("provide-ad").addEventListener("click", () => provide()); $("reconfirm-ad").addEventListener("click", () => provide(true)); $("clear-delivery").addEventListener("click", clearDelivery);
+  $("test-impression").addEventListener("click", () => sendEvent("VIEWABLE_IMPRESSION")); $("test-click").addEventListener("click", () => sendEvent("CLICK"));
+  $("test-image").addEventListener("load", () => {state.imageLoaded = true; updateTestButtons();}); $("test-image").addEventListener("error", () => {hideBanner(); message("test-message", "공개 시험 이미지를 읽을 수 없습니다. 배달을 다시 확인해 주세요.", true);});
+  $("public-panel").addEventListener("toggle", () => {if (!$("public-panel").open) clearDelivery();});
+  $("test-placement").addEventListener("change", clearDelivery);
+  document.addEventListener("visibilitychange", () => {state.visibleSince = null; if (document.visibilityState !== "visible") {invalidatePublicRequest(); hideBanner();} else if (state.delivery && $("public-panel").open) provide(true, true); updateTestButtons();});
+  const observer = new IntersectionObserver(entries => {state.intersecting = entries[0].intersectionRatio >= .5; updateTestButtons();}, {threshold: [0,.5,1]}); observer.observe($("test-image"));
+  setInterval(updateTestButtons, 150); setInterval(() => {if (state.delivery && $("public-panel").open && document.visibilityState === "visible") provide(true, true);}, 1000);
+  setInterval(() => loadStatus().catch(error => {$("worker-dot").classList.remove("running"); $("worker-status").textContent = "서버 상태 확인 실패"; $("worker-detail").textContent = error.message;}), 15000);
+  $("timezone-note").textContent = "입력·표시는 브라우저 시간대(" + Intl.DateTimeFormat().resolvedOptions().timeZone + ")를 사용하며, 서버에는 UTC로 저장합니다.";
+  clearForm(); reload(true).catch(error => message("global-message", error.message, true));
+})();
+</script>
+</body>
+</html>

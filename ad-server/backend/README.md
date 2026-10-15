@@ -17,6 +17,16 @@ Python 3.12.13, Django/DRF, PyMongo를 사용합니다. 실제 설치 버전은 
 [공개 선정·측정 인계](../../docs/development/ads/공개_선정과_측정_로직_인계.md)를 따릅니다.
 운영 guest·정책·서명·공개 주소가 미설정이면 503으로 차단하며 테스트 fixture로 대체하지 않습니다.
 
+## 로컬 임시 관리 도구
+
+사용자 요청으로 기존 광고 API를 확인하는 [로컬 도구](../../docs/development/ads/임시_광고_관리_도구.md)를 별도 제공합니다. `sandbox.py`는 기존 `.env`를 읽지 않는 sandbox 설정/URLconf로 `127.0.0.1:8001/dev/ads/`와 별도 `ads_sandbox_dev/is_test=true`를 사용합니다. Edge/Chrome에서 이 주소를 직접 열고 Git 제외 `.local/ads-sandbox/access.txt`의 실행별 코드를 입력합니다. 앱 내장 브라우저 자동 로그인의 Origin 거부 확인은 도구 안내의 검증 제약을 따릅니다. 저장소 루트의 진입 명령은 다음과 같으며 실제 실행 상태는 검증 기록을 따릅니다.
+
+```powershell
+.\ad-server\backend\.venv\Scripts\python.exe .\ad-server\backend\sandbox.py --start-mongo
+```
+
+`--start-mongo`는 `.tools/mongodb-test/mongod.exe`가 있을 때 전용 로컬 프로세스를 시작하는 선택 기능입니다. 직접 시작한 프로세스만 종료합니다. 기존 관리API·5분 작업/수동 갱신을 확인하며 로그는 PENDING으로 보존합니다. is_test=true 측정은 운영 카운트/예상량0이며 소진을 만들기 위한 운영 flag 우회/가짜 원장은 사용하지 않습니다. 정식 Django admin·React 관리자·공유 ADMIN/guest·PostgreSQL/AWS 연결을 대체하지 않습니다. 아래 일반 서버 안내의 관리자 화면 제외는 이 로컬 확인 도구와 구분합니다.
+
 ## 준비와 실행
 
 PowerShell에서 저장소의 `ad-server/backend` 폴더로 이동합니다.

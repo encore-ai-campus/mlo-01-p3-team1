@@ -12,7 +12,7 @@
 
 기본 runtime provider는 채택한 정책을 연결하며 광고별 예산은 양의 정수2개와 서버 budget_version으로 명시합니다. 미설정/미검증 광고에는 임의 예산을 주지 않습니다. 표시 마감은30분/광고 종료, 보고 마감은 표시 뒤300초이며 재확인은 같은 delivery를 유지합니다. 배달 자체의 자정 단축은 cap_at_midnight=False입니다. 이전 배달의 필드/서명/최초 응답과 마커 없는 예산 판정은 소급 변경하지 않습니다.
 
-관리자 화면·공개 배너 화면·실제 반복 프로세스/운영 배포는 이번 광고 로직 구현에 포함하지 않습니다. 공유 guest/ADMIN·서명/HTTPS 주소·실제 PostgreSQL sink는 해당 환경과 연결/검증이 필요합니다. [정책 결정 가이드](../development/ads/광고_미정_정책_결정_가이드.md), [공개 선정/측정 인계](../development/ads/공개_선정과_측정_로직_인계.md)와 실제 구현 경계를 구분합니다.
+정식 관리자·공개 배너 화면과 운영 배포는 기존 광고 로직 구현에 포함하지 않습니다. 이후 사용자 요청으로 [로컬 임시 도구](../development/ads/임시_광고_관리_도구.md)를 추가했습니다. sandbox 전용 설정/URLconf·loopback·ads_sandbox_dev/is_test=True에서 기존 API와5분 worker를 확인하는 예외이며 정식 React 관리자·공유 guest/ADMIN·PostgreSQL sink·AWS 운영 연결 완료를 뜻하지 않습니다. [정책 결정 가이드](../development/ads/광고_미정_정책_결정_가이드.md), [공개 선정/측정 인계](../development/ads/공개_선정과_측정_로직_인계.md)와 실제 구현 경계를 구분합니다.
 
 ## 적용 계약과 코드 경계
 
@@ -24,7 +24,7 @@ HTTP 오류는 `api/ads.py:error_response`에서 code/message/request_id 및 필
 
 ## 실제 API 연결
 
-아래 경로는 [config/urls.py](../../ad-server/backend/config/urls.py)의 실제 등록과 구현 메서드에 대응합니다. 광고 관리 URL은 모두 공통 ADMIN·광고 권한을 확인합니다. POST/PUT은 세션 CSRF도 확인하며 저장 변경 요청에는 Idempotency-Key가 필요합니다. 저장 전 미리보기 POST는 읽기 권한을 사용하고 저장·배달·측정을 만들지 않습니다.
+아래 경로는 [config/urls.py](../../ad-server/backend/config/urls.py)의 실제 등록과 구현 메서드에 대응합니다. 기본 서버의 광고 관리 URL은 공통 ADMIN·광고 권한을 확인합니다. POST/PUT은 세션 CSRF도 확인하며 저장 변경 요청에는 Idempotency-Key가 필요합니다. 저장 전 미리보기 POST는 읽기 권한을 사용하고 저장·배달·측정을 만들지 않습니다. 별도 sandbox 설정으로 실행하면 같은 API를 개발 로그인으로 보호하며 공유 인증 성공으로 설명하지 않습니다.
 
 | 메서드·경로 | 구현 view | 실행 연결/결과 |
 |---|---|---|
@@ -42,7 +42,22 @@ HTTP 오류는 `api/ads.py:error_response`에서 code/message/request_id 및 필
 | `GET /api/admin/ads/summary` | `AdsSummaryView.get` | repository.summary/metrics_summary → 실제 상태 개수·오늘 주기 집계·범위/시각/지연, null/PENDING과 실제0 구분 |
 | `GET /api/schema` (DEBUG) | `SpectacularAPIView` | 등록된 view의 OpenAPI schema |
 
-관리자 프런트엔드 페이지와 `/admin/ads` 화면은 이 구현에 없습니다. 통계의 null/연동 대기는 0건/토큰 0을 의미하지 않습니다. 서버는 활성 재확인에 최대3초 표시 기한을 제공하고 중단/종료에는 ad=null을 반환합니다. 실제3초 공개 배너 제거는 브라우저에서 별도로 검증해야 합니다.
+정식 관리자 프런트엔드와 `/admin/ads` 화면은 이 구현에 없습니다. 아래 별도 개발 화면은 기존 API를 확인하는 임시 도구입니다. 통계의 null/연동 대기는 0건/토큰 0을 의미하지 않습니다. 서버는 활성 재확인에 최대3초 표시 기한을 제공하고 중단/종료에는 ad=null을 반환합니다. 실제3초 공개 배너 제거는 브라우저에서 별도로 검증해야 합니다.
+
+### 별도 sandbox URLconf
+
+[config/sandbox_urls.py](../../ad-server/backend/config/sandbox_urls.py)는 다음 개발 경로와 기존 API를 함께 등록합니다. 일반 config.urls에는 이 파일을 포함하지 않습니다. middleware가 요청의 실제 loopback IP/Host·테스트 설정/DB·실행별 서명 쿠키를 확인하고, 기존 관리/공개 API도 미로그인 접근을 차단합니다. CSRF/Origin·응답별 nonce CSP는 유지합니다.
+
+| 메서드·경로 | 구현 view | 실행 연결/결과 |
+|---|---|---|
+| `GET /` | `ads_sandbox.home` | 개발 대시보드로 이동 |
+| `GET/POST /dev/ads/login` | `ads_sandbox.login` | 실행별 접근 코드·CSRF 확인 후 instance/kind 서명 쿠키 |
+| `GET /dev/ads/` | `ads_sandbox.dashboard` | 기존 API 기반 등록/수정/중단·예산/통계/미리보기 확인 |
+| `POST /dev/ads/logout` | `ads_sandbox.logout` | 로컬 쿠키 삭제/CSRF 회전, 광고 게시 상태 유지 |
+| `GET /dev/ads/status` | `ads_sandbox.status` | 현재5분 worker 상태·is_test/DB명·로그 NOT_CONNECTED |
+| `POST /dev/ads/refresh` | `ads_sandbox.refresh` | 같은 예산/통계 작업1회, 경합409·실패503 |
+
+개발 로그의 내장 log_relay는 PENDING으로 보존합니다. is_test=True 공개 측정은 MEASUREMENT_UNAVAILABLE·counted=False/운영 예상량0이며 운영 flag 우회나 가짜 원장을 주입하지 않습니다. 실제 서비스의 가시성/3초 숨김·공유 PostgreSQL·AWS 연결은 이 도구의 검증 범위 밖입니다.
 
 ## 저장·로그 실행 연결
 
@@ -61,6 +76,7 @@ HTTP 오류는 `api/ads.py:error_response`에서 code/message/request_id 및 필
 | `relay_ads_event_logs --limit N` | Command → run_configured_event_relay → AdsLogRelay.run_once | ad_events 처리 시각순; 재전달은 판정/예상 원장 불변, 같은 durable sink 계약 |
 | `relay_ads_budget_logs --limit N` | get_log_sink → 정책 repository → AdsLogRelay.run_once | ad_budget_states의 불변 첫 소진 확인 로그만 전달, cutoff/원장 재계산 없음 |
 | `run_ads_dev --port N` | Command → WSGI application → urlpatterns | DEBUG의 loopback 서버, 공통 migration은 별도 |
+| `sandbox.py [--start-mongo] [--port N]` | sandbox settings → run_ads_sandbox → local guard/10컬렉션 적용·sandbox_runtime → WSGI | loopback 기본8001·시험DB만, 실행별 접근 코드/5분 worker·직접 시작한 MongoDB만 종료 |
 
 로그는 MongoDB 관리 감사·공개 이벤트·첫 예산 소진 확인의 불변 payload를 같은 event ID/hash로 전달합니다. sink의 durable commit 또는 동일 payload 확인 후에만 SENT가 됩니다. sink 실패·MongoDB ack 실패는 원본/응답/payload를 보존해 재시도하며 MongoDB와 PostgreSQL의 단일 트랜잭션을 가정하지 않습니다.
 
@@ -74,9 +90,12 @@ HTTP 오류는 `api/ads.py:error_response`에서 code/message/request_id 및 필
 | [ad-server/backend/api/ads_public.py](../../ad-server/backend/api/ads_public.py) | [문서](files/ad-server/backend/api/ads_public.py.md) | 공개 조회·측정·proof 이미지 HTTP 경계 |
 | [ad-server/backend/api/ads_public_auth.py](../../ad-server/backend/api/ads_public_auth.py) | [문서](files/ad-server/backend/api/ads_public_auth.py.md) | 공유 guest·명시 운영 정책 provider |
 | [ad-server/backend/api/ads_public_serializers.py](../../ad-server/backend/api/ads_public_serializers.py) | [문서](files/ad-server/backend/api/ads_public_serializers.py.md) | 공개 요청/응답 OpenAPI 형식 |
+| [ad-server/backend/api/ads_sandbox.py](../../ad-server/backend/api/ads_sandbox.py) | [문서](files/ad-server/backend/api/ads_sandbox.py.md) | 임시 화면·loopback/로컬 로그인·CSRF·개발 문맥/상태 |
 | [ad-server/backend/api/ads_serializers.py](../../ad-server/backend/api/ads_serializers.py) | [문서](files/ad-server/backend/api/ads_serializers.py.md) | OpenAPI 요청/응답 필드 |
 | [ad-server/backend/api/health.py](../../ad-server/backend/api/health.py) | [문서](files/ad-server/backend/api/health.py.md) | DB 없는 프로세스 확인 |
 | [ad-server/backend/config/__init__.py](../../ad-server/backend/config/__init__.py) | [문서](files/ad-server/backend/config/__init__.py.md) | Python 패키지 경계; 업무 동작 없음 |
+| [ad-server/backend/config/sandbox_settings.py](../../ad-server/backend/config/sandbox_settings.py) | [문서](files/ad-server/backend/config/sandbox_settings.py.md) | 기존.env·공유DB와 분리한 시험 설정 |
+| [ad-server/backend/config/sandbox_urls.py](../../ad-server/backend/config/sandbox_urls.py) | [문서](files/ad-server/backend/config/sandbox_urls.py.md) | 일반서버 미등록의 /dev/ads 경로/기존API 연결 |
 | [ad-server/backend/config/settings.py](../../ad-server/backend/config/settings.py) | [문서](files/ad-server/backend/config/settings.py.md) | 환경·기본 runtime provider·외부 공유 어댑터 |
 | [ad-server/backend/config/urls.py](../../ad-server/backend/config/urls.py) | [문서](files/ad-server/backend/config/urls.py.md) | health/광고 관리·공개 URL 등록 |
 | [ad-server/backend/config/wsgi.py](../../ad-server/backend/config/wsgi.py) | [문서](files/ad-server/backend/config/wsgi.py.md) | WSGI 앱 로딩 |
@@ -97,12 +116,14 @@ HTTP 오류는 `api/ads.py:error_response`에서 code/message/request_id 및 필
 | [ad-server/backend/domains/ads/management/commands/relay_ads_event_logs.py](../../ad-server/backend/domains/ads/management/commands/relay_ads_event_logs.py) | [문서](files/ad-server/backend/domains/ads/management/commands/relay_ads_event_logs.py.md) | 공개 측정 pending 로그 한 batch 전달 |
 | [ad-server/backend/domains/ads/management/commands/relay_ads_logs.py](../../ad-server/backend/domains/ads/management/commands/relay_ads_logs.py) | [문서](files/ad-server/backend/domains/ads/management/commands/relay_ads_logs.py.md) | 공통 로그 sink로 한 batch 전달 |
 | [ad-server/backend/domains/ads/management/commands/run_ads_dev.py](../../ad-server/backend/domains/ads/management/commands/run_ads_dev.py) | [문서](files/ad-server/backend/domains/ads/management/commands/run_ads_dev.py.md) | loopback 광고 API 개발 서버 |
+| [ad-server/backend/domains/ads/management/commands/run_ads_sandbox.py](../../ad-server/backend/domains/ads/management/commands/run_ads_sandbox.py) | [문서](files/ad-server/backend/domains/ads/management/commands/run_ads_sandbox.py.md) | 임시도구·로컬 스키마/프로세스 소유·기동/종료 |
 | [ad-server/backend/domains/ads/measurement.py](../../ad-server/backend/domains/ads/measurement.py) | [문서](files/ad-server/backend/domains/ads/measurement.py.md) | 순수 최초 측정·재전송/반복·예상 토큰 |
 | [ad-server/backend/domains/ads/mongo.py](../../ad-server/backend/domains/ads/mongo.py) | [문서](files/ad-server/backend/domains/ads/mongo.py.md) | 로컬 스키마 점검 연결 |
 | [ad-server/backend/domains/ads/public_policy.py](../../ad-server/backend/domains/ads/public_policy.py) | [문서](files/ad-server/backend/domains/ads/public_policy.py.md) | 미정 수명·소재·예산의 명시 서버 정책 경계 |
 | [ad-server/backend/domains/ads/public_schema.py](../../ad-server/backend/domains/ads/public_schema.py) | [문서](files/ad-server/backend/domains/ads/public_schema.py.md) | 공개 validator/index manifest 진입점 |
 | [ad-server/backend/domains/ads/public_service.py](../../ad-server/backend/domains/ads/public_service.py) | [문서](files/ad-server/backend/domains/ads/public_service.py.md) | 공개 제공·측정·예상 항목 원자 저장 |
 | [ad-server/backend/domains/ads/runtime_policy.py](../../ad-server/backend/domains/ads/runtime_policy.py) | [문서](files/ad-server/backend/domains/ads/runtime_policy.py.md) | 기본 공개 정책·저장된 검증/차단 상태 연결 |
+| [ad-server/backend/domains/ads/sandbox_runtime.py](../../ad-server/backend/domains/ads/sandbox_runtime.py) | [문서](files/ad-server/backend/domains/ads/sandbox_runtime.py.md) | sandbox guard·5분 worker·수동갱신/실패 상태 |
 | [ad-server/backend/domains/ads/selection.py](../../ad-server/backend/domains/ads/selection.py) | [문서](files/ad-server/backend/domains/ads/selection.py.md) | 순수 후보/priority/순환·표시 상한 |
 | [ad-server/backend/domains/ads/service.py](../../ad-server/backend/domains/ads/service.py) | [문서](files/ad-server/backend/domains/ads/service.py.md) | 관리·선택 예산/버전·멱등/감사·자동 종료 조회 |
 | [ad-server/backend/domains/ads/validation.py](../../ad-server/backend/domains/ads/validation.py) | [문서](files/ad-server/backend/domains/ads/validation.py.md) | strict 입력·시간·이미지·BSON 검증 |
@@ -111,6 +132,7 @@ HTTP 오류는 `api/ads.py:error_response`에서 code/message/request_id 및 필
 | [ad-server/backend/repositories/ads_mongo.py](../../ad-server/backend/repositories/ads_mongo.py) | [문서](files/ad-server/backend/repositories/ads_mongo.py.md) | 3컬렉션 트랜잭션·조건부 갱신/조회 |
 | [ad-server/backend/repositories/ads_policy_mongo.py](../../ad-server/backend/repositories/ads_policy_mongo.py) | [문서](files/ad-server/backend/repositories/ads_policy_mongo.py.md) | 예산 revision CAS·원장별 집계·범위/지연 요약 |
 | [ad-server/backend/repositories/ads_public_mongo.py](../../ad-server/backend/repositories/ads_public_mongo.py) | [문서](files/ad-server/backend/repositories/ads_public_mongo.py.md) | 공개5컬렉션·CAS·당시 자격·원자 경합 |
+| [ad-server/backend/sandbox.py](../../ad-server/backend/sandbox.py) | [문서](files/ad-server/backend/sandbox.py.md) | 별도 sandbox 설정/개발 명령 진입점 |
 | [ad-server/backend/tests/__init__.py](../../ad-server/backend/tests/__init__.py) | [문서](files/ad-server/backend/tests/__init__.py.md) | Python 패키지 경계; 업무 동작 없음 |
 | [ad-server/backend/tests/policy_fixtures.py](../../ad-server/backend/tests/policy_fixtures.py) | [문서](files/ad-server/backend/tests/policy_fixtures.py.md) | 정책/지표 포함 메모리 원자 rollback fixture |
 | [ad-server/backend/tests/public_fixtures.py](../../ad-server/backend/tests/public_fixtures.py) | [문서](files/ad-server/backend/tests/public_fixtures.py.md) | 메모리 원자 rollback·테스트 전용 정책 |
@@ -131,6 +153,7 @@ HTTP 오류는 `api/ads.py:error_response`에서 code/message/request_id 및 필
 | [ad-server/backend/tests/test_ads_public_service.py](../../ad-server/backend/tests/test_ads_public_service.py) | [문서](files/ad-server/backend/tests/test_ads_public_service.py.md) | 공개 서비스·최초 판정/원장·과거 자격 검증 |
 | [ad-server/backend/tests/test_ads_repository.py](../../ad-server/backend/tests/test_ads_repository.py) | [문서](files/ad-server/backend/tests/test_ads_repository.py.md) | driver 대역·경합/트랜잭션 검증 |
 | [ad-server/backend/tests/test_ads_runtime_policy.py](../../ad-server/backend/tests/test_ads_runtime_policy.py) | [문서](files/ad-server/backend/tests/test_ads_runtime_policy.py.md) | runtime 자격·배치/watch/relay 명령 대역 검증 |
+| [ad-server/backend/tests/test_ads_sandbox.py](../../ad-server/backend/tests/test_ads_sandbox.py) | [문서](files/ad-server/backend/tests/test_ads_sandbox.py.md) | 임시 인증/CSRF·운영격리·시험측정 제외/worker·프로세스 소유 검증 |
 | [ad-server/backend/tests/test_ads_selection.py](../../ad-server/backend/tests/test_ads_selection.py) | [문서](files/ad-server/backend/tests/test_ads_selection.py.md) | 선정/표시 상한·BSON Int64 priority 검증 |
 | [ad-server/backend/tests/test_scaffold.py](../../ad-server/backend/tests/test_scaffold.py) | [문서](files/ad-server/backend/tests/test_scaffold.py.md) | health·미인증 관리 요청 차단 |
 | [ad-server/backend/workers/ads_log_relay.py](../../ad-server/backend/workers/ads_log_relay.py) | [문서](files/ad-server/backend/workers/ads_log_relay.py.md) | 관리·공개 pending claim/전달/재시도 |
@@ -141,4 +164,4 @@ HTTP 오류는 `api/ads.py:error_response`에서 code/message/request_id 및 필
 
 일반 시험은 HTTP/도메인/driver/로그 대역으로 권한·형식·멱등·경합·원본·재전달을 검증합니다. 명시 실행형 MongoDB 시험은 관리/공개/정책 모듈이 loopback ads-rs의 격리 UUID _dev DB에서 실제 트랜잭션·validator·동시 요청을 검증합니다. 최신 실행 결과/명령/미실행 범위는 [광고 검증 기록](../acceptance/광고_개발_준비_검증.md)을 따릅니다. 이 색인의 시그니처 목록은 실행 통과 수치나 실제 PostgreSQL/브라우저/배포 검증을 대신하지 않습니다.
 
-검사 명령은 저장소 루트에서 `ad-server/backend/.venv/Scripts/python.exe .cache/audit_moved_ad_server.py .cache/routing-budget-policy.json`입니다. helper는 폴더 이동 부분문자열 오탐을 피하도록 복사한 임시 rename index로 routing-doc-auditor를 실행하고 실제 Git index는 변경하지 않습니다. 공통 guest/ADMIN·실제 PostgreSQL sink·공개 배너의 가시성/3초 숨김·운영 장애 복구는 별도 확인합니다.
+폴더 재배치를 커밋한 현재 검사 명령은 저장소 루트에서 `ad-server/backend/.venv/Scripts/python.exe C:/Users/이해나/.codex/skills/routing-doc-auditor/scripts/audit_routing.py --repo . --routing-dir docs/backend-routing --include-all --format json --output .cache/routing-sandbox.json`입니다. 이전 이동 단계의 임시 rename index helper를 더 이상 필요로 하지 않으며 실제 Git index를 변경하지 않습니다. 공통 guest/ADMIN·실제 PostgreSQL sink·공개 배너의 가시성/3초 숨김·운영 장애 복구는 별도 확인합니다.

@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>광고 로컬 확인 도구 · 로그인</title>
+  <style nonce="{{ csp_nonce }}">
+    *{box-sizing:border-box}body{margin:0;background:#f3f5f8;color:#1d2939;font:16px/1.6 system-ui,sans-serif;min-height:100vh;display:grid;place-items:center;padding:24px}
+    main{max-width:480px;width:100%;padding:36px;background:white;border:1px solid #dce2e9;border-radius:20px;box-shadow:0 12px 36px #16324f0c}
+    .label{color:#3867b4;font-weight:700;font-size:13px}h1{font-size:26px;line-height:1.3}p{color:#586579}label{display:block;font-weight:600}input{width:100%;padding:12px;margin:8px 0 18px;border:1px solid #aab6c5;border-radius:8px;font:inherit}button{width:100%;padding:12px;background:#245bcc;color:white;border:0;border-radius:8px;font:inherit;font-weight:700;cursor:pointer}.error{color:#b42318}code{overflow-wrap:anywhere;font-size:13px}
+  </style>
+</head>
+<body><main>
+  <div class="label">LOCAL ADS SANDBOX</div>
+  <h1>광고 제어를 확인하세요</h1>
+  <p>이 PC의 시험 데이터만 관리합니다. 실행 시 생성된<br><code>.local/ads-sandbox/access.txt</code>의 접근 코드를 입력해 주세요.</p>
+  <form method="post" action="/dev/ads/login">{% csrf_token %}
+    <label for="access-code">로컬 접근 코드</label>
+    <input id="access-code" name="access_code" type="password" required autocomplete="off" autofocus>
+    {% if error %}<p class="error" role="alert">{{ error }}</p>{% endif %}
+    <button type="submit">관리 도구 열기</button>
+  </form>
+  <p>공유 관리자 계정·운영 서비스에는 연결되지 않습니다.</p>
+</main></body></html>
