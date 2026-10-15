@@ -1,0 +1,441 @@
+{
+  "schema_version": "phase3-ads-policy-20261015.1",
+  "scope": "periodic_budget_verification_and_daily_metrics",
+  "note": "5분 검증 결과와 불변 예상 원장 기반 집계만 저장합니다. 수동 중단 상태·실제 과금 원장을 변경하거나 TTL 삭제를 수행하지 않습니다.",
+  "collections": {
+    "ad_budget_states": {
+      "validator": {
+        "$and": [
+          {
+            "$jsonSchema": {
+              "bsonType": "object",
+              "required": [
+                "_id",
+                "schema_version",
+                "is_test",
+                "ad_id",
+                "budget_version",
+                "metric_date_kst",
+                "daily_budget_tokens",
+                "total_budget_tokens",
+                "daily_tokens",
+                "total_tokens",
+                "verified_at",
+                "created_at",
+                "revision",
+                "daily_blocked_at",
+                "total_blocked_at"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "_id": {
+                  "bsonType": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "bsonType": "string",
+                  "enum": [
+                    "phase3-ads-policy-20261015.1"
+                  ]
+                },
+                "is_test": {
+                  "bsonType": "bool"
+                },
+                "ad_id": {
+                  "bsonType": "string",
+                  "minLength": 1
+                },
+                "budget_version": {
+                  "bsonType": "string",
+                  "minLength": 1
+                },
+                "metric_date_kst": {
+                  "bsonType": "string",
+                  "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+                },
+                "daily_budget_tokens": {
+                  "bsonType": [
+                    "int",
+                    "long"
+                  ],
+                  "minimum": 1
+                },
+                "total_budget_tokens": {
+                  "bsonType": [
+                    "int",
+                    "long"
+                  ],
+                  "minimum": 1
+                },
+                "daily_tokens": {
+                  "bsonType": [
+                    "int",
+                    "long"
+                  ],
+                  "minimum": 0
+                },
+                "total_tokens": {
+                  "bsonType": [
+                    "int",
+                    "long"
+                  ],
+                  "minimum": 0
+                },
+                "verified_at": {
+                  "bsonType": "date"
+                },
+                "created_at": {
+                  "bsonType": "date"
+                },
+                "revision": {
+                  "bsonType": [
+                    "int",
+                    "long"
+                  ],
+                  "minimum": 1
+                },
+                "daily_blocked_at": {
+                  "bsonType": [
+                    "date",
+                    "null"
+                  ]
+                },
+                "total_blocked_at": {
+                  "bsonType": [
+                    "date",
+                    "null"
+                  ]
+                },
+                "log_relay": {
+                  "bsonType": [
+                    "object",
+                    "null"
+                  ],
+                  "required": [
+                    "log_event_id",
+                    "payload",
+                    "payload_hash",
+                    "status",
+                    "attempt_count",
+                    "next_retry_at",
+                    "last_error",
+                    "sent_at"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "log_event_id": {
+                      "bsonType": "string",
+                      "minLength": 1
+                    },
+                    "payload": {
+                      "bsonType": "object"
+                    },
+                    "payload_hash": {
+                      "bsonType": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    "status": {
+                      "bsonType": "string",
+                      "enum": [
+                        "PENDING",
+                        "SENT"
+                      ]
+                    },
+                    "attempt_count": {
+                      "bsonType": [
+                        "int",
+                        "long"
+                      ],
+                      "minimum": 0
+                    },
+                    "next_retry_at": {
+                      "bsonType": [
+                        "date",
+                        "null"
+                      ]
+                    },
+                    "last_error": {
+                      "bsonType": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "sent_at": {
+                      "bsonType": [
+                        "date",
+                        "null"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          {
+            "$expr": {
+              "$gte": [
+                "$verified_at",
+                "$created_at"
+              ]
+            }
+          },
+          {
+            "$expr": {
+              "$gte": [
+                "$total_tokens",
+                "$daily_tokens"
+              ]
+            }
+          },
+          {
+            "$expr": {
+              "$cond": [
+                {
+                  "$eq": [
+                    {
+                      "$type": "$daily_blocked_at"
+                    },
+                    "date"
+                  ]
+                },
+                {
+                  "$lte": [
+                    "$daily_blocked_at",
+                    "$verified_at"
+                  ]
+                },
+                true
+              ]
+            }
+          },
+          {
+            "$expr": {
+              "$cond": [
+                {
+                  "$eq": [
+                    {
+                      "$type": "$total_blocked_at"
+                    },
+                    "date"
+                  ]
+                },
+                {
+                  "$lte": [
+                    "$total_blocked_at",
+                    "$verified_at"
+                  ]
+                },
+                true
+              ]
+            }
+          }
+        ]
+      },
+      "indexes": [
+        {
+          "name": "budget_ad_version_day",
+          "keys": [
+            [
+              "ad_id",
+              1
+            ],
+            [
+              "budget_version",
+              1
+            ],
+            [
+              "metric_date_kst",
+              1
+            ],
+            [
+              "is_test",
+              1
+            ]
+          ],
+          "unique": true
+        },
+        {
+          "name": "budget_latest_verified",
+          "keys": [
+            [
+              "ad_id",
+              1
+            ],
+            [
+              "budget_version",
+              1
+            ],
+            [
+              "is_test",
+              1
+            ],
+            [
+              "verified_at",
+              -1
+            ]
+          ]
+        },
+        {
+          "name": "budget_total_cutoff",
+          "keys": [
+            [
+              "ad_id",
+              1
+            ],
+            [
+              "budget_version",
+              1
+            ],
+            [
+              "is_test",
+              1
+            ],
+            [
+              "total_blocked_at",
+              1
+            ]
+          ]
+        },
+        {
+          "name": "budget_pending_log_relay",
+          "keys": [
+            [
+              "log_relay.status",
+              1
+            ],
+            [
+              "log_relay.next_retry_at",
+              1
+            ],
+            [
+              "is_test",
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    "ad_daily_metrics": {
+      "validator": {
+        "$jsonSchema": {
+          "bsonType": "object",
+          "required": [
+            "_id",
+            "schema_version",
+            "is_test",
+            "ad_id",
+            "placement",
+            "metric_date_kst",
+            "impressions",
+            "clicks",
+            "estimated_tokens",
+            "as_of",
+            "source"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "_id": {
+              "bsonType": "string",
+              "minLength": 1
+            },
+            "schema_version": {
+              "bsonType": "string",
+              "enum": [
+                "phase3-ads-policy-20261015.1"
+              ]
+            },
+            "is_test": {
+              "bsonType": "bool"
+            },
+            "ad_id": {
+              "bsonType": "string",
+              "minLength": 1
+            },
+            "placement": {
+              "bsonType": "string",
+              "enum": [
+                "top",
+                "bottom"
+              ]
+            },
+            "metric_date_kst": {
+              "bsonType": "string",
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+            },
+            "impressions": {
+              "bsonType": [
+                "int",
+                "long"
+              ],
+              "minimum": 0
+            },
+            "clicks": {
+              "bsonType": [
+                "int",
+                "long"
+              ],
+              "minimum": 0
+            },
+            "estimated_tokens": {
+              "bsonType": [
+                "int",
+                "long"
+              ],
+              "minimum": 0
+            },
+            "as_of": {
+              "bsonType": "date"
+            },
+            "source": {
+              "bsonType": "string",
+              "enum": [
+                "ESTIMATED_LEDGER"
+              ]
+            }
+          }
+        }
+      },
+      "indexes": [
+        {
+          "name": "metrics_ad_placement_day",
+          "keys": [
+            [
+              "ad_id",
+              1
+            ],
+            [
+              "placement",
+              1
+            ],
+            [
+              "metric_date_kst",
+              1
+            ],
+            [
+              "is_test",
+              1
+            ]
+          ],
+          "unique": true
+        },
+        {
+          "name": "metrics_day_scope",
+          "keys": [
+            [
+              "metric_date_kst",
+              1
+            ],
+            [
+              "is_test",
+              1
+            ],
+            [
+              "as_of",
+              1
+            ]
+          ]
+        }
+      ]
+    }
+  }
+}
