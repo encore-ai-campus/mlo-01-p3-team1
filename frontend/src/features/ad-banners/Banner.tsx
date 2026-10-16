@@ -1,5 +1,5 @@
 import {useEffect,useRef,useState} from 'react';
-import {api,ApiError,key} from './api';
+import {api,ApiError,key} from '../../shared/api';
 type Delivery={ad:null|{ad_id:string;title:string;image_url:string;link_url:string;delivery_id:string};evaluated_at:string;valid_until:string};
 type Report={body:{delivery_id:string;event_id:string;event_type:string;occurred_at:string};attempts:number;next:number;created:number;done:boolean;inflight:boolean};
 // Transport defaults for this draft; B/INF must confirm production retry settings.

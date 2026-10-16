@@ -1,0 +1,27 @@
+{
+  "mappings": {
+    "properties": {
+      "@timestamp": {
+        "type": "date"
+      },
+      "stage": {
+        "type": "keyword"
+      },
+      "source": {
+        "type": "keyword"
+      },
+      "category": {
+        "type": "keyword"
+      },
+      "request_id": {
+        "type": "keyword"
+      },
+      "log_id": {
+        "type": "keyword"
+      },
+      "error_type": {
+        "type": "keyword"
+      }
+    }
+  }
+}

@@ -1,14 +1,14 @@
 import {useEffect,useRef,useState} from 'react';
-import {api,ApiError,canonical,key,setCsrf,wait} from './api';
-import type {Choices,Option,Playlist,Exclusions} from './types';
-import {Guide} from './Guide';
-import {Banner} from './Banner';
-import {useFeedback} from './Feedback';
-import {Header} from './components/Header';
-import {WeatherPanel} from './components/WeatherPanel';
-import type {Weather} from './components/WeatherPanel';
-import {Icon} from './components/Icons';
-import {TagPicker} from './TagPicker';
+import {api,ApiError,canonical,key,setCsrf,wait} from '../../shared/api';
+import type {Choices,Option,Playlist,Exclusions} from '../../shared/types';
+import {Guide} from '../onboarding/Guide';
+import {Banner} from '../ad-banners/Banner';
+import {useFeedback} from '../feedback/Feedback';
+import {Header} from '../../components/Header';
+import {WeatherPanel} from '../region-weather/WeatherPanel';
+import type {Weather} from '../region-weather/WeatherPanel';
+import {Icon} from '../../components/Icons';
+import {TagPicker} from '../music-options/TagPicker';
 
 const defaults:Choices={region_id:'',vocal_option:'any',tempo_preference:'auto',weather_influence_mode:'ON',selected_theme_codes:[],selected_genre_codes:[],option_version:''};
 function Cover({url,small=false}:{url?:string|null;small?:boolean}){

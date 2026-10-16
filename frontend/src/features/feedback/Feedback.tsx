@@ -1,6 +1,6 @@
 import {useEffect,useRef,useState} from 'react';
-import {api,ApiError,key} from './api';
-import type {Feedback,FeedbackRead,FeedbackValue} from './types';
+import {api,ApiError,key} from '../../shared/api';
+import type {Feedback,FeedbackRead,FeedbackValue} from '../../shared/types';
 type Intent={source:string;target:string;value:FeedbackValue['value'];revision:number;id:string};
 type Failure={intent:Intent;message:string;conflict:boolean};
 function fromRead(data:FeedbackRead):Feedback {

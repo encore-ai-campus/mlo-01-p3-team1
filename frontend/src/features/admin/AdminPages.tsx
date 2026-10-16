@@ -1,7 +1,7 @@
 import {useEffect,useRef,useState} from 'react';
-import {api,key} from './api';
-import {Header} from './components/Header';
-import {Icon,WeatherIcon} from './components/Icons';
+import {api,key} from '../../shared/api';
+import {Header} from '../../components/Header';
+import {Icon,WeatherIcon} from '../../components/Icons';
 type Menu={path:string;label:string};
 type Me={authenticated:boolean;role?:string;allowed_menus:Menu[]};
 export function Login(){

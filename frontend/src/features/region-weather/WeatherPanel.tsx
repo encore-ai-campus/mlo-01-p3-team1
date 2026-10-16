@@ -1,5 +1,5 @@
 import {useRef} from 'react';
-import {Icon,WeatherIcon} from './Icons';
+import {Icon,WeatherIcon} from '../../components/Icons';
 export type Weather={region_name:string;as_of:string;valid_until:string;is_test:boolean;
   current?:{pty:number;sky:number|null;temperature?:number};
   segments:{pty:number;sky:number;status:string;start_at:string;end_at:string}[]};

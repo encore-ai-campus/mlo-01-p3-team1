@@ -1,5 +1,5 @@
 import {useEffect,useRef,useState} from 'react';
-import type {Choices,Option} from './types';
+import type {Choices,Option} from '../../shared/types';
 
 type TagType='theme'|'genre';
 type Props={
