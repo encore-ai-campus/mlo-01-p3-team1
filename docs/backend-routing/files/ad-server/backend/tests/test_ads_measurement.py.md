@@ -1,0 +1,54 @@
+# 광고 측정 규칙 검증
+
+- 작성일: 2026-10-15
+- 수정일: 2026-10-15
+- 원본: [ad-server/backend/tests/test_ads_measurement.py](../../../../../../ad-server/backend/tests/test_ads_measurement.py)
+
+35개 순수 도메인 테스트입니다. 요청 금지 필드·소유·재전송·delivery별 소비·60/300초 반복·300초 수신·중단/종료 전 보고·KST 자정·8/5/15 토큰과 극단 미래 날짜를 확인합니다. 실제 동시 DB 쓰기·브라우저 가시성·로그 relay·결제를 검증한 결과는 아닙니다.
+
+시그니처는 `.cache/routing-policy-prep.json`의 Python AST 결과를 사용했습니다.
+
+선택 display_expires_at의UTC정규화·발급 이후 경계·정확한 만료 시각 발생 제외·표시 뒤 지연300초 수용·최초 응답 불변을 추가 검증합니다. 정책 split_deadlines는False 기본값과 strict bool을 확인하여 기존 문맥/서명 경로에 암묵적 마감을 넣지 않습니다.
+
+## AST 시그니처
+
+```python
+class MeasurementRulesTests(TestCase)
+MeasurementRulesTests.setUp(self)
+MeasurementRulesTests.judge(self, event=None, **overrides)
+MeasurementRulesTests.test_requests_cannot_supply_trusted_server_fields(self)
+MeasurementRulesTests.test_malformed_missing_and_unsupported_event_inputs_are_rejected(self)
+MeasurementRulesTests.test_timezone_equivalent_requests_have_the_same_canonical_hash(self)
+MeasurementRulesTests.test_first_valid_report_consumes_type_and_advances_server_window(self)
+MeasurementRulesTests.test_early_click_is_only_15_and_does_not_imply_an_impression(self)
+MeasurementRulesTests.test_non_counted_reports_have_no_estimated_usage(self)
+MeasurementRulesTests.test_second_report_for_a_consumed_delivery_type_is_duplicate(self)
+MeasurementRulesTests.test_repeat_windows_allow_exact_60_and_300_second_boundaries(self)
+MeasurementRulesTests.test_repeat_window_uses_processing_time_not_client_occurrence_time(self)
+MeasurementRulesTests.test_suppressed_delivery_remains_consumed_after_window_finishes(self)
+MeasurementRulesTests.test_replay_keeps_first_times_and_cost_after_expiry_or_stop(self)
+MeasurementRulesTests.test_same_event_id_with_different_body_is_conflict(self)
+MeasurementRulesTests.test_another_guest_cannot_replay_someones_event(self)
+MeasurementRulesTests.test_wrong_original_event_record_is_rejected(self)
+MeasurementRulesTests.test_wrong_guest_or_delivery_is_not_found(self)
+MeasurementRulesTests.test_receive_delay_includes_300_seconds_and_excludes_next_millisecond(self)
+MeasurementRulesTests.test_future_report_is_excluded_and_does_not_consume_type(self)
+MeasurementRulesTests.test_extreme_future_utc_date_does_not_overflow_kst_conversion(self)
+MeasurementRulesTests.test_report_before_delivery_issue_is_excluded(self)
+MeasurementRulesTests.test_ad_start_is_included_and_end_is_excluded(self)
+MeasurementRulesTests.test_stop_before_event_is_excluded_but_earlier_delayed_event_is_valid(self)
+MeasurementRulesTests.test_valid_occurrence_can_be_received_after_the_ad_ends(self)
+MeasurementRulesTests.test_legacy_delivery_has_no_implicit_display_deadline(self)
+MeasurementRulesTests.test_display_deadline_normalizes_to_utc_and_must_follow_issue_time(self)
+MeasurementRulesTests.test_display_deadline_is_exclusive_for_event_occurrence(self)
+MeasurementRulesTests.test_before_display_deadline_can_arrive_after_display_and_within_delay_limit(self)
+MeasurementRulesTests.test_saved_first_decision_is_not_recomputed_when_display_deadline_changes(self)
+MeasurementRulesTests.test_split_deadline_policy_defaults_to_legacy_and_requires_strict_bool(self)
+MeasurementRulesTests.test_delivery_expiry_and_unknown_creative_policy_are_explicit_server_inputs(self)
+MeasurementRulesTests.test_unavailable_context_and_test_delivery_do_not_count_operational_usage(self)
+MeasurementRulesTests.test_repeat_key_keeps_same_ad_across_new_delivery_and_creative_versions(self)
+MeasurementRulesTests.test_kst_day_uses_occurrence_even_when_receive_crosses_midnight(self)
+MeasurementRulesTests.test_invalid_processing_and_repeat_server_times_are_rejected(self)
+MeasurementRulesTests.test_invalid_report_leaves_delivery_type_available_for_a_new_valid_event(self)
+MeasurementRulesTests.test_response_matches_existing_ads_contract_without_internal_refs_or_usage(self)
+```
