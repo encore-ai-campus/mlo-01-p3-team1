@@ -36,8 +36,9 @@ WEATHER_PROVIDER = os.environ.get('WEATHER_PROVIDER', '')
 # B supplies ownership resolver (request -> opaque owner), event sink and shared guest bootstrap.
 OWNER_RESOLVER = os.environ.get('OWNER_RESOLVER', '')
 EVENT_SINK = os.environ.get('EVENT_SINK', '')
-SEARCH_MAX_CANDIDATES = int(os.environ.get('SEARCH_MAX_CANDIDATES', '96' if LOCAL_DEMO else '0'))
+SEARCH_MAX_CANDIDATES = int(os.environ.get('SEARCH_MAX_CANDIDATES', '200' if LOCAL_DEMO else '0'))
 SEARCH_SECONDS = float(os.environ.get('SEARCH_SECONDS', '10' if LOCAL_DEMO else '0'))
+RECOMMENDATION_WORKER_IDLE_SECONDS = float(os.environ.get('RECOMMENDATION_WORKER_IDLE_SECONDS', '0.25' if LOCAL_DEMO else '1'))
 GEMINI_ENABLED = os.environ.get('GEMINI_ENABLED') == '1'
 GEMINI_TIMEOUT_MS = int(os.environ.get('GEMINI_TIMEOUT_MS', '0'))
 GEMINI_MAX_CANDIDATES = int(os.environ.get('GEMINI_MAX_CANDIDATES', '0'))

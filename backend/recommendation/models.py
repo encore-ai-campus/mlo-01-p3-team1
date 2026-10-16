@@ -24,6 +24,7 @@ class Family(models.Model):
     id = models.TextField(primary_key=True,default=uid)
     owner_id = models.TextField(db_index=True)
     options = models.JSONField()
+    raw_selection = models.JSONField(default=dict)
     allowed_genres = models.JSONField(default=list)
     allowed_speeds = models.JSONField(default=list)
     policy_version = models.TextField()
@@ -59,6 +60,20 @@ class Playlist(models.Model):
     family = models.ForeignKey(Family,on_delete=models.PROTECT)
     snapshot = models.JSONField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+
+class DemoFeedback(models.Model):
+    """Local CSV preview feedback until B's shared feedback store is connected."""
+    playlist = models.ForeignKey(Playlist,on_delete=models.PROTECT)
+    target_kind = models.TextField()
+    track_id = models.TextField(default='')
+    value = models.JSONField(null=True)
+    revision = models.PositiveIntegerField(default=0)
+    last_event_id = models.TextField(null=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=['playlist','target_kind','track_id'],name='demo_feedback_target')]
 
 
 class Idempotency(models.Model):

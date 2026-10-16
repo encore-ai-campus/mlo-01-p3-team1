@@ -5,10 +5,10 @@ from fractions import Fraction
 from pathlib import Path
 from unittest import TestCase
 from pipeline.music.normalize import normalize, speed, instrumental, convert, RAW_SCHEMA, RESULT_SCHEMA
-from backend.recommendation.policy import score, initial_speeds, groups, eligible, profile
-from backend.recommendation.inputs import DEFAULTS
+from backend.recommendation.policy import score, initial_speeds, groups, eligible, profile, weather_fit
+from backend.recommendation.inputs import DEFAULTS, options
 from backend.recommendation.provider import validate_proposal
-from backend.recommendation.solver import choose
+from backend.recommendation.solver import choose, choose_preview, representatives
 from backend.recommendation.errors import DomainError
 from backend.recommendation.weather import validate
 
@@ -62,27 +62,48 @@ class ConversionTests(TestCase):
 
 
 class PolicyTests(TestCase):
+    def test_all_selected_codes_are_equivalent_to_none(self):
+        from backend.recommendation.policy import THEMES, GENRES
+        self.assertEqual(options({'selected_theme_codes':list(THEMES),'selected_genre_codes':list(GENRES)}),DEFAULTS)
+    def test_off_theme_formula_and_no_weather(self):
+        track={'energy':7,'mode':False,'speed':'fast','genre_group_codes':['JAZZ'],'theme_codes':[]}
+        off={**DEFAULTS,'weather_influence_mode':'OFF','selected_theme_codes':['CALM']}
+        self.assertEqual(score(track,off)['P'],Fraction(7550,95))
+        self.assertIsNone(score(track,off)['W'])
+        self.assertEqual(score(track,{**off,'tempo_preference':'fast'})['P'],Fraction(8300,95))
+    def test_primary_core_gate_does_not_reuse_its_higher_score(self):
+        evidence=weather_fit({'raw_energy':'.843','raw_acousticness':'.5','raw_valence':'.53','mode':False},'CLOUDY')
+        self.assertEqual(evidence['pattern'],'CLOUDY_SUPPORT')
+        self.assertEqual(evidence['W'],Fraction(376,5))
+        self.assertEqual(evidence['attempts'][0]['E'],19)
+        self.assertFalse(evidence['attempts'][0]['core_pass'])
+    def test_mixed_weather_requires_both_pools(self):
+        track={'raw_energy':'.2','raw_acousticness':'.8','raw_valence':'.5','mode':True}
+        evidence=weather_fit(track,'MIXED')
+        self.assertEqual(len(evidence['patterns']),2)
+        self.assertEqual(evidence['W'],min(x['W'] for x in evidence['patterns']))
     def test_profiles_and_scores(self):
         self.assertEqual(profile(6,None),'MIXED');self.assertEqual(profile(7,None),'SNOW')
-        track={'energy':4,'acousticness':60,'mode':True,'theme_codes':[]}
-        for pty,sky in [(0,1),(1,None)]:
-            result=score(track,DEFAULTS,[{'pty':pty,'sky':sky,'overlap_ms':10800000}])
-            self.assertEqual(result['W'],95);self.assertEqual(result['S'],95)
+        track={'energy':6,'raw_energy':'.6','raw_acousticness':'.5','raw_valence':'.7',
+               'mode':True,'speed':'slow','genre_group_codes':['JAZZ'],'theme_codes':[]}
+        result=score(track,DEFAULTS,'CLEAR')
+        self.assertEqual(result['W'],100);self.assertEqual(result['S'],100)
+        self.assertIsNone(score(track,DEFAULTS,'RAIN'))
     def test_active_group_denominator(self):
-        t={'energy':4,'acousticness':60,'mode':True,'theme_codes':[]}
+        t={'energy':6,'raw_energy':'.6','raw_acousticness':'.5','raw_valence':'.7','mode':True,'theme_codes':[],
+           'speed':'slow','genre_group_codes':['JAZZ']}
         o={**DEFAULTS,'selected_theme_codes':['CALM'],'selected_genre_codes':['JAZZ'],'tempo_preference':'slow'}
-        s=score(t,o,[{'pty':0,'sky':1,'overlap_ms':10800000}])
+        s=score(t,o,'CLEAR')
         self.assertEqual(s['P'],Fraction(200,3))
-        self.assertEqual(s['S'],Fraction(1055,12))
+        self.assertEqual(s['S'],Fraction(275,3))
     def test_mode_null_no_redistribution(self):
-        s=score({'energy':6,'acousticness':40,'mode':None,'theme_codes':[]},DEFAULTS,[{'pty':0,'sky':1,'overlap_ms':10800000}])
-        self.assertEqual(s['W'],95)
+        t={'raw_energy':'.6','raw_acousticness':'.5','raw_valence':'.7','mode':None,'theme_codes':[]}
+        self.assertEqual(score(t,DEFAULTS,'CLEAR')['W'],95)
     def test_mixed_first_speed_block_only_auto_fast(self):
-        mixed=[{'pty':0,'sky':1},{'pty':1,'sky':4}]
-        self.assertEqual(initial_speeds('slow',mixed),['slow'])
-        with self.assertRaises(DomainError): initial_speeds('auto',mixed)
-        self.assertEqual(initial_speeds('fast',[{'pty':1,'sky':4}]),['fast'])
-        self.assertEqual(initial_speeds('fast',[{'pty':4,'sky':4}]),['fast','fastest'])
+        self.assertEqual(initial_speeds('slow','MIXED'),['slow'])
+        self.assertEqual(initial_speeds('auto','MIXED'),['fast','fastest','medium','slow'])
+        self.assertEqual(initial_speeds('fast','RAIN'),['fast'])
+        self.assertEqual(initial_speeds('fast','CLEAR'),['fast','fastest'])
     def test_genres(self):
         self.assertEqual(groups(['j-rock']),['J-POP','ROCK'])
         self.assertEqual(groups(['ambient','study']),[])
@@ -103,7 +124,7 @@ class WeatherTests(TestCase):
             ('2026-10-15T10:00:00Z','2026-10-15T13:00:00Z')])
         rows=validate(bundle,datetime(2026,10,15,9,tzinfo=timezone.utc))
         self.assertEqual(sum(row['overlap_ms'] for row in rows),10800000)
-        result=score({'energy':6,'acousticness':40,'mode':True,'theme_codes':[]},DEFAULTS,rows)
+        result=score({'raw_energy':'.6','raw_acousticness':'.4','raw_valence':'.7','mode':True,'theme_codes':[]},DEFAULTS,'CLEAR')
         self.assertEqual(result['W'],100)
     def test_offset_strings_are_sorted_by_absolute_instant(self):
         bundle=self.bundle('2026-10-15T09:00:00Z',[
@@ -138,6 +159,52 @@ class SolverTests(TestCase):
     def test_exact_quality_fraction(self):
         tracks=self.tracks([10800000,10800000]);tracks[1]['scores']['S']=Fraction(1000001,10000)
         self.assertEqual(choose(tracks,3,5)[0]['track_id'],'1')
+    def test_off_selected_genres_100_percent_precedes_exact_time(self):
+        selected={'track_id':'selected','duration_ms':10680000,'genre_group_codes':['JAZZ'],'scores':{'S':Fraction(80)}}
+        other={'track_id':'other','duration_ms':120000,'genre_group_codes':['POP'],'scores':{'S':Fraction(100)}}
+        result=choose([selected,other],2,5,'OFF',['JAZZ'])
+        self.assertEqual([t['track_id'] for t in result],['selected'])
+    def test_off_80_percent_fallback_and_distinct_representatives(self):
+        tracks=[{'track_id':'j','duration_ms':4320000,'genre_group_codes':['JAZZ'],'scores':{'S':Fraction(80)}},
+                {'track_id':'p','duration_ms':4320000,'genre_group_codes':['POP'],'scores':{'S':Fraction(80)}},
+                {'track_id':'other','duration_ms':2160000,'genre_group_codes':['ROCK'],'scores':{'S':Fraction(100)}}]
+        result=choose(tracks,3,5,'OFF',['JAZZ','POP'])
+        self.assertEqual({t['track_id'] for t in result},{'j','p','other'})
+        self.assertIsNone(representatives([{'track_id':'one','genre_group_codes':['JAZZ','POP']}],['JAZZ','POP']))
+        tracks[1]['duration_ms']-=1
+        tracks[2]['duration_ms']+=1
+        with self.assertRaises(DomainError) as failure: choose(tracks,3,5,'OFF',['JAZZ','POP'])
+        self.assertEqual(failure.exception.code,'CANDIDATE_SHORTAGE')
+    def test_window_failure_expands_before_reporting_shortage(self):
+        tiny=[{'track_id':f't{i:03}','duration_ms':1,'genre_group_codes':['JAZZ'],'scores':{'S':Fraction(100)}}
+              for i in range(200)]
+        full={'track_id':'last','duration_ms':10800000,'genre_group_codes':['JAZZ'],'scores':{'S':Fraction(0)}}
+        diagnostics={}
+        self.assertEqual(choose(tiny+[full],0,5,'ON',(),'',diagnostics)[0]['track_id'],'last')
+        self.assertEqual(diagnostics['window_size'],201)
+        with self.assertRaises(DomainError) as failure: choose(tiny+[full],200,5,'ON')
+        self.assertEqual(failure.exception.code,'SEARCH_INCOMPLETE')
+    def test_csv_preview_reset_keeps_genre_and_adds_twenty_percent_new_tracks(self):
+        jazz=[{'track_id':f'j{i}','duration_ms':204000,'genre_group_codes':['JAZZ'],
+               'scores':{'S':Fraction(100)}} for i in range(52)]
+        other=[{'track_id':f'o{i}','duration_ms':60000,'genre_group_codes':['POP'],
+                'scores':{'S':Fraction(80)}} for i in range(20)]
+        parent={t['track_id'] for t in jazz}
+        tracks,diagnostics=choose_preview(jazz+other,'OFF',['JAZZ'],'retry-seed',parent)
+        total=sum(t['duration_ms'] for t in tracks)
+        selected=sum(t['duration_ms'] for t in tracks if 'JAZZ' in t['genre_group_codes'])
+        self.assertGreaterEqual(len({t['track_id'] for t in tracks}-parent),len(parent)//5)
+        self.assertGreaterEqual(100*selected,80*total)
+        self.assertTrue(10560000<=total<=11040000)
+        self.assertEqual(diagnostics['genre_share_stage'],80)
+    def test_csv_preview_expands_when_top_200_cannot_fill_duration(self):
+        tracks=[{'track_id':f't{i:03}','duration_ms':1,'genre_group_codes':['JAZZ'],
+                 'scores':{'S':Fraction(100)}} for i in range(200)]
+        tracks.append({'track_id':'last','duration_ms':10800000,'genre_group_codes':['JAZZ'],
+                       'scores':{'S':Fraction(0)}})
+        result,diagnostics=choose_preview(tracks,'ON')
+        self.assertIn('last',{t['track_id'] for t in result})
+        self.assertEqual(diagnostics['window_size'],201)
 
 
 class ProviderTests(TestCase):
@@ -145,10 +212,10 @@ class ProviderTests(TestCase):
         candidates=[{'track_id':str(i),'duration_ms':200000} for i in range(60)]
         ids=[str(i) for i in range(54)]
         proposal={'track_ids':ids,'summary':'설명','track_reasons':[{'track_id':x,'reason':'이유'} for x in ids]}
-        with self.assertRaises(DomainError) as e: validate_proposal(proposal,candidates,[str(i) for i in range(49)])
+        with self.assertRaises(DomainError) as e: validate_proposal(proposal,candidates,[str(i) for i in range(49)],DEFAULTS)
         self.assertEqual(e.exception.code,'NO_MEANINGFUL_CHANGE')
         self.assertEqual(e.exception.details['required_new_count'],9)
-        validate_proposal(proposal,candidates,[str(i) for i in range(40)])
+        validate_proposal(proposal,candidates,[str(i) for i in range(40)],DEFAULTS)
         proposal['track_reasons'][0]['track_id']='missing'
-        with self.assertRaises(DomainError) as e: validate_proposal(proposal,candidates,[])
+        with self.assertRaises(DomainError) as e: validate_proposal(proposal,candidates,[],DEFAULTS)
         self.assertEqual(e.exception.code,'PROVIDER_RESPONSE_INVALID')

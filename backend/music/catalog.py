@@ -17,6 +17,7 @@ def export_tracks():
         tags = {'genre':[], 'mood':[], 'instrument':[]}
         for link in track.approved_links: tags[link.tag.tag_type].append(link.tag.tag_code)
         row = {key:getattr(track,key,None) for key in FIELDS}
+        row.update({key:getattr(track,key) for key in ('raw_energy','raw_acousticness','raw_valence')})
         for key in ['album_id','album_name','album_release_date']: row[key] = getattr(track.album,key)
         row.update(genre=';'.join(sorted(tags['genre'])) or None,
                    mood=';'.join(THEMES.get(x,x) for x in sorted(tags['mood'])) or None,

@@ -25,7 +25,11 @@ def validate(bundle, now, duration=TARGET):
             require(left == cursor and row['status'] == 'valid', 'FORECAST_UNAVAILABLE', '예보 구간이 누락되거나 겹쳤어요.', 503)
             require(instant(row['issued_at']) <= start and instant(row['received_at']) <= start,
                     'FORECAST_UNAVAILABLE', '요청 이후에 도착한 예보예요.', 503)
-            profile(row['pty'], row['sky'])
+            require(type(row['pty']) is int and row['pty'] in (0,1,2,3,4,5,6,7),
+                    'FORECAST_UNAVAILABLE','강수 예보를 확인할 수 없어요.',503)
+            if row['pty'] == 0:
+                require(type(row['sky']) is int and row['sky'] in (1,3,4),
+                        'FORECAST_UNAVAILABLE','하늘 예보를 확인할 수 없어요.',503)
             delta = right-left
             microseconds = (delta.days*86400 + delta.seconds)*1_000_000 + delta.microseconds
             segments.append({**row, 'overlap_ms': Fraction(microseconds, 1000)})
@@ -34,6 +38,21 @@ def validate(bundle, now, duration=TARGET):
         return segments
     except (KeyError, ValueError, TypeError, OverflowError):
         require(False, 'FORECAST_UNAVAILABLE', '예보 형식을 확인할 수 없어요.', 503)
+
+
+def current_profile(bundle, segments, now):
+    try:
+        current = bundle.get('current') or {}
+        require(current.get('status','valid') == 'valid', 'FORECAST_UNAVAILABLE', '현재 날씨를 확인할 수 없어요.', 503)
+        as_of=instant(bundle['as_of'])
+        require(as_of <= now,'FORECAST_UNAVAILABLE','미래 시점의 날씨 자료예요.',503)
+        observed = instant(current['observed_at'])
+        require(observed <= now and observed >= as_of-timedelta(hours=1),
+                'FORECAST_UNAVAILABLE','현재 관측이 유효하지 않아요.',503)
+        sky = next((row['sky'] for row in segments if instant(row['start_at']) <= now < instant(row['end_at'])),None)
+        return profile(current['pty'], sky)
+    except (KeyError,ValueError,TypeError,OverflowError):
+        require(False,'FORECAST_UNAVAILABLE','현재 날씨 형식을 확인할 수 없어요.',503)
 
 
 def obtain(region_id, now):

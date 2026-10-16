@@ -46,6 +46,7 @@ def speed(tempo, signature):
     n = decimal(tempo)
     if n is None: return None
     if n < 0: raise ValueError('negative tempo')
+    if n == 0: return None
     sig = decimal(signature)
     if sig == 3: n /= Decimal('1.5')
     rounded = int(n.quantize(Decimal(1), rounding=ROUND_HALF_UP))
@@ -80,6 +81,10 @@ def normalize(row, schema, existing=None):
             if result[field] is None: result[field]=old.get(field)
         result['energy'] = scaled(row.get('energy'), 10)
         result['acousticness'] = scaled(row.get('acousticness'), 100)
+        for key in ('energy','acousticness','valence'):
+            value = decimal(row.get(key))
+            if value is not None and not 0 <= value <= 1: raise ValueError(f'{key} outside 0..1')
+            result['raw_'+key] = str(value) if value is not None else None
         mode = row.get('mode')
         if type(mode) is bool or mode not in ('0','1',0,1,None,''): raise ValueError('mode must be 0/1')
         result['mode'] = None if mode in (None,'') else str(mode) == '1'
@@ -94,6 +99,10 @@ def normalize(row, schema, existing=None):
         result['mode'] = boolean(row.get('mode'), True)
         if result['speed'] not in (None,'slow','medium','fast','fastest'): raise ValueError('invalid speed')
         result['instrumental'] = review if review is not None else boolean(row.get('instrumental'), True)
+        for key in ('energy','acousticness','valence'):
+            value = decimal(row.get('raw_'+key)) if 'raw_'+key in row else decimal(old.get('raw_'+key))
+            if value is not None and not 0 <= value <= 1: raise ValueError(f'raw_{key} outside 0..1')
+            result['raw_'+key] = str(value) if value is not None else None
         source = 'REVIEW' if review is not None else 'PRESERVED'
     ids = result['artists_id']
     if ids is not None and len(ids.split(';')) != len(result['artists_name'].split(';')):
@@ -110,7 +119,8 @@ def convert(path, schema, existing=None):
         headers=reader.fieldnames or []
         expected=RAW_FIELDS if schema==RAW_SCHEMA else set(FIELDS)|{'instrumental_review_value'}
         content=[x for x in headers if not (schema==RAW_SCHEMA and x in ('','Unnamed: 0'))]
-        if len(set(headers))!=len(headers) or set(content)!=expected:
+        optional=set() if schema==RAW_SCHEMA else {'raw_energy','raw_acousticness','raw_valence'}
+        if len(set(headers))!=len(headers) or not expected <= set(content) or set(content)-expected-optional:
             raise ValueError('CSV headers do not match source_schema_version; conversion was not started')
         for line, row in enumerate(reader, 2):
             try:

@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.utils.decorators import method_decorator
 from rest_framework.views import APIView, exception_handler as drf_exception_handler
 from rest_framework.response import Response
-from . import service
+from . import service, demo_feedback
 from .errors import DomainError, require
 from .models import Family, Job, Playlist
 from .policy import GENRES, THEMES, OPTIONS
@@ -120,4 +120,23 @@ class Regenerate(Endpoint):
 class Approve(Endpoint):
     def post(self,request,pk):
         value,status=service.approve(self.owner(request),pk,self.key(request),request.data,request.request_id)
+        return Response(value,status=status)
+
+
+class Feedback(Endpoint):
+    def get(self,request,pk):
+        return Response(demo_feedback.read(self.owner(request),pk))
+
+
+class TrackReaction(Endpoint):
+    def put(self,request,pk,track_id):
+        value,status=demo_feedback.save(self.owner(request),pk,'TRACK',track_id,
+                                        request.data,self.key(request),request.request_id)
+        return Response(value,status=status)
+
+
+class PlaylistRating(Endpoint):
+    def put(self,request,pk):
+        value,status=demo_feedback.save(self.owner(request),pk,'PLAYLIST','',
+                                        request.data,self.key(request),request.request_id)
         return Response(value,status=status)

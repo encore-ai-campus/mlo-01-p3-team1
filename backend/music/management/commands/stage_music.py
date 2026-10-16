@@ -20,7 +20,8 @@ class Command(BaseCommand):
         existing={}
         for track in Track.objects.all():
             existing[track.pk]={'instrumental_review_value':track.instrumental_review_value,'instrumental':track.instrumental,
-                               'artists_id':track.artists_id,'album_id':track.album.album_id,'album_release_date':track.album.album_release_date}
+                               'artists_id':track.artists_id,'album_id':track.album.album_id,'album_release_date':track.album.album_release_date,
+                               **{key:getattr(track,key) for key in ('raw_energy','raw_acousticness','raw_valence')}}
         result=convert(source,options['schema'],existing)
         report.parent.mkdir(parents=True,exist_ok=True)
         report.write_text(json.dumps(result,ensure_ascii=False),encoding='utf-8')
@@ -33,6 +34,7 @@ class Command(BaseCommand):
                         album,_=Album.objects.get_or_create(album_id=row['album_id'],defaults={k:row[k] for k in ['album_name','album_release_date']})
                     else: album=Album.objects.create(album_name=row['album_name'],album_release_date=row['album_release_date'])
                     fields={k:row[k] for k in FIELDS if k not in ['track_id','album_id','album_name','album_release_date','genre','mood','main_inst']}
+                    fields.update({key:row[key] for key in ('raw_energy','raw_acousticness','raw_valence')})
                     if previous:
                         current={'instrumental_review_value':previous.instrumental_review_value,'instrumental':previous.instrumental}
                         raw=result['source_rows'][row['track_id']][0]['raw']

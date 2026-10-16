@@ -1,7 +1,7 @@
 from .errors import require
 from .policy import GENRES, THEMES, OPTIONS
 
-DEFAULTS = {'vocal_option':'any', 'tempo_preference':'auto', 'selected_theme_codes':[], 'selected_genre_codes':[], 'option_version':OPTIONS}
+DEFAULTS = {'vocal_option':'any', 'tempo_preference':'auto', 'weather_influence_mode':'ON', 'selected_theme_codes':[], 'selected_genre_codes':[], 'option_version':OPTIONS}
 
 
 def shape(data, allowed, required=()):
@@ -24,14 +24,15 @@ def strings(value):
 
 
 def options(data, inherited=None):
-    result = dict(DEFAULTS if inherited is None else inherited)
+    result = {**DEFAULTS,**(inherited or {})}
     for key in DEFAULTS:
         if key in data: result[key] = data[key]
-    for key, choices in [('vocal_option',('any','instrumental_only')),('tempo_preference',('auto','slow','fast'))]:
+    for key, choices in [('vocal_option',('any','instrumental_only')),('tempo_preference',('auto','slow','fast')),('weather_influence_mode',('ON','OFF'))]:
         require(type(result[key]) is str)
         require(result[key] in choices,'OPTION_INVALID','선택 항목을 확인해 주세요.',400)
     for key, choices in [('selected_theme_codes',THEMES),('selected_genre_codes',GENRES)]:
         result[key] = strings(result[key])
         require(set(result[key]) <= choices.keys(),'OPTION_INVALID','선택 코드를 확인해 주세요.',400)
+        if set(result[key]) == choices.keys(): result[key] = []
     require(type(result['option_version']) is str and bool(result['option_version']))
     return result

@@ -8,8 +8,9 @@ import {Header} from './components/Header';
 import {WeatherPanel} from './components/WeatherPanel';
 import type {Weather} from './components/WeatherPanel';
 import {Icon} from './components/Icons';
+import {TagPicker} from './TagPicker';
 
-const defaults:Choices={region_id:'',vocal_option:'any',tempo_preference:'auto',selected_theme_codes:[],selected_genre_codes:[],option_version:''};
+const defaults:Choices={region_id:'',vocal_option:'any',tempo_preference:'auto',weather_influence_mode:'ON',selected_theme_codes:[],selected_genre_codes:[],option_version:''};
 function Cover({url,small=false}:{url?:string|null;small?:boolean}){
   return <img className={small?'track-cover':'album-cover'} src={url||'/default-cover.svg'} alt={small?'':'현재 선곡표 첫 곡의 앨범 이미지'} onError={e=>{e.currentTarget.onerror=null;e.currentTarget.src='/default-cover.svg';}}/>;
 }
@@ -47,7 +48,15 @@ export function PublicPage(){
     api<Weather>(`/api/weather?region_id=${encodeURIComponent(choices.region_id)}`,'GET',undefined,undefined,controller.signal).then(data=>{if(!controller.signal.aborted)setWeather(data);}).catch(e=>{if(!controller.signal.aborted)setWeatherError(e.message);});
     return()=>controller.abort();
   },[choices.region_id,weatherRetry]);
-  const changed=!!result&&canonical(choices)!==canonical(result.context.options);
+  function normalized(value:Choices):Choices{
+    const result={...value};
+    for(const [type,field] of [['theme','selected_theme_codes'],['genre','selected_genre_codes']] as const){
+      const all=options.filter(o=>o.type===type&&o.enabled).map(o=>o.code);
+      if(all.length&&all.every(code=>result[field].includes(code)))result[field]=[];
+    }
+    return result;
+  }
+  const changed=!!result&&canonical(normalized(choices))!==canonical(result.context.options);
   const dirty=!!excluded&&canonical(draft)!==canonical(excluded.excluded_track_ids);
   const locked=busy||saving||approving;
   const canRegenerate=!!result&&!locked&&!changed&&!dirty&&!saveError;
@@ -75,7 +84,7 @@ export function PublicPage(){
         const status=await api<{status:string;playlist_id:string|null;error:{message:string}|null}>(`/api/recommendation-jobs/${job.job_id}`,'GET',undefined,undefined,controller.signal);
         if(status.status==='SUCCEEDED'){await loadResult(status.playlist_id!,controller.signal);setJobIntent(null);break;}
         if(status.status==='FAILED'||status.status==='EXPIRED'){setJobIntent(null);throw new Error(status.error?.message||'선곡표 생성에 실패했어요.');}
-        await wait(2000,controller.signal);
+        await wait(performance.now()-started<5000?300:1000,controller.signal);
       }
     }catch(e){if(!controller.signal.aborted){setError((e as Error).message);if(e instanceof ApiError)setJobIntent(null);}}
     finally{if(!controller.signal.aborted)setBusy(false);}
@@ -105,13 +114,10 @@ export function PublicPage(){
   }
   const first=result?.items[0];
   const applied=!!result&&canonical(result.context.excluded_track_ids)===canonical(excluded?.excluded_track_ids);
+  const approvedCurrent=!!result&&!changed&&!dirty&&applied&&result.approved_playlist_id===result.playlist_id;
   const status=busy?'새 선곡표를 준비하고 있어요.':changed||dirty||!applied&&result?'변경 사항 미반영 · 변경 전 결과':
-    result?.approved_playlist_id===result?.playlist_id&&result?'승인한 선곡표예요.':result?'선곡표를 확인해 주세요.':'지역을 선택하고 선곡표를 받아 보세요.';
-  const featured=['CALM','DREAMY','JAZZ','CLASSICAL'];
-  const sortedOptions=[...options].sort((a,b)=>{
-    const aIndex=featured.indexOf(a.code),bIndex=featured.indexOf(b.code);
-    return (aIndex<0?100:aIndex)-(bIndex<0?100:bIndex);
-  });
+    result?.approved_playlist_id===result?.playlist_id&&result?result.preview_only?'CSV 검증용 선곡표를 승인했어요.':'승인한 선곡표예요.':
+    result?.preview_only?'실제 CSV 곡을 보여주는 검증용 선곡표예요.':result?'선곡표를 확인해 주세요.':'지역을 선택하고 선곡표를 받아 보세요.';
   return <>
     <div inert={guide}>
       <Header showGuide={()=>setGuide(true)} isDemo={isDemo}/>
@@ -125,27 +131,29 @@ export function PublicPage(){
           <button onClick={()=>setInitRetry(x=>x+1)} disabled={locked}>연결 다시 확인</button>}</div>}
         <div className="music-grid">
           <section className="selection card" aria-labelledby="selection-title" data-guide="selection">
-            <h2 id="selection-title">음악 선택</h2><p className="muted">선택하지 않아도 추천받을 수 있어요.</p>
+            <h2 id="selection-title">음악 선택</h2>
+            <fieldset disabled={locked}><legend>날씨 반영</legend><div className="radio-options weather-mode-options">
+              <label><input type="radio" name="weather-influence" checked={choices.weather_influence_mode==='ON'}
+                onChange={()=>setChoices(c=>({...c,weather_influence_mode:'ON'}))}/>반영</label>
+              <label><input type="radio" name="weather-influence" checked={choices.weather_influence_mode==='OFF'}
+                onChange={()=>setChoices(c=>({...c,weather_influence_mode:'OFF'}))}/>반영하지 않음</label>
+            </div></fieldset>
             <fieldset disabled={locked}><legend>보컬</legend><div className="radio-options">
               {[['any','제한 없음'],['instrumental_only','연주곡만']].map(([value,label])=>
                 <label key={value}><input type="radio" name="vocal" value={value} checked={choices.vocal_option===value}
                   onChange={()=>setChoices(c=>({...c,vocal_option:value}))}/>{label}</label>)}
             </div></fieldset>
             <fieldset disabled={locked}><legend>빠르기</legend><div className="radio-options tempo-options">
-              {[['auto','날씨에 맡기기'],['slow','느린 곡 우선'],['fast','빠른 곡 우선']].map(([value,label])=>
+              {[['auto',choices.weather_influence_mode==='ON'?'날씨에 맡기기':'제한 없음'],['slow','느린 곡 우선'],['fast','빠른 곡 우선']].map(([value,label])=>
                 <label key={value}><input type="radio" name="tempo" value={value} checked={choices.tempo_preference===value}
                   onChange={()=>setChoices(c=>({...c,tempo_preference:value}))}/>{label}</label>)}
             </div></fieldset>
             <fieldset className="tag-fieldset" disabled={locked}><legend>테마 · 장르 <small>복수 선택 가능</small></legend>
-              <div className="chips">{sortedOptions.map(option=><label key={option.type+option.code} className={!option.enabled?'unavailable':''}>
-                <input type="checkbox" disabled={!option.enabled}
-                  checked={(option.type==='genre'?choices.selected_genre_codes:choices.selected_theme_codes).includes(option.code)}
-                  onChange={()=>toggleOption(option)}/><span>{option.label}</span>
-              </label>)}</div>
+              <TagPicker options={options} choices={choices} disabled={locked} onToggle={toggleOption}/>
             </fieldset>
-            <div className="selection-bottom"><p className="muted">지역과 날씨에 맞는<br/>새로운 선곡표를 만들어 드려요.</p>
-              <button className="primary" disabled={!choices.region_id||!choices.option_version||!weather||locked||!!jobIntent}
-                onClick={()=>void generate()}>{busy?'선곡표 준비 중…':'선곡표 받기'}</button>
+            <div className="selection-bottom">
+              <button className="primary" disabled={!choices.region_id||!choices.option_version||(choices.weather_influence_mode==='ON'&&!weather)||locked||!!jobIntent}
+                onClick={()=>void generate()}>{busy?'선곡표 준비 중…':!choices.region_id?'지역 선택 후 선곡표 받기':'선곡표 받기'}</button>
             </div>
           </section>
           <section className="representative card" aria-labelledby="cover-title">
@@ -155,10 +163,10 @@ export function PublicPage(){
             <p>{first?.artists_name||'선곡표를 받으면 첫 곡을 보여드려요.'}</p>
           </section>
           <section className="playlist card" aria-labelledby="playlist-title" data-guide="playlist">
-            <div className="list-heading"><h2 id="playlist-title">날씨에 맞춘 선곡표</h2><span className="count">{result?result.items.length+'곡':'준비 전'}</span></div>
+            <div className="list-heading"><h2 id="playlist-title">{result?.context.options.weather_influence_mode==='OFF'?'취향에 맞춘 선곡표':'날씨에 맞춘 선곡표'}</h2><span className="count">{result?result.items.length+'곡':'준비 전'}</span></div>
             <div aria-live="polite" className={'playlist-status'+(result&&!busy&&!changed&&!dirty&&applied&&result.approved_playlist_id!==result.playlist_id?' sr-only':'')}>{status}</div>
-            {result&&<p className="playlist-summary">{result.summary} <span className="badge">{result.generation_method==='RULE_BASED'?'기본 추천':'재설정'}</span></p>}
-            <div className="list-meta">{result?'전체 '+result.items.length+'곡':'지역에 맞는 음악을 준비해 드려요.'}</div>
+            {result&&!result.preview_only&&<p className="playlist-summary">{result.summary} <span className="badge">{result.generation_method==='RULE_BASED'?'기본 추천':'재설정'}</span></p>}
+            {!result&&<div className="list-meta">지역에 맞는 음악을 준비해 드려요.</div>}
             <ol className="tracks" aria-label="추천 곡 목록">{result?.items.map(track=>{
               const isExcluded=draft.includes(track.track_id);
               const reaction=feedback.feedback?.track_reactions.find(r=>r.track_id===track.track_id)?.value;
@@ -209,9 +217,9 @@ export function PublicPage(){
             {feedback.error&&<div role="alert" className="notice feedback-notice">{feedback.error}{feedback.retry&&<button onClick={()=>void feedback.retry?.()}>{feedback.retryLabel}</button>}</div>}
             <div className="playlist-actions">
               <button disabled={!canRegenerate||!!jobIntent} onClick={()=>void generate(true)}>다른 선곡표 요청</button>
-              <button className="primary" disabled={!canApprove||!!jobIntent} onClick={()=>void approve()}>{approving?'승인 중…':'이 선곡표 승인'}</button>
+              <button className="primary" disabled={!canApprove||!!jobIntent||approvedCurrent} onClick={()=>void approve()}>{approving?'승인 중…':approvedCurrent?'승인 완료':'이 선곡표 승인'}</button>
             </div>
-            <small className="playlist-hint">조건을 바꾸면 새 선곡표를 받아 확인해 주세요.</small>
+            <small className="playlist-hint">{result?.preview_only?'CSV 검증용 결과입니다. 좋아요·싫어요·별점·제외·승인은 이 PC의 로컬 데이터에 저장돼요.':'조건을 바꾸면 새 선곡표를 받아 확인해 주세요.'}</small>
           </section>
         </div>
       </main>

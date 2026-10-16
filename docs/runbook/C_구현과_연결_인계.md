@@ -56,10 +56,10 @@ pnpm dev
 
 ## 3. CSV 변환과 음악 RDB
 
-원본을 변경하거나 복사하지 않고 경로로 입력합니다.
+저장소에 포함한 원본 CSV를 변경하지 않고 상대 경로로 입력합니다. 수령 당시 다운로드 파일과 해시가 일치합니다.
 
 ```powershell
-./.venv/Scripts/python.exe -m pipeline.music.normalize C:/Users/Playdata/Downloads/spotify_dataset.csv --schema spotify-raw20-v1 --output artifacts/music-staging.json
+./.venv/Scripts/python.exe -m pipeline.music.normalize docs/handoff/music/spotify_dataset.csv --schema spotify-raw20-v1 --output artifacts/music-staging.json
 ```
 
 입력 형식은 `spotify-raw20-v1` 또는 `music-normalized19-v1`입니다. energy/acousticness 절삭·mode0/1·3박자 보정/HALF_UP·장르 합집합·검수False 보존·아티스트 ID 빈 위치를 처리합니다. 필수 메타데이터 충돌 곡은 정상 목록에서 통째로 격리하고 오류 행/원본/해시를 보고서에 남깁니다. 길이0은 저장 형식에는 허용하지만 추천에서 제외합니다.
@@ -68,7 +68,7 @@ pnpm dev
 
 ```powershell
 $env:C_LOCAL_DEMO='1'
-./.venv/Scripts/python.exe -m backend.manage stage_music C:/Users/Playdata/Downloads/spotify_dataset.csv --schema spotify-raw20-v1 --report artifacts/music-staging.json --load-local-demo
+./.venv/Scripts/python.exe -m backend.manage stage_music docs/handoff/music/spotify_dataset.csv --schema spotify-raw20-v1 --report artifacts/music-staging.json --load-local-demo
 ```
 
 `music_album/music_track/music_tag/track_tag` 모델과 PK/FK/UNIQUE/범위 제약을 제공합니다. track_tag는 복합 PK입니다. 실제 음악 RDB 제품·분리 배치·DDL 적용은 INF/B 연결 전입니다. 원본 확인 장르 연결만 approved로 입력하고 청취 mood/악기를 생성하지 않습니다. 일반 적재는 검수 컬럼을 갱신하지 않습니다.
