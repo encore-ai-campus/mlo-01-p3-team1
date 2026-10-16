@@ -8,6 +8,8 @@ watch의 SIGTERM 요청·KeyboardInterrupt·시작/종료 실패·핸들러 복�
 
 [실행/검증 범위](../../../../../runbook/광고_보관_점검과_배치_종료.md)
 
+KeyboardInterrupt 시험은 대기 호출과 종료·핸들러 복원을 확인하며 내부 대기 인자30초를 고정하지 않습니다.
+
 ## AST 시그니처
 
 ```python

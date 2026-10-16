@@ -9,13 +9,11 @@ from django.core.management.base import CommandError
 from django.test import SimpleTestCase, override_settings
 from pymongo.errors import DuplicateKeyError, OperationFailure
 
-from domains.ads.errors import DatabaseUnavailable, ValidationError, VersionConflict
+from domains.ads.errors import ValidationError, VersionConflict
 from domains.ads.public_schema import load_public_manifest
 from repositories.ads_mongo import DuplicateMutation
 from repositories.ads_public_mongo import (
     MongoPublicAdsRepository,
-    _configured_public_repository,
-    get_public_ads_repository,
 )
 
 
@@ -35,9 +33,6 @@ class PublicAdsRepositoryTests(SimpleTestCase):
         )
         self.repository = MongoPublicAdsRepository(self.client, "advertising_dev", is_test=False)
         self.now = datetime(2026, 10, 15, tzinfo=UTC)
-
-    def tearDown(self):
-        _configured_public_repository.cache_clear()
 
     def collection(self, name):
         return self.database[name]
@@ -291,27 +286,6 @@ class PublicAdsRepositoryTests(SimpleTestCase):
             transaction.insert_event({"_id": "e", "is_test": False})
         self.assertIs(raised.exception, failure)
         self.assertTrue(raised.exception.has_error_label("TransientTransactionError"))
-
-    @override_settings(ADS_MONGODB_URI="mongodb://ads.private:27017/?replicaSet=team-rs")
-    def test_public_repository_factory_reuses_client_and_returns_public_adapter(self):
-        with patch(
-            "repositories.ads_public_mongo.MongoClient", return_value=self.client
-        ) as factory:
-            first = get_public_ads_repository()
-            self.assertIs(get_public_ads_repository(), first)
-        self.assertIsInstance(first, MongoPublicAdsRepository)
-        factory.assert_called_once()
-        self.assertEqual(factory.call_args.kwargs["readPreference"], "primary")
-        self.assertEqual(
-            factory.call_args.args[0], "mongodb://ads.private:27017/?replicaSet=team-rs"
-        )
-
-    @override_settings(ADS_MONGODB_URI="")
-    def test_unconfigured_public_repository_does_not_create_driver(self):
-        with patch("repositories.ads_public_mongo.MongoClient") as factory:
-            with self.assertRaises(DatabaseUnavailable):
-                get_public_ads_repository()
-        factory.assert_not_called()
 
 
 class PublicAdsSchemaTests(SimpleTestCase):

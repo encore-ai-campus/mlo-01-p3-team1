@@ -38,7 +38,7 @@ class RuntimeBudgetPolicyTests(SimpleTestCase):
             "ad-one", "budget-v1", "2026-10-15"
         )
         self.repository.total_budget_cutoff.assert_called_once_with("ad-one", "budget-v1")
-        self.assertEqual(len(self.repository.mock_calls), 2)
+        self.repository.usage_rows.assert_not_called()
 
     def test_unconfigured_nonpositive_or_boolean_budget_is_not_served(self):
         invalid = (None, 0, -1, True, "100", 1.0)

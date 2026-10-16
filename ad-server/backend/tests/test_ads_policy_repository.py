@@ -11,14 +11,12 @@ from django.core.management.base import CommandError
 from django.test import SimpleTestCase, override_settings
 from pymongo.errors import DuplicateKeyError
 
-from domains.ads.errors import DatabaseUnavailable, ValidationError
+from domains.ads.errors import ValidationError
 from domains.ads.management.commands.apply_ads_policy_schema import load_policy_manifest
 from repositories.ads_mongo import DuplicateMutation
 from repositories.ads_policy_mongo import (
     POLICY_SCHEMA_VERSION,
     MongoAdsPolicyRepository,
-    _configured_policy_repository,
-    get_ads_policy_repository,
 )
 
 
@@ -39,9 +37,6 @@ class AdsPolicyRepositoryTests(SimpleTestCase):
         self.repository = MongoAdsPolicyRepository(self.client, "advertising_dev", is_test=False)
         self.now = datetime(2026, 10, 15, 15, tzinfo=UTC)
         self.day = "2026-10-16"
-
-    def tearDown(self):
-        _configured_policy_repository.cache_clear()
 
     def collection(self, name):
         return self.database[name]
@@ -313,23 +308,6 @@ class AdsPolicyRepositoryTests(SimpleTestCase):
         self.collection("ads").find.return_value.append({"_id": "ad-two", "placement": "bottom"})
         self.assertEqual(self.repository.metrics_summary(self.now)["aggregation_status"], "PARTIAL")
 
-    @override_settings(ADS_MONGODB_URI="mongodb://ads.private:27017/?replicaSet=team-rs")
-    def test_policy_factory_is_cached_and_retains_primary_environment(self):
-        with patch("repositories.ads_policy_mongo.MongoClient", return_value=self.client) as create:
-            first = get_ads_policy_repository()
-            self.assertIs(first, get_ads_policy_repository())
-        self.assertIsInstance(first, MongoAdsPolicyRepository)
-        self.assertFalse(first.is_test)
-        create.assert_called_once()
-        self.assertEqual(create.call_args.kwargs["readPreference"], "primary")
-
-    @override_settings(ADS_MONGODB_URI="")
-    def test_missing_factory_uri_does_not_create_driver(self):
-        with patch("repositories.ads_policy_mongo.MongoClient") as create:
-            with self.assertRaises(DatabaseUnavailable):
-                get_ads_policy_repository()
-        create.assert_not_called()
-
 
 class AdsPolicySchemaTests(SimpleTestCase):
     def test_manifest_limits_two_collections_strict_fields_positive_limits_and_unique_scopes(self):
@@ -360,25 +338,19 @@ class AdsPolicySchemaTests(SimpleTestCase):
         self.assertIn("ad_budget_states", output.getvalue())
         self.assertIn("미적용", output.getvalue())
 
-    @override_settings(
-        ADS_MONGODB_URI="mongodb://shared.private:27017/?replicaSet=ads-rs",
-        ADS_MONGODB_DATABASE="advertising_dev",
-    )
-    def test_apply_rejects_shared_host_before_driver_creation(self):
-        with patch("domains.ads.mongo.MongoClient") as create:
-            with self.assertRaises(CommandError):
-                call_command("apply_ads_policy_schema", apply=True, stdout=io.StringIO())
-        create.assert_not_called()
-
-    @override_settings(
-        ADS_MONGODB_URI="mongodb://127.0.0.1:27017/?replicaSet=ads-rs",
-        ADS_MONGODB_DATABASE="advertising",
-    )
-    def test_apply_rejects_non_dev_database_before_driver_creation(self):
-        with patch("domains.ads.mongo.MongoClient") as create:
-            with self.assertRaises(CommandError):
-                call_command("apply_ads_policy_schema", apply=True, stdout=io.StringIO())
-        create.assert_not_called()
+    def test_apply_rejects_shared_host_or_non_dev_database_before_driver_creation(self):
+        for uri, database in (
+            ("mongodb://shared.private:27017/?replicaSet=ads-rs", "advertising_dev"),
+            ("mongodb://127.0.0.1:27017/?replicaSet=ads-rs", "advertising"),
+        ):
+            with (
+                self.subTest(uri=uri, database=database),
+                self.settings(ADS_MONGODB_URI=uri, ADS_MONGODB_DATABASE=database),
+                patch("domains.ads.mongo.MongoClient") as create,
+            ):
+                with self.assertRaises(CommandError):
+                    call_command("apply_ads_policy_schema", apply=True, stdout=io.StringIO())
+                create.assert_not_called()
 
     @override_settings(ADS_MONGODB_DATABASE="advertising_dev")
     def test_apply_uses_strict_error_validation_and_requires_ads_primary(self):

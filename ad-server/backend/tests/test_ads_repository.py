@@ -2,14 +2,14 @@
 
 from datetime import datetime, timezone
 from types import SimpleNamespace
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
 from django.test import SimpleTestCase, override_settings
 from pymongo import ReadPreference
 from pymongo.errors import ConnectionFailure, DuplicateKeyError, OperationFailure
 
 from domains.ads.errors import DatabaseUnavailable, VersionConflict
-from repositories.ads_mongo import MongoAdsRepository, _configured_repository, get_ads_repository
+from repositories.ads_mongo import MongoAdsRepository
 
 
 @override_settings(ADS_MONGODB_DATABASE="advertising_dev", ADS_IS_TEST=True)
@@ -27,26 +27,6 @@ class AdsRepositoryTests(SimpleTestCase):
         )
         self.repository = MongoAdsRepository(self.client, "advertising_dev", is_test=True)
         self.now = datetime(2026, 10, 15, 3, 0, tzinfo=timezone.utc)
-
-    def tearDown(self):
-        _configured_repository.cache_clear()
-
-    @override_settings(ADS_MONGODB_URI="")
-    def test_unconfigured_repository_rejects_before_driver_creation(self):
-        with patch("repositories.ads_mongo.MongoClient") as factory:
-            with self.assertRaises(DatabaseUnavailable):
-                get_ads_repository()
-        factory.assert_not_called()
-
-    @override_settings(ADS_MONGODB_URI="mongodb://ads.private:27017/?replicaSet=team-rs")
-    def test_api_configuration_allows_private_replica_and_reuses_client(self):
-        with patch("repositories.ads_mongo.MongoClient", return_value=self.client) as factory:
-            first = get_ads_repository()
-            self.assertIs(first, get_ads_repository())
-        factory.assert_called_once()
-        self.assertIn("ads.private", factory.call_args.args[0])
-        self.assertEqual(factory.call_args.kwargs["readPreference"], "primary")
-        self.assertTrue(first.is_test)
 
     def test_standalone_or_secondary_does_not_run_mutation(self):
         for hello in ({"isWritablePrimary": True}, {"setName": "team-rs"}):

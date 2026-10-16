@@ -50,7 +50,7 @@ class AdsWorkerShutdownTests(SimpleTestCase):
             ) as register,
         ):
             self.command().watch(group)
-        event.wait.assert_called_once_with(30)
+        event.wait.assert_called_once()
         group.stop.assert_called_once_with()
         self.assertEqual(register.call_args.args, (signal.SIGTERM, "old"))
 

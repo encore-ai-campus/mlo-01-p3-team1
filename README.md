@@ -189,7 +189,7 @@ flowchart TB
 `GET /api/ads`, `POST /api/ad-events`, `GET /api/ad-deliveries/{delivery_id}/image`를 구현했고
 관리3·공개5·정책2 컬렉션을 사용합니다. 사용자 확정은 배달30분·표시/보고 분리·소재교체 후 옛 배달 차단·통계/예산 검증 모두5분입니다. 소진 확인 cutoff 이후 신규/재확인/이미지를 차단하고 이전 유효 발생만300초 내 초과 인정합니다. 자동 종료는 소진/게시 기간, 수동 paused는 별도 유지합니다. 실예산은 관리API 입력값이며 기본값·예약·최소잔여23/20은 없습니다.
 
-`ADS_PUBLIC_POLICY_PROVIDER=domains.ads.runtime_policy.get_public_policy`를 명시 설정합니다. 상태 누락은 부적격,300초 초과 stale는503입니다. 공유 guest·서명·절대HTTPS 주소도 필수입니다. `apply_ads_policy_schema`는 dry-run 기본, `refresh_ads_policy`는1회/--watch300초 시작 간격, `relay_ads_budget_logs`는 기존 durable sink 연결입니다. 관리자 화면은 별도 담당자 작업이며 실제 watch·공유PostgreSQL·브라우저/AWS 연결은 미완료입니다.
+`ADS_PUBLIC_POLICY_PROVIDER=domains.ads.runtime_policy.get_public_policy`를 명시 설정합니다. 상태 누락은 부적격,300초 초과 stale는503입니다. 공유 guest·서명·절대HTTPS 주소도 필수입니다. `apply_ads_policy_schema`는 dry-run 기본, `refresh_ads_policy`는1회/--watch300초 시작 간격, `check_ads_logs`는 MongoDB 내장 로그를 읽기 점검합니다. 관리자 화면은 별도 담당자 작업이며 운영 상주 배치·공유 인증·정식 공개 배너/AWS 연결은 미완료입니다.
 
 1. [서비스 흐름](./docs/product/카페_음악_서비스_기능_및_사용자_흐름_정리.md)과 [공통 개발 계약](./docs/product/3차_공통_개발_계약과_검증_기준.md)으로 기능·API·상태 기준을 확인합니다.
 2. [구현 태스크](./docs/product/카페_음악_추천_서비스_3차_구현_태스크.md)에서 담당 작업 ID와 직접 선행 조건을 확인합니다.
@@ -216,7 +216,7 @@ flowchart TB
 | [확인·인계 목록](./docs/product/3차_사용자_확인과_담당자_인계_목록.md) | 남은 결정·담당 자료·보완 사항 |
 | [구현 결정과 원문 보관](./docs/product/3차_구현_결정과_익명문맥_원문보관_가이드.md) | 최신 결정·익명 소유·로컬/S3·인프라 수령 상태 |
 | [광고 정책과 결정사항](./docs/product/3차_광고_운영_회의_결정사항_목록.md) | 광고 운영·측정·초기 정책과 남은 결정 |
-| [ADS 인계](./docs/handoff/ads/README.md) | 관리/공개 연결·MongoDB 저장·PostgreSQL 로그·환경/검증 |
+| [ADS 인계](./docs/handoff/ads/README.md) | 관리/공개 연결·MongoDB 저장·내장 광고 로그·환경/검증 |
 | [저장 경계와 발행 계약](./docs/product/3차_저장소_경계와_발행_계약.md) | 음악RDB4개·원본/백업S3·공통·피드백 로그 PostgreSQL·광고/광고 로그 MongoDB |
 | [음악 컬럼 정의](./docs/handoff/music/음악_분류_컬럼_정의.md) | 음악18개·변환·검수 특성·검수 입력 |
 | [날씨 인계 자료](./docs/handoff/weather/01_날씨_수집과_지역매핑.md) | 수집/지역 매핑부터 정제·저장·분류로 연결 |

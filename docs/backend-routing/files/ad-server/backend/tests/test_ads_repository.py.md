@@ -1,21 +1,20 @@
 # ad-server/backend/tests/test_ads_repository.py
 
 - 작성일: 2026-10-15
-- 수정일: 2026-10-15
+- 수정일: 2026-10-16
 - [원본 코드](../../../../../../ad-server/backend/tests/test_ads_repository.py)
 
 MongoDB client/session/collection 대역으로 저장 어댑터의 연결 설정·primary·단일 session·트랜잭션 driver 재시도·멱등 unique 경합·실패 처리·트랜잭션 밖 쓰기 차단·version 조건/no-op 잠금·test 범위·분리된 조회 사본·커서/요약을 검증합니다.
 
 입력은 driver 대역과 callback fixture이며 출력은 assertion 결과입니다. 실제 primary/커밋·동시 실행 결과는 별도 MongoDB 통합 테스트로 확인합니다. 중첩 helper 시그니처는 AST 자료 그대로 아래에 포함합니다.
 
+연결 생성·primary·캐시·미설정 및 시험/운영 환경 전달 검사는 [공통 연결 시험](./test_ads_repository_configuration.py.md)으로 통합했습니다. 저장소별 트랜잭션·경합·집계·스키마 검증은 유지합니다.
+
 ## AST 시그니처
 
 ```python
 class AdsRepositoryTests(SimpleTestCase)
 AdsRepositoryTests.setUp(self)
-AdsRepositoryTests.tearDown(self)
-AdsRepositoryTests.test_unconfigured_repository_rejects_before_driver_creation(self)
-AdsRepositoryTests.test_api_configuration_allows_private_replica_and_reuses_client(self)
 AdsRepositoryTests.test_standalone_or_secondary_does_not_run_mutation(self)
 AdsRepositoryTests.test_transaction_configuration_and_all_writes_use_one_session(self)
 AdsRepositoryTests.test_driver_callback_retry_cannot_mutate_service_document(self)
