@@ -12,3 +12,14 @@ artifacts/
 .pytest_cache/
 .local-preview-logs/
 frontend/.vite/
+
+# Rebuild full music analysis datasets locally; retain policies, summaries and examples.
+/analysis/weather_music_20261016/pools/
+/analysis/weather_music_20261016/general/pools/
+/analysis/weather_music_20261016/general/occasion_decisions.csv
+/analysis/weather_music_20261016/general/occasion_review.csv
+/analysis/weather_music_20261016/diagnostics_20261016/pertrack_sensitivity_flags.csv
+/analysis/weather_music_20261016/diagnostics_20261016/profile_review_flags.csv
+/analysis/weather_music_20261016/diagnostics_20261016/llm_review_sample.csv
+/analysis/**/routing-audit*.json
+/analysis/*routing-audit*.json

@@ -1,2 +1,6 @@
 # Preserve the exact bytes and SHA-256 of received weather originals.
 docs/handoff/weather/received/20261014/*.md -text
+
+# Policies, manifests and verification evidence carry byte-level hashes.
+analysis/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+docs/acceptance/assets/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

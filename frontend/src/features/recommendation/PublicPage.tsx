@@ -9,6 +9,12 @@ import {WeatherPanel} from '../region-weather/WeatherPanel';
 import type {Weather} from '../region-weather/WeatherPanel';
 import {Icon} from '../../components/Icons';
 import {TagPicker} from '../music-options/TagPicker';
+import {YoutubeTrackLink} from './YoutubeLinks';
+import {YoutubePlayer} from './YoutubePlayer';
+import {YoutubeReviewPanel} from './YoutubeReviewPanel';
+import {YoutubeNativePlayback} from './YoutubeNativePlayback';
+import {RecommendationErrorNotice} from './RecommendationErrorNotice';
+import type {RecommendationFailure} from './RecommendationErrorNotice';
 
 const defaults:Choices={region_id:'',vocal_option:'any',tempo_preference:'auto',weather_influence_mode:'ON',selected_theme_codes:[],selected_genre_codes:[],option_version:''};
 function Cover({url,small=false}:{url?:string|null;small?:boolean}){
@@ -17,10 +23,13 @@ function Cover({url,small=false}:{url?:string|null;small?:boolean}){
 export function PublicPage(){
   const [choices,setChoices]=useState(defaults),[options,setOptions]=useState<Option[]>([]),[regions,setRegions]=useState<{region_id:string;name:string}[]>([]);
   const [result,setResult]=useState<Playlist|null>(null),[excluded,setExcluded]=useState<Exclusions|null>(null),[draft,setDraft]=useState<string[]>([]);
-  const [weather,setWeather]=useState<Weather|null>(null),[weatherError,setWeatherError]=useState(''),[error,setError]=useState(''),[saveError,setSaveError]=useState('');
+  const [weather,setWeather]=useState<Weather|null>(null),[weatherError,setWeatherError]=useState(''),[error,setError]=useState<string|RecommendationFailure>(''),[saveError,setSaveError]=useState('');
   const [busy,setBusy]=useState(false),[saving,setSaving]=useState(false),[approving,setApproving]=useState(false),[guide,setGuide]=useState(false),[widget,setWidget]=useState(true),[expanded,setExpanded]=useState(false);
   const [isDemo,setDemo]=useState(false),[initRetry,setInitRetry]=useState(0),[weatherRetry,setWeatherRetry]=useState(0);
   const [adContextReady,setAdContextReady]=useState(false);
+  const [reviewOpen,setReviewOpen]=useState(false),[reviewPreview,setReviewPreview]=useState(false),[mappingRevision,setMappingRevision]=useState(0);
+  const [iframePlaylistId,setIframePlaylistId]=useState<string|null>(null);
+  const iframeOpen=!!result&&iframePlaylistId===result.playlist_id;
   const [saveIntent,setSaveIntent]=useState<{ids:string[];body:unknown;id:string}|null>(null);
   const [jobIntent,setJobIntent]=useState<{path:string;body:unknown;id:string}|null>(null);
   const abort=useRef<AbortController|null>(null);
@@ -81,12 +90,12 @@ export function PublicPage(){
       const started=performance.now();
       for(;;){
         if(performance.now()-started>Number(import.meta.env.VITE_JOB_POLL_TIMEOUT_MS||120000))throw new Error('작업 조회를 잠시 멈췄어요. 같은 요청 다시 확인으로 진행 상태를 확인해 주세요.');
-        const status=await api<{status:string;playlist_id:string|null;error:{message:string}|null}>(`/api/recommendation-jobs/${job.job_id}`,'GET',undefined,undefined,controller.signal);
+        const status=await api<{status:string;playlist_id:string|null;error:{code:string;message:string;details?:Record<string,unknown>}|null}>(`/api/recommendation-jobs/${job.job_id}`,'GET',undefined,undefined,controller.signal);
         if(status.status==='SUCCEEDED'){await loadResult(status.playlist_id!,controller.signal);setJobIntent(null);break;}
-        if(status.status==='FAILED'||status.status==='EXPIRED'){setJobIntent(null);throw new Error(status.error?.message||'선곡표 생성에 실패했어요.');}
+        if(status.status==='FAILED'||status.status==='EXPIRED'){setJobIntent(null);throw new ApiError(status.error?.code||'RECOMMENDATION_FAILED',status.error?.message||'선곡표 생성에 실패했어요.',status.error?.details);}
         await wait(performance.now()-started<5000?300:1000,controller.signal);
       }
-    }catch(e){if(!controller.signal.aborted){setError((e as Error).message);if(e instanceof ApiError)setJobIntent(null);}}
+    }catch(e){if(!controller.signal.aborted){setError(e instanceof ApiError?{code:e.code,message:e.message}:(e as Error).message);if(e instanceof ApiError)setJobIntent(null);}}
     finally{if(!controller.signal.aborted)setBusy(false);}
   }
   async function saveExclusions(ids:string[],retry=false){
@@ -112,9 +121,16 @@ export function PublicPage(){
     try{await api(`/api/playlists/${result.playlist_id}/approval`,'POST',body,intent.id);await loadResult(result.playlist_id);approvalIntent.current=null;}
     catch(e){setError((e as Error).message);}finally{setApproving(false);}
   }
-  const first=result?.items[0];
   const applied=!!result&&canonical(result.context.excluded_track_ids)===canonical(excluded?.excluded_track_ids);
   const approvedCurrent=!!result&&!changed&&!dirty&&applied&&result.approved_playlist_id===result.playlist_id;
+  const youtubeBlockReason=guide?'사용 안내를 닫은 뒤 재생해 주세요.':
+    reviewPreview?'운영자 검수 미리보기 중이에요. 미리보기를 닫은 뒤 재생해 주세요.':
+    busy?'새 선곡표를 준비하고 있어요. 완료된 뒤 재생해 주세요.':
+    saving?'제외 설정을 저장하고 있어요. 저장이 끝난 뒤 다시 확인해 주세요.':
+    changed?'선택 조건이 변경됐어요. 변경 사항을 반영한 새 선곡표를 먼저 받아 주세요.':
+    saveError?'제외 설정 저장에 실패했어요. 저장을 완료한 뒤 다시 확인해 주세요.':
+    dirty?'제외 설정에 저장하지 않은 변경이 있어요. 먼저 저장해 주세요.':
+    result&&!applied?'제외 설정이 아직 이 선곡표에 반영되지 않았어요. 새 선곡표를 먼저 받아 주세요.':null;
   const status=busy?'새 선곡표를 준비하고 있어요.':changed||dirty||!applied&&result?'변경 사항 미반영 · 변경 전 결과':
     result?.approved_playlist_id===result?.playlist_id&&result?result.preview_only?'CSV 검증용 선곡표를 승인했어요.':'승인한 선곡표예요.':
     result?.preview_only?'실제 CSV 곡을 보여주는 검증용 선곡표예요.':result?'선곡표를 확인해 주세요.':'지역을 선택하고 선곡표를 받아 보세요.';
@@ -126,12 +142,12 @@ export function PublicPage(){
         <WeatherPanel region={choices.region_id} regions={regions}
           onRegion={id=>setChoices(c=>({...c,region_id:id}))} locked={locked} weather={weather} error={weatherError}
           onRetry={()=>setWeatherRetry(x=>x+1)} widget={widget} onGuide={()=>setGuide(true)} onHideWidget={()=>setWidget(false)}/>
-        {error&&<div role="alert" className="notice error">{error}{jobIntent?
-          <button onClick={()=>void generate(false,true)} disabled={locked}>같은 요청 다시 확인</button>:
-          <button onClick={()=>setInitRetry(x=>x+1)} disabled={locked}>연결 다시 확인</button>}</div>}
+        {error&&<RecommendationErrorNotice failure={typeof error==='string'?{message:error}:error} pendingRequest={!!jobIntent} locked={locked}
+          onResume={()=>void generate(false,true)} onReconnect={()=>setInitRetry(x=>x+1)}
+          onReviewConditions={()=>document.getElementById('selection-title')?.focus()}/>}
         <div className="music-grid">
           <section className="selection card" aria-labelledby="selection-title" data-guide="selection">
-            <h2 id="selection-title">음악 선택</h2>
+            <h2 id="selection-title" tabIndex={-1}>음악 선택</h2>
             <fieldset disabled={locked}><legend>날씨 반영</legend><div className="radio-options weather-mode-options">
               <label><input type="radio" name="weather-influence" checked={choices.weather_influence_mode==='ON'}
                 onChange={()=>setChoices(c=>({...c,weather_influence_mode:'ON'}))}/>반영</label>
@@ -156,11 +172,18 @@ export function PublicPage(){
                 onClick={()=>void generate()}>{busy?'선곡표 준비 중…':!choices.region_id?'지역 선택 후 선곡표 받기':'선곡표 받기'}</button>
             </div>
           </section>
-          <section className="representative card" aria-labelledby="cover-title">
-            <div className="cover-heading"><h2 id="cover-title">곡 · 앨범 이미지</h2>{!first?.cover_image_url&&<span className="badge">기본 이미지</span>}</div>
-            <div className="cover-wrap"><Cover url={first?.cover_image_url}/></div>
-            <h3>{first?.track_name||'오늘의 음악을 만나 보세요'}</h3>
-            <p>{first?.artists_name||'선곡표를 받으면 첫 곡을 보여드려요.'}</p>
+          <section className="representative card representative-playback" aria-labelledby="cover-title">
+            <div className="cover-heading"><h2 id="cover-title">음악 재생</h2>{!result&&<span className="badge">기본 이미지</span>}</div>
+            {result?<>
+              <YoutubeNativePlayback playlistId={result.playlist_id} tracks={result.items} blockReason={youtubeBlockReason} mappingRevision={mappingRevision} onOpen={()=>setIframePlaylistId(null)}/>
+              <button className="youtube-iframe-toggle" type="button" aria-expanded={iframeOpen} aria-controls="youtube-iframe-secondary" onClick={()=>setIframePlaylistId(value=>value===result.playlist_id?null:result.playlist_id)}>{iframeOpen?'대시보드 재생 닫기':'대시보드에서 재생 (보조)'}</button>
+              {iframeOpen&&<div className="youtube-iframe-secondary" id="youtube-iframe-secondary"><p className="youtube-iframe-caution">이 보조 플레이어는 영상의 삽입 허용 여부에 따라 재생이 제한될 수 있어요.</p><YoutubePlayer playlistId={result.playlist_id} tracks={result.items} blockReason={youtubeBlockReason} mappingRevision={mappingRevision}/></div>}
+            </>:<>
+              <div className="cover-wrap"><Cover/></div>
+              <h3>오늘의 음악을 만나 보세요</h3>
+              <p>선곡표를 받으면 이곳에서 음악을 재생해요.</p>
+            </>}
+            {result&&isDemo&&<button className="youtube-review-toggle" type="button" aria-expanded={reviewOpen} aria-controls="youtube-review-panel" onClick={()=>{setReviewOpen(value=>!value);setReviewPreview(false);}}>{reviewOpen?'영상 연결 관리 닫기':'영상 연결 관리'}</button>}
           </section>
           <section className="playlist card" aria-labelledby="playlist-title" data-guide="playlist">
             <div className="list-heading"><h2 id="playlist-title">{result?.context.options.weather_influence_mode==='OFF'?'취향에 맞춘 선곡표':'날씨에 맞춘 선곡표'}</h2><span className="count">{result?result.items.length+'곡':'준비 전'}</span></div>
@@ -173,7 +196,7 @@ export function PublicPage(){
               const feedbackReady=!!feedback.feedback?.track_reactions.some(r=>r.track_id===track.track_id);
               return <li key={track.track_id} className={isExcluded?'excluded':''}>
                 <Cover url={track.cover_image_url} small/>
-                <div className="track-info"><strong title={track.track_name}>{track.track_name}</strong><span>{track.artists_name}{isExcluded?' · 제외됨':''}</span></div>
+                <div className="track-info"><strong title={track.track_name}>{track.track_name}</strong><span>{track.artists_name}{isExcluded?' · 제외됨':''}</span><YoutubeTrackLink track={track} excluded={isExcluded}/></div>
                   <div className="reactions">
                     <button aria-label={track.track_name+' 좋아요'} aria-pressed={reaction==='LIKE'}
                       disabled={!feedbackReady||feedback.pending.includes(track.track_id)}
@@ -222,6 +245,7 @@ export function PublicPage(){
             <small className="playlist-hint">{result?.preview_only?'CSV 검증용 결과입니다. 좋아요·싫어요·별점·제외·승인은 이 PC의 로컬 데이터에 저장돼요.':'조건을 바꾸면 새 선곡표를 받아 확인해 주세요.'}</small>
           </section>
         </div>
+        {result&&isDemo&&reviewOpen&&<div id="youtube-review-panel"><YoutubeReviewPanel key={result.playlist_id} playlistId={result.playlist_id} onUpdated={()=>setMappingRevision(value=>value+1)} onPreviewActive={setReviewPreview} blocked={guide||locked}/></div>}
       </main>
       <Banner placement="bottom" blocked={guide} enabled={adContextReady}/>
     </div>

@@ -1,0 +1,973 @@
+{
+  "schema_version": "YOUTUBE_CANDIDATE_RESEARCH_V1",
+  "research_date": "2026-10-16",
+  "source_file": "docs/acceptance/assets/dashboard-general-result-20261016.json",
+  "source_file_sha256": "233880987fe3436650368ada98a25a2c00a905a70659e7d2d1e135124326e280",
+  "assigned_slice": [
+    32,
+    47
+  ],
+  "source_positions": [
+    33,
+    47
+  ],
+  "record_count": 15,
+  "status": "CANDIDATES_PENDING_ROOT_BROWSER_VERIFICATION",
+  "verification_limitations": [
+    "전곡 CANDIDATE입니다. 공식 출처·원본 메타데이터로 수집한 후보이며 VERIFIED가 아닙니다.",
+    "영상 실제 길이를 관측하지 않아 platform_duration_seconds는 모두 null입니다. 원본 duration_ms를 영상 길이로 복사하지 않았습니다.",
+    "33번은 공식 Topic의 2001-04-06 발매일과 Amazon의 같은 날짜 라이브 앨범·4:06 곡 정보가 맞습니다. 영상 설명에서 (Ao Vivo) 생략이 있으므로 실제 녹음·길이 확인은 남아 있습니다.",
+    "40번은 공식 영상 ID 미확보이며 다른 담당자가 추가 탐색 중입니다.",
+    "45번은 공식 채널·사운드트랙 제목은 일치하나 웹도구에서 설명이 반환되지 않았습니다.",
+    "국내 가용성·실재생·연속 재생은 root 브라우저 검증 전입니다."
+  ],
+  "mappings": [
+    {
+      "source_position": 33,
+      "track_id": "048KE72zqhDQpy7V7YOyRb",
+      "source_track_name": "Outra Vez",
+      "source_artists": "Painel de Controle",
+      "source_album_name": "Painel de Controle (Ao Vivo)",
+      "source_duration_ms": 246200,
+      "source_track": {
+        "track_id": "048KE72zqhDQpy7V7YOyRb",
+        "track_name": "Outra Vez",
+        "artists_name": "Painel de Controle",
+        "album_name": "Painel de Controle (Ao Vivo)",
+        "duration_ms": 246200,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "2cbbe00c9ea49207dc64b832eaa034db7f7e9f189617afbf0dd0d81b4bee7c8b",
+        "genre_group_codes": [
+          "LATIN"
+        ],
+        "theme_codes": [],
+        "speed": "medium",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "youtube_video_id": "ze4NvFQAwg8",
+      "youtube_url": "https://www.youtube.com/watch?v=ze4NvFQAwg8",
+      "youtube_title": "Outra Vez",
+      "youtube_channel": "Painel De Controle - Topic",
+      "youtube_album_evidence": "Painel de Controle",
+      "youtube_provider_evidence": "ONErpm",
+      "version_alignment": "ORIGINAL_2001_ALBUM_DATE_CORROBORATED_LIVE_AUDIO_PENDING",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "verification_note": "원곡과 같은 아티스트·작곡자의 공식 자동 제공 음원이며 설명의 원발매일은 2001-04-06입니다. Amazon Music의 Painel de Controle (Ao Vivo) 원앨범도 같은 발매일·2번 Outra Vez·4:06·14곡 순서를 표시합니다. 따라서 원앨범의 (Ao Vivo) 표기 생략 가능성을 근거로 이 후보를 우선합니다. 실제 동일 라이브 녹음·영상 길이·국내 가용성·실재생은 root 브라우저 확인 전입니다.",
+      "checked_at": null,
+      "verified_by": null,
+      "research_date": "2026-10-16",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=ze4NvFQAwg8",
+        "https://music.amazon.de/albums/B07BYFV43Z",
+        "https://music.amazon.com/albums/B0FSNGQMRS"
+      ],
+      "duration_evidence": {
+        "status": "NOT_OBSERVED",
+        "source_duration_seconds": 246.2,
+        "youtube_observed_seconds": null
+      },
+      "alternatives": [
+        {
+          "youtube_video_id": "tCRvQXqrbOk",
+          "youtube_title": "Outra Vez (Ao Vivo)",
+          "youtube_channel": "Banda Painel de Controle - Topic",
+          "youtube_album_evidence": "Painel de Controle",
+          "youtube_provider_evidence": "ONErpm",
+          "note": "2024-10-05 발행 라이브 표기. 원곡과 아티스트 표기 및 발매 시점 차이가 있어 동일 녹음 확인 전입니다.",
+          "youtube_url": "https://www.youtube.com/watch?v=tCRvQXqrbOk",
+          "platform_duration_seconds": null,
+          "match_status": "CANDIDATE"
+        },
+        {
+          "youtube_video_id": "T4A1VZk3Ww0",
+          "youtube_title": "Outra Vez (Ao Vivo)",
+          "youtube_channel": "Banda Painel de Controle - Topic",
+          "youtube_album_evidence": "Só Sucessos",
+          "youtube_provider_evidence": "Sua Musica Digital LTDA",
+          "note": "2021-07-25 발매로 표시되는 라이브 재수록. 동일 녹음·길이 확인 전입니다.",
+          "youtube_url": "https://www.youtube.com/watch?v=T4A1VZk3Ww0",
+          "platform_duration_seconds": null,
+          "match_status": "CANDIDATE"
+        }
+      ],
+      "rejected_candidates": [],
+      "remaining_checks": [
+        "실제 영상 길이와 원본 duration_ms 차이 확인",
+        "원본과 동일한 녹음·라이브/리믹스/리마스터/편집 버전 재확인",
+        "국내 실제 재생 가용성·사용 중 브라우저 확인"
+      ]
+    },
+    {
+      "source_position": 34,
+      "track_id": "04CHEoMbrLOiX8co3EG5dO",
+      "source_track_name": "Thursday's Child Has Far To Go",
+      "source_artists": "TOMORROW X TOGETHER",
+      "source_album_name": "minisode 2: Thursday's Child",
+      "source_duration_ms": 211399,
+      "source_track": {
+        "track_id": "04CHEoMbrLOiX8co3EG5dO",
+        "track_name": "Thursday's Child Has Far To Go",
+        "artists_name": "TOMORROW X TOGETHER",
+        "album_name": "minisode 2: Thursday's Child",
+        "duration_ms": 211399,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "300d3fe43d9e3fedd4f699efdabadf8f1f9be135a5fa43bac17734ffd8dbe12d",
+        "genre_group_codes": [
+          "K-POP"
+        ],
+        "theme_codes": [],
+        "speed": "fastest",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "youtube_video_id": "phT2MJAn1KY",
+      "youtube_url": "https://www.youtube.com/watch?v=phT2MJAn1KY",
+      "youtube_title": "Thursday's Child Has Far To Go",
+      "youtube_channel": "TOMORROW X TOGETHER OFFICIAL",
+      "youtube_album_evidence": "minisode 2: Thursday's Child",
+      "youtube_provider_evidence": "BIGHIT MUSIC",
+      "version_alignment": "EXACT_ALBUM_AND_ARTIST",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "verification_note": "공식 아티스트 채널의 자동 제공 음원에 원본 곡명·아티스트·앨범이 일치합니다. 공식 BIGHIT 앨범 설명의 3:31은 곡 정보이며 YouTube 플레이어 길이를 대신하지 않습니다. 실제 영상 길이·국내 가용성·실재생은 root 브라우저 확인 전입니다.",
+      "checked_at": null,
+      "verified_by": null,
+      "research_date": "2026-10-16",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=phT2MJAn1KY",
+        "https://ibighit.com/legacy/txt/minisode-2-ko.html"
+      ],
+      "duration_evidence": {
+        "status": "NOT_OBSERVED",
+        "source_duration_seconds": 211.399,
+        "youtube_observed_seconds": null
+      },
+      "alternatives": [],
+      "rejected_candidates": [],
+      "remaining_checks": [
+        "실제 영상 길이와 원본 duration_ms 차이 확인",
+        "원본과 동일한 녹음·라이브/리믹스/리마스터/편집 버전 재확인",
+        "국내 실제 재생 가용성·사용 중 브라우저 확인"
+      ]
+    },
+    {
+      "source_position": 35,
+      "track_id": "04fYoQSUTfPhVjyW8aXkix",
+      "source_track_name": "En Jannal Vandha",
+      "source_artists": "Yuvan Shankar Raja;Roshini;Priya Hemesh;Divya Vijay",
+      "source_album_name": "Theeratha Vilayaatu Pillai (Original Motion Picture Soundtrack)",
+      "source_duration_ms": 283480,
+      "source_track": {
+        "track_id": "04fYoQSUTfPhVjyW8aXkix",
+        "track_name": "En Jannal Vandha",
+        "artists_name": "Yuvan Shankar Raja;Roshini;Priya Hemesh;Divya Vijay",
+        "album_name": "Theeratha Vilayaatu Pillai (Original Motion Picture Soundtrack)",
+        "duration_ms": 283480,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "990f06b3f661f8e7784a354dec47730887423e7f96b86a11572c105bce706ec9",
+        "genre_group_codes": [
+          "K-POP"
+        ],
+        "theme_codes": [],
+        "speed": "fast",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "youtube_video_id": "NfAA9FAaO7M",
+      "youtube_url": "https://www.youtube.com/watch?v=NfAA9FAaO7M",
+      "youtube_title": "En Jannal Vandha",
+      "youtube_channel": "Yuvan Shankar Raja - Topic",
+      "youtube_album_evidence": "Theeratha Vilayaatu Pillai (Original Motion Picture Soundtrack)",
+      "youtube_provider_evidence": "Sony Music Entertainment India Pvt. Ltd.",
+      "version_alignment": "EXACT_SOUNDTRACK_AND_ALL_FOUR_SOURCE_ARTISTS",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "verification_note": "자동 제공 음원에 원본 사운드트랙·곡명과 Yuvan Shankar Raja/Roshini/Priya Hemesh/Divya Vijay 네 명이 모두 일치합니다. 다른 컴필레이션 재수록 후보보다 원본 앨범이 일치하는 이 음원을 우선했습니다. 실제 영상 길이·국내 가용성·실재생은 root 브라우저 확인 전입니다.",
+      "checked_at": null,
+      "verified_by": null,
+      "research_date": "2026-10-16",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=NfAA9FAaO7M"
+      ],
+      "duration_evidence": {
+        "status": "NOT_OBSERVED",
+        "source_duration_seconds": 283.48,
+        "youtube_observed_seconds": null
+      },
+      "alternatives": [
+        {
+          "youtube_video_id": "Be-kwhLzZkQ",
+          "youtube_title": "En Jannal Vandha (From \"Theeratha Vilayaatu Pillai\")",
+          "youtube_channel": "Yuvan Shankar Raja - Topic",
+          "youtube_album_evidence": "My Star: Vishal",
+          "note": "동일 크레디트의 2009 Sony 녹음이지만 원본 사운드트랙 후보를 우선합니다.",
+          "youtube_url": "https://www.youtube.com/watch?v=Be-kwhLzZkQ",
+          "platform_duration_seconds": null,
+          "match_status": "CANDIDATE"
+        }
+      ],
+      "rejected_candidates": [],
+      "remaining_checks": [
+        "실제 영상 길이와 원본 duration_ms 차이 확인",
+        "원본과 동일한 녹음·라이브/리믹스/리마스터/편집 버전 재확인",
+        "국내 실제 재생 가용성·사용 중 브라우저 확인"
+      ]
+    },
+    {
+      "source_position": 36,
+      "track_id": "04hjo1F3q8K5EtY9BQoX0w",
+      "source_track_name": "I'll Shut up Now (feat. Willie Nelson)",
+      "source_artists": "The Dirt Drifters;Willie Nelson",
+      "source_album_name": "This Is My Blood",
+      "source_duration_ms": 243880,
+      "source_track": {
+        "track_id": "04hjo1F3q8K5EtY9BQoX0w",
+        "track_name": "I'll Shut up Now (feat. Willie Nelson)",
+        "artists_name": "The Dirt Drifters;Willie Nelson",
+        "album_name": "This Is My Blood",
+        "duration_ms": 243880,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "44dc5c0cebe2e6250f72335b8894fcfb26e6dbd25e45ab54e5c04b3f70155a6b",
+        "genre_group_codes": [
+          "FOLK_COUNTRY"
+        ],
+        "theme_codes": [],
+        "speed": "medium",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "youtube_video_id": "6K5rjXI9MLo",
+      "youtube_url": "https://www.youtube.com/watch?v=6K5rjXI9MLo",
+      "youtube_title": "I'll Shut up Now (feat. Willie Nelson)",
+      "youtube_channel": "The Dirt Drifters - Topic",
+      "youtube_album_evidence": "This Is My Blood",
+      "youtube_provider_evidence": "Warner Records",
+      "version_alignment": "EXACT_ALBUM_AND_FEATURED_ARTIST",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "verification_note": "자동 제공 음원에 This Is My Blood 앨범과 The Dirt Drifters/Willie Nelson이 일치하고, Willie Nelson의 Featured Vocals 크레디트가 있습니다. 라이브 대체 영상은 사용하지 않았습니다. 실제 영상 길이·국내 가용성·실재생은 root 브라우저 확인 전입니다.",
+      "checked_at": null,
+      "verified_by": null,
+      "research_date": "2026-10-16",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=6K5rjXI9MLo"
+      ],
+      "duration_evidence": {
+        "status": "NOT_OBSERVED",
+        "source_duration_seconds": 243.88,
+        "youtube_observed_seconds": null
+      },
+      "alternatives": [],
+      "rejected_candidates": [],
+      "remaining_checks": [
+        "실제 영상 길이와 원본 duration_ms 차이 확인",
+        "원본과 동일한 녹음·라이브/리믹스/리마스터/편집 버전 재확인",
+        "국내 실제 재생 가용성·사용 중 브라우저 확인"
+      ]
+    },
+    {
+      "source_position": 37,
+      "track_id": "04qx1yENXdu9yN6zzRiVfP",
+      "source_track_name": "Perreito - Remix",
+      "source_artists": "Mariah Angeliq;Arcangel;Darell",
+      "source_album_name": "Última Misión Reggaeton",
+      "source_duration_ms": 213333,
+      "source_track": {
+        "track_id": "04qx1yENXdu9yN6zzRiVfP",
+        "track_name": "Perreito - Remix",
+        "artists_name": "Mariah Angeliq;Arcangel;Darell",
+        "album_name": "Última Misión Reggaeton",
+        "duration_ms": 213333,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "bfe2bf6bfc1e4d7fecf19ed289810f91964b3e4297456be083bec2b07d153b03",
+        "genre_group_codes": [
+          "LATIN"
+        ],
+        "theme_codes": [],
+        "speed": "fastest",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "youtube_video_id": "53t-QjzGrC8",
+      "youtube_url": "https://www.youtube.com/watch?v=53t-QjzGrC8",
+      "youtube_title": "Perreito (Remix)",
+      "youtube_channel": "Mariah Angeliq",
+      "youtube_album_evidence": "Perreito",
+      "youtube_provider_evidence": "Universal Music Group",
+      "version_alignment": "EXACT_REMIX_AND_ALL_THREE_ARTISTS_COMPILATION_DIFFERENCE",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "verification_note": "공식 아티스트 채널 음원에 Remix 및 Mariah Angeliq/Arcángel/Darell 세 명이 일치합니다. 원본 CSV 앨범은 Última Misión Reggaeton 컴필레이션이므로 동일 리믹스 녹음과 길이 확인은 추가로 필요합니다. 설명의 발매일은 2019-09-27입니다. 실제 영상 길이·국내 가용성·실재생은 root 브라우저 확인 전입니다.",
+      "checked_at": null,
+      "verified_by": null,
+      "research_date": "2026-10-16",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=53t-QjzGrC8"
+      ],
+      "duration_evidence": {
+        "status": "NOT_OBSERVED",
+        "source_duration_seconds": 213.333,
+        "youtube_observed_seconds": null
+      },
+      "alternatives": [],
+      "rejected_candidates": [],
+      "remaining_checks": [
+        "실제 영상 길이와 원본 duration_ms 차이 확인",
+        "원본과 동일한 녹음·라이브/리믹스/리마스터/편집 버전 재확인",
+        "국내 실제 재생 가용성·사용 중 브라우저 확인"
+      ]
+    },
+    {
+      "source_position": 38,
+      "track_id": "0530i8KhAfzyJfHhjlSlUS",
+      "source_track_name": "Tordilho Negro",
+      "source_artists": "Os Serranos",
+      "source_album_name": "40 Anos - Sempre Gaúchos !",
+      "source_duration_ms": 309775,
+      "source_track": {
+        "track_id": "0530i8KhAfzyJfHhjlSlUS",
+        "track_name": "Tordilho Negro",
+        "artists_name": "Os Serranos",
+        "album_name": "40 Anos - Sempre Gaúchos !",
+        "duration_ms": 309775,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "1bd1f18d98cfa23872e7077c3e58d4959ce1b2378e2400c26a555c2e7058f744",
+        "genre_group_codes": [
+          "LATIN"
+        ],
+        "theme_codes": [],
+        "speed": "medium",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "youtube_video_id": "KjLyC1hzSF8",
+      "youtube_url": "https://www.youtube.com/watch?v=KjLyC1hzSF8",
+      "youtube_title": "Tordilho Negro (Ao Vivo)",
+      "youtube_channel": "Os Serranos",
+      "youtube_album_evidence": "40 Anos - Sempre Gaúchos!",
+      "youtube_provider_evidence": "ONErpm",
+      "version_alignment": "EXACT_LIVE_ALBUM",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "verification_note": "공식 아티스트 채널 자동 제공 음원에 40 Anos - Sempre Gaúchos!와 라이브 표기가 일치합니다. DVD 영상 대신 이 앨범 음원을 우선합니다. 설명 발매일은 2009-11-04입니다. 실제 영상 길이·국내 가용성·실재생은 root 브라우저 확인 전입니다.",
+      "checked_at": null,
+      "verified_by": null,
+      "research_date": "2026-10-16",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=KjLyC1hzSF8"
+      ],
+      "duration_evidence": {
+        "status": "NOT_OBSERVED",
+        "source_duration_seconds": 309.775,
+        "youtube_observed_seconds": null
+      },
+      "alternatives": [
+        {
+          "youtube_video_id": "5VzhkHMs5D8",
+          "youtube_title": "DVD Os Serranos 40 Anos - Tordilho Negro",
+          "youtube_channel": "Os Serranos",
+          "youtube_album_evidence": "DVD Os Serranos 40 Anos - Sempre Gaúchos",
+          "note": "공식 DVD 개별 곡이며 2008년 공연 출처가 명시되지만 영상 도입부·길이가 추가될 수 있으므로 자동 제공 앨범 음원 우선입니다.",
+          "youtube_url": "https://www.youtube.com/watch?v=5VzhkHMs5D8",
+          "platform_duration_seconds": null,
+          "match_status": "CANDIDATE"
+        }
+      ],
+      "rejected_candidates": [],
+      "remaining_checks": [
+        "실제 영상 길이와 원본 duration_ms 차이 확인",
+        "원본과 동일한 녹음·라이브/리믹스/리마스터/편집 버전 재확인",
+        "국내 실제 재생 가용성·사용 중 브라우저 확인"
+      ]
+    },
+    {
+      "source_position": 39,
+      "track_id": "0572KbbV9g5j56X5ujG8Ax",
+      "source_track_name": "Superando Expectativas",
+      "source_artists": "Sudario",
+      "source_album_name": "Esquenta Pagodera do Sudario",
+      "source_duration_ms": 148149,
+      "source_track": {
+        "track_id": "0572KbbV9g5j56X5ujG8Ax",
+        "track_name": "Superando Expectativas",
+        "artists_name": "Sudario",
+        "album_name": "Esquenta Pagodera do Sudario",
+        "duration_ms": 148149,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "ae5d552663bb020d53777c24c61feb5a66a36e7e70ca11ae07b08545dc160332",
+        "genre_group_codes": [
+          "LATIN"
+        ],
+        "theme_codes": [],
+        "speed": "fastest",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "youtube_video_id": "7xkRkdOIVWE",
+      "youtube_url": "https://www.youtube.com/watch?v=7xkRkdOIVWE",
+      "youtube_title": "Sudário - Superando Expectativas (Esquenta Pagodera do Sudário)",
+      "youtube_channel": "Sudário Oficial",
+      "youtube_album_evidence": "Esquenta Pagodera do Sudário",
+      "youtube_provider_evidence": null,
+      "version_alignment": "EXACT_2019_PROJECT_ON_OFFICIAL_ARTIST_CHANNEL",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "verification_note": "공식 아티스트 채널의 2019-12-19 게시 영상 제목·설명이 원본의 Esquenta Pagodera do Sudário 프로젝트와 일치합니다. 2021년 Pagodera do Sudário (Ao Vivo) 재녹음·2022년 메들리는 대체하지 않았습니다. 실제 영상 길이·국내 가용성·실재생은 root 브라우저 확인 전입니다.",
+      "checked_at": null,
+      "verified_by": null,
+      "research_date": "2026-10-16",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=7xkRkdOIVWE",
+        "https://music.amazon.com.br/tracks/B0DNLBN62P"
+      ],
+      "duration_evidence": {
+        "status": "NOT_OBSERVED",
+        "source_duration_seconds": 148.149,
+        "youtube_observed_seconds": null
+      },
+      "alternatives": [],
+      "rejected_candidates": [
+        {
+          "youtube_video_id": "qa9rUZ0-l4I",
+          "reason": "Superando As Expectativas/Intensidade/Chegou Pra Ficar 메들리이므로 원본 단일 곡 대체 금지."
+        }
+      ],
+      "remaining_checks": [
+        "실제 영상 길이와 원본 duration_ms 차이 확인",
+        "원본과 동일한 녹음·라이브/리믹스/리마스터/편집 버전 재확인",
+        "국내 실제 재생 가용성·사용 중 브라우저 확인"
+      ]
+    },
+    {
+      "source_position": 40,
+      "track_id": "05OYrX2wIpHZYVuy56Rce8",
+      "source_track_name": "What, Why, Where, When (featuring Styles)",
+      "source_artists": "DJ Envy",
+      "source_album_name": "The Desert Storm Mixtape: DJ Envy Blok Party Vol. 1",
+      "source_duration_ms": 195706,
+      "source_track": {
+        "track_id": "05OYrX2wIpHZYVuy56Rce8",
+        "track_name": "What, Why, Where, When (featuring Styles)",
+        "artists_name": "DJ Envy",
+        "album_name": "The Desert Storm Mixtape: DJ Envy Blok Party Vol. 1",
+        "duration_ms": 195706,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "d21c02ca72bd705ef47a29016d916b157c7f549bc87f3214807dd55dbfbefe31",
+        "genre_group_codes": [
+          "ELECTRONIC_DANCE"
+        ],
+        "theme_codes": [],
+        "speed": "medium",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "youtube_video_id": null,
+      "youtube_url": null,
+      "youtube_title": null,
+      "youtube_channel": null,
+      "youtube_album_evidence": null,
+      "youtube_provider_evidence": null,
+      "version_alignment": "UNRESOLVED_NO_YOUTUBE_ID_OBSERVED",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "verification_note": "원본 곡·앨범 정보와 3:15~3:16 길이를 Apple Music/Amazon에서 확인했으나 웹검색에서 공식 YouTube 음원 ID를 확보하지 못했습니다. ID를 추측하지 않았습니다. root와 part2 담당자가 추가 검색 중입니다. 실제 영상 길이·국내 가용성·실재생은 root 브라우저 확인 전입니다.",
+      "checked_at": null,
+      "verified_by": null,
+      "research_date": "2026-10-16",
+      "evidence_urls": [
+        "https://music.apple.com/us/album/the-desert-storm-mixtape-dj-envy-blok-party-vol-1/193605350",
+        "https://music.amazon.com/tracks/B0013AHLKI"
+      ],
+      "duration_evidence": {
+        "status": "NOT_OBSERVED",
+        "source_duration_seconds": 195.706,
+        "youtube_observed_seconds": null
+      },
+      "alternatives": [],
+      "rejected_candidates": [],
+      "remaining_checks": [
+        "정확한 DJ Envy/Styles 스튜디오 앨범 버전의 공식·Topic 영상 ID 확보",
+        "실제 영상 길이와 재생 가용성 확인"
+      ]
+    },
+    {
+      "source_position": 41,
+      "track_id": "05QsnIXjPo4ZUhvlV1JxfA",
+      "source_track_name": "Amanhã - Ao Vivo",
+      "source_artists": "Sorriso Maroto",
+      "source_album_name": "É Diferente (Ao Vivo)",
+      "source_duration_ms": 238960,
+      "source_track": {
+        "track_id": "05QsnIXjPo4ZUhvlV1JxfA",
+        "track_name": "Amanhã - Ao Vivo",
+        "artists_name": "Sorriso Maroto",
+        "album_name": "É Diferente (Ao Vivo)",
+        "duration_ms": 238960,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "6fc6d2be639209cf9ff21d9b8ca0bc957c3535cb6a50ba611ca76a57b10b5405",
+        "genre_group_codes": [
+          "LATIN"
+        ],
+        "theme_codes": [],
+        "speed": "fast",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "youtube_video_id": "mkfFvreNpMs",
+      "youtube_url": "https://www.youtube.com/watch?v=mkfFvreNpMs",
+      "youtube_title": "Sorriso Maroto  - Amanhã (ao vivo)",
+      "youtube_channel": "Deck",
+      "youtube_album_evidence": "É Diferente - Ao Vivo",
+      "youtube_provider_evidence": "Deck (label channel)",
+      "version_alignment": "EXACT_2007_LIVE_ALBUM",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "verification_note": "레이블 Deck의 2008-12-15 게시 개별 영상입니다. 설명에서 2007년 É Diferente - Ao Vivo CD 수록 및 리우 라이브 녹음을 명시합니다. 전체 DVD나 다른 공연 버전은 대체하지 않았습니다. 실제 영상 길이·국내 가용성·실재생은 root 브라우저 확인 전입니다.",
+      "checked_at": null,
+      "verified_by": null,
+      "research_date": "2026-10-16",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=mkfFvreNpMs"
+      ],
+      "duration_evidence": {
+        "status": "NOT_OBSERVED",
+        "source_duration_seconds": 238.96,
+        "youtube_observed_seconds": null
+      },
+      "alternatives": [],
+      "rejected_candidates": [
+        {
+          "youtube_video_id": "Z1lHbk573JM",
+          "reason": "22곡 전체 DVD이므로 단일 곡 후보로 사용하지 않습니다."
+        }
+      ],
+      "remaining_checks": [
+        "실제 영상 길이와 원본 duration_ms 차이 확인",
+        "원본과 동일한 녹음·라이브/리믹스/리마스터/편집 버전 재확인",
+        "국내 실제 재생 가용성·사용 중 브라우저 확인"
+      ]
+    },
+    {
+      "source_position": 42,
+      "track_id": "05f8Hg3RSfiPSCBQOtxl3i",
+      "source_track_name": "When the Levee Breaks - Remaster",
+      "source_artists": "Led Zeppelin",
+      "source_album_name": "Led Zeppelin IV (Deluxe Edition)",
+      "source_duration_ms": 428851,
+      "source_track": {
+        "track_id": "05f8Hg3RSfiPSCBQOtxl3i",
+        "track_name": "When the Levee Breaks - Remaster",
+        "artists_name": "Led Zeppelin",
+        "album_name": "Led Zeppelin IV (Deluxe Edition)",
+        "duration_ms": 428851,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "dce73d0e4277a37fb3ad6d7ee2fba5241da813fbe44976bf50df8ebc67a553dd",
+        "genre_group_codes": [
+          "ROCK"
+        ],
+        "theme_codes": [],
+        "speed": "fast",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "youtube_video_id": "28ZOwVAZS0o",
+      "youtube_url": "https://www.youtube.com/watch?v=28ZOwVAZS0o",
+      "youtube_title": "When the Levee Breaks (Remaster)",
+      "youtube_channel": "Led Zeppelin",
+      "youtube_album_evidence": "Led Zeppelin IV",
+      "youtube_provider_evidence": "Atlantic Records",
+      "version_alignment": "EXACT_IV_REMASTER_NOT_ROUGH_MIX",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "verification_note": "공식 아티스트 채널의 자동 제공 IV 음원에 Remaster와 John Davis 리마스터 크레디트가 일치합니다. 원본 CSV는 Deluxe Edition이므로 해당 판의 원앨범 트랙과 실제 길이를 추가 대조해야 합니다. Mothership 재수록이나 Rough Mix는 우선하지 않았습니다. 실제 영상 길이·국내 가용성·실재생은 root 브라우저 확인 전입니다.",
+      "checked_at": null,
+      "verified_by": null,
+      "research_date": "2026-10-16",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=28ZOwVAZS0o"
+      ],
+      "duration_evidence": {
+        "status": "NOT_OBSERVED",
+        "source_duration_seconds": 428.851,
+        "youtube_observed_seconds": null
+      },
+      "alternatives": [
+        {
+          "youtube_video_id": "uwiTs60VoTM",
+          "youtube_title": "When the Levee Breaks (Remaster)",
+          "youtube_channel": "Led Zeppelin",
+          "youtube_album_evidence": "Mothership",
+          "note": "공식 리마스터 음원이지만 원본 IV 앨범 후보를 우선합니다.",
+          "youtube_url": "https://www.youtube.com/watch?v=uwiTs60VoTM",
+          "platform_duration_seconds": null,
+          "match_status": "CANDIDATE"
+        }
+      ],
+      "rejected_candidates": [],
+      "remaining_checks": [
+        "실제 영상 길이와 원본 duration_ms 차이 확인",
+        "원본과 동일한 녹음·라이브/리믹스/리마스터/편집 버전 재확인",
+        "국내 실제 재생 가용성·사용 중 브라우저 확인"
+      ]
+    },
+    {
+      "source_position": 43,
+      "track_id": "05fHQeRbCSjKVS6z0WbQKJ",
+      "source_track_name": "Every Time You Go Away - Radio Edit",
+      "source_artists": "Paul Young",
+      "source_album_name": "From Time To Time - The Singles Collection",
+      "source_duration_ms": 267000,
+      "source_track": {
+        "track_id": "05fHQeRbCSjKVS6z0WbQKJ",
+        "track_name": "Every Time You Go Away - Radio Edit",
+        "artists_name": "Paul Young",
+        "album_name": "From Time To Time - The Singles Collection",
+        "duration_ms": 267000,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "41470010168be988cb2b62a4c1928f8557a4f33e104851055d799a4d36af107a",
+        "genre_group_codes": [
+          "ELECTRONIC_DANCE",
+          "POP"
+        ],
+        "theme_codes": [],
+        "speed": "fastest",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "youtube_video_id": "p3tH4Ksu50o",
+      "youtube_url": "https://www.youtube.com/watch?v=p3tH4Ksu50o",
+      "youtube_title": "Every Time You Go Away (Radio Edit)",
+      "youtube_channel": "Paul Young - Topic",
+      "youtube_album_evidence": "From Time To Time - The Singles Collection",
+      "youtube_provider_evidence": "Columbia",
+      "version_alignment": "EXACT_RADIO_EDIT_AND_ALBUM",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "verification_note": "자동 제공 음원에 Radio Edit 및 From Time To Time - The Singles Collection이 원본과 일치합니다. 일반 앨범 버전이나 라이브를 대체하지 않았습니다. 실제 영상 길이·국내 가용성·실재생은 root 브라우저 확인 전입니다.",
+      "checked_at": null,
+      "verified_by": null,
+      "research_date": "2026-10-16",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=p3tH4Ksu50o"
+      ],
+      "duration_evidence": {
+        "status": "NOT_OBSERVED",
+        "source_duration_seconds": 267,
+        "youtube_observed_seconds": null
+      },
+      "alternatives": [],
+      "rejected_candidates": [],
+      "remaining_checks": [
+        "실제 영상 길이와 원본 duration_ms 차이 확인",
+        "원본과 동일한 녹음·라이브/리믹스/리마스터/편집 버전 재확인",
+        "국내 실제 재생 가용성·사용 중 브라우저 확인"
+      ]
+    },
+    {
+      "source_position": 44,
+      "track_id": "05ngREvdGhL4Omvxw4Hjmo",
+      "source_track_name": "Guach Perry",
+      "source_artists": "Chancho En Piedra",
+      "source_album_name": "Peor Es Mascar Lauchas",
+      "source_duration_ms": 236693,
+      "source_track": {
+        "track_id": "05ngREvdGhL4Omvxw4Hjmo",
+        "track_name": "Guach Perry",
+        "artists_name": "Chancho En Piedra",
+        "album_name": "Peor Es Mascar Lauchas",
+        "duration_ms": 236693,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "59aad94b0b7e0393e99dd6ba4743e240304799c289b265f557114cd7be00c074",
+        "genre_group_codes": [
+          "REGGAE_SKA"
+        ],
+        "theme_codes": [],
+        "speed": "fast",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "youtube_video_id": "Fs-3fP7-HE8",
+      "youtube_url": "https://www.youtube.com/watch?v=Fs-3fP7-HE8",
+      "youtube_title": "Guach Perry",
+      "youtube_channel": "Chancho En Piedra",
+      "youtube_album_evidence": "Peor Es Mascar Lauchas",
+      "youtube_provider_evidence": "The Orchard Enterprises",
+      "version_alignment": "EXACT_1995_ALBUM_RECORDING",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "verification_note": "공식 아티스트 채널의 자동 제공 음원에 원본 곡·앨범과 ℗1995 Alerce 및 1995-09-12 발매가 일치합니다. 기념 공연 라이브는 대체하지 않았습니다. 실제 영상 길이·국내 가용성·실재생은 root 브라우저 확인 전입니다.",
+      "checked_at": null,
+      "verified_by": null,
+      "research_date": "2026-10-16",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=Fs-3fP7-HE8"
+      ],
+      "duration_evidence": {
+        "status": "NOT_OBSERVED",
+        "source_duration_seconds": 236.693,
+        "youtube_observed_seconds": null
+      },
+      "alternatives": [],
+      "rejected_candidates": [],
+      "remaining_checks": [
+        "실제 영상 길이와 원본 duration_ms 차이 확인",
+        "원본과 동일한 녹음·라이브/리믹스/리마스터/편집 버전 재확인",
+        "국내 실제 재생 가용성·사용 중 브라우저 확인"
+      ]
+    },
+    {
+      "source_position": 45,
+      "track_id": "05oFyvdztPdpwSwpoclD4c",
+      "source_track_name": "If You Leave - From \"Pretty In Pink\"",
+      "source_artists": "Orchestral Manoeuvres In The Dark",
+      "source_album_name": "If You Leave",
+      "source_duration_ms": 268546,
+      "source_track": {
+        "track_id": "05oFyvdztPdpwSwpoclD4c",
+        "track_name": "If You Leave - From \"Pretty In Pink\"",
+        "artists_name": "Orchestral Manoeuvres In The Dark",
+        "album_name": "If You Leave",
+        "duration_ms": 268546,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "abab8efcf04c7e00392df464bf3c0964beae0e3e502ebaff35de5a205acc576c",
+        "genre_group_codes": [
+          "POP"
+        ],
+        "theme_codes": [],
+        "speed": "fast",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "youtube_video_id": "n3jO84dtg9M",
+      "youtube_url": "https://www.youtube.com/watch?v=n3jO84dtg9M",
+      "youtube_title": "If You Leave (From \"Pretty In Pink\" Soundtrack)",
+      "youtube_channel": "Orchestral Manoeuvres in the Dark",
+      "youtube_album_evidence": null,
+      "youtube_provider_evidence": null,
+      "version_alignment": "EXACT_SOUNDTRACK_TAG_ALBUM_DESCRIPTION_NOT_RETURNED",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "verification_note": "공식 아티스트 채널의 음원 제목에 From Pretty In Pink Soundtrack이 원본과 일치합니다. 웹도구에서 영상 설명이 None으로 반환되어 앨범·제공자·영상 길이는 미확인입니다. 일반 공식 MV와 별도 후보입니다. 실제 영상 길이·국내 가용성·실재생은 root 브라우저 확인 전입니다.",
+      "checked_at": null,
+      "verified_by": null,
+      "research_date": "2026-10-16",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=n3jO84dtg9M"
+      ],
+      "duration_evidence": {
+        "status": "NOT_OBSERVED",
+        "source_duration_seconds": 268.546,
+        "youtube_observed_seconds": null
+      },
+      "alternatives": [
+        {
+          "youtube_video_id": "EPmTGFg06zA",
+          "youtube_title": "Orchestral Manoeuvres In The Dark - If You Leave (Official Music Video)",
+          "youtube_channel": "Orchestral Manoeuvres in the Dark",
+          "note": "공식 MV이지만 원본 음원 길이와 인트로 차이가 확인되지 않았으므로 음원 후보를 우선합니다.",
+          "youtube_url": "https://www.youtube.com/watch?v=EPmTGFg06zA",
+          "platform_duration_seconds": null,
+          "match_status": "CANDIDATE"
+        }
+      ],
+      "rejected_candidates": [],
+      "remaining_checks": [
+        "실제 영상 길이와 원본 duration_ms 차이 확인",
+        "원본과 동일한 녹음·라이브/리믹스/리마스터/편집 버전 재확인",
+        "국내 실제 재생 가용성·사용 중 브라우저 확인"
+      ]
+    },
+    {
+      "source_position": 46,
+      "track_id": "05y79YGqS94EQe0v29lHIo",
+      "source_track_name": "Soñando - Remastered",
+      "source_artists": "Kevin Martes 13",
+      "source_album_name": "Inmortal",
+      "source_duration_ms": 272000,
+      "source_track": {
+        "track_id": "05y79YGqS94EQe0v29lHIo",
+        "track_name": "Soñando - Remastered",
+        "artists_name": "Kevin Martes 13",
+        "album_name": "Inmortal",
+        "duration_ms": 272000,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "fd2d03366a7033069995ec8bb7b42517794bf69dfbc9a45c9984f8c7c7a48630",
+        "genre_group_codes": [
+          "LATIN",
+          "REGGAE_SKA"
+        ],
+        "theme_codes": [],
+        "speed": "fastest",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "youtube_video_id": "liIeZSb7rT0",
+      "youtube_url": "https://www.youtube.com/watch?v=liIeZSb7rT0",
+      "youtube_title": "Soñando (Remastered)",
+      "youtube_channel": "Kevin Martes 13 - Topic",
+      "youtube_album_evidence": "Inmortal",
+      "youtube_provider_evidence": "Mojo Latam LLC",
+      "version_alignment": "EXACT_REMASTERED_AND_ALBUM",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "verification_note": "자동 제공 음원에 Soñando(Remastered)와 Inmortal 앨범·Kevin Martes 13이 일치하고 2020-10-13 발매가 명시됩니다. 원래 싱글이나 별도 MV는 대체하지 않았습니다. 실제 영상 길이·국내 가용성·실재생은 root 브라우저 확인 전입니다.",
+      "checked_at": null,
+      "verified_by": null,
+      "research_date": "2026-10-16",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=liIeZSb7rT0"
+      ],
+      "duration_evidence": {
+        "status": "NOT_OBSERVED",
+        "source_duration_seconds": 272,
+        "youtube_observed_seconds": null
+      },
+      "alternatives": [],
+      "rejected_candidates": [],
+      "remaining_checks": [
+        "실제 영상 길이와 원본 duration_ms 차이 확인",
+        "원본과 동일한 녹음·라이브/리믹스/리마스터/편집 버전 재확인",
+        "국내 실제 재생 가용성·사용 중 브라우저 확인"
+      ]
+    },
+    {
+      "source_position": 47,
+      "track_id": "05zDB03E1WxCLyraJJ2I2r",
+      "source_track_name": "ラブ・ドラマティック (Funky Flag Version)",
+      "source_artists": "Masayuki Suzuki;伊原六花",
+      "source_album_name": "Funky Flag",
+      "source_duration_ms": 262946,
+      "source_track": {
+        "track_id": "05zDB03E1WxCLyraJJ2I2r",
+        "track_name": "ラブ・ドラマティック (Funky Flag Version)",
+        "artists_name": "Masayuki Suzuki;伊原六花",
+        "album_name": "Funky Flag",
+        "duration_ms": 262946,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "3ea7711b6b0f4d87a6fbce1458b58f419d1e5e6d8d86591997344f56040f42b9",
+        "genre_group_codes": [
+          "J-POP"
+        ],
+        "theme_codes": [],
+        "speed": "fast",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "youtube_video_id": "OVBl7cdP8zk",
+      "youtube_url": "https://www.youtube.com/watch?v=OVBl7cdP8zk",
+      "youtube_title": "Love Dramatic (Funky Flag Version)",
+      "youtube_channel": "鈴木雅之 Official YouTube Channel",
+      "youtube_album_evidence": "Funky Flag",
+      "youtube_provider_evidence": "Sony Music Labels Inc.",
+      "version_alignment": "EXACT_FUNKY_FLAG_VERSION_AND_FEATURE",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "verification_note": "공식 아티스트 채널 자동 제공 음원에 Funky Flag Version, Funky Flag 앨범 및 Masayuki Suzuki/Rikka Ihara가 일치합니다. 일본어 원곡명 라ブ・ドラマティック의 로마자/영문 표시이며 일반 TV·MV 버전은 대체하지 않았습니다. 설명 발매일은 2019-03-13입니다. 실제 영상 길이·국내 가용성·실재생은 root 브라우저 확인 전입니다.",
+      "checked_at": null,
+      "verified_by": null,
+      "research_date": "2026-10-16",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=OVBl7cdP8zk"
+      ],
+      "duration_evidence": {
+        "status": "NOT_OBSERVED",
+        "source_duration_seconds": 262.946,
+        "youtube_observed_seconds": null
+      },
+      "alternatives": [
+        {
+          "youtube_video_id": "qpsE-l-ZTpY",
+          "youtube_title": "ラブ・ドラマティック (Funky Flag Version)",
+          "youtube_channel": "鈴木雅之 Official YouTube Channel",
+          "note": "동일 공식 채널의 일본어 제목 후보. 웹도구에 설명이 없어 제공자·앨범 근거가 있는 OVBl7cdP8zk를 우선합니다.",
+          "youtube_url": "https://www.youtube.com/watch?v=qpsE-l-ZTpY",
+          "platform_duration_seconds": null,
+          "match_status": "CANDIDATE"
+        }
+      ],
+      "rejected_candidates": [],
+      "remaining_checks": [
+        "실제 영상 길이와 원본 duration_ms 차이 확인",
+        "원본과 동일한 녹음·라이브/리믹스/리마스터/편집 버전 재확인",
+        "국내 실제 재생 가용성·사용 중 브라우저 확인"
+      ]
+    }
+  ]
+}

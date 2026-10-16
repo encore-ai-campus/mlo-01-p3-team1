@@ -4,7 +4,8 @@ from django.test import TransactionTestCase, Client, override_settings
 from django.core.management import call_command
 from django.utils import timezone
 from backend.recommendation.models import Job, Playlist, PendingEvent, Family, DemoFeedback, Catalog
-from backend.recommendation.worker import run_one, verified_catalog
+from backend.recommendation.worker import run_one, verified_catalog, warm_current_catalog
+from backend.recommendation.service import current_catalog
 from backend.recommendation.errors import DomainError
 from backend.recommendation.policy import GENRES, THEMES
 from backend.recommendation.weather import obtain
@@ -33,6 +34,67 @@ class ApiTests(TransactionTestCase):
         catalog.sha256='0'*64;catalog.save(update_fields=['sha256'])
         with self.assertRaises(DomainError) as failure: verified_catalog(catalog)
         self.assertEqual(failure.exception.code,'CATALOG_INVALID')
+    def catalog_copy(self, version, source_ref, is_test=True, ready=True):
+        source=Catalog.objects.get(pk='c-demo-v2')
+        return Catalog.objects.create(version=version,tracks=source.tracks,sha256=source.sha256,
+            source_ref=source_ref,source_sha256=source.source_sha256,is_test=is_test,ready=ready)
+    def test_general_recommendation_and_warmup_skip_latest_fixed_playback_catalog(self):
+        self.catalog_copy('general-old','local-preview:general-old.csv')
+        expected=self.catalog_copy('general-current','local-preview:general-current.csv')
+        fixed=self.catalog_copy('fixed-playback','local-preview:youtube-playback-selection:source.csv')
+        self.catalog_copy('not-ready','local-preview:pending.csv',ready=False)
+        self.catalog_copy('production-newer','released:catalog',is_test=False)
+        self.assertEqual(current_catalog().pk,expected.pk)
+        with patch('backend.recommendation.worker.verified_catalog') as verify:
+            warm_current_catalog()
+        self.assertEqual(verify.call_args.args[0].pk,expected.pk)
+        job=Job.objects.get(pk=self.basic())
+        self.assertEqual(job.catalog_id,expected.pk)
+        self.assertTrue(Catalog.objects.filter(pk=fixed.pk,ready=True).exists())
+    def test_fixed_playback_catalog_alone_cannot_supply_general_recommendation(self):
+        fixed=self.catalog_copy('fixed-only','local-preview:youtube-playback-selection:source.csv')
+        Catalog.objects.exclude(pk=fixed.pk).delete()
+        with patch('backend.recommendation.worker.verified_catalog') as verify:
+            warm_current_catalog()
+        verify.assert_not_called()
+        response=self.post('/api/recommendation-jobs',{'region_id':'demo-region'},'fixed-only')
+        self.assertEqual(response.status_code,503,response.content)
+        self.assertEqual(response.json()['code'],'POLICY_NOT_READY')
+        self.assertIn('일반 추천용 전체 음악 카탈로그',response.json()['message'])
+        self.assertFalse(Job.objects.exists())
+        self.assertFalse(Family.objects.exists())
+    def test_catalog_selection_keeps_production_catalog_scope(self):
+        self.catalog_copy('production-old','released:old',is_test=False)
+        newest=self.catalog_copy('production-current','released:current',is_test=False)
+        self.catalog_copy('local-fixed','local-preview:youtube-playback-selection:source.csv')
+        with override_settings(LOCAL_DEMO=False):
+            self.assertEqual(current_catalog().pk,newest.pk)
+    def test_preview_parent_keeps_catalog_when_new_general_catalog_is_published(self):
+        parent=self.result()
+        original=parent.job.catalog
+        original.source_ref='local-preview:source.csv';original.save(update_fields=['source_ref'])
+        parent.snapshot['preview_only']=True;parent.save(update_fields=['snapshot'])
+        self.catalog_copy('general-newer','local-preview:newer.csv')
+        self.catalog_copy('fixed-newest','local-preview:youtube-playback-selection:source.csv')
+        response=self.post(f'/api/playlists/{parent.pk}/regenerations',{'exclusion_revision':0},'keep-parent')
+        self.assertEqual(response.status_code,202,response.content)
+        regenerated=Job.objects.get(pk=response.json()['job_id'])
+        self.assertEqual(regenerated.parent_id,parent.pk)
+        self.assertEqual(regenerated.catalog_id,original.pk)
+    def test_historical_fixed_playback_result_stays_readable_and_parent_fixed(self):
+        parent=self.result()
+        original=parent.job.catalog
+        original.source_ref='local-preview:youtube-playback-selection:source.csv'
+        original.save(update_fields=['source_ref'])
+        parent.snapshot['preview_only']=True;parent.save(update_fields=['snapshot'])
+        self.catalog_copy('general-after-fixed','local-preview:general.csv')
+        detail=self.client.get(f'/api/playlists/{parent.pk}')
+        self.assertEqual(detail.status_code,200,detail.content)
+        self.assertEqual(detail.json()['items'],parent.snapshot['items'])
+        self.assertEqual(detail.json()['total_ms'],parent.snapshot['total_ms'])
+        response=self.post(f'/api/playlists/{parent.pk}/regenerations',{'exclusion_revision':0},'historical-parent')
+        self.assertEqual(response.status_code,202,response.content)
+        self.assertEqual(Job.objects.get(pk=response.json()['job_id']).catalog_id,original.pk)
     def test_default_flow_idempotency_ownership(self):
         j=self.basic()
         duplicate=self.post('/api/recommendation-jobs',{'region_id':'demo-region'})

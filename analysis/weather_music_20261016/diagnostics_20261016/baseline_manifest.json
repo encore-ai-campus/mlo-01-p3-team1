@@ -1,0 +1,63 @@
+{
+  "analysis_version": "WEATHER_DIAGNOSTICS_20261016_V1",
+  "baseline_formula_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+  "analysis_date": "2026-10-16",
+  "baseline_files": {
+    "analysis/weather_music_20261016/policy.json": {
+      "sha256": "def75d6885d04464b58bcb60b8148482ecb394de23151e4b4830f25f15626622",
+      "bytes": 8312
+    },
+    "analysis/weather_music_20261016/summary.json": {
+      "sha256": "61532e41b6c3a26ac4d7783cf4c5a65de4ea46950f0de090a9f0b908b8b39e47",
+      "bytes": 95159
+    },
+    "analysis/weather_music_20261016/analyze.py": {
+      "sha256": "c6f1e22901d6faffc09f1fba54656c599340229a6358fad14ef4c1046a409211",
+      "bytes": 36944
+    },
+    "analysis/weather_music_20261016/pools/CLEAR.csv": {
+      "sha256": "5e5bd65aba4805cb7bf88372b1fdf84840ef91b3b6b7be6d8cde1a5e18a9d189",
+      "bytes": 21750096
+    },
+    "analysis/weather_music_20261016/pools/CLOUDY.csv": {
+      "sha256": "e60ccd8b8658cbb8721578d5be13b2314f429dc9fe4bebc0a52a2998d3ec0147",
+      "bytes": 20783685
+    },
+    "analysis/weather_music_20261016/pools/OVERCAST.csv": {
+      "sha256": "dbd5cf3906dc0870ad3c6443de8f8a07bfddf8a54012c6e603a0489548de00c9",
+      "bytes": 8266349
+    },
+    "analysis/weather_music_20261016/pools/RAIN.csv": {
+      "sha256": "4368d420e083319ebda844fad177836e2e04ab199437d1f0fd74ffe0a09733ad",
+      "bytes": 5396877
+    },
+    "analysis/weather_music_20261016/pools/RAIN_SNOW_INTERSECTION.csv": {
+      "sha256": "3f01a07bc13780bda35cb6cfa62c110d1e6f9e5e40ef817a2a182dcfb7c84cd5",
+      "bytes": 3032857
+    },
+    "analysis/weather_music_20261016/pools/SNOW.csv": {
+      "sha256": "6aa19a4137a094dac62b88e7655d7549341ce1f9fdc4312d3452d83018f04a91",
+      "bytes": 5436952
+    },
+    "analysis/weather_music_20261016/examples/CLEAR_180min.csv": {
+      "sha256": "0bece89d28da6e2c79bebac51318a4b2f8019c82d71c81046bdea6189e1aa74a",
+      "bytes": 29381
+    },
+    "analysis/weather_music_20261016/examples/CLOUDY_180min.csv": {
+      "sha256": "284fb2985729726067ce1258b8c108b624c68a17e5e50e75986443e68dac2a5d",
+      "bytes": 26915
+    },
+    "analysis/weather_music_20261016/examples/OVERCAST_180min.csv": {
+      "sha256": "24311b77d20c9eed079116ba33641d80d0c9e4c174e492bb20d09cb79cbe2cdc",
+      "bytes": 27169
+    },
+    "analysis/weather_music_20261016/examples/RAIN_180min.csv": {
+      "sha256": "bf30aee34034ad3d5a0eeb60879025e9e60a7ae00c233800e434f453bba4d909",
+      "bytes": 26129
+    },
+    "analysis/weather_music_20261016/examples/SNOW_180min.csv": {
+      "sha256": "05d8b20d667b4fcfcff02ff797dd33079ba0b4760d86da8dfd0277ad6f2c6ab9",
+      "bytes": 40298
+    }
+  }
+}

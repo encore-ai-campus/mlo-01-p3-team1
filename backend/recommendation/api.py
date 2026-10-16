@@ -13,6 +13,7 @@ from .errors import DomainError, require
 from .models import Family, Job, Playlist
 from .policy import GENRES, THEMES, OPTIONS
 from .weather import obtain
+from .youtube_playback import validate_playback_request, resolve_playback_candidates
 
 
 def csrf_failure(request,reason=''):
@@ -99,6 +100,18 @@ class PlaylistDetail(Endpoint):
         return Response({'playlist_id':p.pk,'family_id':f.pk,**p.snapshot,
                          'approval_revision':f.approval_revision,'approved_playlist_id':f.approved_playlist_id,
                          'exclusions_applied':set(p.snapshot['context']['excluded_track_ids'])==set(f.excluded)})
+
+
+class YoutubePlayback(Endpoint):
+    def post(self,request,pk):
+        owner=self.owner(request)
+        playlist=service.owned(Playlist,owner,pk)
+        track_id,excluded_videos=validate_playback_request(request.data)
+        require(set(playlist.snapshot['context']['excluded_track_ids'])==set(playlist.family.excluded),
+                'EXCLUSIONS_NOT_APPLIED','제외 변경을 반영한 새 선곡표를 먼저 받아 주세요.',409)
+        track=next((item for item in playlist.snapshot['items'] if item['track_id']==track_id),None)
+        require(track is not None,'NOT_FOUND','선곡표에 있는 곡만 재생할 수 있어요.',404)
+        return Response(resolve_playback_candidates(track,excluded_videos,owner_id=owner))
 
 
 class Exclusions(Endpoint):

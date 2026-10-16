@@ -6,7 +6,7 @@ from math import lcm
 from time import monotonic
 from ortools.sat.python import cp_model
 from .errors import DomainError, require
-from .policy import MINIMUM, TARGET, MAXIMUM
+from .policy import MINIMUM, TARGET, MAXIMUM, GENRES
 
 
 def representatives(tracks, genres):
@@ -126,6 +126,47 @@ def choose_preview(candidates, mode='ON', selected_genres=(), seed='', parent_id
     """Local, unreviewed CSV preview: feasible time/filters, without optimality claims."""
     parent_ids=set(parent_ids)
     required_new=max(1,len(parent_ids)//5) if parent_ids else 0
+    total_ms=sum(t['duration_ms'] for t in candidates)
+    available_new=len({t['track_id'] for t in candidates}-parent_ids)
+    genre_counts={genre:sum(genre in t['genre_group_codes'] for t in candidates) for genre in selected_genres}
+    missing_genres=[genre for genre,count in genre_counts.items() if not count]
+    labels=lambda codes:[GENRES.get(code,(code,))[0] for code in codes]
+    distinct_possible=not selected_genres or representatives(candidates,selected_genres) is not None
+    details={'candidate_count':len(candidates),'total_ms':total_ms,'min_duration_ms':MINIMUM,
+             'target_duration_ms':TARGET,'max_duration_ms':MAXIMUM,
+             'selected_genre_codes':list(selected_genres),'genre_candidate_counts':genre_counts,
+             'missing_genres':missing_genres,'missing_genre_labels':labels(missing_genres),
+             'distinct_genre_representatives_possible':distinct_possible,
+             'parent_track_count':len(parent_ids),'required_new_count':required_new,
+             'available_new_count':available_new,'checked_full_candidate_pool':True}
+    def fail(code,message,reason,**extra):
+        raise DomainError(code,message,503 if code=='SEARCH_INCOMPLETE' else 422,
+                          {**details,'reason':reason,**extra})
+    if total_ms<MINIMUM:
+        minutes,seconds=divmod(total_ms//1000,60)
+        absent=(' 후보가 없는 장르: '+', '.join(labels(missing_genres))+'.') if missing_genres else ''
+        fail('CANDIDATE_SHORTAGE',
+             f'조건에 맞는 후보는 {len(candidates)}곡, 총 {minutes}분 {seconds:02d}초로 최소 {MINIMUM//60000}분보다 짧아요.'
+             +absent+' 선택 조건을 확인해 주세요.','TOTAL_DURATION_BELOW_MINIMUM')
+    if missing_genres:
+        fail('CANDIDATE_SHORTAGE','선택한 장르의 후보가 없어요: '+', '.join(labels(missing_genres))
+             +'. 선택 조건을 확인해 주세요.','SELECTED_GENRE_MISSING')
+    if not distinct_possible:
+        fail('CANDIDATE_SHORTAGE','선택한 장르('+', '.join(labels(selected_genres))
+             +')를 서로 다른 곡으로 대표할 수 없어요. 선택 조건을 확인해 주세요.',
+             'DISTINCT_GENRE_REPRESENTATIVES_UNAVAILABLE')
+    if required_new and available_new<required_new:
+        fail('NO_MEANINGFUL_CHANGE',
+             f'필요한 신규 곡 수를 채우지 못했어요. 현재 조건의 신규 후보는 {available_new}곡이고 필요한 수는 {required_new}곡입니다. 현재 선곡표는 유지됩니다.',
+             'AVAILABLE_NEW_TRACKS_BELOW_REQUIREMENT')
+    if mode=='OFF' and selected_genres:
+        selected_total=sum(t['duration_ms'] for t in candidates if set(t['genre_group_codes']) & set(selected_genres))
+        minimum_selected=(4*MINIMUM+4)//5
+        if selected_total<minimum_selected:
+            fail('CANDIDATE_SHORTAGE','선택한 장르('+', '.join(labels(selected_genres))
+                 +')의 후보 재생시간이 부족해 80% 장르 조건과 최소 176분을 함께 채울 수 없어요. 선택 조건을 확인해 주세요.',
+                 'SELECTED_GENRE_DURATION_BELOW_REQUIRED_SHARE',selected_genre_total_ms=selected_total,
+                 required_selected_duration_ms=minimum_selected)
     def greedy(pool, share):
         assigned=representatives(pool,selected_genres) if selected_genres else {}
         if assigned is None: return None
@@ -151,9 +192,14 @@ def choose_preview(candidates, mode='ON', selected_genres=(), seed='', parent_id
     def tie(track): return sha256((seed+'\0'+track['track_id']).encode()).digest() if mode=='OFF' else b''
     def rank(track): return (-Fraction(track['scores']['S'] or 0),tie(track),track['track_id'])
     stages=(100,80) if mode=='OFF' and selected_genres else (0,)
+    solver_windows=[]
     for share in stages:
         stage=[t for t in candidates if set(t['genre_group_codes']) & set(selected_genres)] if share==100 else candidates
-        if not stage: continue
+        # Necessary conditions over the entire stage prove impossibility without
+        # treating a limited window or failed greedy attempt as such a proof.
+        if (not stage or sum(t['duration_ms'] for t in stage)<MINIMUM
+                or len({t['track_id'] for t in stage}-parent_ids)<required_new): continue
+        full_stage_infeasible=False
         for size in sorted({min(len(stage),n) for n in (200,400,800,len(stage))}):
             pool=sorted(stage,key=rank) if size==len(stage) else nsmallest(size,stage,key=rank)
             if sum(t['duration_ms'] for t in pool)<MINIMUM: continue
@@ -183,10 +229,21 @@ def choose_preview(candidates, mode='ON', selected_genres=(), seed='', parent_id
             solver.parameters.num_search_workers=1
             solver.parameters.stop_after_first_solution=True
             status=solver.Solve(model)
+            solver_windows.append({'window_size':len(pool),'genre_share_stage':share or None,
+                                   'solver_status':{cp_model.UNKNOWN:'UNKNOWN',cp_model.MODEL_INVALID:'MODEL_INVALID',
+                                                    cp_model.INFEASIBLE:'INFEASIBLE',cp_model.FEASIBLE:'FEASIBLE',
+                                                    cp_model.OPTIMAL:'OPTIMAL'}.get(status,'UNRECOGNIZED')})
             if status in (cp_model.FEASIBLE,cp_model.OPTIMAL):
                 result=[t for x,t in zip(xs,pool) if solver.Value(x)]
                 return sorted(result,key=lambda t:(-Fraction(t['scores']['S'] or 0),t['track_id'])),{
                     'solver_status':'FEASIBLE_PREVIEW','window_size':len(pool),'genre_share_stage':share or None,
                     'candidate_count':len(candidates)}
-            if len(pool)==len(stage) and status==cp_model.INFEASIBLE: break
-    raise DomainError('SEARCH_INCOMPLETE','실제 CSV 프리뷰 조합을 찾지 못했어요. 조건을 조정해 주세요.',503)
+            if len(pool)==len(stage) and status==cp_model.INFEASIBLE:
+                full_stage_infeasible=True
+                break
+        if not full_stage_infeasible:
+            fail('SEARCH_INCOMPLETE','정해진 탐색 범위나 시간 안에 선곡표 구성을 확인하지 못했어요. 현재 조건은 유지됩니다.',
+                 'SOLVER_OR_FULL_POOL_SEARCH_INCOMPLETE',genre_share_stage=share or None,
+                 solver_windows=solver_windows)
+    fail('CANDIDATE_SHORTAGE','전체 적격 후보로 선택 조건과 176~184분을 함께 만족하는 선곡표를 구성할 수 없어요. 선택 조건을 확인해 주세요.',
+         'FULL_ELIGIBLE_POOL_PROVEN_INFEASIBLE',solver_windows=solver_windows)

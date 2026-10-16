@@ -13,6 +13,7 @@ from .policy import eligible, score, weather_fit, off_preference_details, DURATI
 from .weather import validate, obtain, current_profile, instant
 from .solver import choose, choose_preview
 from .provider import propose, validate_proposal
+from .service import current_catalog
 
 
 _catalog_lock = threading.Lock()
@@ -37,7 +38,7 @@ def verified_catalog(catalog):
 
 
 def warm_current_catalog():
-    catalog = Catalog.objects.defer('tracks').filter(ready=True, is_test=settings.LOCAL_DEMO).order_by('-created_at').first()
+    catalog = current_catalog()
     if catalog is not None:
         verified_catalog(catalog)
 
@@ -97,11 +98,14 @@ def run_one():
         catalog = Catalog.objects.defer('tracks').get(pk=job.catalog_id)
         raw = verified_catalog(catalog)
         candidates=[]
-        candidate_audit={'catalog_count':len(raw),'common_eligible_count':0,'weather_rejected_count':0,
-                         'off_missing_preference_count':0}
+        candidate_audit={'catalog_count':len(raw),'common_eligible_count':0,'common_rejected_count':0,
+                         'common_eligible_total_ms':0,'weather_rejected_count':0,'off_missing_preference_count':0}
         for t in raw:
-            if not eligible(t,context['options'],context['allowed_genre_group_codes'],context['allowed_speed_codes'],context['excluded_track_ids']): continue
+            if not eligible(t,context['options'],context['allowed_genre_group_codes'],context['allowed_speed_codes'],context['excluded_track_ids']):
+                candidate_audit['common_rejected_count']+=1
+                continue
             candidate_audit['common_eligible_count']+=1
+            candidate_audit['common_eligible_total_ms']+=t['duration_ms']
             scored=score(t,context['options'],context['weather_code'])
             if scored is None:
                 candidate_audit['weather_rejected_count']+=1
@@ -111,6 +115,7 @@ def run_one():
                 continue
             candidates.append(dict(t,scores=scored))
         candidate_audit['candidate_count']=len(candidates)
+        candidate_audit['candidate_total_ms']=sum(t['duration_ms'] for t in candidates)
         preview=settings.LOCAL_DEMO and catalog.source_ref.startswith('local-preview:')
         if job.method=='RULE_BASED':
             search_diagnostics={}
@@ -179,7 +184,7 @@ def run_one():
                 'is_test':catalog.is_test,'preview_only':preview,'validation_passed':not preview})
             current.status='SUCCEEDED'; current.error=None; current.save()
     except DomainError as exc:
-        if exc.code in ('CANDIDATE_SHORTAGE','SEARCH_INCOMPLETE') and 'candidate_audit' in locals():
+        if exc.code in ('CANDIDATE_SHORTAGE','SEARCH_INCOMPLETE','NO_MEANINGFUL_CHANGE') and 'candidate_audit' in locals():
             exc.details.update(candidate_audit)
         active_job(job).update(
             status='EXPIRED' if exc.code=='JOB_EXPIRED' else 'FAILED',error={'code':exc.code,'message':exc.message,'details':exc.details})

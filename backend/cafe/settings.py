@@ -42,3 +42,12 @@ RECOMMENDATION_WORKER_IDLE_SECONDS = float(os.environ.get('RECOMMENDATION_WORKER
 GEMINI_ENABLED = os.environ.get('GEMINI_ENABLED') == '1'
 GEMINI_TIMEOUT_MS = int(os.environ.get('GEMINI_TIMEOUT_MS', '0'))
 GEMINI_MAX_CANDIDATES = int(os.environ.get('GEMINI_MAX_CANDIDATES', '0'))
+# Known-video playback is keyless by default. Official search is an explicit option.
+YOUTUBE_PLAYBACK_MODE = os.environ.get('YOUTUBE_PLAYBACK_MODE', 'KEYLESS')
+if YOUTUBE_PLAYBACK_MODE not in {'KEYLESS', 'OPTIONAL_SEARCH'}:
+    raise ImproperlyConfigured('YOUTUBE_PLAYBACK_MODE must be KEYLESS or OPTIONAL_SEARCH')
+YOUTUBE_DATA_API_KEY = (os.environ.get('YOUTUBE_DATA_API_KEY') or os.environ.get('YOUTUBE_API_KEY') or '').strip()
+YOUTUBE_SEARCH_TIMEOUT_SECONDS = float(os.environ.get('YOUTUBE_SEARCH_TIMEOUT_SECONDS') or '8')
+YOUTUBE_SEARCH_PER_OWNER_MINUTE = int(os.environ.get('YOUTUBE_SEARCH_PER_OWNER_MINUTE') or '6')
+YOUTUBE_SEARCH_DAILY_LIMIT = int(os.environ.get('YOUTUBE_SEARCH_DAILY_LIMIT') or '80')
+YOUTUBE_SEARCH_CACHE_SECONDS = int(os.environ.get('YOUTUBE_SEARCH_CACHE_SECONDS') or '21600')
