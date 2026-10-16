@@ -1,0 +1,4 @@
+requests==2.34.2
+kafka-python==2.3.2
+psycopg[binary]==3.3.6
+pymongo==4.17.0

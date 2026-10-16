@@ -1,8 +1,8 @@
 {
-  "contract_version": "phase3-20261014.2",
+  "contract_version": "phase3-20261016.1",
   "data_mode": "FIXTURE",
   "is_test": true,
-  "description": "현행18개/원본변환·W/P/S0~100·RDB4개·사이클/176~184분 계약의고정모의자료입니다. 실제 CSV/RDB/앱/외부호출/청취결과가 아닙니다. 광고 고정 정책은 유지합니다.",
+  "description": "모든 값은 가상 자료입니다. ON/OFF 최신 계약의 일부 형태·경계 예시이며 실제 곡/날씨·청취/성능 검증 결과가 아닙니다.",
   "schema_cases": [
     {
       "id": "basic_region_only",
@@ -576,533 +576,54 @@
       "expected_valid": true
     },
     {
-      "id": "music_19_nullable_ids",
-      "definition": "MusicNormalizedTrack",
+      "id": "basic_off",
+      "definition": "BasicRequest",
       "data": {
-        "track_id": "fixture-track",
-        "track_name": "검증용곡",
-        "artists_id": "fixture-a;;fixture-c",
-        "artists_name": "A;B;C",
-        "album_id": null,
-        "album_name": "검증용앨범",
-        "album_release_date": null,
-        "duration_ms": 180000,
-        "explicit": false,
-        "genre": "jazz",
-        "energy": 6,
-        "mode": false,
-        "acousticness": 70,
-        "mood": null,
-        "speed": "slow",
-        "main_inst": null,
-        "instrumental": true,
-        "play_url": "https://open.spotify.com/track/fixture-track",
-        "instrumental_review_value": null
+        "region_id": "fixture-region-001",
+        "weather_influence_mode": "OFF"
       },
       "expected_valid": true
     },
     {
-      "id": "music_19_raw_energy_not_service_integer",
-      "definition": "MusicNormalizedTrack",
+      "id": "basic_bad_mode",
+      "definition": "BasicRequest",
       "data": {
-        "track_id": "fixture-track",
-        "track_name": "검증용곡",
-        "artists_id": "fixture-a;;fixture-c",
-        "artists_name": "A;B;C",
-        "album_id": null,
-        "album_name": "검증용앨범",
-        "album_release_date": null,
-        "duration_ms": 180000,
-        "explicit": false,
-        "genre": "jazz",
-        "energy": 0.6,
-        "mode": false,
-        "acousticness": 70,
-        "mood": null,
-        "speed": "slow",
-        "main_inst": null,
-        "instrumental": true,
-        "play_url": "https://open.spotify.com/track/fixture-track",
-        "instrumental_review_value": null
+        "region_id": "fixture-region-001",
+        "weather_influence_mode": "AUTO"
       },
       "expected_valid": false
     },
     {
-      "id": "music_19_acousticness_above_range",
-      "definition": "MusicNormalizedTrack",
+      "id": "regeneration_mode_on",
+      "definition": "RegenerationRequest",
       "data": {
-        "track_id": "fixture-track",
-        "track_name": "검증용곡",
-        "artists_id": "fixture-a;;fixture-c",
-        "artists_name": "A;B;C",
-        "album_id": null,
-        "album_name": "검증용앨범",
-        "album_release_date": null,
-        "duration_ms": 180000,
-        "explicit": false,
-        "genre": "jazz",
-        "energy": 6,
-        "mode": false,
-        "acousticness": 101,
-        "mood": null,
-        "speed": "slow",
-        "main_inst": null,
-        "instrumental": true,
-        "play_url": "https://open.spotify.com/track/fixture-track",
-        "instrumental_review_value": null
-      },
-      "expected_valid": false
-    },
-    {
-      "id": "music_19_country_rejected",
-      "definition": "MusicNormalizedTrack",
-      "data": {
-        "track_id": "fixture-track",
-        "track_name": "검증용곡",
-        "artists_id": "fixture-a;;fixture-c",
-        "artists_name": "A;B;C",
-        "album_id": null,
-        "album_name": "검증용앨범",
-        "album_release_date": null,
-        "duration_ms": 180000,
-        "explicit": false,
-        "genre": "jazz",
-        "energy": 6,
-        "mode": false,
-        "acousticness": 70,
-        "mood": null,
-        "speed": "slow",
-        "main_inst": null,
-        "instrumental": true,
-        "play_url": "https://open.spotify.com/track/fixture-track",
-        "instrumental_review_value": null,
-        "country": "KR"
-      },
-      "expected_valid": false
-    },
-    {
-      "id": "music_19_review_key_required",
-      "definition": "MusicNormalizedTrack",
-      "data": {
-        "track_id": "fixture-track",
-        "track_name": "검증용곡",
-        "artists_id": "fixture-a;;fixture-c",
-        "artists_name": "A;B;C",
-        "album_id": null,
-        "album_name": "검증용앨범",
-        "album_release_date": null,
-        "duration_ms": 180000,
-        "explicit": false,
-        "genre": "jazz",
-        "energy": 6,
-        "mode": false,
-        "acousticness": 70,
-        "mood": null,
-        "speed": "slow",
-        "main_inst": null,
-        "instrumental": true,
-        "play_url": "https://open.spotify.com/track/fixture-track"
-      },
-      "expected_valid": false
-    },
-    {
-      "id": "music_19_explicit_missing_not_false",
-      "definition": "MusicNormalizedTrack",
-      "data": {
-        "track_id": "fixture-track",
-        "track_name": "검증용곡",
-        "artists_id": "fixture-a;;fixture-c",
-        "artists_name": "A;B;C",
-        "album_id": null,
-        "album_name": "검증용앨범",
-        "album_release_date": null,
-        "duration_ms": 180000,
-        "explicit": null,
-        "genre": "jazz",
-        "energy": 6,
-        "mode": false,
-        "acousticness": 70,
-        "mood": null,
-        "speed": "slow",
-        "main_inst": null,
-        "instrumental": true,
-        "play_url": "https://open.spotify.com/track/fixture-track",
-        "instrumental_review_value": null
-      },
-      "expected_valid": false
-    },
-    {
-      "id": "music_19_duration_zero_storable",
-      "definition": "MusicNormalizedTrack",
-      "data": {
-        "track_id": "fixture-track",
-        "track_name": "검증용곡",
-        "artists_id": "fixture-a;;fixture-c",
-        "artists_name": "A;B;C",
-        "album_id": null,
-        "album_name": "검증용앨범",
-        "album_release_date": null,
-        "duration_ms": 0,
-        "explicit": false,
-        "genre": "jazz",
-        "energy": 6,
-        "mode": false,
-        "acousticness": 70,
-        "mood": null,
-        "speed": "slow",
-        "main_inst": null,
-        "instrumental": true,
-        "play_url": "https://open.spotify.com/track/fixture-track",
-        "instrumental_review_value": null
+        "exclusion_revision": 2,
+        "weather_influence_mode": "ON"
       },
       "expected_valid": true
-    },
-    {
-      "id": "cycle_fixed_valid",
-      "definition": "MusicCycleSnapshot",
-      "data": {
-        "family_id": "fixture-family",
-        "vocal_option": "instrumental_only",
-        "tempo_preference": "slow",
-        "selected_theme_codes": [],
-        "selected_genre_codes": [
-          "JAZZ"
-        ],
-        "allowed_genre_group_codes": [
-          "JAZZ"
-        ],
-        "allowed_speed_codes": [
-          "slow"
-        ],
-        "option_version": "fixture-options",
-        "policy_version": "WEATHER_MUSIC_V4_CYCLE_FIXED",
-        "mapping_version": "GENRE_THEME_V3_CRITERIA_FIRST",
-        "duration_policy_version": "phase3-duration-20261014.2",
-        "duration_mode": "STANDARD",
-        "effective_target_ms": 10800000,
-        "effective_min_ms": 10560000,
-        "effective_max_ms": 11040000
-      },
-      "expected_valid": true
-    },
-    {
-      "id": "cycle_no_shortened_mode",
-      "definition": "MusicCycleSnapshot",
-      "data": {
-        "family_id": "fixture-family",
-        "vocal_option": "instrumental_only",
-        "tempo_preference": "slow",
-        "selected_theme_codes": [],
-        "selected_genre_codes": [
-          "JAZZ"
-        ],
-        "allowed_genre_group_codes": [
-          "JAZZ"
-        ],
-        "allowed_speed_codes": [
-          "slow"
-        ],
-        "option_version": "fixture-options",
-        "policy_version": "WEATHER_MUSIC_V4_CYCLE_FIXED",
-        "mapping_version": "GENRE_THEME_V3_CRITERIA_FIRST",
-        "duration_policy_version": "phase3-duration-20261014.2",
-        "duration_mode": "SHORTENED",
-        "effective_target_ms": 10800000,
-        "effective_min_ms": 10560000,
-        "effective_max_ms": 11040000
-      },
-      "expected_valid": false
-    },
-    {
-      "id": "cycle_empty_genre_not_ready",
-      "definition": "MusicCycleSnapshot",
-      "data": {
-        "family_id": "fixture-family",
-        "vocal_option": "instrumental_only",
-        "tempo_preference": "slow",
-        "selected_theme_codes": [],
-        "selected_genre_codes": [
-          "JAZZ"
-        ],
-        "allowed_genre_group_codes": [],
-        "allowed_speed_codes": [
-          "slow"
-        ],
-        "option_version": "fixture-options",
-        "policy_version": "WEATHER_MUSIC_V4_CYCLE_FIXED",
-        "mapping_version": "GENRE_THEME_V3_CRITERIA_FIRST",
-        "duration_policy_version": "phase3-duration-20261014.2",
-        "duration_mode": "STANDARD",
-        "effective_target_ms": 10800000,
-        "effective_min_ms": 10560000,
-        "effective_max_ms": 11040000
-      },
-      "expected_valid": false
-    },
-    {
-      "id": "cycle_duplicate_speed",
-      "definition": "MusicCycleSnapshot",
-      "data": {
-        "family_id": "fixture-family",
-        "vocal_option": "instrumental_only",
-        "tempo_preference": "slow",
-        "selected_theme_codes": [],
-        "selected_genre_codes": [
-          "JAZZ"
-        ],
-        "allowed_genre_group_codes": [
-          "JAZZ"
-        ],
-        "allowed_speed_codes": [
-          "slow",
-          "slow"
-        ],
-        "option_version": "fixture-options",
-        "policy_version": "WEATHER_MUSIC_V4_CYCLE_FIXED",
-        "mapping_version": "GENRE_THEME_V3_CRITERIA_FIRST",
-        "duration_policy_version": "phase3-duration-20261014.2",
-        "duration_mode": "STANDARD",
-        "effective_target_ms": 10800000,
-        "effective_min_ms": 10560000,
-        "effective_max_ms": 11040000
-      },
-      "expected_valid": false
-    },
-    {
-      "id": "snapshot_automatic_instrumental",
-      "definition": "MusicTrackSnapshot",
-      "data": {
-        "music": {
-          "track_id": "fixture-track",
-          "track_name": "검증용곡",
-          "artists_id": "fixture-a;;fixture-c",
-          "artists_name": "A;B;C",
-          "album_id": null,
-          "album_name": "검증용앨범",
-          "album_release_date": null,
-          "duration_ms": 180000,
-          "explicit": false,
-          "genre": "jazz",
-          "energy": 6,
-          "mode": false,
-          "acousticness": 70,
-          "mood": null,
-          "speed": "slow",
-          "main_inst": null,
-          "instrumental": true,
-          "play_url": "https://open.spotify.com/track/fixture-track",
-          "instrumental_review_value": null
-        },
-        "instrumental_source": "AUTO",
-        "genre_group_codes": [
-          "JAZZ"
-        ],
-        "theme_codes": [],
-        "genre_group_labels": [
-          "재즈"
-        ],
-        "theme_labels": [],
-        "source_version": "fixture-source",
-        "schema_version": "music-19",
-        "catalog_version": "fixture-catalog",
-        "review_version": null,
-        "policy_version": "WEATHER_MUSIC_V4_CYCLE_FIXED",
-        "mapping_version": "GENRE_THEME_V3_CRITERIA_FIRST",
-        "raw_values": {
-          "energy": 0.6,
-          "acousticness": 0.7,
-          "mode": 0,
-          "tempo": 70,
-          "time_signature": 4,
-          "instrumentalness": 0.9
-        },
-        "raw_snapshot_ref": null,
-        "W": 90,
-        "P": 100,
-        "S": 92.5
-      },
-      "expected_valid": true
-    },
-    {
-      "id": "snapshot_zero_duration_not_candidate",
-      "definition": "MusicTrackSnapshot",
-      "data": {
-        "music": {
-          "track_id": "fixture-track",
-          "track_name": "검증용곡",
-          "artists_id": "fixture-a;;fixture-c",
-          "artists_name": "A;B;C",
-          "album_id": null,
-          "album_name": "검증용앨범",
-          "album_release_date": null,
-          "duration_ms": 0,
-          "explicit": false,
-          "genre": "jazz",
-          "energy": 6,
-          "mode": false,
-          "acousticness": 70,
-          "mood": null,
-          "speed": "slow",
-          "main_inst": null,
-          "instrumental": true,
-          "play_url": "https://open.spotify.com/track/fixture-track",
-          "instrumental_review_value": null
-        },
-        "instrumental_source": "AUTO",
-        "genre_group_codes": [
-          "JAZZ"
-        ],
-        "theme_codes": [],
-        "genre_group_labels": [
-          "재즈"
-        ],
-        "theme_labels": [],
-        "source_version": "fixture-source",
-        "schema_version": "music-19",
-        "catalog_version": "fixture-catalog",
-        "review_version": null,
-        "policy_version": "WEATHER_MUSIC_V4_CYCLE_FIXED",
-        "mapping_version": "GENRE_THEME_V3_CRITERIA_FIRST",
-        "raw_values": {
-          "energy": 0.6,
-          "acousticness": 0.7,
-          "mode": 0,
-          "tempo": 70,
-          "time_signature": 4,
-          "instrumentalness": 0.9
-        },
-        "raw_snapshot_ref": null,
-        "W": 90,
-        "P": 100,
-        "S": 92.5
-      },
-      "expected_valid": false
-    },
-    {
-      "id": "snapshot_raw_evidence_required",
-      "definition": "MusicTrackSnapshot",
-      "data": {
-        "music": {
-          "track_id": "fixture-track",
-          "track_name": "검증용곡",
-          "artists_id": "fixture-a;;fixture-c",
-          "artists_name": "A;B;C",
-          "album_id": null,
-          "album_name": "검증용앨범",
-          "album_release_date": null,
-          "duration_ms": 180000,
-          "explicit": false,
-          "genre": "jazz",
-          "energy": 6,
-          "mode": false,
-          "acousticness": 70,
-          "mood": null,
-          "speed": "slow",
-          "main_inst": null,
-          "instrumental": true,
-          "play_url": "https://open.spotify.com/track/fixture-track",
-          "instrumental_review_value": null
-        },
-        "instrumental_source": "AUTO",
-        "genre_group_codes": [
-          "JAZZ"
-        ],
-        "theme_codes": [],
-        "genre_group_labels": [
-          "재즈"
-        ],
-        "theme_labels": [],
-        "source_version": "fixture-source",
-        "schema_version": "music-19",
-        "catalog_version": "fixture-catalog",
-        "review_version": null,
-        "policy_version": "WEATHER_MUSIC_V4_CYCLE_FIXED",
-        "mapping_version": "GENRE_THEME_V3_CRITERIA_FIRST",
-        "raw_values": null,
-        "raw_snapshot_ref": null,
-        "W": 90,
-        "P": 100,
-        "S": 92.5
-      },
-      "expected_valid": false
-    },
-    {
-      "id": "snapshot_score_out_of_range",
-      "definition": "MusicTrackSnapshot",
-      "data": {
-        "music": {
-          "track_id": "fixture-track",
-          "track_name": "검증용곡",
-          "artists_id": "fixture-a;;fixture-c",
-          "artists_name": "A;B;C",
-          "album_id": null,
-          "album_name": "검증용앨범",
-          "album_release_date": null,
-          "duration_ms": 180000,
-          "explicit": false,
-          "genre": "jazz",
-          "energy": 6,
-          "mode": false,
-          "acousticness": 70,
-          "mood": null,
-          "speed": "slow",
-          "main_inst": null,
-          "instrumental": true,
-          "play_url": "https://open.spotify.com/track/fixture-track",
-          "instrumental_review_value": null
-        },
-        "instrumental_source": "AUTO",
-        "genre_group_codes": [
-          "JAZZ"
-        ],
-        "theme_codes": [],
-        "genre_group_labels": [
-          "재즈"
-        ],
-        "theme_labels": [],
-        "source_version": "fixture-source",
-        "schema_version": "music-19",
-        "catalog_version": "fixture-catalog",
-        "review_version": null,
-        "policy_version": "WEATHER_MUSIC_V4_CYCLE_FIXED",
-        "mapping_version": "GENRE_THEME_V3_CRITERIA_FIRST",
-        "raw_values": {
-          "energy": 0.6,
-          "acousticness": 0.7,
-          "mode": 0,
-          "tempo": 70,
-          "time_signature": 4,
-          "instrumentalness": 0.9
-        },
-        "raw_snapshot_ref": null,
-        "W": 100.01,
-        "P": 100,
-        "S": 92.5
-      },
-      "expected_valid": false
     }
   ],
   "calculation_cases": [
     {
       "kind": "score",
-      "W": 80,
+      "W": 0.8,
       "matches": [
-        100,
+        1,
         0
       ],
       "expected": 72.5
     },
     {
       "kind": "score",
-      "W": 80,
+      "W": 0.8,
       "matches": [],
       "expected": 80
     },
     {
       "kind": "score",
-      "W": 80,
+      "W": 0.8,
       "matches": [
-        100,
+        1,
         0,
         0
       ],
@@ -1198,15 +719,15 @@
     },
     {
       "kind": "score",
-      "W": 80,
+      "W": 0.8,
       "matches": [
-        100
+        1
       ],
       "expected": 85
     },
     {
       "kind": "score",
-      "W": 80,
+      "W": 0.8,
       "matches": [
         0
       ],
@@ -1554,385 +1075,6 @@
         "width_px": 3072,
         "height_px": 208
       }
-    },
-    {
-      "kind": "weather_score",
-      "profile": "SUNNY",
-      "energy": 5,
-      "acousticness": 0,
-      "mode": true,
-      "expected": 100
-    },
-    {
-      "kind": "weather_score",
-      "profile": "CLOUDY",
-      "energy": 3,
-      "acousticness": 20,
-      "mode": false,
-      "expected": 100
-    },
-    {
-      "kind": "weather_score",
-      "profile": "OVERCAST",
-      "energy": 2,
-      "acousticness": 40,
-      "mode": false,
-      "expected": 100
-    },
-    {
-      "kind": "weather_score",
-      "profile": "RAIN",
-      "energy": 2,
-      "acousticness": 60,
-      "mode": false,
-      "expected": 100
-    },
-    {
-      "kind": "weather_score",
-      "profile": "RAIN_SNOW",
-      "energy": 2,
-      "acousticness": 50,
-      "mode": false,
-      "expected": 100
-    },
-    {
-      "kind": "weather_score",
-      "profile": "SNOW",
-      "energy": 1,
-      "acousticness": 60,
-      "mode": true,
-      "expected": 100
-    },
-    {
-      "kind": "weather_score",
-      "profile": "SHOWER",
-      "energy": 2,
-      "acousticness": 60,
-      "mode": false,
-      "expected": 100
-    },
-    {
-      "kind": "weather_score",
-      "profile": "DRIZZLE",
-      "energy": 2,
-      "acousticness": 60,
-      "mode": false,
-      "expected": 100
-    },
-    {
-      "kind": "weather_score",
-      "profile": "DRIZZLE_SNOW",
-      "energy": 2,
-      "acousticness": 50,
-      "mode": false,
-      "expected": 100
-    },
-    {
-      "kind": "weather_score",
-      "profile": "SNOW_FLURRY",
-      "energy": 1,
-      "acousticness": 60,
-      "mode": true,
-      "expected": 100
-    },
-    {
-      "kind": "weather_score",
-      "profile": "SUNNY",
-      "energy": 4,
-      "acousticness": 60,
-      "mode": true,
-      "expected": 95
-    },
-    {
-      "kind": "weather_score",
-      "profile": "RAIN",
-      "energy": 4,
-      "acousticness": 60,
-      "mode": true,
-      "expected": 95
-    },
-    {
-      "kind": "weather_score",
-      "profile": "RAIN",
-      "energy": 6,
-      "acousticness": 70,
-      "mode": false,
-      "expected": 90
-    },
-    {
-      "kind": "weather_score",
-      "profile": "RAIN",
-      "energy": 6,
-      "acousticness": 70,
-      "mode": null,
-      "expected": 85
-    },
-    {
-      "kind": "weather_score",
-      "profile": "RAIN",
-      "energy": null,
-      "acousticness": 70,
-      "mode": false,
-      "expected": null
-    },
-    {
-      "kind": "weather_score",
-      "profile": "SUNNY",
-      "energy": 0,
-      "acousticness": 100,
-      "mode": false,
-      "expected": 52
-    },
-    {
-      "kind": "weather_score",
-      "profile": "RAIN",
-      "energy": 10,
-      "acousticness": 0,
-      "mode": true,
-      "expected": 38
-    },
-    {
-      "kind": "weather_weight",
-      "scores": [
-        100,
-        70
-      ],
-      "overlap_ms": [
-        3600000,
-        7200000
-      ],
-      "expected": 80
-    },
-    {
-      "kind": "weather_weight",
-      "scores": [
-        100,
-        70
-      ],
-      "overlap_ms": [
-        3600000,
-        7199999
-      ],
-      "expected": null
-    },
-    {
-      "kind": "score",
-      "W": 90,
-      "matches": [
-        100,
-        0,
-        100
-      ],
-      "expected": 84.16666666666667
-    },
-    {
-      "kind": "scalar_conversion",
-      "raw": "0",
-      "multiplier": 10,
-      "expected": 0
-    },
-    {
-      "kind": "scalar_conversion",
-      "raw": "0.199",
-      "multiplier": 10,
-      "expected": 1
-    },
-    {
-      "kind": "scalar_conversion",
-      "raw": "0.999",
-      "multiplier": 10,
-      "expected": 9
-    },
-    {
-      "kind": "scalar_conversion",
-      "raw": "1",
-      "multiplier": 10,
-      "expected": 10
-    },
-    {
-      "kind": "scalar_conversion",
-      "raw": "0",
-      "multiplier": 100,
-      "expected": 0
-    },
-    {
-      "kind": "scalar_conversion",
-      "raw": "0.199",
-      "multiplier": 100,
-      "expected": 19
-    },
-    {
-      "kind": "scalar_conversion",
-      "raw": "0.996",
-      "multiplier": 100,
-      "expected": 99
-    },
-    {
-      "kind": "scalar_conversion",
-      "raw": "1",
-      "multiplier": 100,
-      "expected": 100
-    },
-    {
-      "kind": "speed_conversion",
-      "tempo": 79.49,
-      "time_signature": 4,
-      "expected": "slow"
-    },
-    {
-      "kind": "speed_conversion",
-      "tempo": 79.5,
-      "time_signature": 4,
-      "expected": "medium"
-    },
-    {
-      "kind": "speed_conversion",
-      "tempo": 109.49,
-      "time_signature": 4,
-      "expected": "medium"
-    },
-    {
-      "kind": "speed_conversion",
-      "tempo": 109.5,
-      "time_signature": 4,
-      "expected": "fast"
-    },
-    {
-      "kind": "speed_conversion",
-      "tempo": 149.49,
-      "time_signature": 4,
-      "expected": "fast"
-    },
-    {
-      "kind": "speed_conversion",
-      "tempo": 149.5,
-      "time_signature": 4,
-      "expected": "fastest"
-    },
-    {
-      "kind": "speed_conversion",
-      "tempo": 119.25,
-      "time_signature": 3,
-      "expected": "medium"
-    },
-    {
-      "kind": "speed_conversion",
-      "tempo": 165,
-      "time_signature": 3,
-      "expected": "fast"
-    },
-    {
-      "kind": "speed_conversion",
-      "tempo": 225,
-      "time_signature": 3,
-      "expected": "fastest"
-    },
-    {
-      "kind": "speed_conversion",
-      "tempo": null,
-      "time_signature": 4,
-      "expected": null
-    },
-    {
-      "kind": "speed_conversion",
-      "tempo": 150,
-      "time_signature": null,
-      "expected": "fastest"
-    },
-    {
-      "kind": "instrumental_final",
-      "review_value": null,
-      "raw": 0.199,
-      "expected": false
-    },
-    {
-      "kind": "instrumental_final",
-      "review_value": null,
-      "raw": 0.2,
-      "expected": null
-    },
-    {
-      "kind": "instrumental_final",
-      "review_value": null,
-      "raw": 0.799,
-      "expected": null
-    },
-    {
-      "kind": "instrumental_final",
-      "review_value": null,
-      "raw": 0.8,
-      "expected": true
-    },
-    {
-      "kind": "instrumental_final",
-      "review_value": false,
-      "raw": 0.99,
-      "expected": false
-    },
-    {
-      "kind": "instrumental_final",
-      "review_value": true,
-      "raw": 0.01,
-      "expected": true
-    },
-    {
-      "kind": "instrumental_final",
-      "review_value": null,
-      "raw": null,
-      "expected": null
-    },
-    {
-      "kind": "instrumental_final",
-      "review_value": null,
-      "raw": null,
-      "previous_final": true,
-      "expected": true
-    },
-    {
-      "kind": "cycle_filter",
-      "track_genres": [
-        "ROCK",
-        "J-POP"
-      ],
-      "track_speed": "fast",
-      "allowed_genres": [
-        "ROCK"
-      ],
-      "allowed_speeds": [
-        "fast"
-      ],
-      "expected": true
-    },
-    {
-      "kind": "cycle_filter",
-      "track_genres": [
-        "JAZZ"
-      ],
-      "track_speed": "fastest",
-      "allowed_genres": [
-        "JAZZ"
-      ],
-      "allowed_speeds": [
-        "fast"
-      ],
-      "expected": false
-    },
-    {
-      "kind": "cycle_filter",
-      "track_genres": [],
-      "track_speed": "slow",
-      "allowed_genres": [
-        "JAZZ"
-      ],
-      "allowed_speeds": [
-        "slow"
-      ],
-      "expected": false
-    },
-    {
-      "kind": "standard_duration",
-      "total_ms": 8100000,
-      "expected": false
     }
   ],
   "behavior_cases": [
@@ -1963,16 +1105,16 @@
       }
     },
     {
-      "id": "regen_changed_selection_new_cycle_required",
+      "id": "regen_inherit_and_clear",
       "given": {
         "parent": {
           "vocal_option": "instrumental_only",
           "tempo_preference": "slow",
           "selected_theme_codes": [
-            "CALM"
+            "calm"
           ],
           "selected_genre_codes": [
-            "JAZZ"
+            "jazz"
           ]
         },
         "request": {
@@ -1981,12 +1123,12 @@
         }
       },
       "expected": {
-        "http": 409,
-        "code": "CYCLE_CONDITIONS_CHANGED",
-        "new_job": false,
-        "new_family": false,
-        "preserve_parent": true,
-        "preserve_exclusions": true
+        "vocal_option": "instrumental_only",
+        "tempo_preference": "slow",
+        "selected_theme_codes": [],
+        "selected_genre_codes": [
+          "jazz"
+        ]
       }
     },
     {
@@ -2114,12 +1256,14 @@
       "id": "weather_changed",
       "given": {
         "new_weather_bundle": true,
-        "existing_success_result": true
+        "existing_success_result": true,
+        "weather_influence_mode": "ON"
       },
       "expected": {
         "panel_updates": true,
-        "automatic_track_change": false,
-        "original_context_immutable": true
+        "new_result_version_required": true,
+        "original_context_immutable": true,
+        "in_place_track_change": false
       }
     },
     {
@@ -2223,134 +1367,37 @@
       }
     },
     {
-      "id": "regen_same_condition_inherit",
+      "id": "weather_changed_off",
       "given": {
-        "parent": {
-          "tempo_preference": "slow",
-          "selected_genre_codes": [
-            "JAZZ"
-          ]
-        },
-        "request": {
-          "exclusion_revision": 2
-        }
+        "weather_influence_mode": "OFF",
+        "new_weather_bundle": true,
+        "existing_success_result": true
       },
       "expected": {
-        "tempo_preference": "slow",
-        "selected_genre_codes": [
-          "JAZZ"
-        ],
-        "preserve_allowed_sets": true
+        "panel_updates": true,
+        "recommendation_unchanged": true
       }
     },
     {
-      "id": "condition_change_basic_new_family",
+      "id": "off_weather_unavailable",
       "given": {
-        "request_kind": "basic",
-        "changed_start_conditions": true,
-        "existing_family": true
+        "weather_influence_mode": "OFF",
+        "weather_available": false,
+        "eligible_catalog_available": true
       },
       "expected": {
-        "new_family": true,
-        "excluded_track_ids": [],
-        "feedback_empty": true,
-        "preserve_previous_family": true
+        "recommendation_blocked_by_weather": false
       }
     },
     {
-      "id": "initial_rain_fast",
+      "id": "standard_shortage_no_fallback",
       "given": {
-        "uniform_PTY": 1,
-        "tempo_preference": "fast"
-      },
-      "expected": {
-        "allowed_speed_codes": [
-          "fast"
-        ],
-        "allow_fastest": false
-      }
-    },
-    {
-      "id": "rain_policy_not_extended_to_shower",
-      "given": {
-        "uniform_PTY": 4,
-        "tempo_preference": "fast"
-      },
-      "expected": {
-        "allowed_speed_codes": [
-          "fast",
-          "fastest"
-        ],
-        "apply_PTY1_special_filter": false
-      }
-    },
-    {
-      "id": "initial_mixed_auto",
-      "given": {
-        "mixed_profiles": true,
-        "existing_cycle": false,
-        "tempo_preference": "auto"
-      },
-      "expected": {
-        "http": 503,
-        "code": "POLICY_NOT_READY",
-        "new_job": false
-      }
-    },
-    {
-      "id": "existing_cycle_mixed_weather",
-      "given": {
-        "mixed_profiles": true,
-        "existing_cycle": true,
-        "allowed_speed_codes": [
-          "fast",
-          "fastest"
-        ]
-      },
-      "expected": {
-        "preserve_allowed_sets": true,
-        "weather_weighted": true,
-        "overwrite_old_result": false
-      }
-    },
-    {
-      "id": "automatic_instrumental_candidate",
-      "given": {
-        "review_value": null,
-        "raw_instrumentalness": 0.9,
-        "ready_catalog": true,
-        "vocal_option": "instrumental_only"
-      },
-      "expected": {
-        "instrumental": true,
-        "instrumental_source": "AUTO",
-        "vocal_filter_pass": true,
-        "listening_review_confirmed": false
-      }
-    },
-    {
-      "id": "genre_speed_unknown_unselected",
-      "given": {
-        "genre_group_codes": [],
-        "speed": null,
-        "selected_groups": []
-      },
-      "expected": {
-        "candidate_held": true,
-        "create_missing_tag": false
-      }
-    },
-    {
-      "id": "shortened_not_enabled",
-      "given": {
-        "eligible_shortage_confirmed": true,
-        "proposed_total_ms": 8100000
+        "weather_influence_mode": "ON",
+        "full_eligible_set_infeasible_at_176_minutes": true
       },
       "expected": {
         "code": "CANDIDATE_SHORTAGE",
-        "new_success_result": false,
-        "preserve_parent": true,
-        "automatically_shorten": false
+        "shortened_result": false
       }
     }
   ],
@@ -2388,134 +1435,5 @@
       "mobile_reference_width_px": 390,
       "production_scale": 2
     }
-  },
-  "music_policy": {
-    "score_policy_version": "WEATHER_MUSIC_V4_CYCLE_FIXED",
-    "mapping_version": "GENRE_THEME_V3_CRITERIA_FIRST",
-    "score_scale": [
-      0,
-      100
-    ],
-    "weather_weights": {
-      "energy": 0.5,
-      "acousticness": 0.45,
-      "mode": 0.05
-    },
-    "profiles": {
-      "SUNNY": {
-        "energy": [
-          5,
-          8
-        ],
-        "acousticness": [
-          0,
-          60
-        ],
-        "mode": true
-      },
-      "CLOUDY": {
-        "energy": [
-          3,
-          6
-        ],
-        "acousticness": [
-          20,
-          80
-        ],
-        "mode": false
-      },
-      "OVERCAST": {
-        "energy": [
-          2,
-          5
-        ],
-        "acousticness": [
-          40,
-          100
-        ],
-        "mode": false
-      },
-      "RAIN": {
-        "energy": [
-          2,
-          4
-        ],
-        "acousticness": [
-          60,
-          100
-        ],
-        "mode": false
-      },
-      "RAIN_SNOW": {
-        "energy": [
-          2,
-          4
-        ],
-        "acousticness": [
-          50,
-          100
-        ],
-        "mode": false
-      },
-      "SNOW": {
-        "energy": [
-          1,
-          4
-        ],
-        "acousticness": [
-          60,
-          100
-        ],
-        "mode": true
-      },
-      "SHOWER": {
-        "energy": [
-          2,
-          4
-        ],
-        "acousticness": [
-          60,
-          100
-        ],
-        "mode": false
-      },
-      "DRIZZLE": {
-        "energy": [
-          2,
-          4
-        ],
-        "acousticness": [
-          60,
-          100
-        ],
-        "mode": false
-      },
-      "DRIZZLE_SNOW": {
-        "energy": [
-          2,
-          4
-        ],
-        "acousticness": [
-          50,
-          100
-        ],
-        "mode": false
-      },
-      "SNOW_FLURRY": {
-        "energy": [
-          1,
-          4
-        ],
-        "acousticness": [
-          60,
-          100
-        ],
-        "mode": true
-      }
-    },
-    "duration_policy_version": "phase3-duration-20261014.2",
-    "duration_mode": "STANDARD",
-    "allow_automatic_shortening": false
   }
 }
-
