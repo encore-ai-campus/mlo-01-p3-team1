@@ -21,6 +21,15 @@ def resolution_kind(node, peer, resolved):
     return 'mismatch'
 
 
+def verify_memory(nominal_mib, guest_mib, environment):
+    # AWS wrappers verify the exact instance type through IMDSv2 first. Kernel
+    # reservations reduce guest MemTotal; retain the local VM threshold.
+    ratio = 0.93 if environment == 'aws' else 0.94
+    if guest_mib < nominal_mib * ratio:
+        raise ValueError('RAM is below inventory budget: '
+                         + str(guest_mib) + ' MiB visible / ' + str(nominal_mib) + ' MiB nominal')
+
+
 def check(c, skip_peers=False):
     n = c['node']
     if socket.gethostname().split('.')[0] != n['name']:
@@ -32,8 +41,7 @@ def check(c, skip_peers=False):
     if os.cpu_count() < n['cpu']:
         raise ValueError('CPU count is below inventory budget')
     ram = int(next(line.split()[1] for line in Path('/proc/meminfo').read_text().splitlines() if line.startswith('MemTotal:'))) // 1024
-    if ram < n['memory_mib'] * 0.94:
-        raise ValueError('RAM is below inventory budget')
+    verify_memory(n['memory_mib'], ram, c['env']['ENVIRONMENT'])
     if shutil.disk_usage('/var/lib/music-cluster').free < n['min_free_disk_gib'] * 1024**3:
         raise ValueError('Insufficient free space on /var')
     failures = []

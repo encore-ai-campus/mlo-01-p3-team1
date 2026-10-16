@@ -25,8 +25,8 @@ import database_config
 CORE_ROLES={'kafka','spark','es','control'}
 STAGES={'preflight','init-empty-disk','common','check-common','kafka','zookeeper','es','control',
         'connectors','health','smoke','finalize-es','catalog','zookeeper-health',
-        'spark-master','spark-master-health','spark-worker','postgresql','mongodb','database-health','application-host'}
-AWS_FILES=('aws-bootstrap.sh','aws-identity.py','init-disk.py','spark-master-health.py','control-tools.sh','database.py','database_config.py','application-host.sh')
+        'spark-master','spark-master-health','spark-worker','postgresql','mongodb','database-health','application-host','checkpoint-smoke','control-fencing'}
+AWS_FILES=('aws-bootstrap.sh','aws-identity.py','init-disk.py','spark-master-health.py','control-tools.sh','database.py','database_config.py','application-host.sh','connectors.lock.json','checkpoint_probe.py','integration_scope.py','checkpoint-probe.sh')
 
 
 def file_hash(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
@@ -66,9 +66,15 @@ def core_inventory(value):
     return {'environment':'aws','nodes':nodes}
 
 
-def prepare(c,inv_path):
+def prepare(c,inv_path,connector_bundle=None):
     needed=blockers(c,'install')
     if needed:raise ValueError('Select deployment inputs before private package creation: '+', '.join(needed))
+    connector_lock=None
+    if connector_bundle is not None:
+        sys.path.insert(0,str(ROOT/'installer/core/lib'))
+        import connectors
+        connectors.validate_bundle(connector_bundle,reviewed_lock=ROOT/'installer/connectors.lock.json')
+        connector_lock=file_hash(ROOT/'installer/connectors.lock.json')
     value=json.loads(Path(inv_path).read_text());checked_inventory(c,value)
     private=ROOT/'.private'/c['environment']/c['generation'];private.mkdir(parents=True,exist_ok=True);private.chmod(0o700)
     marker={'project':c['project'],'environment':c['environment'],'generation':c['generation']}
@@ -108,6 +114,10 @@ def prepare(c,inv_path):
         paths += [(name,ROOT/'installer'/name) for name in AWS_FILES]
         paths += [('runtime.json',tmp/'runtime.json'),('core/pki/ca.crt',private/'pki/ca.crt'),
                   ('core/pki/node.key',private/'pki'/n['name']/'node.key'),('core/pki/node.crt',private/'pki'/n['name']/'node.crt')]
+        if connector_bundle is not None and n['role'] in ('spark','control'):
+            folder=Path(connector_bundle)
+            paths += [('core/connectors/connectors.lock.json',folder/'connectors.lock.json')]
+            paths += [('core/connectors/'+j['filename'],folder/j['filename']) for j in json.loads((folder/'connectors.lock.json').read_text())['jars']]
         archive=tmp/'payload.tgz'
         with tarfile.open(archive,'w:gz') as tar:
             for rel,path in safe_members(paths):
@@ -115,7 +125,8 @@ def prepare(c,inv_path):
                 with path.open('rb') as f:tar.addfile(info,f)
         checksum=file_hash(archive);key=f"private/{n['name']}/{c['generation']}/{checksum}/payload.tgz"
         manifest.append({'implementation':source_identity(),'node':n['name'],'profile':n['profile'],'instance_id':n['instance_id'],
-            'generation':c['generation'],'file':str(archive),'sha256':checksum,'bucket':artifact_bucket(c,a),'key':key})
+            'generation':c['generation'],'file':str(archive),'sha256':checksum,'bucket':artifact_bucket(c,a),'key':key,
+            'connector_lock_sha256':connector_lock if n['role'] in ('spark','control') else None})
     write(private/'packages.json',manifest)
     print(f'{len(manifest)} node-private packages prepared. CA key remains on Mac; no S3 upload or EC2 installation performed. Advertising application deployment belongs to the team.')
 
@@ -128,7 +139,7 @@ def stage_allowed(stage,node):
     if stage in ('postgresql','mongodb','database-health'):return False
     required={'kafka':'kafka','es':'es','finalize-es':'es','zookeeper':'spark','spark-master':'spark',
               'spark-worker':'spark','spark-master-health':'spark','zookeeper-health':'spark','control':'control',
-              'connectors':('spark','control')}
+              'connectors':('spark','control'),'checkpoint-smoke':'spark','control-fencing':'control'}
     roles=required.get(stage)
     return roles is None or node['role'] in ([roles] if isinstance(roles,str) else roles)
 
@@ -136,16 +147,28 @@ def stage_allowed(stage,node):
 def manifest(c):return ROOT/'.private'/c['environment']/c['generation']/'packages.json'
 
 
-def send(c,node,stage,receipt,init_token):
+def send(c,node,stage,receipt,init_token,package_manifest=None):
     if Path(receipt).exists():raise ValueError('Receipt exists; inspect its CommandId with status instead of resubmitting')
-    if stage=='connectors':raise ValueError('Connector transitive dependency lock/package is pending; activation blocked')
+    selected_manifest=manifest(c) if package_manifest is None else Path(package_manifest)
+    if package_manifest is not None:
+        allowed=ROOT/'.private'/c['environment']/c['generation']/'control-fencing'
+        if stage!='control-fencing' or not selected_manifest.resolve().is_relative_to(allowed.resolve()):
+            raise ValueError('Separate manifests are limited to prepared Control fencing packages')
+    if stage in ('connectors','checkpoint-smoke'):
+        prepared=next(p for p in json.loads(selected_manifest.read_text()) if p['node']==node)
+        if prepared.get('connector_lock_sha256')!=file_hash(ROOT/'installer/connectors.lock.json'):
+            raise ValueError('Reviewed connector bundle not explicitly included in this node package; activation blocked')
+    if stage=='control-fencing':
+        prepared=next(p for p in json.loads(selected_manifest.read_text()) if p['node']==node)
+        if prepared.get('control_fencing_lock_sha256')!=file_hash(ROOT/'installer/control-fencing.lock.json'):
+            raise ValueError('Explicitly prepared fencing runtime bundle required; ordinary packages cannot activate it')
     with tempfile.TemporaryDirectory() as temp:
         current=inventory(c,Path(temp)/'inventory.json')
     checked_inventory(c,current)
     actual=next(n for n in current['nodes'] if n['name']==node)
     if actual['role'] not in CORE_ROLES|database_config.KINDS|{'advertising'} or not stage_allowed(stage,actual):raise ValueError('Stage not supported for this node role')
     if actual['state']!='running' or not actual['ssm_online']:raise AwsError('Node must be running and SSM Online')
-    package=next(p for p in json.loads(manifest(c).read_text()) if p['node']==node)
+    package=next(p for p in json.loads(selected_manifest.read_text()) if p['node']==node)
     if package.get('implementation',{}).get('source_sha256')!=source_identity()['source_sha256']:
         raise ValueError('Package code differs from current source; explicitly prepare fresh packages')
     if package['instance_id']!=actual['instance_id'] or package['generation']!=c['generation']:
@@ -177,13 +200,20 @@ def send(c,node,stage,receipt,init_token):
     # Dispatch is asynchronous. 'status' waits explicitly using the stored ID; never resend on timeout.
 
 
+def command_invocation(aws,command,iid):
+    # Observe the whole invocation: AWS document step names differ, and remote
+    # scripts also have a download step whose result must not be ignored.
+    items=aws.call('ssm','list-command-invocations','--command-id',command,
+                   '--instance-id',iid,'--details')['CommandInvocations']
+    if not items:return {'Status':'Pending'}
+    if len(items)!=1 or items[0]['CommandId']!=command or items[0]['InstanceId']!=iid:
+        raise AwsError('SSM invocation identity differs from the saved command and instance')
+    return items[0]
+
+
 def poll(aws,command,iid,seconds=300):
-    def fetch():
-        try:return aws.call('ssm','get-command-invocation','--command-id',command,'--instance-id',iid,'--plugin-name','runShellScript')
-        except AwsError as e:
-            if 'InvocationDoesNotExist' in str(e):return {'Status':'Pending'}
-            raise
-    value=wait_until(fetch,lambda v:v['Status'] not in ('Pending','InProgress','Delayed','Cancelling'),seconds=seconds)
+    value=wait_until(lambda:command_invocation(aws,command,iid),
+        lambda v:v['Status'] not in ('Pending','InProgress','Delayed','Cancelling'),seconds=seconds)
     if value['Status']!='Success':raise AwsError('SSM stage '+value['Status']+'; inspect private logs, no automatic resubmission')
     return value
 
@@ -192,12 +222,12 @@ def main():
     os.umask(0o077)
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--config',default=str(ROOT/'config/project.json'))
     s=p.add_subparsers(dest='action',required=True)
-    q=s.add_parser('prepare');q.add_argument('--inventory',required=True)
+    q=s.add_parser('prepare');q.add_argument('--inventory',required=True);q.add_argument('--connector-bundle')
     q=s.add_parser('send');q.add_argument('--node',required=True);q.add_argument('--stage',choices=sorted(STAGES),required=True)
     q.add_argument('--receipt',required=True);q.add_argument('--new-generation')
     q=s.add_parser('status');q.add_argument('--receipt',required=True)
     a=p.parse_args();c=load(a.config)
-    if a.action=='prepare':prepare(c,a.inventory)
+    if a.action=='prepare':prepare(c,a.inventory,a.connector_bundle)
     elif a.action=='send':send(c,a.node,a.stage,a.receipt,a.new_generation)
     elif a.action=='status':
         r=json.loads(Path(a.receipt).read_text())
@@ -205,8 +235,7 @@ def main():
         if 'command_id' not in r:raise ValueError('Submission outcome unknown; inspect SSM command history, do not automatically resend')
         aws=Aws(c,account(c,r['profile']))
         # One bounded read; calling this command again does not install anything again.
-        v=aws.call('ssm','get-command-invocation','--command-id',r['command_id'],
-                   '--instance-id',r['instance_id'],'--plugin-name','runShellScript')
+        v=command_invocation(aws,r['command_id'],r['instance_id'])
         r['status']=v['Status'];write(a.receipt,r);print(json.dumps(r,indent=2))
 
 

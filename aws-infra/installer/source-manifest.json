@@ -23,10 +23,14 @@
     "examples/connector-smoke.py": "7eb09fdb6426e2ff8d4fb387bf3162264c62f9a79e20cd3818e37ae7a8a4681a"
   },
   "aws_patches": {
+    "versions.json": "Keep verified service/artifact versions; freeze Spark-provided SLF4J 2.0.17, Snappy 1.1.10.8 and Scala library 2.13.17 during Kafka/S3A resolution",
+    "lib/connectors.py": "Central-only isolated Maven resolution, schema2 full-distribution and dependency hash lock, reviewed provided libraries, complete-bundle publication and pre-copy drift checks",
+    "25-connectors.sh": "Support reviewed Spark/Control classpath additions only after all three Masters are observed idle; missing/unknown membership or applications blocks changes",
     "lib/pki.py": "AWS CA subject; new CA remains on Mac; database nodes include verified localhost SAN for local bootstrap",
     "20-spark.sh": "Separate Master/Worker starts; health barrier marker required",
-    "lib/preflight.py": "Capacity measured on AWS mounted data volume",
+    "lib/preflight.py": "Capacity measured on AWS mounted data volume; exact IMDSv2 instanceType checked by AWS wrapper, kernel-reserved guest RAM allowance (93%); local 94% threshold preserved",
     "cluster-bootstrap.sh": "Reject local environment and check IMDSv2 identity even if called directly",
-    "40-control.sh": "Framework-neutral Control host preparation; FastAPI/ASGI app deployment remains team-owned"
+    "40-control.sh": "Framework-neutral Control host preparation; FastAPI/ASGI app deployment remains team-owned",
+    "lib/health.py": "ZooKeeper quorum checks use existing ZooKeeper client TLS material before Spark installation; full TLS identity and voting membership checks preserved"
   }
 }

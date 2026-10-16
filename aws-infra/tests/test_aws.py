@@ -18,6 +18,10 @@ def module(name,path):
 identity=module('aws_identity',ROOT/'installer/aws-identity.py')
 disk=module('disk',ROOT/'installer/init-disk.py')
 masters=module('masters',ROOT/'installer/spark-master-health.py')
+guest_preflight=module('guest_preflight',ROOT/'installer/core/lib/preflight.py')
+sys.path.insert(0,str(ROOT/'installer/core/lib'))
+guest_health=module('guest_health',ROOT/'installer/core/lib/health.py')
+sys.path.pop(0)
 
 
 class Topology(unittest.TestCase):
@@ -131,8 +135,8 @@ class Topology(unittest.TestCase):
 
 class GuestSafety(unittest.TestCase):
     def runtime(self):return {'env':{'ENVIRONMENT':'aws','AWS_REGION':'ap-northeast-2'},'aws':{'generation':'g1'},
-        'node':{'account_id':'444444444444','instance_id':'i-123','address':'10.83.18.20'}}
-    def actual(self):return {'accountId':'444444444444','instanceId':'i-123','privateIp':'10.83.18.20','region':'ap-northeast-2'}
+        'node':{'account_id':'444444444444','instance_id':'i-123','instance_type':'t3.medium','address':'10.83.18.20'}}
+    def actual(self):return {'accountId':'444444444444','instanceId':'i-123','instanceType':'t3.medium','privateIp':'10.83.18.20','region':'ap-northeast-2'}
     def test_identity_pass(self):identity.verify(self.runtime(),self.actual)
     def test_local_vm_rejected(self):
         c=self.runtime();c['env']['ENVIRONMENT']='local'
@@ -143,6 +147,33 @@ class GuestSafety(unittest.TestCase):
     def test_wrong_instance_rejected(self):
         value=self.actual();value['instanceId']='i-wrong'
         with self.assertRaises(ValueError):identity.verify(self.runtime(),lambda:value)
+    def test_wrong_or_missing_instance_type_rejected(self):
+        for value in ({**self.actual(),'instanceType':'t3.small'},
+                      {k:v for k,v in self.actual().items() if k!='instanceType'}):
+            with self.subTest(actual=value),self.assertRaises(ValueError):identity.verify(self.runtime(),lambda:value)
+    def test_aws_guest_kernel_reserve_does_not_reject_correct_nominal_capacity(self):
+        guest_preflight.verify_memory(4096,3832,'aws')
+    def test_aws_guest_with_significant_capacity_shortage_still_rejected(self):
+        for guest in (2048,3500,3800):
+            with self.subTest(guest=guest),self.assertRaises(ValueError):
+                guest_preflight.verify_memory(4096,guest,'aws')
+    def test_local_guest_memory_threshold_is_preserved(self):
+        with self.assertRaises(ValueError):guest_preflight.verify_memory(4096,3832,'local')
+        guest_preflight.verify_memory(4096,3900,'local')
+    def test_zookeeper_tls_quorum_check_works_before_spark_certificates_exist(self):
+        nodes=[{'name':'spark-'+str(i),'address':'192.0.2.'+str(i),'roles':['spark']} for i in (1,2,3)]
+        with tempfile.TemporaryDirectory() as tmp:
+            tls=Path(tmp)/'zookeeper/tls';tls.mkdir(parents=True)
+            for name in ('ca.crt','node.crt','node.key'):(tls/name).write_text('test material')
+            self.assertFalse((Path(tmp)/'spark/tls').exists())
+            observed=[]
+            def voting_mode(address,*,tls_directory=None):
+                self.assertTrue(all((Path(tls_directory)/name).is_file() for name in ('ca.crt','node.crt','node.key')))
+                observed.append(address)
+                return 'leader' if address=='192.0.2.1' else 'follower'
+            with patch.object(guest_health,'CONF',tmp),patch.object(guest_health,'zk_mode',side_effect=voting_mode):
+                guest_health.zookeeper({'inventory':{'nodes':nodes}})
+            self.assertEqual(set(observed),{n['address'] for n in nodes})
     def test_volume_identified_by_serial(self):
         value=disk.find_disk([{'name':'nvme0n1','type':'disk','serial':'volroot'},
             {'name':'nvme1n1','type':'disk','serial':'vol012345'}],'vol-012345')

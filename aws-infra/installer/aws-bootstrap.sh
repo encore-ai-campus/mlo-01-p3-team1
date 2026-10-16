@@ -17,7 +17,7 @@ case "$stage" in
     python3 "$root/init-disk.py" "$runtime"
     exit 0
     ;;
-  application-host|postgresql|mongodb|database-health|preflight|common|check-common|kafka|zookeeper|es|control|connectors|health|smoke|finalize-es|catalog|zookeeper-health|spark-master|spark-master-health|spark-worker) ;;
+  application-host|postgresql|mongodb|database-health|preflight|common|check-common|kafka|zookeeper|es|control|connectors|checkpoint-smoke|health|smoke|finalize-es|catalog|zookeeper-health|spark-master|spark-master-health|spark-worker) ;;
   *) echo '[FAIL] Stage unavailable; application pipeline/HA activation belongs to team integration' >&2; exit 1 ;;
 esac
 mountpoint -q /var/lib/music-cluster || { echo '[FAIL] Explicit init-empty-disk stage is required first' >&2; exit 1; }
@@ -32,6 +32,8 @@ if [[ $role == postgresql || $role == mongodb ]]; then
     python3 "$root/database.py" "$runtime" "$stage"
 elif [[ $stage == application-host || $role == advertising ]]; then
     case "$stage" in preflight) ;; application-host) bash "$root/application-host.sh" "$runtime" ;; *) echo '[FAIL] Invalid application host stage' >&2; exit 1 ;; esac
+elif [[ $stage == checkpoint-smoke ]]; then
+    bash "$root/checkpoint-probe.sh" "$runtime"
 elif [[ $stage == spark-master-health ]]; then
     python3 "$root/spark-master-health.py" "$runtime"
 elif [[ $stage == control ]]; then

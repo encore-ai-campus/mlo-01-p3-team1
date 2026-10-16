@@ -9,6 +9,7 @@
   "zookeeper": {"version": "3.9.4", "url": "https://archive.apache.org/dist/zookeeper/zookeeper-3.9.4/apache-zookeeper-3.9.4-bin.tar.gz", "algorithm": "sha512", "checksum": "36bffae6440ed0d71ed83a621b8c52c583860b414812197373237f0c148bd16e6b599977c90e5eb81c0fce6b82ef44aa782621535417cffc4c2a0a51a56f2cdf"},
   "elasticsearch": {"version": "8.19.23", "url": "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.19.23-linux-x86_64.tar.gz", "algorithm": "sha512", "checksum": "ccec1037814ef8051717d09adf22fde4edd93135284eb84948eb8fd82cb4e95513bb8c0780deb555e570fef549968f1d59ebe1ba81683afc6f8fab939ad03e6f", "jdk": "bundled"},
   "connectors": {
+    "provided_dependencies": {"org.slf4j:slf4j-api": "2.0.17", "org.xerial.snappy:snappy-java": "1.1.10.8", "org.scala-lang:scala-library": "2.13.17"},
     "kafka": {"coordinate": "org.apache.spark:spark-sql-kafka-0-10_2.13:4.1.3"},
     "s3a": {"coordinate": "org.apache.hadoop:hadoop-aws:3.4.2"},
     "elasticsearch": {"status": "unresolved", "artifact": "org.elasticsearch:elasticsearch-spark-41_2.13", "reason": "Official Maven metadata returned HTTP 404 on 2026-10-12; do not substitute a Spark 3 jar or SNAPSHOT silently."}

@@ -2,6 +2,7 @@
 import copy
 import importlib.util
 import json
+import hashlib
 from pathlib import Path
 import shutil
 import sys
@@ -104,6 +105,37 @@ class DatabaseSecurity(unittest.TestCase):
         with patch.object(db.subprocess,'run',return_value=Mock(returncode=1,stdout=secret,stderr=secret)):
             with self.assertRaises(ValueError) as error:db.run('psql')
         self.assertNotIn(secret,str(error.exception))
+
+    def check_mongodb_public_key_readable_by_apt(self, existing):
+        value=self.runtime('mongodb');key=b'public repository key fixture'
+        value['database_versions']['mongodb'].update(signing_key_sha256=hashlib.sha256(key).hexdigest(),packages=[])
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder);keyring=root/'mongodb.gpg';cache=root/'cache'
+            if existing:
+                keyring.write_bytes(b'previous public key');keyring.chmod(0o600)
+            def mapped_path(path):
+                return {'/usr/share/keyrings/music-mongodb-8.0.gpg':keyring,
+                        '/var/cache/music-cluster/database':cache}.get(str(path),Path(path))
+            updates=[]
+            def command(*args,**kwargs):
+                if args[:2]==('apt-get','update'):
+                    if keyring.exists():self.assertEqual(keyring.stat().st_mode & 0o777,0o644)
+                    updates.append(True)
+                if args[0]=='gpg':
+                    self.assertEqual(args[args.index('--output')+1],str(keyring))
+                    keyring.write_bytes(b'dearmored public key');keyring.chmod(0o600)
+                return Mock(returncode=0,stdout='',stderr='')
+            with patch.object(db,'Path',side_effect=mapped_path),patch.object(db,'run',side_effect=command), \
+                 patch.object(db,'urlopen',return_value=Mock(read=Mock(return_value=key))),patch.object(db,'save'):
+                db.install_packages(value)
+            self.assertEqual(len(updates),2)
+            self.assertEqual(keyring.stat().st_mode & 0o777,0o644)
+
+    def test_fresh_mongodb_public_key_is_readable_before_repository_update(self):
+        self.check_mongodb_public_key_readable_by_apt(existing=False)
+
+    def test_retry_repairs_existing_public_key_before_first_repository_update(self):
+        self.check_mongodb_public_key_readable_by_apt(existing=True)
 
     def test_completed_database_checks_health_without_reinstall(self):
         value = self.runtime('postgresql')

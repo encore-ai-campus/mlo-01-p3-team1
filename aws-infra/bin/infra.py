@@ -34,12 +34,30 @@ def owned(stack,c):
     return all(observed.get(k)==c[k.lower()] for k in ('Project','Environment'))
 
 
-def get_stack(aws,name,c):
+def get_stack(aws,name,c,review_record=None):
     try:s=aws.call('cloudformation','describe-stacks','--stack-name',name)['Stacks'][0]
     except AwsError as e:
         if 'does not exist' in str(e):return None
         raise
-    if not owned(s,c):raise AwsError('Stack name exists without matching ownership tags; refusing takeover')
+    if not owned(s,c):
+        # New CREATE change sets have no stack tags until execution. Only a saved,
+        # independently verified change set can identify an empty review stack.
+        valid = bool(review_record) and s['StackStatus']=='REVIEW_IN_PROGRESS'
+        if valid:
+            account = next((a for a in c['accounts'] if a['profile']==review_record.get('profile')), None)
+            valid = account is not None and review_record.get('name')==name and bool(review_record.get('change_set_id'))
+            valid = valid and stack_name(c,account['profile'],review_record.get('kind',''))==name
+        if valid:
+            cs=aws.call('cloudformation','describe-change-set','--change-set-name',review_record['change_set_id'])
+            expected_role=f"arn:aws:iam::{account['account_id']}:role/{prefix(c)}-cfn-execution"
+            valid=(cs.get('ChangeSetId')==review_record['change_set_id'] and cs.get('StackId')==s['StackId'] and
+                   cs.get('StackName')==name and cs.get('Status')=='CREATE_COMPLETE' and
+                   cs.get('ExecutionStatus')=='AVAILABLE' and s.get('RoleARN')==expected_role and
+                   cs.get('RoleARN') in (None,expected_role) and owned(cs,c))
+        if valid:
+            resources=aws.call('cloudformation','list-stack-resources','--stack-name',name)
+            valid=not resources['StackResourceSummaries']
+        if not valid:raise AwsError('Stack name exists without verified project ownership; refusing takeover')
     return s
 
 
@@ -50,7 +68,7 @@ def outputs(aws,name,c):
     return {x['OutputKey']:x['OutputValue'] for x in s.get('Outputs',[])}
 
 
-def stack_spec(c,a,kind):
+def stack_spec(c,a,kind,review_record=None):
     """Resolve real stack outputs, never use invented EC2/VPC/ENI IDs."""
     admin=kind in ('bootstrap','acceptor')
     aws=Aws(c,a,admin=admin)
@@ -65,7 +83,7 @@ def stack_spec(c,a,kind):
         # Recheck existing CIDRs at execution time; a previously empty account is only a time snapshot.
         current=aws.call('ec2','describe-vpcs')['Vpcs']
         import ipaddress
-        existing=get_stack(aws,template,c)
+        existing=get_stack(aws,template,c,review_record=review_record)
         existing_id=next((o['OutputValue'] for o in existing.get('Outputs',[]) if o['OutputKey']=='VpcId'),None) if existing else None
         for v in current:
             if v['VpcId']!=existing_id and any(ipaddress.ip_network(x['CidrBlock']).overlaps(ipaddress.ip_network(a['cidr']))
@@ -101,7 +119,7 @@ def stack_spec(c,a,kind):
         params={'AmiId':c['ami_id'],'InstanceType':n['instance_type'],'EniId':net[logical(n['name'])+'EniId'],
                 'RootGiB':n['root_gib'],'DataGiB':n['data_gib']}
         eni=aws.call('ec2','describe-network-interfaces','--network-interface-ids',params['EniId'])['NetworkInterfaces'][0]
-        if not get_stack(aws,template,c) and (eni['Status']!='available' or eni.get('Attachment')):
+        if not get_stack(aws,template,c,review_record=review_record) and (eni['Status']!='available' or eni.get('Attachment')):
             raise AwsError('Primary ENI is still attached; remove old compute and wait before recreation')
     elif kind.startswith('peer-') or kind.startswith('route-'):
         other=kind.split('-',1)[1];peer=account(c,other)
@@ -201,7 +219,7 @@ def changeset(c,a,kind,out):
         if checked.returncode:
             raise ValueError('Local template validation failed: '+path.name+'; run bin/check-local.sh for findings')
     existing=get_stack(aws,name,c)
-    token='review-'+uuid.uuid4().hex
+    token=name+'-review-'+uuid.uuid4().hex[:16]
     args=['--stack-name',name,'--change-set-name',token,'--change-set-type','UPDATE' if existing else 'CREATE',
           '--template-body','file://'+str(path),'--tags',json.dumps(tags(c))]
     if params:args+=['--parameters',json.dumps([{'ParameterKey':k,'ParameterValue':str(v)} for k,v in params.items()])]
