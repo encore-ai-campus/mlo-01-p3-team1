@@ -1,0 +1,6 @@
+Django
+djangorestframework
+ortools
+psycopg[binary]
+google-genai
+drf-spectacular
