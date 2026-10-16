@@ -53,6 +53,14 @@ coverage/
 /backend/media/
 /backend/staticfiles/
 
+# 독립 광고 서버의 빌드·개발 DB·업로드 산출물
+/ad-server/backend/build/
+/ad-server/backend/dist/
+/ad-server/backend/db.sqlite3
+/ad-server/backend/db.sqlite3-*
+/ad-server/backend/media/
+/ad-server/backend/staticfiles/
+
 # React, TypeScript, Vite 의존성과 빌드 결과
 node_modules/
 .vite/

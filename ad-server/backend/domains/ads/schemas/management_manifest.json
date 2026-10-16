@@ -1,0 +1,803 @@
+{
+  "schema_version": "phase3-ads-data-20261015.4",
+  "scope": "initial_management",
+  "note": "기본 BSON 타입·금지 필드·기간·고유키 검증 초안. 인증·참조·이미지 디코딩·HTTP/동시성 검증을 대신하지 않습니다. 보관 미정/relay pending은 자동 TTL을 설정하지 않습니다.",
+  "collections": {
+    "ads": {
+      "validator": {
+        "$and": [
+          {
+            "$jsonSchema": {
+              "bsonType": "object",
+              "required": [
+                "_id",
+                "schema_version",
+                "is_test",
+                "created_at",
+                "title",
+                "link_url",
+                "asset_id",
+                "creative_version",
+                "placement",
+                "starts_at",
+                "ends_at",
+                "priority",
+                "version",
+                "paused",
+                "stopped_at",
+                "created_by_account_id",
+                "updated_by_account_id",
+                "identity_source",
+                "updated_at"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "_id": {
+                  "bsonType": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "bsonType": "string",
+                  "enum": [
+                    "phase3-ads-data-20261014.3",
+                    "phase3-ads-data-20261015.4"
+                  ]
+                },
+                "is_test": {
+                  "bsonType": "bool"
+                },
+                "created_at": {
+                  "bsonType": "date"
+                },
+                "title": {
+                  "bsonType": "string",
+                  "minLength": 1
+                },
+                "link_url": {
+                  "bsonType": "string",
+                  "pattern": "^https://[^/\\s?#]+"
+                },
+                "asset_id": {
+                  "bsonType": "string",
+                  "minLength": 1
+                },
+                "creative_version": {
+                  "bsonType": "string",
+                  "minLength": 1
+                },
+                "placement": {
+                  "bsonType": "string",
+                  "enum": [
+                    "top",
+                    "bottom"
+                  ]
+                },
+                "starts_at": {
+                  "bsonType": "date"
+                },
+                "ends_at": {
+                  "bsonType": "date"
+                },
+                "priority": {
+                  "bsonType": [
+                    "int",
+                    "long"
+                  ]
+                },
+                "version": {
+                  "bsonType": [
+                    "int",
+                    "long"
+                  ],
+                  "minimum": 1
+                },
+                "paused": {
+                  "bsonType": "bool"
+                },
+                "stopped_at": {
+                  "bsonType": [
+                    "date",
+                    "null"
+                  ]
+                },
+                "created_by_account_id": {
+                  "bsonType": "string",
+                  "minLength": 1
+                },
+                "updated_by_account_id": {
+                  "bsonType": "string",
+                  "minLength": 1
+                },
+                "identity_source": {
+                  "bsonType": "string",
+                  "minLength": 1
+                },
+                "updated_at": {
+                  "bsonType": "date"
+                },
+                "daily_budget_tokens": {
+                  "bsonType": [
+                    "int",
+                    "long",
+                    "null"
+                  ],
+                  "minimum": 1,
+                  "maximum": 9223372036854775807
+                },
+                "total_budget_tokens": {
+                  "bsonType": [
+                    "int",
+                    "long",
+                    "null"
+                  ],
+                  "minimum": 1,
+                  "maximum": 9223372036854775807
+                },
+                "budget_version": {
+                  "bsonType": [
+                    "string",
+                    "null"
+                  ],
+                  "minLength": 1
+                },
+                "budget_blocked_at": {
+                  "bsonType": [
+                    "date",
+                    "null"
+                  ]
+                },
+                "budget_blocked_until": {
+                  "bsonType": [
+                    "date",
+                    "null"
+                  ]
+                },
+                "budget_blocked_version": {
+                  "bsonType": [
+                    "string",
+                    "null"
+                  ],
+                  "minLength": 1
+                },
+                "budget_blocked_scope": {
+                  "bsonType": [
+                    "string",
+                    "null"
+                  ],
+                  "enum": [
+                    "DAILY",
+                    "TOTAL",
+                    null
+                  ]
+                }
+              },
+              "oneOf": [
+                {
+                  "not": {
+                    "anyOf": [
+                      {
+                        "required": [
+                          "daily_budget_tokens"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "total_budget_tokens"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "budget_version"
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "required": [
+                    "daily_budget_tokens",
+                    "total_budget_tokens",
+                    "budget_version"
+                  ],
+                  "properties": {
+                    "daily_budget_tokens": {
+                      "bsonType": "null"
+                    },
+                    "total_budget_tokens": {
+                      "bsonType": "null"
+                    },
+                    "budget_version": {
+                      "bsonType": "null"
+                    }
+                  }
+                },
+                {
+                  "required": [
+                    "daily_budget_tokens",
+                    "total_budget_tokens",
+                    "budget_version"
+                  ],
+                  "properties": {
+                    "daily_budget_tokens": {
+                      "bsonType": [
+                        "int",
+                        "long"
+                      ]
+                    },
+                    "total_budget_tokens": {
+                      "bsonType": [
+                        "int",
+                        "long"
+                      ]
+                    },
+                    "budget_version": {
+                      "bsonType": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "$expr": {
+              "$lt": [
+                "$starts_at",
+                "$ends_at"
+              ]
+            }
+          }
+        ]
+      },
+      "indexes": [
+        {
+          "name": "candidate_lookup",
+          "keys": [
+            [
+              "placement",
+              1
+            ],
+            [
+              "paused",
+              1
+            ],
+            [
+              "priority",
+              -1
+            ],
+            [
+              "starts_at",
+              1
+            ],
+            [
+              "ends_at",
+              1
+            ]
+          ]
+        },
+        {
+          "name": "admin_updated_list",
+          "keys": [
+            [
+              "updated_at",
+              -1
+            ],
+            [
+              "_id",
+              -1
+            ]
+          ]
+        }
+      ]
+    },
+    "ad_assets": {
+      "validator": {
+        "$jsonSchema": {
+          "bsonType": "object",
+          "required": [
+            "_id",
+            "schema_version",
+            "is_test",
+            "created_at",
+            "image_bytes",
+            "mime_type",
+            "byte_size",
+            "width",
+            "height",
+            "sha256",
+            "uploaded_by_account_id",
+            "identity_source"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "_id": {
+              "bsonType": "string",
+              "minLength": 1
+            },
+            "schema_version": {
+              "bsonType": "string",
+              "enum": [
+                "phase3-ads-data-20261014.3",
+                "phase3-ads-data-20261015.4"
+              ]
+            },
+            "is_test": {
+              "bsonType": "bool"
+            },
+            "created_at": {
+              "bsonType": "date"
+            },
+            "image_bytes": {
+              "bsonType": "binData"
+            },
+            "mime_type": {
+              "bsonType": "string",
+              "enum": [
+                "image/png",
+                "image/jpeg",
+                "image/webp"
+              ]
+            },
+            "byte_size": {
+              "bsonType": [
+                "int",
+                "long"
+              ],
+              "minimum": 1,
+              "maximum": 2000000
+            },
+            "width": {
+              "bsonType": [
+                "int",
+                "long"
+              ],
+              "minimum": 1
+            },
+            "height": {
+              "bsonType": [
+                "int",
+                "long"
+              ],
+              "minimum": 1
+            },
+            "sha256": {
+              "bsonType": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "uploaded_by_account_id": {
+              "bsonType": "string",
+              "minLength": 1
+            },
+            "identity_source": {
+              "bsonType": "string",
+              "minLength": 1
+            }
+          }
+        }
+      },
+      "indexes": []
+    },
+    "ad_admin_changes": {
+      "validator": {
+        "$and": [
+          {
+            "$jsonSchema": {
+              "bsonType": "object",
+              "required": [
+                "_id",
+                "schema_version",
+                "is_test",
+                "created_at",
+                "operation",
+                "ad_id",
+                "asset_id",
+                "identity_source",
+                "actor_account_id",
+                "resource_scope",
+                "idempotency_key_hash",
+                "request_hash",
+                "changed",
+                "version_before",
+                "version_after",
+                "before_snapshot",
+                "after_snapshot",
+                "reason",
+                "response_snapshot",
+                "completed_at",
+                "occurred_at",
+                "retention_due_at"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "_id": {
+                  "bsonType": "string",
+                  "minLength": 1
+                },
+                "schema_version": {
+                  "bsonType": "string",
+                  "enum": [
+                    "phase3-ads-data-20261014.3",
+                    "phase3-ads-data-20261015.4"
+                  ]
+                },
+                "is_test": {
+                  "bsonType": "bool"
+                },
+                "created_at": {
+                  "bsonType": "date"
+                },
+                "operation": {
+                  "bsonType": "string",
+                  "enum": [
+                    "UPLOAD_ASSET",
+                    "CREATE",
+                    "UPDATE",
+                    "STOP"
+                  ]
+                },
+                "ad_id": {
+                  "bsonType": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "asset_id": {
+                  "bsonType": "string",
+                  "minLength": 1
+                },
+                "identity_source": {
+                  "bsonType": "string",
+                  "minLength": 1
+                },
+                "actor_account_id": {
+                  "bsonType": "string",
+                  "minLength": 1
+                },
+                "resource_scope": {
+                  "bsonType": "string",
+                  "minLength": 1
+                },
+                "idempotency_key_hash": {
+                  "bsonType": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "request_hash": {
+                  "bsonType": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "changed": {
+                  "bsonType": "bool"
+                },
+                "version_before": {
+                  "bsonType": [
+                    "int",
+                    "long",
+                    "null"
+                  ],
+                  "minimum": 1
+                },
+                "version_after": {
+                  "bsonType": [
+                    "int",
+                    "long",
+                    "null"
+                  ],
+                  "minimum": 1
+                },
+                "before_snapshot": {
+                  "bsonType": [
+                    "object",
+                    "null"
+                  ],
+                  "properties": {
+                    "daily_budget_tokens": {
+                      "bsonType": [
+                        "int",
+                        "long",
+                        "null"
+                      ],
+                      "minimum": 1,
+                      "maximum": 9223372036854775807
+                    },
+                    "total_budget_tokens": {
+                      "bsonType": [
+                        "int",
+                        "long",
+                        "null"
+                      ],
+                      "minimum": 1,
+                      "maximum": 9223372036854775807
+                    },
+                    "budget_version": {
+                      "bsonType": [
+                        "string",
+                        "null"
+                      ],
+                      "minLength": 1
+                    },
+                    "end_reason": {
+                      "bsonType": [
+                        "string",
+                        "null"
+                      ],
+                      "enum": [
+                        "BUDGET_EXHAUSTED",
+                        "PERIOD_ENDED",
+                        null
+                      ]
+                    }
+                  }
+                },
+                "after_snapshot": {
+                  "bsonType": "object",
+                  "properties": {
+                    "daily_budget_tokens": {
+                      "bsonType": [
+                        "int",
+                        "long",
+                        "null"
+                      ],
+                      "minimum": 1,
+                      "maximum": 9223372036854775807
+                    },
+                    "total_budget_tokens": {
+                      "bsonType": [
+                        "int",
+                        "long",
+                        "null"
+                      ],
+                      "minimum": 1,
+                      "maximum": 9223372036854775807
+                    },
+                    "budget_version": {
+                      "bsonType": [
+                        "string",
+                        "null"
+                      ],
+                      "minLength": 1
+                    },
+                    "end_reason": {
+                      "bsonType": [
+                        "string",
+                        "null"
+                      ],
+                      "enum": [
+                        "BUDGET_EXHAUSTED",
+                        "PERIOD_ENDED",
+                        null
+                      ]
+                    }
+                  }
+                },
+                "reason": {
+                  "bsonType": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "response_snapshot": {
+                  "bsonType": "object",
+                  "required": [
+                    "http_status",
+                    "body"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "http_status": {
+                      "bsonType": [
+                        "int",
+                        "long"
+                      ],
+                      "minimum": 200,
+                      "maximum": 299
+                    },
+                    "body": {
+                      "bsonType": "object"
+                    }
+                  }
+                },
+                "completed_at": {
+                  "bsonType": "date"
+                },
+                "occurred_at": {
+                  "bsonType": "date"
+                },
+                "retention_due_at": {
+                  "bsonType": [
+                    "date",
+                    "null"
+                  ]
+                },
+                "log_relay": {
+                  "bsonType": "object",
+                  "required": [
+                    "log_event_id",
+                    "payload",
+                    "payload_hash",
+                    "status",
+                    "attempt_count",
+                    "next_retry_at",
+                    "last_error",
+                    "sent_at"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "log_event_id": {
+                      "bsonType": "string",
+                      "minLength": 1
+                    },
+                    "payload": {
+                      "bsonType": "object"
+                    },
+                    "payload_hash": {
+                      "bsonType": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    "status": {
+                      "bsonType": "string",
+                      "enum": [
+                        "PENDING",
+                        "SENT"
+                      ]
+                    },
+                    "attempt_count": {
+                      "bsonType": [
+                        "int",
+                        "long"
+                      ],
+                      "minimum": 0
+                    },
+                    "next_retry_at": {
+                      "bsonType": [
+                        "date",
+                        "null"
+                      ]
+                    },
+                    "last_error": {
+                      "bsonType": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "sent_at": {
+                      "bsonType": [
+                        "date",
+                        "null"
+                      ]
+                    }
+                  }
+                },
+                "log_record": {
+                  "bsonType": "object",
+                  "required": [
+                    "log_schema_version",
+                    "log_event_id",
+                    "payload",
+                    "payload_hash",
+                    "stored_at"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "log_schema_version": {
+                      "enum": [
+                        "ads-mongo-log-20261015.1"
+                      ]
+                    },
+                    "log_event_id": {
+                      "bsonType": "string",
+                      "minLength": 1
+                    },
+                    "payload": {
+                      "bsonType": "object"
+                    },
+                    "payload_hash": {
+                      "bsonType": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    "stored_at": {
+                      "bsonType": "date"
+                    }
+                  }
+                }
+              },
+              "anyOf": [
+                {
+                  "required": [
+                    "log_record"
+                  ]
+                },
+                {
+                  "required": [
+                    "log_relay"
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "$expr": {
+              "$cond": [
+                {
+                  "$eq": [
+                    "$operation",
+                    "UPLOAD_ASSET"
+                  ]
+                },
+                {
+                  "$eq": [
+                    "$ad_id",
+                    null
+                  ]
+                },
+                {
+                  "$ne": [
+                    "$ad_id",
+                    null
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "indexes": [
+        {
+          "name": "admin_history",
+          "keys": [
+            [
+              "ad_id",
+              1
+            ],
+            [
+              "occurred_at",
+              -1
+            ]
+          ]
+        },
+        {
+          "name": "admin_idempotency",
+          "keys": [
+            [
+              "identity_source",
+              1
+            ],
+            [
+              "actor_account_id",
+              1
+            ],
+            [
+              "operation",
+              1
+            ],
+            [
+              "resource_scope",
+              1
+            ],
+            [
+              "idempotency_key_hash",
+              1
+            ]
+          ],
+          "unique": true
+        },
+        {
+          "name": "mongo_log_created",
+          "keys": [
+            [
+              "is_test",
+              1
+            ],
+            [
+              "log_record.stored_at",
+              -1
+            ],
+            [
+              "_id",
+              1
+            ]
+          ]
+        }
+      ]
+    }
+  }
+}
