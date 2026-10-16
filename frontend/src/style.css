@@ -64,6 +64,13 @@
 @media(max-width:700px){.music-grid>.selection{min-height:0}.selection h2{margin-bottom:16px}.selection-bottom{padding-top:12px}}
 
 /* Give the playlist rows the space formerly used by redundant preview copy and large stars. */
+.region-hierarchy{display:flex;gap:8px;flex-wrap:wrap;align-items:end}
+.region-hierarchy label{display:flex;flex-direction:column;gap:3px;font-size:11px;color:#4d6386}
+.region-hierarchy select{width:140px;min-width:140px;max-width:220px}
+.weather-panel:has(.region-hierarchy){height:auto;min-height:120px}
+.region-section:has(.region-hierarchy){min-width:0}
+.region-section:has(.region-hierarchy) h1{white-space:normal}
+@media(max-width:700px){.region-hierarchy{width:100%}.region-hierarchy label{flex:1;min-width:120px}.region-hierarchy select{width:100%;min-width:0;max-width:none}}
 .playlist .rating{padding-top:6px;margin-top:0}
 .playlist .stars{margin-top:2px}
 .playlist .star-options{gap:2px}

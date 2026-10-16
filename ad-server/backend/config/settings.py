@@ -45,6 +45,8 @@ DATABASES = {
         "OPTIONS": {"connect_timeout": 5},
     }
 }
+DATABASES['default']['OPTIONS'].update({key:os.environ[name] for key,name in
+    [('sslmode','POSTGRES_SSLMODE'),('sslrootcert','POSTGRES_SSLROOTCERT')] if os.environ.get(name)})
 PASSWORD_HASHERS = ["django.contrib.auth.hashers.Argon2PasswordHasher"]
 LANGUAGE_CODE = "ko-kr"
 TIME_ZONE = "UTC"
@@ -72,11 +74,13 @@ SPECTACULAR_SETTINGS = {
 ADS_MONGODB_URI = os.environ.get("ADS_MONGODB_URI", "")
 ADS_MONGODB_DATABASE = os.environ.get("ADS_MONGODB_DATABASE", "advertising_dev")
 ADS_IS_TEST = os.environ.get("ADS_IS_TEST", "1" if DEBUG else "0") == "1"
-ADS_ADMIN_AUTHORIZER = os.environ.get("ADS_ADMIN_AUTHORIZER", "")
+ADS_ADMIN_AUTHORIZER = os.environ.get("ADS_ADMIN_AUTHORIZER", "api.common_bridge.authorize_admin")
 # 공통 계약의 이벤트 버전 불일치는 이 설정으로 임의 통합하지 않습니다.
 ADS_API_CONTRACT_VERSION = os.environ.get("ADS_API_CONTRACT_VERSION", "")
 # 미확정 수명·소재 변경·예산을 환경 기본값으로 확정하지 않습니다.
-ADS_GUEST_CONTEXT_PROVIDER = os.environ.get("ADS_GUEST_CONTEXT_PROVIDER", "")
+ADS_GUEST_CONTEXT_PROVIDER = os.environ.get("ADS_GUEST_CONTEXT_PROVIDER", "api.common_bridge.resolve_guest")
+ADS_COMMON_API_URL = os.environ.get("ADS_COMMON_API_URL", "")
+ADS_INTERNAL_SECRET = os.environ.get("ADS_INTERNAL_SECRET", "")
 ADS_PUBLIC_POLICY_PROVIDER = os.environ.get(
     "ADS_PUBLIC_POLICY_PROVIDER", "domains.ads.runtime_policy.get_public_policy"
 )

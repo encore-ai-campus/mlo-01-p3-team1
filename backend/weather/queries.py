@@ -1,6 +1,6 @@
 """공통 API에서 호출할 지역 검색·최신 날씨 조회. 화면·HTTP 서버 없음."""
 from datetime import datetime
-from pipeline.weather.mongo_current import read_grid
+from pipeline.weather.es_latest import read_grid
 from pipeline.weather.common import KST
 from pipeline.weather.mapping_postgres import load_regions, connection
 from backend.weather import road_lookup
@@ -51,7 +51,7 @@ def read_weather(region):
     current = enrich(document, now)
     return dict(region=region, weather=current, guidance=current['guidance'],
                 music_weather=current['music_weather'],
-                viewed_at=now.isoformat(), source='MongoDB 저장 자료')
+                viewed_at=now.isoformat(), source='Elasticsearch 저장 자료')
 
 def lookup_region(identifier):
     if identifier.startswith('road:'):

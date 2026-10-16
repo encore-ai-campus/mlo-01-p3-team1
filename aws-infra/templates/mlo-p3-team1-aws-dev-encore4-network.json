@@ -1,0 +1,1457 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "One private project VPC, three AZ-ID subnet pairs, one zonal NAT, S3 endpoint and stable per-node ENIs.",
+  "Metadata": {
+    "ProjectCodeVersion": "0.3.2",
+    "AWSToolsMetrics": {
+      "AWSAgentToolkit": "aws-cloudformation@3"
+    },
+    "com.aws.cloudformation.Context": {
+      "ref": [
+        "../README.md",
+        "../SECURITY.md",
+        "../../docs/handoff/infra/README.md"
+      ],
+      "must": [
+        "Five independent accounts; 14 private EC2 nodes; three physical AZ IDs.",
+        "No local VM operations. No secrets or CA private key in templates."
+      ]
+    }
+  },
+  "Parameters": {
+    "AzA": {
+      "Type": "String",
+      "AllowedPattern": "apne2-az[1-4]"
+    },
+    "AzB": {
+      "Type": "String",
+      "AllowedPattern": "apne2-az[1-4]"
+    },
+    "AzC": {
+      "Type": "String",
+      "AllowedPattern": "apne2-az[1-4]"
+    }
+  },
+  "Resources": {
+    "Vpc": {
+      "Type": "AWS::EC2::VPC",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Independent non-overlapping account VPC.",
+          "must": [
+            "Review connected local/VPN CIDRs before apply."
+          ]
+        }
+      },
+      "Properties": {
+        "CidrBlock": "10.83.0.0/16",
+        "EnableDnsSupport": true,
+        "EnableDnsHostnames": true,
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "shared"
+          },
+          {
+            "Key": "Role",
+            "Value": "infrastructure"
+          }
+        ]
+      }
+    },
+    "AccepterPolicy": {
+      "Type": "AWS::IAM::Policy",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Binds the current VPC inside the network stack, so every create/delete cycle needs no account-owner intervention.",
+          "must": [
+            "The accepter permissions boundary and trust are administrator-owned.",
+            "Remove peer stacks before deleting this network-owned policy."
+          ]
+        }
+      },
+      "Properties": {
+        "PolicyName": "mlo-p3-team1-aws-dev-accept-project-vpc",
+        "Roles": [
+          "mlo-p3-team1-aws-dev-peering-accepter"
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": "ec2:AcceptVpcPeeringConnection",
+              "Resource": {
+                "Fn::Sub": "arn:${AWS::Partition}:ec2:${AWS::Region}:${AWS::AccountId}:vpc/${Vpc}"
+              }
+            },
+            {
+              "Effect": "Allow",
+              "Action": "ec2:AcceptVpcPeeringConnection",
+              "Resource": {
+                "Fn::Sub": "arn:${AWS::Partition}:ec2:${AWS::Region}:${AWS::AccountId}:vpc-peering-connection/*"
+              },
+              "Condition": {
+                "ArnEquals": {
+                  "ec2:AccepterVpc": {
+                    "Fn::Sub": "arn:${AWS::Partition}:ec2:${AWS::Region}:${AWS::AccountId}:vpc/${Vpc}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "InternetGateway": {
+      "Type": "AWS::EC2::InternetGateway",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Outbound Internet via project NAT and future public ALB.",
+          "must": []
+        }
+      },
+      "Properties": {
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "shared"
+          },
+          {
+            "Key": "Role",
+            "Value": "infrastructure"
+          }
+        ]
+      }
+    },
+    "GatewayAttachment": {
+      "Type": "AWS::EC2::VPCGatewayAttachment",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Attach only to the project VPC.",
+          "must": []
+        }
+      },
+      "Properties": {
+        "VpcId": {
+          "Ref": "Vpc"
+        },
+        "InternetGatewayId": {
+          "Ref": "InternetGateway"
+        }
+      }
+    },
+    "PublicRoutes": {
+      "Type": "AWS::EC2::RouteTable",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Public subnet routing for NAT and ALB.",
+          "must": []
+        }
+      },
+      "Properties": {
+        "VpcId": {
+          "Ref": "Vpc"
+        },
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "shared"
+          },
+          {
+            "Key": "Role",
+            "Value": "infrastructure"
+          }
+        ]
+      }
+    },
+    "PublicDefault": {
+      "Type": "AWS::EC2::Route",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Internet egress route.",
+          "must": []
+        }
+      },
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "PublicRoutes"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": {
+          "Ref": "InternetGateway"
+        }
+      },
+      "DependsOn": "GatewayAttachment"
+    },
+    "PublicA": {
+      "Type": "AWS::EC2::Subnet",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Subnet placement by physical AZ ID across accounts.",
+          "must": [
+            "Never replace AZ ID by an assumed account-local AZ name."
+          ]
+        }
+      },
+      "Properties": {
+        "VpcId": {
+          "Ref": "Vpc"
+        },
+        "AvailabilityZoneId": {
+          "Ref": "AzA"
+        },
+        "CidrBlock": "10.83.0.0/24",
+        "MapPublicIpOnLaunch": false,
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "shared"
+          },
+          {
+            "Key": "Role",
+            "Value": "infrastructure"
+          }
+        ]
+      }
+    },
+    "PrivateA": {
+      "Type": "AWS::EC2::Subnet",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Subnet placement by physical AZ ID across accounts.",
+          "must": [
+            "Never replace AZ ID by an assumed account-local AZ name."
+          ]
+        }
+      },
+      "Properties": {
+        "VpcId": {
+          "Ref": "Vpc"
+        },
+        "AvailabilityZoneId": {
+          "Ref": "AzA"
+        },
+        "CidrBlock": "10.83.16.0/24",
+        "MapPublicIpOnLaunch": false,
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "shared"
+          },
+          {
+            "Key": "Role",
+            "Value": "infrastructure"
+          }
+        ]
+      }
+    },
+    "PrivateRoutesA": {
+      "Type": "AWS::EC2::RouteTable",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Private routes: local, NAT and direct peering only.",
+          "must": []
+        }
+      },
+      "Properties": {
+        "VpcId": {
+          "Ref": "Vpc"
+        },
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "shared"
+          },
+          {
+            "Key": "Role",
+            "Value": "infrastructure"
+          }
+        ]
+      }
+    },
+    "PublicAssociationA": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Attach the correct route table.",
+          "must": []
+        }
+      },
+      "Properties": {
+        "SubnetId": {
+          "Ref": "PublicA"
+        },
+        "RouteTableId": {
+          "Ref": "PublicRoutes"
+        }
+      }
+    },
+    "PrivateAssociationA": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Attach the correct route table.",
+          "must": []
+        }
+      },
+      "Properties": {
+        "SubnetId": {
+          "Ref": "PrivateA"
+        },
+        "RouteTableId": {
+          "Ref": "PrivateRoutesA"
+        }
+      }
+    },
+    "PublicB": {
+      "Type": "AWS::EC2::Subnet",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Subnet placement by physical AZ ID across accounts.",
+          "must": [
+            "Never replace AZ ID by an assumed account-local AZ name."
+          ]
+        }
+      },
+      "Properties": {
+        "VpcId": {
+          "Ref": "Vpc"
+        },
+        "AvailabilityZoneId": {
+          "Ref": "AzB"
+        },
+        "CidrBlock": "10.83.1.0/24",
+        "MapPublicIpOnLaunch": false,
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "shared"
+          },
+          {
+            "Key": "Role",
+            "Value": "infrastructure"
+          }
+        ]
+      }
+    },
+    "PrivateB": {
+      "Type": "AWS::EC2::Subnet",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Subnet placement by physical AZ ID across accounts.",
+          "must": [
+            "Never replace AZ ID by an assumed account-local AZ name."
+          ]
+        }
+      },
+      "Properties": {
+        "VpcId": {
+          "Ref": "Vpc"
+        },
+        "AvailabilityZoneId": {
+          "Ref": "AzB"
+        },
+        "CidrBlock": "10.83.17.0/24",
+        "MapPublicIpOnLaunch": false,
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "shared"
+          },
+          {
+            "Key": "Role",
+            "Value": "infrastructure"
+          }
+        ]
+      }
+    },
+    "PrivateRoutesB": {
+      "Type": "AWS::EC2::RouteTable",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Private routes: local, NAT and direct peering only.",
+          "must": []
+        }
+      },
+      "Properties": {
+        "VpcId": {
+          "Ref": "Vpc"
+        },
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "shared"
+          },
+          {
+            "Key": "Role",
+            "Value": "infrastructure"
+          }
+        ]
+      }
+    },
+    "PublicAssociationB": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Attach the correct route table.",
+          "must": []
+        }
+      },
+      "Properties": {
+        "SubnetId": {
+          "Ref": "PublicB"
+        },
+        "RouteTableId": {
+          "Ref": "PublicRoutes"
+        }
+      }
+    },
+    "PrivateAssociationB": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Attach the correct route table.",
+          "must": []
+        }
+      },
+      "Properties": {
+        "SubnetId": {
+          "Ref": "PrivateB"
+        },
+        "RouteTableId": {
+          "Ref": "PrivateRoutesB"
+        }
+      }
+    },
+    "PublicC": {
+      "Type": "AWS::EC2::Subnet",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Subnet placement by physical AZ ID across accounts.",
+          "must": [
+            "Never replace AZ ID by an assumed account-local AZ name."
+          ]
+        }
+      },
+      "Properties": {
+        "VpcId": {
+          "Ref": "Vpc"
+        },
+        "AvailabilityZoneId": {
+          "Ref": "AzC"
+        },
+        "CidrBlock": "10.83.2.0/24",
+        "MapPublicIpOnLaunch": false,
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "shared"
+          },
+          {
+            "Key": "Role",
+            "Value": "infrastructure"
+          }
+        ]
+      }
+    },
+    "PrivateC": {
+      "Type": "AWS::EC2::Subnet",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Subnet placement by physical AZ ID across accounts.",
+          "must": [
+            "Never replace AZ ID by an assumed account-local AZ name."
+          ]
+        }
+      },
+      "Properties": {
+        "VpcId": {
+          "Ref": "Vpc"
+        },
+        "AvailabilityZoneId": {
+          "Ref": "AzC"
+        },
+        "CidrBlock": "10.83.18.0/24",
+        "MapPublicIpOnLaunch": false,
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "shared"
+          },
+          {
+            "Key": "Role",
+            "Value": "infrastructure"
+          }
+        ]
+      }
+    },
+    "PrivateRoutesC": {
+      "Type": "AWS::EC2::RouteTable",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Private routes: local, NAT and direct peering only.",
+          "must": []
+        }
+      },
+      "Properties": {
+        "VpcId": {
+          "Ref": "Vpc"
+        },
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "shared"
+          },
+          {
+            "Key": "Role",
+            "Value": "infrastructure"
+          }
+        ]
+      }
+    },
+    "PublicAssociationC": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Attach the correct route table.",
+          "must": []
+        }
+      },
+      "Properties": {
+        "SubnetId": {
+          "Ref": "PublicC"
+        },
+        "RouteTableId": {
+          "Ref": "PublicRoutes"
+        }
+      }
+    },
+    "PrivateAssociationC": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Attach the correct route table.",
+          "must": []
+        }
+      },
+      "Properties": {
+        "SubnetId": {
+          "Ref": "PrivateC"
+        },
+        "RouteTableId": {
+          "Ref": "PrivateRoutesC"
+        }
+      }
+    },
+    "NatAddress": {
+      "Type": "AWS::EC2::EIP",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "One paid NAT IPv4 per VPC.",
+          "must": []
+        }
+      },
+      "Properties": {
+        "Domain": "vpc",
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "shared"
+          },
+          {
+            "Key": "Role",
+            "Value": "infrastructure"
+          }
+        ]
+      },
+      "DependsOn": "GatewayAttachment"
+    },
+    "Nat": {
+      "Type": "AWS::EC2::NatGateway",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Approved one-zonal-NAT-per-VPC cost compromise.",
+          "must": [
+            "All private AZs share this NAT; NAT AZ failure interrupts external connectivity."
+          ]
+        }
+      },
+      "Properties": {
+        "AllocationId": {
+          "Fn::GetAtt": [
+            "NatAddress",
+            "AllocationId"
+          ]
+        },
+        "SubnetId": {
+          "Ref": "PublicC"
+        },
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "shared"
+          },
+          {
+            "Key": "Role",
+            "Value": "infrastructure"
+          }
+        ]
+      }
+    },
+    "PrivateDefaultA": {
+      "Type": "AWS::EC2::Route",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Internet route; private cluster traffic uses direct peering.",
+          "must": []
+        }
+      },
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "PrivateRoutesA"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "NatGatewayId": {
+          "Ref": "Nat"
+        }
+      }
+    },
+    "PrivateDefaultB": {
+      "Type": "AWS::EC2::Route",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Internet route; private cluster traffic uses direct peering.",
+          "must": []
+        }
+      },
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "PrivateRoutesB"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "NatGatewayId": {
+          "Ref": "Nat"
+        }
+      }
+    },
+    "PrivateDefaultC": {
+      "Type": "AWS::EC2::Route",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Internet route; private cluster traffic uses direct peering.",
+          "must": []
+        }
+      },
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "PrivateRoutesC"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "NatGatewayId": {
+          "Ref": "Nat"
+        }
+      }
+    },
+    "S3Endpoint": {
+      "Type": "AWS::EC2::VPCEndpoint",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Each VPC gets its own S3 gateway endpoint; endpoint cannot be shared through peering.",
+          "must": []
+        }
+      },
+      "Properties": {
+        "VpcId": {
+          "Ref": "Vpc"
+        },
+        "VpcEndpointType": "Gateway",
+        "ServiceName": {
+          "Fn::Sub": "com.amazonaws.${AWS::Region}.s3"
+        },
+        "RouteTableIds": [
+          {
+            "Ref": "PrivateRoutesA"
+          },
+          {
+            "Ref": "PrivateRoutesB"
+          },
+          {
+            "Ref": "PrivateRoutesC"
+          }
+        ]
+      }
+    },
+    "Kafka03SG": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Exact node /32 sources and service ports derived from pinned Ubuntu renderer.",
+          "must": [
+            "No public SSH/DB/Kibana/Spark UI; Spark maxRetries=32 is included."
+          ]
+        }
+      },
+      "Properties": {
+        "VpcId": {
+          "Ref": "Vpc"
+        },
+        "GroupDescription": "Project private kafka",
+        "SecurityGroupIngress": [
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 9092,
+            "ToPort": 9092,
+            "CidrIp": "10.80.16.10/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 9092,
+            "ToPort": 9092,
+            "CidrIp": "10.80.17.11/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 9092,
+            "ToPort": 9092,
+            "CidrIp": "10.81.16.10/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 9092,
+            "ToPort": 9092,
+            "CidrIp": "10.81.16.20/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 9092,
+            "ToPort": 9092,
+            "CidrIp": "10.82.17.10/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 9092,
+            "ToPort": 9092,
+            "CidrIp": "10.82.17.20/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 9092,
+            "ToPort": 9092,
+            "CidrIp": "10.83.18.10/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 9092,
+            "ToPort": 9092,
+            "CidrIp": "10.83.18.20/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 9093,
+            "ToPort": 9093,
+            "CidrIp": "10.81.16.10/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 9093,
+            "ToPort": 9093,
+            "CidrIp": "10.82.17.10/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 9093,
+            "ToPort": 9093,
+            "CidrIp": "10.83.18.10/32"
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "kafka-03"
+          },
+          {
+            "Key": "Role",
+            "Value": "kafka"
+          }
+        ]
+      }
+    },
+    "Kafka03ENI": {
+      "Type": "AWS::EC2::NetworkInterface",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Network stack owns stable node primary ENI separately from compute stack.",
+          "must": [
+            "Delete old compute and wait for ENI available before reusing; no create-before-delete compute replacement."
+          ]
+        }
+      },
+      "Properties": {
+        "SubnetId": {
+          "Ref": "PrivateC"
+        },
+        "PrivateIpAddress": "10.83.18.10",
+        "GroupSet": [
+          {
+            "Ref": "Kafka03SG"
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "kafka-03"
+          },
+          {
+            "Key": "Role",
+            "Value": "kafka"
+          }
+        ]
+      }
+    },
+    "Spark03SG": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Exact node /32 sources and service ports derived from pinned Ubuntu renderer.",
+          "must": [
+            "No public SSH/DB/Kibana/Spark UI; Spark maxRetries=32 is included."
+          ]
+        }
+      },
+      "Properties": {
+        "VpcId": {
+          "Ref": "Vpc"
+        },
+        "GroupDescription": "Project private spark",
+        "SecurityGroupIngress": [
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 2281,
+            "ToPort": 2281,
+            "CidrIp": "10.80.16.10/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 7077,
+            "ToPort": 7078,
+            "CidrIp": "10.80.16.10/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 8080,
+            "ToPort": 8080,
+            "CidrIp": "10.80.16.10/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 39000,
+            "ToPort": 39032,
+            "CidrIp": "10.80.16.10/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 39050,
+            "ToPort": 39082,
+            "CidrIp": "10.80.16.10/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 39100,
+            "ToPort": 39132,
+            "CidrIp": "10.80.16.10/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 2281,
+            "ToPort": 2281,
+            "CidrIp": "10.80.17.11/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 7077,
+            "ToPort": 7078,
+            "CidrIp": "10.80.17.11/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 8080,
+            "ToPort": 8080,
+            "CidrIp": "10.80.17.11/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 39000,
+            "ToPort": 39032,
+            "CidrIp": "10.80.17.11/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 39050,
+            "ToPort": 39082,
+            "CidrIp": "10.80.17.11/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 39100,
+            "ToPort": 39132,
+            "CidrIp": "10.80.17.11/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 2281,
+            "ToPort": 2281,
+            "CidrIp": "10.81.16.20/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 7077,
+            "ToPort": 7078,
+            "CidrIp": "10.81.16.20/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 8080,
+            "ToPort": 8080,
+            "CidrIp": "10.81.16.20/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 39000,
+            "ToPort": 39032,
+            "CidrIp": "10.81.16.20/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 39050,
+            "ToPort": 39082,
+            "CidrIp": "10.81.16.20/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 39100,
+            "ToPort": 39132,
+            "CidrIp": "10.81.16.20/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 2281,
+            "ToPort": 2281,
+            "CidrIp": "10.82.17.20/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 7077,
+            "ToPort": 7078,
+            "CidrIp": "10.82.17.20/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 8080,
+            "ToPort": 8080,
+            "CidrIp": "10.82.17.20/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 39000,
+            "ToPort": 39032,
+            "CidrIp": "10.82.17.20/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 39050,
+            "ToPort": 39082,
+            "CidrIp": "10.82.17.20/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 39100,
+            "ToPort": 39132,
+            "CidrIp": "10.82.17.20/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 2281,
+            "ToPort": 2281,
+            "CidrIp": "10.83.18.20/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 7077,
+            "ToPort": 7078,
+            "CidrIp": "10.83.18.20/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 8080,
+            "ToPort": 8080,
+            "CidrIp": "10.83.18.20/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 39000,
+            "ToPort": 39032,
+            "CidrIp": "10.83.18.20/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 39050,
+            "ToPort": 39082,
+            "CidrIp": "10.83.18.20/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 39100,
+            "ToPort": 39132,
+            "CidrIp": "10.83.18.20/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 2888,
+            "ToPort": 2888,
+            "CidrIp": "10.81.16.20/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 3888,
+            "ToPort": 3888,
+            "CidrIp": "10.81.16.20/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 2888,
+            "ToPort": 2888,
+            "CidrIp": "10.82.17.20/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 3888,
+            "ToPort": 3888,
+            "CidrIp": "10.82.17.20/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 2888,
+            "ToPort": 2888,
+            "CidrIp": "10.83.18.20/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 3888,
+            "ToPort": 3888,
+            "CidrIp": "10.83.18.20/32"
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "spark-03"
+          },
+          {
+            "Key": "Role",
+            "Value": "spark"
+          }
+        ]
+      }
+    },
+    "Spark03ENI": {
+      "Type": "AWS::EC2::NetworkInterface",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Network stack owns stable node primary ENI separately from compute stack.",
+          "must": [
+            "Delete old compute and wait for ENI available before reusing; no create-before-delete compute replacement."
+          ]
+        }
+      },
+      "Properties": {
+        "SubnetId": {
+          "Ref": "PrivateC"
+        },
+        "PrivateIpAddress": "10.83.18.20",
+        "GroupSet": [
+          {
+            "Ref": "Spark03SG"
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "spark-03"
+          },
+          {
+            "Key": "Role",
+            "Value": "spark"
+          }
+        ]
+      }
+    },
+    "Es03SG": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Exact node /32 sources and service ports derived from pinned Ubuntu renderer.",
+          "must": [
+            "No public SSH/DB/Kibana/Spark UI; Spark maxRetries=32 is included."
+          ]
+        }
+      },
+      "Properties": {
+        "VpcId": {
+          "Ref": "Vpc"
+        },
+        "GroupDescription": "Project private es",
+        "SecurityGroupIngress": [
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 9200,
+            "ToPort": 9200,
+            "CidrIp": "10.80.16.10/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 9200,
+            "ToPort": 9200,
+            "CidrIp": "10.80.17.11/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 9200,
+            "ToPort": 9200,
+            "CidrIp": "10.81.16.20/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 9200,
+            "ToPort": 9200,
+            "CidrIp": "10.81.16.30/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 9200,
+            "ToPort": 9200,
+            "CidrIp": "10.82.17.20/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 9200,
+            "ToPort": 9200,
+            "CidrIp": "10.82.17.30/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 9200,
+            "ToPort": 9200,
+            "CidrIp": "10.83.18.20/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 9200,
+            "ToPort": 9200,
+            "CidrIp": "10.83.18.30/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 9300,
+            "ToPort": 9300,
+            "CidrIp": "10.81.16.30/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 9300,
+            "ToPort": 9300,
+            "CidrIp": "10.82.17.30/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 9300,
+            "ToPort": 9300,
+            "CidrIp": "10.83.18.30/32"
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "es-03"
+          },
+          {
+            "Key": "Role",
+            "Value": "es"
+          }
+        ]
+      }
+    },
+    "Es03ENI": {
+      "Type": "AWS::EC2::NetworkInterface",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Network stack owns stable node primary ENI separately from compute stack.",
+          "must": [
+            "Delete old compute and wait for ENI available before reusing; no create-before-delete compute replacement."
+          ]
+        }
+      },
+      "Properties": {
+        "SubnetId": {
+          "Ref": "PrivateC"
+        },
+        "PrivateIpAddress": "10.83.18.30",
+        "GroupSet": [
+          {
+            "Ref": "Es03SG"
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "es-03"
+          },
+          {
+            "Key": "Role",
+            "Value": "es"
+          }
+        ]
+      }
+    }
+  },
+  "Outputs": {
+    "PrivateSubnetA": {
+      "Value": {
+        "Ref": "PrivateA"
+      },
+      "Description": "Private subnet ID"
+    },
+    "PublicSubnetA": {
+      "Value": {
+        "Ref": "PublicA"
+      },
+      "Description": "Public subnet ID"
+    },
+    "PrivateRouteTableA": {
+      "Value": {
+        "Ref": "PrivateRoutesA"
+      },
+      "Description": "Private route table ID"
+    },
+    "PrivateSubnetB": {
+      "Value": {
+        "Ref": "PrivateB"
+      },
+      "Description": "Private subnet ID"
+    },
+    "PublicSubnetB": {
+      "Value": {
+        "Ref": "PublicB"
+      },
+      "Description": "Public subnet ID"
+    },
+    "PrivateRouteTableB": {
+      "Value": {
+        "Ref": "PrivateRoutesB"
+      },
+      "Description": "Private route table ID"
+    },
+    "PrivateSubnetC": {
+      "Value": {
+        "Ref": "PrivateC"
+      },
+      "Description": "Private subnet ID"
+    },
+    "PublicSubnetC": {
+      "Value": {
+        "Ref": "PublicC"
+      },
+      "Description": "Public subnet ID"
+    },
+    "PrivateRouteTableC": {
+      "Value": {
+        "Ref": "PrivateRoutesC"
+      },
+      "Description": "Private route table ID"
+    },
+    "Kafka03EniId": {
+      "Value": {
+        "Ref": "Kafka03ENI"
+      },
+      "Description": "Stable primary ENI ID"
+    },
+    "Spark03EniId": {
+      "Value": {
+        "Ref": "Spark03ENI"
+      },
+      "Description": "Stable primary ENI ID"
+    },
+    "Es03EniId": {
+      "Value": {
+        "Ref": "Es03ENI"
+      },
+      "Description": "Stable primary ENI ID"
+    },
+    "VpcId": {
+      "Value": {
+        "Ref": "Vpc"
+      },
+      "Description": "Project VPC ID"
+    }
+  }
+}

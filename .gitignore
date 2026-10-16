@@ -9,6 +9,17 @@ node_modules/
 dist/
 *.tsbuildinfo
 artifacts/
+config/environments/runtime.env
 .pytest_cache/
 .local-preview-logs/
 frontend/.vite/
+# Infrastructure runtime and credentials (shared root rules).
+.private/
+.state/
+.local/
+.tools/
+.aws/
+*.key
+*.pem
+/aws-infra/config/project.json
+/aws-infra/config/*.local.json

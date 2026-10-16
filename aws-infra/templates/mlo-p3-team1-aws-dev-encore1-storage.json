@@ -1,0 +1,279 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Private encrypted versioned install artifacts and optional cross-account Spark checkpoint bucket; retained by default.",
+  "Metadata": {
+    "ProjectCodeVersion": "0.3.2",
+    "AWSToolsMetrics": {
+      "AWSAgentToolkit": "aws-cloudformation@3"
+    },
+    "com.aws.cloudformation.Context": {
+      "ref": [
+        "../README.md",
+        "../SECURITY.md",
+        "../../docs/handoff/infra/README.md"
+      ],
+      "must": [
+        "Five independent accounts; 14 private EC2 nodes; three physical AZ IDs.",
+        "No local VM operations. No secrets or CA private key in templates."
+      ]
+    }
+  },
+  "Parameters": {},
+  "Resources": {
+    "Artifacts": {
+      "Type": "AWS::S3::Bucket",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Environment-owned S3 storage separated from original music source backups.",
+          "must": [
+            "Retained until explicit version-aware purge; active checkpoints have no expiry."
+          ]
+        }
+      },
+      "Properties": {
+        "BucketName": "mlo-p3-team1-aws-dev-111111111111-artifacts",
+        "PublicAccessBlockConfiguration": {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true
+        },
+        "BucketEncryption": {
+          "ServerSideEncryptionConfiguration": [
+            {
+              "ServerSideEncryptionByDefault": {
+                "SSEAlgorithm": "AES256"
+              }
+            }
+          ]
+        },
+        "VersioningConfiguration": {
+          "Status": "Enabled"
+        },
+        "OwnershipControls": {
+          "Rules": [
+            {
+              "ObjectOwnership": "BucketOwnerEnforced"
+            }
+          ]
+        },
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "shared"
+          },
+          {
+            "Key": "Role",
+            "Value": "infrastructure"
+          }
+        ]
+      },
+      "DeletionPolicy": "Retain",
+      "UpdateReplacePolicy": "Retain"
+    },
+    "ArtifactsPolicy": {
+      "Type": "AWS::S3::BucketPolicy",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Deny non-TLS access; checkpoint allowlist matches exact Control and Spark roles.",
+          "must": [
+            "All five bootstrap stacks must exist before checkpoint policy references their role principals."
+          ]
+        }
+      },
+      "Properties": {
+        "Bucket": {
+          "Ref": "Artifacts"
+        },
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Deny",
+              "Principal": "*",
+              "Action": "s3:*",
+              "Resource": [
+                "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-artifacts",
+                "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-artifacts/*"
+              ],
+              "Condition": {
+                "Bool": {
+                  "aws:SecureTransport": "false"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "Checkpoints": {
+      "Type": "AWS::S3::Bucket",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Environment-owned S3 storage separated from original music source backups.",
+          "must": [
+            "Retained until explicit version-aware purge; active checkpoints have no expiry."
+          ]
+        }
+      },
+      "Properties": {
+        "BucketName": "mlo-p3-team1-aws-dev-111111111111-checkpoints",
+        "PublicAccessBlockConfiguration": {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true
+        },
+        "BucketEncryption": {
+          "ServerSideEncryptionConfiguration": [
+            {
+              "ServerSideEncryptionByDefault": {
+                "SSEAlgorithm": "AES256"
+              }
+            }
+          ]
+        },
+        "VersioningConfiguration": {
+          "Status": "Enabled"
+        },
+        "OwnershipControls": {
+          "Rules": [
+            {
+              "ObjectOwnership": "BucketOwnerEnforced"
+            }
+          ]
+        },
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "shared"
+          },
+          {
+            "Key": "Role",
+            "Value": "infrastructure"
+          }
+        ]
+      },
+      "DeletionPolicy": "Retain",
+      "UpdateReplacePolicy": "Retain"
+    },
+    "CheckpointsPolicy": {
+      "Type": "AWS::S3::BucketPolicy",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Deny non-TLS access; checkpoint allowlist matches exact Control and Spark roles.",
+          "must": [
+            "All five bootstrap stacks must exist before checkpoint policy references their role principals."
+          ]
+        }
+      },
+      "Properties": {
+        "Bucket": {
+          "Ref": "Checkpoints"
+        },
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Deny",
+              "Principal": "*",
+              "Action": "s3:*",
+              "Resource": [
+                "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-checkpoints",
+                "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-checkpoints/*"
+              ],
+              "Condition": {
+                "Bool": {
+                  "aws:SecureTransport": "false"
+                }
+              }
+            },
+            {
+              "Effect": "Allow",
+              "Action": "s3:GetBucketLocation",
+              "Resource": "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-checkpoints",
+              "Principal": {
+                "AWS": [
+                  "arn:aws:iam::111111111111:role/mlo-p3-team1-aws-dev-control-a-runtime",
+                  "arn:aws:iam::111111111111:role/mlo-p3-team1-aws-dev-control-b-runtime",
+                  "arn:aws:iam::222222222222:role/mlo-p3-team1-aws-dev-spark-01-runtime",
+                  "arn:aws:iam::333333333333:role/mlo-p3-team1-aws-dev-spark-02-runtime",
+                  "arn:aws:iam::444444444444:role/mlo-p3-team1-aws-dev-spark-03-runtime"
+                ]
+              }
+            },
+            {
+              "Effect": "Allow",
+              "Action": "s3:ListBucket",
+              "Resource": "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-checkpoints",
+              "Principal": {
+                "AWS": [
+                  "arn:aws:iam::111111111111:role/mlo-p3-team1-aws-dev-control-a-runtime",
+                  "arn:aws:iam::111111111111:role/mlo-p3-team1-aws-dev-control-b-runtime",
+                  "arn:aws:iam::222222222222:role/mlo-p3-team1-aws-dev-spark-01-runtime",
+                  "arn:aws:iam::333333333333:role/mlo-p3-team1-aws-dev-spark-02-runtime",
+                  "arn:aws:iam::444444444444:role/mlo-p3-team1-aws-dev-spark-03-runtime"
+                ]
+              },
+              "Condition": {
+                "StringLike": {
+                  "s3:prefix": "aws/aws-dev/*"
+                }
+              }
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:GetObject",
+                "s3:PutObject",
+                "s3:DeleteObject",
+                "s3:AbortMultipartUpload",
+                "s3:ListMultipartUploadParts"
+              ],
+              "Resource": "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-checkpoints/aws/aws-dev/*",
+              "Principal": {
+                "AWS": [
+                  "arn:aws:iam::111111111111:role/mlo-p3-team1-aws-dev-control-a-runtime",
+                  "arn:aws:iam::111111111111:role/mlo-p3-team1-aws-dev-control-b-runtime",
+                  "arn:aws:iam::222222222222:role/mlo-p3-team1-aws-dev-spark-01-runtime",
+                  "arn:aws:iam::333333333333:role/mlo-p3-team1-aws-dev-spark-02-runtime",
+                  "arn:aws:iam::444444444444:role/mlo-p3-team1-aws-dev-spark-03-runtime"
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "ArtifactsBucket": {
+      "Value": {
+        "Ref": "Artifacts"
+      },
+      "Description": "Owned bucket; deletion retains object versions"
+    },
+    "CheckpointsBucket": {
+      "Value": {
+        "Ref": "Checkpoints"
+      },
+      "Description": "Owned bucket; deletion retains object versions"
+    }
+  }
+}

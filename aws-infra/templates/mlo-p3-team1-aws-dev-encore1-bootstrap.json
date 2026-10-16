@@ -1,0 +1,999 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Administrator bootstrap: scoped Mac operations, CloudFormation service role, per-node EC2 roles and peering trust.",
+  "Metadata": {
+    "ProjectCodeVersion": "0.3.2",
+    "AWSToolsMetrics": {
+      "AWSAgentToolkit": "aws-cloudformation@3"
+    },
+    "com.aws.cloudformation.Context": {
+      "ref": [
+        "../README.md",
+        "../SECURITY.md",
+        "../../docs/handoff/infra/README.md"
+      ],
+      "must": [
+        "Five independent accounts; 14 private EC2 nodes; three physical AZ IDs.",
+        "No local VM operations. No secrets or CA private key in templates."
+      ]
+    }
+  },
+  "Parameters": {},
+  "Resources": {
+    "ExecutionRole": {
+      "Type": "AWS::IAM::Role",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "CloudFormation owns infrastructure; ordinary IAM role/trust/boundary creation remains administrator-only.",
+          "must": [
+            "PassRole only the named EC2 runtime roles; regional EC2 resource wildcards require review.",
+            "CPU-credit modification requires this project and environment on the target instance.",
+            "Only the boundary-constrained peering role inline policy may be changed by network stacks.",
+            "The sole service-linked-role exception is the AWS-managed ELB service role."
+          ]
+        }
+      },
+      "Properties": {
+        "RoleName": "mlo-p3-team1-aws-dev-cfn-execution",
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "cloudformation.amazonaws.com"
+              },
+              "Action": "sts:AssumeRole"
+            }
+          ]
+        },
+        "Policies": [
+          {
+            "PolicyName": "project-resources",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "ec2:DescribeVpcs",
+                    "ec2:DescribeVpcAttribute",
+                    "ec2:DescribeSubnets",
+                    "ec2:DescribeRouteTables",
+                    "ec2:DescribeInternetGateways",
+                    "ec2:DescribeAddresses",
+                    "ec2:DescribeNatGateways",
+                    "ec2:DescribeSecurityGroups",
+                    "ec2:DescribeSecurityGroupRules",
+                    "ec2:DescribeNetworkInterfaces",
+                    "ec2:DescribeVpcEndpoints",
+                    "ec2:DescribeVpcPeeringConnections",
+                    "ec2:DescribeInstances",
+                    "ec2:DescribeInstanceAttribute",
+                    "ec2:DescribeInstanceStatus",
+                    "ec2:DescribeVolumes",
+                    "ec2:DescribeImages",
+                    "ec2:DescribeTags",
+                    "ec2:DescribeInstanceCreditSpecifications",
+                    "ec2:DescribeLaunchTemplates",
+                    "ec2:DescribeLaunchTemplateVersions",
+                    "ec2:DescribeIamInstanceProfileAssociations",
+                    "ec2:DescribeKeyPairs",
+                    "ec2:DescribeNetworkAcls",
+                    "ec2:DescribeVpnGateways",
+                    "ec2:DescribeAvailabilityZones",
+                    "ec2:DescribeInstanceTypes",
+                    "ec2:DescribeInstanceTypeOfferings"
+                  ],
+                  "Resource": "*",
+                  "Condition": {
+                    "StringEquals": {
+                      "aws:RequestedRegion": "ap-northeast-2"
+                    }
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "ec2:CreateVpc",
+                    "ec2:DeleteVpc",
+                    "ec2:ModifyVpcAttribute",
+                    "ec2:CreateSubnet",
+                    "ec2:DeleteSubnet",
+                    "ec2:ModifySubnetAttribute",
+                    "ec2:CreateRouteTable",
+                    "ec2:DeleteRouteTable",
+                    "ec2:AssociateRouteTable",
+                    "ec2:DisassociateRouteTable",
+                    "ec2:CreateRoute",
+                    "ec2:DeleteRoute",
+                    "ec2:ReplaceRoute",
+                    "ec2:CreateInternetGateway",
+                    "ec2:AttachInternetGateway",
+                    "ec2:DetachInternetGateway",
+                    "ec2:DeleteInternetGateway",
+                    "ec2:AllocateAddress",
+                    "ec2:ReleaseAddress",
+                    "ec2:CreateNatGateway",
+                    "ec2:DeleteNatGateway",
+                    "ec2:CreateSecurityGroup",
+                    "ec2:DeleteSecurityGroup",
+                    "ec2:AuthorizeSecurityGroupIngress",
+                    "ec2:RevokeSecurityGroupIngress",
+                    "ec2:AuthorizeSecurityGroupEgress",
+                    "ec2:RevokeSecurityGroupEgress",
+                    "ec2:CreateNetworkInterface",
+                    "ec2:DeleteNetworkInterface",
+                    "ec2:ModifyNetworkInterfaceAttribute",
+                    "ec2:CreateVpcEndpoint",
+                    "ec2:DeleteVpcEndpoints",
+                    "ec2:ModifyVpcEndpoint",
+                    "ec2:CreateVpcPeeringConnection",
+                    "ec2:DeleteVpcPeeringConnection",
+                    "ec2:ModifyVpcPeeringConnectionOptions",
+                    "ec2:ReplaceRouteTableAssociation",
+                    "ec2:CreateTags",
+                    "ec2:DeleteTags",
+                    "ec2:TerminateInstances",
+                    "ec2:ModifyInstanceAttribute",
+                    "ec2:AssociateIamInstanceProfile",
+                    "ec2:ModifyInstanceMetadataOptions",
+                    "ec2:ModifyPrivateDnsNameOptions"
+                  ],
+                  "Resource": [
+                    "arn:aws:ec2:ap-northeast-2:111111111111:vpc/*",
+                    "arn:aws:ec2:ap-northeast-2:111111111111:subnet/*",
+                    "arn:aws:ec2:ap-northeast-2:111111111111:route-table/*",
+                    "arn:aws:ec2:ap-northeast-2:111111111111:internet-gateway/*",
+                    "arn:aws:ec2:ap-northeast-2:111111111111:natgateway/*",
+                    "arn:aws:ec2:ap-northeast-2:111111111111:elastic-ip/*",
+                    "arn:aws:ec2:ap-northeast-2:111111111111:security-group/*",
+                    "arn:aws:ec2:ap-northeast-2:111111111111:security-group-rule/*",
+                    "arn:aws:ec2:ap-northeast-2:111111111111:network-interface/*",
+                    "arn:aws:ec2:ap-northeast-2:111111111111:vpc-endpoint/*",
+                    "arn:aws:ec2:ap-northeast-2:111111111111:vpc-peering-connection/*",
+                    "arn:aws:ec2:ap-northeast-2:111111111111:instance/*",
+                    "arn:aws:ec2:ap-northeast-2:111111111111:volume/*"
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "ec2:RunInstances"
+                  ],
+                  "Resource": [
+                    "arn:aws:ec2:ap-northeast-2:111111111111:instance/*",
+                    "arn:aws:ec2:ap-northeast-2:111111111111:volume/*",
+                    "arn:aws:ec2:ap-northeast-2:111111111111:subnet/*",
+                    "arn:aws:ec2:ap-northeast-2:111111111111:network-interface/*",
+                    "arn:aws:ec2:ap-northeast-2:111111111111:security-group/*",
+                    "arn:aws:ec2:ap-northeast-2::image/*",
+                    "arn:aws:ec2:ap-northeast-2::snapshot/*"
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "ec2:ModifyInstanceCreditSpecification",
+                  "Resource": "arn:aws:ec2:ap-northeast-2:111111111111:instance/*",
+                  "Condition": {
+                    "StringEquals": {
+                      "ec2:ResourceTag/Project": "mlo-p3-team1",
+                      "ec2:ResourceTag/Environment": "aws-dev"
+                    }
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "iam:PassRole"
+                  ],
+                  "Resource": [
+                    "arn:aws:iam::111111111111:role/mlo-p3-team1-aws-dev-control-a-runtime",
+                    "arn:aws:iam::111111111111:role/mlo-p3-team1-aws-dev-control-b-runtime",
+                    "arn:aws:iam::111111111111:role/mlo-p3-team1-aws-dev-postgresql-runtime"
+                  ],
+                  "Condition": {
+                    "StringEquals": {
+                      "iam:PassedToService": "ec2.amazonaws.com"
+                    }
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "iam:GetRole"
+                  ],
+                  "Resource": [
+                    "arn:aws:iam::111111111111:role/mlo-p3-team1-aws-dev-control-a-runtime",
+                    "arn:aws:iam::111111111111:role/mlo-p3-team1-aws-dev-control-b-runtime",
+                    "arn:aws:iam::111111111111:role/mlo-p3-team1-aws-dev-postgresql-runtime"
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "ssm:DescribeAssociation",
+                    "ssm:ListAssociations"
+                  ],
+                  "Resource": "*",
+                  "Condition": {
+                    "StringEquals": {
+                      "aws:RequestedRegion": "ap-northeast-2"
+                    }
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "iam:GetInstanceProfile"
+                  ],
+                  "Resource": [
+                    "arn:aws:iam::111111111111:instance-profile/mlo-p3-team1-aws-dev-control-a-runtime",
+                    "arn:aws:iam::111111111111:instance-profile/mlo-p3-team1-aws-dev-control-b-runtime",
+                    "arn:aws:iam::111111111111:instance-profile/mlo-p3-team1-aws-dev-postgresql-runtime"
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "sts:AssumeRole"
+                  ],
+                  "Resource": [
+                    "arn:aws:iam::222222222222:role/mlo-p3-team1-aws-dev-peering-accepter",
+                    "arn:aws:iam::333333333333:role/mlo-p3-team1-aws-dev-peering-accepter",
+                    "arn:aws:iam::444444444444:role/mlo-p3-team1-aws-dev-peering-accepter",
+                    "arn:aws:iam::555555555555:role/mlo-p3-team1-aws-dev-peering-accepter"
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "s3:CreateBucket",
+                    "s3:DeleteBucket",
+                    "s3:GetBucketLocation",
+                    "s3:GetBucketPolicy",
+                    "s3:PutBucketPolicy",
+                    "s3:DeleteBucketPolicy",
+                    "s3:GetBucketPublicAccessBlock",
+                    "s3:PutBucketPublicAccessBlock",
+                    "s3:GetEncryptionConfiguration",
+                    "s3:PutEncryptionConfiguration",
+                    "s3:GetBucketVersioning",
+                    "s3:PutBucketVersioning",
+                    "s3:GetBucketTagging",
+                    "s3:PutBucketTagging",
+                    "s3:GetBucketOwnershipControls",
+                    "s3:PutBucketOwnershipControls",
+                    "s3:GetLifecycleConfiguration",
+                    "s3:PutLifecycleConfiguration",
+                    "s3:GetAccelerateConfiguration",
+                    "s3:GetAnalyticsConfiguration",
+                    "s3:GetBucketCORS",
+                    "s3:GetInventoryConfiguration",
+                    "s3:GetBucketLogging",
+                    "s3:GetMetricsConfiguration",
+                    "s3:GetBucketNotification",
+                    "s3:GetReplicationConfiguration",
+                    "s3:GetBucketWebsite",
+                    "s3:GetBucketObjectLockConfiguration",
+                    "s3:GetBucketAbac",
+                    "s3:GetIntelligentTieringConfiguration",
+                    "s3:GetBucketMetadataTableConfiguration",
+                    "s3:ListBucket",
+                    "s3:ListTagsForResource"
+                  ],
+                  "Resource": [
+                    "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-artifacts",
+                    "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-checkpoints"
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "elasticloadbalancing:DescribeLoadBalancers",
+                    "elasticloadbalancing:DescribeLoadBalancerAttributes",
+                    "elasticloadbalancing:DescribeTargetGroups",
+                    "elasticloadbalancing:DescribeTargetGroupAttributes",
+                    "elasticloadbalancing:DescribeListeners",
+                    "elasticloadbalancing:DescribeTags",
+                    "elasticloadbalancing:DescribeTargetHealth"
+                  ],
+                  "Resource": "*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "elasticloadbalancing:CreateLoadBalancer",
+                    "elasticloadbalancing:DeleteLoadBalancer",
+                    "elasticloadbalancing:ModifyLoadBalancerAttributes",
+                    "elasticloadbalancing:CreateTargetGroup",
+                    "elasticloadbalancing:DeleteTargetGroup",
+                    "elasticloadbalancing:ModifyTargetGroup",
+                    "elasticloadbalancing:ModifyTargetGroupAttributes",
+                    "elasticloadbalancing:CreateListener",
+                    "elasticloadbalancing:DeleteListener",
+                    "elasticloadbalancing:ModifyListener",
+                    "elasticloadbalancing:AddListenerCertificates",
+                    "elasticloadbalancing:RemoveListenerCertificates",
+                    "elasticloadbalancing:AddTags",
+                    "elasticloadbalancing:RemoveTags",
+                    "elasticloadbalancing:RegisterTargets",
+                    "elasticloadbalancing:DeregisterTargets"
+                  ],
+                  "Resource": [
+                    "arn:aws:elasticloadbalancing:ap-northeast-2:111111111111:loadbalancer/app/mlo-p3-team1-aws-dev-web/*",
+                    "arn:aws:elasticloadbalancing:ap-northeast-2:111111111111:targetgroup/mlo-p3-team1-aws-dev-web/*",
+                    "arn:aws:elasticloadbalancing:ap-northeast-2:111111111111:listener/app/mlo-p3-team1-aws-dev-web/*/*",
+                    "arn:aws:elasticloadbalancing:ap-northeast-2:111111111111:listener-rule/app/mlo-p3-team1-aws-dev-web/*/*/*"
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "iam:CreateServiceLinkedRole",
+                  "Resource": "arn:aws:iam::111111111111:role/aws-service-role/elasticloadbalancing.amazonaws.com/AWSServiceRoleForElasticLoadBalancing",
+                  "Condition": {
+                    "StringEquals": {
+                      "iam:AWSServiceName": "elasticloadbalancing.amazonaws.com"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "shared"
+          },
+          {
+            "Key": "Role",
+            "Value": "infrastructure"
+          }
+        ]
+      }
+    },
+    "ControlARole": {
+      "Type": "AWS::IAM::Role",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "SSM-managed EC2 with its own private artifact path; Spark and Control use checkpoint S3.",
+          "must": [
+            "No AWS keys in code; no CA private key in artifact; no fencing permission until HA implementation review."
+          ]
+        }
+      },
+      "Properties": {
+        "RoleName": "mlo-p3-team1-aws-dev-control-a-runtime",
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "ec2.amazonaws.com"
+              },
+              "Action": "sts:AssumeRole"
+            }
+          ]
+        },
+        "ManagedPolicyArns": [
+          "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+        ],
+        "Policies": [
+          {
+            "PolicyName": "node-storage",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": "s3:GetBucketLocation",
+                  "Resource": "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-artifacts"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "s3:ListBucket",
+                  "Resource": "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-artifacts",
+                  "Condition": {
+                    "StringLike": {
+                      "s3:prefix": [
+                        "public/*",
+                        "private/control-a/*"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "s3:GetObject",
+                  "Resource": [
+                    "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-artifacts/public/*",
+                    "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-artifacts/private/control-a/*"
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "s3:GetBucketLocation",
+                  "Resource": "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-checkpoints"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "s3:ListBucket",
+                  "Resource": "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-checkpoints",
+                  "Condition": {
+                    "StringLike": {
+                      "s3:prefix": "aws/aws-dev/*"
+                    }
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "s3:GetObject",
+                    "s3:PutObject",
+                    "s3:DeleteObject",
+                    "s3:AbortMultipartUpload",
+                    "s3:ListMultipartUploadParts"
+                  ],
+                  "Resource": "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-checkpoints/aws/aws-dev/*"
+                }
+              ]
+            }
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "control-a"
+          },
+          {
+            "Key": "Role",
+            "Value": "control"
+          }
+        ]
+      }
+    },
+    "ControlAProfile": {
+      "Type": "AWS::IAM::InstanceProfile",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Separate named instance profile for this logical node.",
+          "must": []
+        }
+      },
+      "Properties": {
+        "InstanceProfileName": "mlo-p3-team1-aws-dev-control-a-runtime",
+        "Roles": [
+          {
+            "Ref": "ControlARole"
+          }
+        ]
+      }
+    },
+    "ControlBRole": {
+      "Type": "AWS::IAM::Role",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "SSM-managed EC2 with its own private artifact path; Spark and Control use checkpoint S3.",
+          "must": [
+            "No AWS keys in code; no CA private key in artifact; no fencing permission until HA implementation review."
+          ]
+        }
+      },
+      "Properties": {
+        "RoleName": "mlo-p3-team1-aws-dev-control-b-runtime",
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "ec2.amazonaws.com"
+              },
+              "Action": "sts:AssumeRole"
+            }
+          ]
+        },
+        "ManagedPolicyArns": [
+          "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+        ],
+        "Policies": [
+          {
+            "PolicyName": "node-storage",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": "s3:GetBucketLocation",
+                  "Resource": "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-artifacts"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "s3:ListBucket",
+                  "Resource": "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-artifacts",
+                  "Condition": {
+                    "StringLike": {
+                      "s3:prefix": [
+                        "public/*",
+                        "private/control-b/*"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "s3:GetObject",
+                  "Resource": [
+                    "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-artifacts/public/*",
+                    "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-artifacts/private/control-b/*"
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "s3:GetBucketLocation",
+                  "Resource": "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-checkpoints"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "s3:ListBucket",
+                  "Resource": "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-checkpoints",
+                  "Condition": {
+                    "StringLike": {
+                      "s3:prefix": "aws/aws-dev/*"
+                    }
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "s3:GetObject",
+                    "s3:PutObject",
+                    "s3:DeleteObject",
+                    "s3:AbortMultipartUpload",
+                    "s3:ListMultipartUploadParts"
+                  ],
+                  "Resource": "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-checkpoints/aws/aws-dev/*"
+                }
+              ]
+            }
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "control-b"
+          },
+          {
+            "Key": "Role",
+            "Value": "control"
+          }
+        ]
+      }
+    },
+    "ControlBProfile": {
+      "Type": "AWS::IAM::InstanceProfile",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Separate named instance profile for this logical node.",
+          "must": []
+        }
+      },
+      "Properties": {
+        "InstanceProfileName": "mlo-p3-team1-aws-dev-control-b-runtime",
+        "Roles": [
+          {
+            "Ref": "ControlBRole"
+          }
+        ]
+      }
+    },
+    "PostgresqlRole": {
+      "Type": "AWS::IAM::Role",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "SSM-managed EC2 with its own private artifact path; Spark and Control use checkpoint S3.",
+          "must": [
+            "No AWS keys in code; no CA private key in artifact; no fencing permission until HA implementation review."
+          ]
+        }
+      },
+      "Properties": {
+        "RoleName": "mlo-p3-team1-aws-dev-postgresql-runtime",
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "ec2.amazonaws.com"
+              },
+              "Action": "sts:AssumeRole"
+            }
+          ]
+        },
+        "ManagedPolicyArns": [
+          "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+        ],
+        "Policies": [
+          {
+            "PolicyName": "node-storage",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": "s3:GetBucketLocation",
+                  "Resource": "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-artifacts"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "s3:ListBucket",
+                  "Resource": "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-artifacts",
+                  "Condition": {
+                    "StringLike": {
+                      "s3:prefix": [
+                        "public/*",
+                        "private/postgresql/*"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "s3:GetObject",
+                  "Resource": [
+                    "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-artifacts/public/*",
+                    "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-artifacts/private/postgresql/*"
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "postgresql"
+          },
+          {
+            "Key": "Role",
+            "Value": "postgresql"
+          }
+        ]
+      }
+    },
+    "PostgresqlProfile": {
+      "Type": "AWS::IAM::InstanceProfile",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Separate named instance profile for this logical node.",
+          "must": []
+        }
+      },
+      "Properties": {
+        "InstanceProfileName": "mlo-p3-team1-aws-dev-postgresql-runtime",
+        "Roles": [
+          {
+            "Ref": "PostgresqlRole"
+          }
+        ]
+      }
+    },
+    "OperatorRole": {
+      "Type": "AWS::IAM::Role",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Optional scoped operator assumption from encore1 login; student remains bootstrap administrator.",
+          "must": [
+            "SignInSessionArn is session context presence, not a direct MFA proof."
+          ]
+        }
+      },
+      "Properties": {
+        "RoleName": "mlo-p3-team1-aws-dev-operator",
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": "arn:aws:iam::111111111111:user/REPLACE_ME"
+              },
+              "Action": "sts:AssumeRole",
+              "Condition": {
+                "Null": {
+                  "aws:SignInSessionArn": "false"
+                }
+              }
+            }
+          ]
+        },
+        "Policies": [
+          {
+            "PolicyName": "project-operations",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "cloudformation:DescribeChangeSet",
+                    "cloudformation:DeleteChangeSet",
+                    "cloudformation:ExecuteChangeSet",
+                    "cloudformation:DescribeStacks",
+                    "cloudformation:DescribeStackResources",
+                    "cloudformation:ListStackResources",
+                    "cloudformation:DeleteStack",
+                    "cloudformation:GetTemplate",
+                    "cloudformation:DescribeStackEvents",
+                    "cloudformation:DescribeEvents",
+                    "cloudformation:ListChangeSets"
+                  ],
+                  "Resource": [
+                    "arn:aws:cloudformation:ap-northeast-2:111111111111:stack/mlo-p3-team1-aws-dev-encore1-*/*"
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "cloudformation:CreateChangeSet",
+                  "Resource": "arn:aws:cloudformation:ap-northeast-2:111111111111:stack/mlo-p3-team1-aws-dev-encore1-*/*",
+                  "Condition": {
+                    "ArnEquals": {
+                      "cloudformation:RoleArn": "arn:aws:iam::111111111111:role/mlo-p3-team1-aws-dev-cfn-execution"
+                    }
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "cloudformation:ListStacks",
+                    "cloudformation:ValidateTemplate",
+                    "cloudformation:GetTemplateSummary"
+                  ],
+                  "Resource": "*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "iam:PassRole",
+                  "Resource": "arn:aws:iam::111111111111:role/mlo-p3-team1-aws-dev-cfn-execution",
+                  "Condition": {
+                    "StringEquals": {
+                      "iam:PassedToService": "cloudformation.amazonaws.com"
+                    }
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "ec2:DescribeVpcs",
+                    "ec2:DescribeVpcAttribute",
+                    "ec2:DescribeSubnets",
+                    "ec2:DescribeRouteTables",
+                    "ec2:DescribeInternetGateways",
+                    "ec2:DescribeAddresses",
+                    "ec2:DescribeNatGateways",
+                    "ec2:DescribeSecurityGroups",
+                    "ec2:DescribeSecurityGroupRules",
+                    "ec2:DescribeNetworkInterfaces",
+                    "ec2:DescribeVpcEndpoints",
+                    "ec2:DescribeVpcPeeringConnections",
+                    "ec2:DescribeInstances",
+                    "ec2:DescribeInstanceAttribute",
+                    "ec2:DescribeInstanceStatus",
+                    "ec2:DescribeVolumes",
+                    "ec2:DescribeImages",
+                    "ec2:DescribeTags",
+                    "ec2:DescribeInstanceCreditSpecifications",
+                    "ec2:DescribeLaunchTemplates",
+                    "ec2:DescribeLaunchTemplateVersions",
+                    "ec2:DescribeIamInstanceProfileAssociations",
+                    "ec2:DescribeKeyPairs",
+                    "ec2:DescribeNetworkAcls",
+                    "ec2:DescribeVpnGateways",
+                    "ec2:DescribeAvailabilityZones",
+                    "ec2:DescribeInstanceTypes",
+                    "ec2:DescribeInstanceTypeOfferings"
+                  ],
+                  "Resource": "*",
+                  "Condition": {
+                    "StringEquals": {
+                      "aws:RequestedRegion": "ap-northeast-2"
+                    }
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "ssm:DescribeInstanceInformation",
+                    "ssm:GetCommandInvocation",
+                    "ssm:ListCommands",
+                    "ssm:ListCommandInvocations"
+                  ],
+                  "Resource": "*",
+                  "Condition": {
+                    "StringEquals": {
+                      "aws:RequestedRegion": "ap-northeast-2"
+                    }
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "ssm:SendCommand",
+                  "Resource": "arn:aws:ec2:ap-northeast-2:111111111111:instance/*",
+                  "Condition": {
+                    "StringEquals": {
+                      "ssm:resourceTag/Project": "mlo-p3-team1",
+                      "ssm:resourceTag/Environment": "aws-dev"
+                    }
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "ssm:SendCommand",
+                  "Resource": [
+                    "arn:aws:ssm:ap-northeast-2::document/AWS-RunShellScript",
+                    "arn:aws:ssm:ap-northeast-2::document/AWS-RunRemoteScript"
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "servicequotas:GetServiceQuota",
+                  "Resource": "arn:aws:servicequotas:ap-northeast-2:111111111111:ec2/L-1216C47A"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "s3:ListBucket",
+                    "s3:GetBucketLocation"
+                  ],
+                  "Resource": [
+                    "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-artifacts",
+                    "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-checkpoints"
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "s3:PutObject",
+                    "s3:GetObject"
+                  ],
+                  "Resource": "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-artifacts/*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "s3:GetBucketTagging",
+                    "s3:ListBucketVersions",
+                    "s3:ListBucketMultipartUploads",
+                    "s3:DeleteBucket"
+                  ],
+                  "Resource": [
+                    "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-artifacts",
+                    "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-checkpoints"
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "s3:DeleteObject",
+                    "s3:DeleteObjectVersion",
+                    "s3:AbortMultipartUpload"
+                  ],
+                  "Resource": [
+                    "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-artifacts/*",
+                    "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-checkpoints/*"
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "elasticloadbalancing:DescribeLoadBalancers",
+                    "elasticloadbalancing:DescribeTargetGroups",
+                    "elasticloadbalancing:DescribeTargetHealth",
+                    "elasticloadbalancing:DescribeTags"
+                  ],
+                  "Resource": "*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "acm:DescribeCertificate",
+                  "Resource": "arn:aws:acm:ap-northeast-2:111111111111:certificate/*"
+                }
+              ]
+            }
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "shared"
+          },
+          {
+            "Key": "Role",
+            "Value": "infrastructure"
+          }
+        ]
+      }
+    }
+  },
+  "Outputs": {
+    "ControlAInstanceProfile": {
+      "Value": {
+        "Ref": "ControlAProfile"
+      },
+      "Description": "Instance profile name"
+    },
+    "ControlBInstanceProfile": {
+      "Value": {
+        "Ref": "ControlBProfile"
+      },
+      "Description": "Instance profile name"
+    },
+    "PostgresqlInstanceProfile": {
+      "Value": {
+        "Ref": "PostgresqlProfile"
+      },
+      "Description": "Instance profile name"
+    },
+    "OperatorRoleArn": {
+      "Value": {
+        "Fn::GetAtt": [
+          "OperatorRole",
+          "Arn"
+        ]
+      },
+      "Description": "Scoped operator role for encore1"
+    },
+    "ExecutionRoleArn": {
+      "Value": {
+        "Fn::GetAtt": [
+          "ExecutionRole",
+          "Arn"
+        ]
+      },
+      "Description": "Role passed to subsequent infrastructure change sets"
+    }
+  }
+}
