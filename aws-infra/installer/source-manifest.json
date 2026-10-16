@@ -1,0 +1,32 @@
+{
+  "source_files_sha256": {
+    "versions.json": "2deaf0a097c2395961b0c15c9a45849390cb0cf3651dbb077996cc6fd363caff",
+    "00-preflight.sh": "1c0c962c5b990fac46c449a1cf1a692b22c78eb7fcfe7a3b1f3a27a14ddbd688",
+    "01-common.sh": "243fc2b71f1bb7824825b97a2b1311c64386eecb8a7e705e5bd5d779b49dcf5d",
+    "02-check-common.sh": "9f683f995464d1eb3c7c9e6c6c71b6f0b6a2e7bfa8dcfb7a0ad6e33e10387270",
+    "10-kafka.sh": "3e88dbf85a21ae4a85c0a75dfae1518bab0d3bef9949fdc3bd9ee789fe8af63a",
+    "20-spark.sh": "4e7b29079aadcafedee74db12e27ccef757096e8c35c0c8980d560b5e313e463",
+    "25-connectors.sh": "1b6737786a4ba599475a34da10b10d649da6e8129888b0f2e5c5306df30943ed",
+    "30-elasticsearch.sh": "cc8c98921c0157c179c74afcdc4aa8093a9b5a62087dd81d2f5bcb18f89b3695",
+    "40-control.sh": "a2b2214f97c215f39a7000872c4536246ff64c9c6c3db8d50b71adb8248e47d6",
+    "90-health-check.sh": "a69567aca6ae5c20f62ddfac1b3c9ac132d49d257fe6582f4da65a6ae4051f7e",
+    "cluster-bootstrap.sh": "136efd3e6996f318a157e2bec5fd8d49179ba4c62cc1e1a7ca8ab7efcaa08977",
+    "lib/common.sh": "e7e72ae411a74b074a13794ee8f349989fbc8150ae646c8b37ee226e9fb5d83b",
+    "lib/config.py": "ecfbae1483746ab03e2eb3c2510fc4302c6bb41d67c5daa2f06330027d85f7ee",
+    "lib/preflight.py": "951afa72578f1f9a534aa76c4d1fa9360aeb602797276e0dc0fde284638bbe83",
+    "lib/state.py": "797e4866e6a2b6da8708cae75812ef8cd675a7de1890acd3e241394f6d438545",
+    "lib/render.py": "3de7ba838ec3b659487c91cacca0435fd388faa0732410c460d3f2cd4b60c2cb",
+    "lib/health.py": "2d8844b2bb384155d956061cb98d33b3b3cd54e7ca8685a77767f2bd8e84e743",
+    "lib/connectors.py": "267d9723a1b2fe090a8b34cea3526454da9005bfd8969b4a47e19dc8d4914408",
+    "lib/pki.py": "182bd9345210ba2d8758551a2890929ff26e5ccdb757d0e1e6412d9d4fbda8b6",
+    "examples/spark-smoke.py": "0eb8ff659a03c99a0e1e1e8451959c0633fa9816ece127849241a1fac5f4afd8",
+    "examples/connector-smoke.py": "7eb09fdb6426e2ff8d4fb387bf3162264c62f9a79e20cd3818e37ae7a8a4681a"
+  },
+  "aws_patches": {
+    "lib/pki.py": "AWS CA subject; new CA remains on Mac; database nodes include verified localhost SAN for local bootstrap",
+    "20-spark.sh": "Separate Master/Worker starts; health barrier marker required",
+    "lib/preflight.py": "Capacity measured on AWS mounted data volume",
+    "cluster-bootstrap.sh": "Reject local environment and check IMDSv2 identity even if called directly",
+    "40-control.sh": "Framework-neutral Control host preparation; FastAPI/ASGI app deployment remains team-owned"
+  }
+}

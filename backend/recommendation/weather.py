@@ -1,9 +1,9 @@
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 from fractions import Fraction
 from django.conf import settings
 from django.utils.module_loading import import_string
 from .errors import require
-from .policy import TARGET, MAXIMUM, profile
+from .policy import TARGET, profile
 
 
 def instant(value):
@@ -49,7 +49,11 @@ def current_profile(bundle, segments, now):
         observed = instant(current['observed_at'])
         require(observed <= now and observed >= as_of-timedelta(hours=1),
                 'FORECAST_UNAVAILABLE','현재 관측이 유효하지 않아요.',503)
-        sky = next((row['sky'] for row in segments if instant(row['start_at']) <= now < instant(row['end_at'])),None)
+        if 'sky_state' in current:
+            # A's current-hour SKY context is separate from hour-ending future segments.
+            sky=current.get('sky') if instant(current['sky_valid_from'])<=now<instant(current['sky_valid_until']) else None
+        else:
+            sky = next((row['sky'] for row in segments if instant(row['start_at']) <= now < instant(row['end_at'])),None)
         return profile(current['pty'], sky)
     except (KeyError,ValueError,TypeError,OverflowError):
         require(False,'FORECAST_UNAVAILABLE','현재 날씨 형식을 확인할 수 없어요.',503)
@@ -59,9 +63,12 @@ def obtain(region_id, now):
     if settings.WEATHER_PROVIDER:
         bundle = import_string(settings.WEATHER_PROVIDER)(region_id, now)
     else:
-        require(settings.LOCAL_DEMO and region_id == 'demo-region', 'FORECAST_UNAVAILABLE', '날씨 서비스 연결을 기다리고 있어요.', 503)
+        from backend.weather.regions import demo_region
+        selected=demo_region(region_id) if settings.LOCAL_DEMO and region_id!='demo-region' else None
+        require(settings.LOCAL_DEMO and (region_id == 'demo-region' or selected is not None), 'FORECAST_UNAVAILABLE', '날씨 서비스 연결을 기다리고 있어요.', 503)
         def iso(dt): return dt.isoformat().replace('+00:00','Z')
-        bundle = {'region_id': region_id, 'region_name': '성수동 · 고정 검증 자료', 'nx': 61, 'ny': 126,
+        bundle = {'region_id': region_id, 'region_name': selected['address'] if selected else '성수동 · 고정 검증 자료',
+                  'nx':selected['nx'] if selected else 61,'ny':selected['ny'] if selected else 126,
                   'as_of': iso(now), 'valid_until': iso(now+timedelta(minutes=5)), 'is_test': True,
                   'current': {'pty':0,'sky':None,'temperature':22,'observed_at':iso(now)},
                   'bundle_version': 'demo-weather-v1', 'segments': [

@@ -14,11 +14,15 @@ def build_package(output=None):
     sources += list(ROOT.glob('*.sql'))
     with zipfile.ZipFile(output, 'w', zipfile.ZIP_DEFLATED) as archive:
         archive.write(ROOT.parent / '__init__.py', 'pipeline/__init__.py')
+        archive.write(ROOT.parent / 'kafka_config.py', 'pipeline/kafka_config.py')
+        archive.write(ROOT.parent / 'environment.py', 'pipeline/environment.py')
         for path in sorted(sources):
             archive.write(path, 'pipeline/weather/' + path.relative_to(ROOT).as_posix())
     return output
 
 def main():
+    from pipeline.environment import load
+    load('weather')
     if not os.environ.get('SPARK_MASTER'):
         raise RuntimeError('SPARK_MASTER_missing')
     archive = build_package()

@@ -1,0 +1,106 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "One remote VPC CIDR route in each private AZ route table; explicit account-to-account output parameters.",
+  "Metadata": {
+    "ProjectCodeVersion": "0.3.2",
+    "AWSToolsMetrics": {
+      "AWSAgentToolkit": "aws-cloudformation@3"
+    },
+    "com.aws.cloudformation.Context": {
+      "ref": [
+        "../README.md",
+        "../SECURITY.md",
+        "../../docs/handoff/infra/README.md"
+      ],
+      "must": [
+        "Five independent accounts; 14 private EC2 nodes; three physical AZ IDs.",
+        "No local VM operations. No secrets or CA private key in templates."
+      ]
+    }
+  },
+  "Parameters": {
+    "PeeringId": {
+      "Type": "String",
+      "AllowedPattern": "pcx-[0-9a-f]+"
+    },
+    "DestinationCidr": {
+      "Type": "String",
+      "AllowedPattern": "[0-9.]+/[0-9]+"
+    },
+    "RouteTableA": {
+      "Type": "String",
+      "AllowedPattern": "rtb-[0-9a-f]+"
+    },
+    "RouteTableB": {
+      "Type": "String",
+      "AllowedPattern": "rtb-[0-9a-f]+"
+    },
+    "RouteTableC": {
+      "Type": "String",
+      "AllowedPattern": "rtb-[0-9a-f]+"
+    }
+  },
+  "Resources": {
+    "RouteA": {
+      "Type": "AWS::EC2::Route",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Owned in this account; reciprocal routes must also exist.",
+          "must": []
+        }
+      },
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "RouteTableA"
+        },
+        "DestinationCidrBlock": {
+          "Ref": "DestinationCidr"
+        },
+        "VpcPeeringConnectionId": {
+          "Ref": "PeeringId"
+        }
+      }
+    },
+    "RouteB": {
+      "Type": "AWS::EC2::Route",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Owned in this account; reciprocal routes must also exist.",
+          "must": []
+        }
+      },
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "RouteTableB"
+        },
+        "DestinationCidrBlock": {
+          "Ref": "DestinationCidr"
+        },
+        "VpcPeeringConnectionId": {
+          "Ref": "PeeringId"
+        }
+      }
+    },
+    "RouteC": {
+      "Type": "AWS::EC2::Route",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Owned in this account; reciprocal routes must also exist.",
+          "must": []
+        }
+      },
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "RouteTableC"
+        },
+        "DestinationCidrBlock": {
+          "Ref": "DestinationCidr"
+        },
+        "VpcPeeringConnectionId": {
+          "Ref": "PeeringId"
+        }
+      }
+    }
+  },
+  "Outputs": {}
+}

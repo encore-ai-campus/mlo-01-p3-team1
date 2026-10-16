@@ -1,20 +1,21 @@
-"""Kafka → Spark 격자 선택·정규화 → MongoDB. ES는 별도 발행."""
+"""Kafka → Spark 격자 선택·정규화 → Elasticsearch 최신 자료·공통 특징."""
 import json
 import os
 from datetime import datetime, timezone
 from importlib.resources import files
 from pipeline.weather.common import normalize_event
-from pipeline.weather.mongo_current import collection, write_grid
+from pipeline.weather.es_latest import write_grid, configuration
 from pipeline.weather.collection_logs import append, flush_if_configured
+from pipeline.kafka_config import spark_options
 
 
 def write_batch(batch, batch_id, grid_broadcast):
-    """Kafka value 열의 JSON을 정제·격자별 묶기 → Driver에서 MongoDB 저장.
+    """Kafka value 열의 JSON을 정제·격자별 묶기 → Driver에서 ES 저장.
 
     batch는 Spark DataFrame, grid_broadcast.value는 {(nx, ny): 지역 정보} 매핑.
     저장 실패는 호출자에게 전달해 Spark가 같은 배치를 재처리할 수 있게 함.
     """
-    store = collection('write')
+    configuration()
 
     def normalize_message(message):
         event = json.loads(message.value)
@@ -34,7 +35,7 @@ def write_batch(batch, batch_id, grid_broadcast):
     changed_count = 0
     request_ids = set()
     for (nx, ny), rows in grouped_rows.toLocalIterator():
-        changed = write_grid(store, nx, ny, rows)
+        changed = write_grid(nx, ny, rows)
         if changed:
             changed_count += 1
         grid_count += 1
@@ -44,7 +45,7 @@ def write_batch(batch, batch_id, grid_broadcast):
     log_path = os.environ.get('WEATHER_PROCESS_LOG_PATH', '')
     if log_path:
         append(log_path, dict(
-            stage='mongo_projection', ok=True, batch_id=batch_id,
+            stage='es_projection', ok=True, batch_id=batch_id,
             normalized_rows=row_count, grids=grid_count,
             request_ids=sorted(request_ids),
             requested_at=datetime.now(timezone.utc).isoformat(),
@@ -52,32 +53,36 @@ def write_batch(batch, batch_id, grid_broadcast):
         flush_if_configured(log_path)
     print(json.dumps(dict(
         batch_id=batch_id, normalized_rows=row_count, grids=grid_count,
-        changed_grids=changed_count, sink='mongodb_latest',
+        changed_grids=changed_count, sink='elasticsearch_latest',
     )), flush=True)
 
 
 def main():
+    from pipeline.environment import load
+    load('weather')
     from pyspark.sql import SparkSession
 
     required_settings = (
-        'KAFKA_BOOTSTRAP', 'WEATHER_MONGODB_WRITE_URI', 'WEATHER_MONGODB_DATABASE',
-        'WEATHER_MONGODB_COLLECTION', 'CHECKPOINT_PATH',
+        'KAFKA_BOOTSTRAP', 'ES_URL', 'WEATHER_INDEX', 'CHECKPOINT_PATH',
     )
     for name in required_settings:
         if not os.environ.get(name):
             raise RuntimeError(name + '_missing')
     mapping = json.loads(files('pipeline.weather').joinpath('mapping.json').read_text(encoding='utf-8'))
-    spark = SparkSession.builder.appName('weather-stream').getOrCreate()
+    spark = (SparkSession.builder.appName('weather-stream')
+             .config('spark.redaction.regex','(?i)secret|password|token|access[.]key|jaas').getOrCreate())
     spark.sparkContext.setLogLevel('WARN')
     grids = spark.sparkContext.broadcast({
         (g['nx'], g['ny']): g for g in mapping['grids'] + mapping.get('admin_grids', [])
     })
-    stream = (spark.readStream.format('kafka')
+    reader = (spark.readStream.format('kafka')
         .option('kafka.bootstrap.servers', os.environ['KAFKA_BOOTSTRAP'])
         .option('subscribe', os.environ.get('KAFKA_TOPIC', 'weather.v1'))
         .option('startingOffsets', 'earliest')
         .option('maxOffsetsPerTrigger', 1000)
-        .load().selectExpr('CAST(value AS STRING) AS value'))
+        )
+    for key,value in spark_options('WEATHER_KAFKA_OPTIONS_FILE').items():reader=reader.option(key,value)
+    stream=reader.load().selectExpr('CAST(value AS STRING) AS value')
 
     def save(batch, batch_id):
         try:
@@ -85,7 +90,7 @@ def main():
         except Exception as error:
             path = os.environ.get('WEATHER_PROCESS_LOG_PATH', '')
             if path:
-                append(path, dict(stage='mongo_projection', ok=False, batch_id=batch_id,
+                append(path, dict(stage='es_projection', ok=False, batch_id=batch_id,
                     error_type=type(error).__name__, requested_at=datetime.now(timezone.utc).isoformat()))
                 flush_if_configured(path)
             raise

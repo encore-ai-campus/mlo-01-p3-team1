@@ -4,10 +4,12 @@ from datetime import datetime, timezone
 from fractions import Fraction
 from pathlib import Path
 from unittest import TestCase
+from unittest.mock import patch, MagicMock
+from django.test import override_settings
 from pipeline.music.normalize import normalize, speed, instrumental, convert, RAW_SCHEMA, RESULT_SCHEMA
-from backend.recommendation.policy import score, initial_speeds, groups, eligible, profile, weather_fit
+from backend.recommendation.policy import score, initial_speeds, groups, eligible, profile, weather_fit, precompute_scores, theme_affinity, THEMES, WEATHER_WEIGHTS
 from backend.recommendation.inputs import DEFAULTS, options
-from backend.recommendation.provider import validate_proposal
+from backend.recommendation.provider import validate_proposal, candidate_window, propose
 from backend.recommendation.solver import choose, choose_preview, representatives
 from backend.recommendation.errors import DomainError
 from backend.recommendation.weather import validate
@@ -94,8 +96,26 @@ class PolicyTests(TestCase):
            'speed':'slow','genre_group_codes':['JAZZ']}
         o={**DEFAULTS,'selected_theme_codes':['CALM'],'selected_genre_codes':['JAZZ'],'tempo_preference':'slow'}
         s=score(t,o,'CLEAR')
-        self.assertEqual(s['P'],Fraction(200,3))
-        self.assertEqual(s['S'],Fraction(275,3))
+        self.assertEqual(s['P'],(200+theme_affinity(t,'CALM'))/3)
+        self.assertEqual(s['S'],Fraction(3,4)*s['W']+Fraction(1,4)*s['P'])
+        self.assertGreater(s['P'],Fraction(200,3))
+    def test_published_scores_match_live_formula_and_do_not_invent_mood(self):
+        t={'energy':6,'raw_energy':'.6','raw_acousticness':'.5','raw_valence':'.7','mode':True,
+           'speed':'slow','genre_group_codes':['JAZZ'],'theme_codes':[],'mood':None,'main_inst':None}
+        cached=precompute_scores(t)
+        self.assertEqual(set(cached['score_cache']['weather']),set(WEATHER_WEIGHTS))
+        self.assertEqual(set(cached['score_cache']['theme']),set(THEMES))
+        self.assertIsNone(cached['mood']);self.assertIsNone(cached['main_inst'])
+        for weather in (*WEATHER_WEIGHTS,'MIXED'):
+            for selected in ([],['CALM'],['CALM','BRIGHT']):
+                options={**DEFAULTS,'selected_theme_codes':selected}
+                self.assertEqual(score(cached,options,weather),score(t,options,weather))
+        off={**DEFAULTS,'weather_influence_mode':'OFF','selected_theme_codes':['CALM','BRIGHT']}
+        self.assertEqual(score(cached,off),score(t,off))
+        with (patch('backend.recommendation.policy.weather_fit',side_effect=AssertionError('recomputed weather')),
+              patch('backend.recommendation.policy.off_preference_details',side_effect=AssertionError('recomputed theme'))):
+            self.assertEqual(score(cached,{**DEFAULTS,'selected_theme_codes':['CALM']},'CLEAR')['W'],100)
+            self.assertIsNotNone(score(cached,off)['P'])
     def test_mode_null_no_redistribution(self):
         t={'raw_energy':'.6','raw_acousticness':'.5','raw_valence':'.7','mode':None,'theme_codes':[]}
         self.assertEqual(score(t,DEFAULTS,'CLEAR')['W'],95)
@@ -208,6 +228,38 @@ class SolverTests(TestCase):
 
 
 class ProviderTests(TestCase):
+    @override_settings(GEMINI_MAX_CANDIDATES=200)
+    def test_large_csv_window_is_bounded_and_reserves_new_and_genre_tracks(self):
+        tracks=[{'track_id':str(i),'genre_group_codes':['JAZZ' if i<299 else 'POP'],
+                 'scores':{'S':Fraction(300-i)}} for i in range(300)]
+        context={'options':{**DEFAULTS,'selected_genre_codes':['JAZZ','POP']},'seed':'fixed'}
+        window=candidate_window(tracks,context,[str(i) for i in range(200)])
+        self.assertEqual(len(window),200)
+        self.assertIn('299',{t['track_id'] for t in window})
+        self.assertGreaterEqual(len({t['track_id'] for t in window}-{str(i) for i in range(200)}),40)
+        self.assertEqual(window,candidate_window(tracks,context,[str(i) for i in range(200)]))
+
+    @override_settings(GEMINI_ENABLED=True,GEMINI_TIMEOUT_MS=60000,GEMINI_MAX_CANDIDATES=200)
+    @patch.dict('os.environ',{'GEMINI_API_KEY':'test-key','GEMINI_MAX_OUTPUT_TOKENS':'8192'})
+    def test_provider_busy_reports_safe_failure_without_retry(self):
+        error=type('BusyError',(Exception,),{'code':503})('test-key must not appear')
+        client=MagicMock();client.models.generate_content.side_effect=error
+        context={'options':{**DEFAULTS,'weather_influence_mode':'OFF'}}
+        with patch('google.genai.Client',return_value=client),self.assertRaises(DomainError) as failure:
+            propose([],context,[])
+        self.assertEqual(failure.exception.code,'PROVIDER_BUSY')
+        self.assertEqual(failure.exception.details,{'provider_status':503})
+        self.assertNotIn('test-key',failure.exception.message)
+        client.models.generate_content.assert_called_once()
+
+    def test_model_cannot_return_unoffered_ids_from_full_catalog(self):
+        track={'track_id':'not-offered','duration_ms':10800000}
+        proposal={'track_ids':['not-offered'],'summary':'explanation',
+                  'track_reasons':[{'track_id':'not-offered','reason':'reason'}]}
+        with self.assertRaises(DomainError) as failure:
+            validate_proposal(proposal,[],['parent'],DEFAULTS,all_candidates=[track])
+        self.assertEqual(failure.exception.code,'PROVIDER_RESPONSE_INVALID')
+
     def test_novelty_49_floor_and_invalid_reasons(self):
         candidates=[{'track_id':str(i),'duration_ms':200000} for i in range(60)]
         ids=[str(i) for i in range(54)]

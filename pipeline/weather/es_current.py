@@ -1,15 +1,35 @@
 """관리자 ES 발행. 사용자 조회·Spark checkpoint와 독립적으로 실행."""
 import json
-from urllib.request import Request, urlopen
+import os
+import base64
+import ssl
+from urllib.parse import urlsplit
+from urllib.request import Request, build_opener, HTTPRedirectHandler, HTTPSHandler
 from pipeline.weather.common import encode
 from pipeline.weather.latest_state import newer, trim_rows, merge_rows
 
 
+class NoRedirect(HTTPRedirectHandler):
+    def redirect_request(self,*args,**kwargs):
+        return None
+
+
 def request(base, method, path, body=None, raw=False):
+    parsed=urlsplit(base)
+    if parsed.scheme not in ('http','https') or not parsed.hostname or parsed.username or parsed.password or parsed.query or parsed.fragment:
+        raise ValueError('invalid_es_url')
     data = body if raw else encode(body) if body is not None else None
+    headers={'Content-Type': 'application/x-ndjson' if raw else 'application/json'}
+    username=os.environ.get('ES_USERNAME','');password=os.environ.get('ES_PASSWORD','')
+    if username or password:
+        if not username or not password or parsed.scheme!='https':raise ValueError('es_credentials_require_https')
+        headers['Authorization']='Basic '+base64.b64encode((username+':'+password).encode()).decode()
     req = Request(base.rstrip('/') + path, data=data, method=method,
-                  headers={'Content-Type': 'application/x-ndjson' if raw else 'application/json'})
-    with urlopen(req, timeout=15) as response:
+                  headers=headers)
+    context=ssl.create_default_context(cafile=os.environ.get('ES_CA_CERT') or None) if parsed.scheme=='https' else None
+    handlers=[NoRedirect]
+    if context:handlers.append(HTTPSHandler(context=context))
+    with build_opener(*handlers).open(req,timeout=15) as response:
         return json.load(response)
 
 

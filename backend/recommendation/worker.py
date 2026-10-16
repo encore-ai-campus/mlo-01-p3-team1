@@ -12,7 +12,7 @@ from .errors import DomainError, require
 from .policy import eligible, score, weather_fit, off_preference_details, DURATION_POLICY, TARGET, MINIMUM, MAXIMUM, POLICY, MAPPING, WEATHER_SCORE_VERSION, OFF_SCORE_VERSION
 from .weather import validate, obtain, current_profile, instant
 from .solver import choose, choose_preview
-from .provider import propose, validate_proposal
+from .provider import propose, validate_proposal, candidate_window
 
 
 _catalog_lock = threading.Lock()
@@ -131,11 +131,14 @@ def run_one():
             reasons={}
         else:
             parent=Playlist.objects.get(pk=job.parent_id)
-            require(active_job(job).update(provider_attempted=True)==1,'LEASE_LOST','작업 실행 권한이 만료됐어요.',409)
             ids=[t['track_id'] for t in parent.snapshot['items']]
-            proposal,diagnostics=propose(candidates,context,ids)
+            offered=candidate_window(candidates,context,ids)
+            require(active_job(job).update(provider_attempted=True)==1,'LEASE_LOST','작업 실행 권한이 만료됐어요.',409)
+            proposal,diagnostics=propose(offered,context,ids)
+            diagnostics.update({'eligible_candidate_count':len(candidates),'offered_candidate_count':len(offered),
+                                'searched_full_pool':len(offered)==len(candidates)})
             active_job(job).update(provider_diagnostics=diagnostics)
-            tracks=validate_proposal(proposal,candidates,ids,context['options'])
+            tracks=validate_proposal(proposal,offered,ids,context['options'],all_candidates=candidates)
             summary=proposal['summary']; reasons={r['track_id']:r['reason'] for r in proposal['track_reasons']}
         total=sum(t['duration_ms'] for t in tracks)
         if on:
@@ -155,7 +158,8 @@ def run_one():
         items=[]
         for t in tracks:
             evidence=weather_fit(t,context['weather_code']) if on else off_preference_details(t,context['options'])
-            items.append({**t,'scores':{k:display(v) for k,v in t['scores'].items()},'scores_exact':exact(t['scores']),
+            item={k:v for k,v in t.items() if k != 'score_cache'}
+            items.append({**item,'scores':{k:display(v) for k,v in t['scores'].items()},'scores_exact':exact(t['scores']),
                           'score_evidence':exact(evidence),
                           'reason':reasons.get(t['track_id'])})
         with transaction.atomic():
@@ -172,11 +176,15 @@ def run_one():
                    'source_ref':catalog.source_ref,'source_sha256':catalog.source_sha256,
                    'duration_policy_version':DURATION_POLICY,'duration_mode':'STANDARD',
                    'effective_target_ms':TARGET,'effective_min_ms':MINIMUM,'effective_max_ms':MAXIMUM,'shortening_reason':None}
-            Playlist.objects.create(job=current,family=f,snapshot={'context':fixed,'items':items,'total_ms':total,
+            result=Playlist.objects.create(job=current,family=f,snapshot={'context':fixed,'items':items,'total_ms':total,
                 'summary':summary,'generation_method':job.method,'model':'gemini-3.8-flash' if job.method=='GEMINI_RECONFIGURE' else None,
                 'provider_diagnostics':diagnostics if job.method=='GEMINI_RECONFIGURE' else None,
                 'search_diagnostics':{**candidate_audit,**search_diagnostics} if job.method=='RULE_BASED' else candidate_audit,
                 'is_test':catalog.is_test,'preview_only':preview,'validation_passed':not preview})
+            if settings.INTEGRATION_ENABLED:
+                from .service import event
+                event('PLAYLIST_GENERATED',f,job.request_id,{'source_playlist_id':result.pk,'context_snapshot':fixed,
+                                                           'track_snapshots':items})
             current.status='SUCCEEDED'; current.error=None; current.save()
     except DomainError as exc:
         if exc.code in ('CANDIDATE_SHORTAGE','SEARCH_INCOMPLETE') and 'candidate_audit' in locals():
