@@ -2,7 +2,7 @@
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description": "One remote VPC CIDR route in each private AZ route table; explicit account-to-account output parameters.",
   "Metadata": {
-    "ProjectCodeVersion": "0.3.19",
+    "ProjectCodeVersion": "0.3.20",
     "AWSToolsMetrics": {
       "AWSAgentToolkit": "aws-cloudformation@3"
     },
