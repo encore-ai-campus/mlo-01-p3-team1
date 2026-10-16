@@ -1,0 +1,38 @@
+{
+  "policy_status": "development_defaults",
+  "backfill_hours": 6,
+  "max_attempts": 12,
+  "daily_request_budget": 9000,
+  "daily_byte_budget": 4000000000,
+  "observation_max_age_minutes": 30,
+  "forecast_max_age_minutes": 120,
+  "kim_max_age_minutes": 720,
+  "sno_max_age_minutes": 300,
+  "alert_max_gap_minutes": 20,
+  "snow_intensity_thresholds_cm": [
+    0.5,
+    1.0
+  ],
+  "seasonal_thresholds_c": {
+    "봄": [
+      10,
+      18,
+      26
+    ],
+    "여름": [
+      18,
+      24,
+      30
+    ],
+    "가을": [
+      10,
+      18,
+      26
+    ],
+    "겨울": [
+      5,
+      10,
+      20
+    ]
+  }
+}
