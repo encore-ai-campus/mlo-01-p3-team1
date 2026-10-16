@@ -1,0 +1,16 @@
+{
+  "service_name": "날씨 기반",
+  "service_accent": "음악 선곡",
+  "admin_badge": "관리자",
+  "page_title": "광고 관리",
+  "page_description": "상·하단 배너의 게시 상태를 한곳에서 관리하세요.",
+  "list_title": "광고 목록",
+  "preview_title": "배너 미리보기",
+  "empty_title": "첫 광고를 등록해 보세요",
+  "empty_description": "오른쪽에서 이미지와 게시 정보를 입력하면 이곳에서 관리할 수 있습니다.",
+  "local_mode": "로컬 미리보기",
+  "local_description": "이 컴퓨터의 시험 데이터입니다. 노출·클릭 시험은 운영 집계와 토큰 사용량에 포함되지 않습니다.",
+  "login_title": "광고 관리 시작하기",
+  "login_description": "로컬 접근 코드를 입력해 광고 서버를 확인하세요.",
+  "footer_note": "자동 종료는 토큰 소진 확인 또는 게시 기간 종료입니다. 수동 중단은 별도로 유지됩니다."
+}

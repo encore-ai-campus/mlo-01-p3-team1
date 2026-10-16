@@ -1,8 +1,8 @@
 {
-  "contract_version": "phase3-20261014.1",
+  "contract_version": "phase3-20261016.1",
   "data_mode": "FIXTURE",
   "is_test": true,
-  "description": "모든 값은 가상 자료입니다. 실제 음악/날씨 원문·승인 카탈로그·실측 만족도 자료가 아닙니다.",
+  "description": "모든 값은 가상 자료입니다. ON/OFF 최신 계약의 일부 형태·경계 예시이며 실제 곡/날씨·청취/성능 검증 결과가 아닙니다.",
   "schema_cases": [
     {
       "id": "basic_region_only",
@@ -574,6 +574,33 @@
         "approval_revision": 1
       },
       "expected_valid": true
+    },
+    {
+      "id": "basic_off",
+      "definition": "BasicRequest",
+      "data": {
+        "region_id": "fixture-region-001",
+        "weather_influence_mode": "OFF"
+      },
+      "expected_valid": true
+    },
+    {
+      "id": "basic_bad_mode",
+      "definition": "BasicRequest",
+      "data": {
+        "region_id": "fixture-region-001",
+        "weather_influence_mode": "AUTO"
+      },
+      "expected_valid": false
+    },
+    {
+      "id": "regeneration_mode_on",
+      "definition": "RegenerationRequest",
+      "data": {
+        "exclusion_revision": 2,
+        "weather_influence_mode": "ON"
+      },
+      "expected_valid": true
     }
   ],
   "calculation_cases": [
@@ -860,52 +887,6 @@
         "fixture-a",
         "fixture-b"
       ]
-    },
-    {
-      "kind": "shortened_duration",
-      "total_ms": 8099999,
-      "expected": false
-    },
-    {
-      "kind": "shortened_duration",
-      "total_ms": 8100000,
-      "expected": true
-    },
-    {
-      "kind": "shortened_duration",
-      "total_ms": 10499999,
-      "expected": true
-    },
-    {
-      "kind": "shortened_duration",
-      "total_ms": 10500000,
-      "expected": true
-    },
-    {
-      "kind": "shortened_duration",
-      "total_ms": 10559999,
-      "expected": true
-    },
-    {
-      "kind": "shortened_duration",
-      "total_ms": 10560000,
-      "expected": false
-    },
-    {
-      "kind": "shortened_stage_range",
-      "target_min": 175,
-      "expected": {
-        "min_ms": 10260000,
-        "max_ms": 10559999
-      }
-    },
-    {
-      "kind": "shortened_stage_range",
-      "target_min": 135,
-      "expected": {
-        "min_ms": 8100000,
-        "max_ms": 8340000
-      }
     },
     {
       "kind": "ad_rotation_sequence",
@@ -1275,12 +1256,14 @@
       "id": "weather_changed",
       "given": {
         "new_weather_bundle": true,
-        "existing_success_result": true
+        "existing_success_result": true,
+        "weather_influence_mode": "ON"
       },
       "expected": {
         "panel_updates": true,
-        "automatic_track_change": false,
-        "original_context_immutable": true
+        "new_result_version_required": true,
+        "original_context_immutable": true,
+        "in_place_track_change": false
       }
     },
     {
@@ -1303,19 +1286,6 @@
       },
       "expected": {
         "recommendation_blocked": false
-      }
-    },
-    {
-      "id": "shortened_configuration_missing",
-      "given": {
-        "eligible_shortage_confirmed": true,
-        "shortened_policy": false,
-        "phase": "worker"
-      },
-      "expected": {
-        "job_status": "FAILED",
-        "code": "POLICY_NOT_READY",
-        "short_success": false
       }
     },
     {
@@ -1395,6 +1365,40 @@
         "estimated_usage": 0,
         "link_navigation_allowed": true
       }
+    },
+    {
+      "id": "weather_changed_off",
+      "given": {
+        "weather_influence_mode": "OFF",
+        "new_weather_bundle": true,
+        "existing_success_result": true
+      },
+      "expected": {
+        "panel_updates": true,
+        "recommendation_unchanged": true
+      }
+    },
+    {
+      "id": "off_weather_unavailable",
+      "given": {
+        "weather_influence_mode": "OFF",
+        "weather_available": false,
+        "eligible_catalog_available": true
+      },
+      "expected": {
+        "recommendation_blocked_by_weather": false
+      }
+    },
+    {
+      "id": "standard_shortage_no_fallback",
+      "given": {
+        "weather_influence_mode": "ON",
+        "full_eligible_set_infeasible_at_176_minutes": true
+      },
+      "expected": {
+        "code": "CANDIDATE_SHORTAGE",
+        "shortened_result": false
+      }
     }
   ],
   "ad_policy": {
@@ -1433,4 +1437,3 @@
     }
   }
 }
-
