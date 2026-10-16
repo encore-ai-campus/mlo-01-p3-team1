@@ -1,25 +1,35 @@
-# Repository-level protection; aws-infra also keeps its own rules.
-# Local AWS credentials and environment files (use existing external profiles).
-.aws/
+.venv/
+__pycache__/
+*.py[cod]
+*.sqlite3
 .env
 .env.*
+!.env.example
+node_modules/
+dist/
+*.tsbuildinfo
+artifacts/
+config/environments/runtime.env
+.pytest_cache/
+.local-preview-logs/
+frontend/.vite/
+# Infrastructure runtime and credentials (shared root rules).
+.private/
+.state/
+.local/
+.tools/
+.aws/
+*.key
+*.pem
+/aws-infra/config/project.json
+/aws-infra/config/*.local.json
+
+# AWS publication: private runtime, credentials and generated payloads.
 *.env
 *.env.*
 credentials
 credentials.*
 .npmrc
-
-# Account bindings, execution receipts, secrets and downloaded tools.
-/aws-infra/config/project.json
-/aws-infra/config/*.local.json
-.private/
-.state/
-.local/
-.tools/
-
-# Keys, certificates, credential exports and installation payloads.
-*.pem
-*.key
 *.p12
 *.pfx
 *.jks
@@ -35,17 +45,26 @@ credentials.*
 *.tfstate.*
 *.log
 *.bak
-
-# Python, editor and OS artifacts.
-__pycache__/
-*.py[cod]
-.venv/
 venv/
-.pytest_cache/
 .mypy_cache/
 .coverage
 htmlcov/
 .DS_Store
 .idea/
 .vscode/
-node_modules/
+
+# Only non-secret environment examples are publishable.
+!.env.example
+!.env.sample
+!.env.template
+!*.env.example
+!*.env.sample
+!*.env.template
+# Database dumps and exported operational state.
+*.dump
+*.sql.gz
+*.sqlite
+*.sqlite3
+*.sqlite3-*
+/aws-infra/observability/*-before.json
+/aws-infra/observability/v2-published-ledger.json
