@@ -1,0 +1,2 @@
+# Preserve the exact bytes and SHA-256 of received weather originals.
+docs/handoff/weather/received/20261014/*.md -text

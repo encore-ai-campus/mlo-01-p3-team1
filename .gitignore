@@ -3,8 +3,12 @@ __pycache__/
 *.py[cod]
 *.sqlite3
 .env
+.env.*
+!.env.example
 node_modules/
 dist/
 *.tsbuildinfo
 artifacts/
 .pytest_cache/
+.local-preview-logs/
+frontend/.vite/
