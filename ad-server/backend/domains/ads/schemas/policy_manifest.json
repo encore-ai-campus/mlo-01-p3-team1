@@ -1,5 +1,5 @@
 {
-  "schema_version": "phase3-ads-policy-20261015.1",
+  "schema_version": "phase3-ads-policy-20261015.2",
   "scope": "periodic_budget_verification_and_daily_metrics",
   "note": "5분 검증 결과와 불변 예상 원장 기반 집계만 저장합니다. 수동 중단 상태·실제 과금 원장을 변경하거나 TTL 삭제를 수행하지 않습니다.",
   "collections": {
@@ -35,7 +35,8 @@
                 "schema_version": {
                   "bsonType": "string",
                   "enum": [
-                    "phase3-ads-policy-20261015.1"
+                    "phase3-ads-policy-20261015.1",
+                    "phase3-ads-policy-20261015.2"
                   ]
                 },
                 "is_test": {
@@ -165,6 +166,41 @@
                         "date",
                         "null"
                       ]
+                    }
+                  }
+                },
+                "log_record": {
+                  "bsonType": [
+                    "object",
+                    "null"
+                  ],
+                  "required": [
+                    "log_schema_version",
+                    "log_event_id",
+                    "payload",
+                    "payload_hash",
+                    "stored_at"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "log_schema_version": {
+                      "enum": [
+                        "ads-mongo-log-20261015.1"
+                      ]
+                    },
+                    "log_event_id": {
+                      "bsonType": "string",
+                      "minLength": 1
+                    },
+                    "payload": {
+                      "bsonType": "object"
+                    },
+                    "payload_hash": {
+                      "bsonType": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    "stored_at": {
+                      "bsonType": "date"
                     }
                   }
                 }
@@ -297,18 +333,18 @@
           ]
         },
         {
-          "name": "budget_pending_log_relay",
+          "name": "mongo_log_created",
           "keys": [
             [
-              "log_relay.status",
-              1
-            ],
-            [
-              "log_relay.next_retry_at",
-              1
-            ],
-            [
               "is_test",
+              1
+            ],
+            [
+              "log_record.stored_at",
+              -1
+            ],
+            [
+              "_id",
               1
             ]
           ]
@@ -341,7 +377,8 @@
             "schema_version": {
               "bsonType": "string",
               "enum": [
-                "phase3-ads-policy-20261015.1"
+                "phase3-ads-policy-20261015.1",
+                "phase3-ads-policy-20261015.2"
               ]
             },
             "is_test": {

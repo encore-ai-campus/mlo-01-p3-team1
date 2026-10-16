@@ -339,6 +339,12 @@ class PublicAdsSchemaTests(SimpleTestCase):
                 if name == "ad_deliveries"
                 else set()
             )
+            if name == "ad_events":
+                optional |= {"log_record", "log_relay"}
+                self.assertEqual(
+                    schema["anyOf"],
+                    [{"required": ["log_record"]}, {"required": ["log_relay"]}],
+                )
             self.assertEqual(set(schema["required"]), set(schema["properties"]) - optional)
 
     def test_delivery_optional_idempotency_key_has_partial_unique_index(self):

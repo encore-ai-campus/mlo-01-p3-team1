@@ -13,7 +13,7 @@ from pymongo.errors import DuplicateKeyError, PyMongoError
 from domains.ads.errors import DatabaseUnavailable, ValidationError, VersionConflict
 from repositories.ads_mongo import Document, DuplicateMutation, MongoAdsRepository
 
-PUBLIC_SCHEMA_VERSION = "phase3-ads-public-20261015.1"
+PUBLIC_SCHEMA_VERSION = "phase3-ads-public-20261015.2"
 EVENT_TYPES = frozenset({"VIEWABLE_IMPRESSION", "CLICK"})
 
 

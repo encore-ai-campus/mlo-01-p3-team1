@@ -14,7 +14,7 @@ from domains.ads.validation import utc_datetime, validate_bson_size
 from repositories.ads_mongo import Document, DuplicateMutation
 from repositories.ads_public_mongo import MongoPublicAdsRepository
 
-POLICY_SCHEMA_VERSION = "phase3-ads-policy-20261015.1"
+POLICY_SCHEMA_VERSION = "phase3-ads-policy-20261015.2"
 KST = timezone(timedelta(hours=9))
 METRIC_COUNTERS = ("impressions", "clicks", "estimated_tokens")
 

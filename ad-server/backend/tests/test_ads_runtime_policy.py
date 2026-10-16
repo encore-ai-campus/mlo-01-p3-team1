@@ -6,7 +6,7 @@ from unittest.mock import Mock, patch
 
 from django.core.management import call_command
 from django.core.management.base import CommandError
-from django.test import SimpleTestCase, override_settings
+from django.test import SimpleTestCase
 
 from domains.ads.errors import DatabaseUnavailable, DomainError
 from domains.ads.runtime_policy import budget_eligible, get_public_policy
@@ -180,42 +180,3 @@ class RuntimePolicyCommandsTests(SimpleTestCase):
         ):
             with self.assertRaises(CommandError):
                 call_command("refresh_ads_policy", stdout=StringIO())
-
-    @override_settings(ADS_LOG_SINK=None)
-    def test_budget_relay_missing_sink_blocks_before_database_access(self):
-        with patch(
-            "domains.ads.management.commands.relay_ads_budget_logs.get_ads_policy_repository"
-        ) as repository:
-            with self.assertRaises(CommandError):
-                call_command("relay_ads_budget_logs", stdout=StringIO())
-        repository.assert_not_called()
-
-    def test_budget_relay_uses_state_collection_and_one_bounded_batch(self):
-        repository = Mock()
-        collection = Mock()
-        repository.database = {"ad_budget_states": collection}
-        repository.is_test = False
-        sink = Mock()
-        worker = Mock()
-        worker.run_once.return_value = {"claimed": 1, "sent": 1, "failed": 0, "stale": 0}
-        with (
-            patch(
-                "domains.ads.management.commands.relay_ads_budget_logs.get_log_sink",
-                return_value=sink,
-            ),
-            patch(
-                "domains.ads.management.commands.relay_ads_budget_logs.get_ads_policy_repository",
-                return_value=repository,
-            ),
-            patch(
-                "domains.ads.management.commands.relay_ads_budget_logs.AdsLogRelay",
-                return_value=worker,
-            ) as factory,
-        ):
-            output = StringIO()
-            call_command("relay_ads_budget_logs", limit=5, stdout=output)
-        self.assertIs(factory.call_args.args[0], collection)
-        self.assertIs(factory.call_args.args[1], sink)
-        self.assertFalse(factory.call_args.kwargs["is_test"])
-        worker.run_once.assert_called_once_with(5)
-        self.assertIn("sent=1", output.getvalue())

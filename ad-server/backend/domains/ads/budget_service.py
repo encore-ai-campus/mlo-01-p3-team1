@@ -7,7 +7,7 @@ from .errors import DatabaseUnavailable
 from .service import canonical_hash
 from .validation import utc_datetime, utc_string, validate_bson_size
 
-POLICY_SCHEMA_VERSION = "phase3-ads-policy-20261015.1"
+POLICY_SCHEMA_VERSION = "phase3-ads-policy-20261015.2"
 POLICY_VERSION = "phase3-ads-20261015.1"
 VERIFICATION_INTERVAL_SECONDS = 300
 KST = timezone(timedelta(hours=9))
@@ -57,7 +57,6 @@ class AdsBudgetService:
         event_id = f"ads-budget:{state['_id']}:first-stop"
         payload = {
             "log_event_id": event_id,
-            "source_domain": "ADS",
             "source_event_id": state["_id"],
             "schema_version": POLICY_SCHEMA_VERSION,
             "ads_policy_version": POLICY_VERSION,
@@ -82,11 +81,8 @@ class AdsBudgetService:
             "log_event_id": event_id,
             "payload": payload,
             "payload_hash": canonical_hash(payload),
-            "status": "PENDING",
-            "attempt_count": 0,
-            "next_retry_at": None,
-            "last_error": None,
-            "sent_at": None,
+            "stored_at": state["verified_at"],
+            "log_schema_version": "ads-mongo-log-20261015.1",
         }
 
     def _refresh(self, repository, ad_id):
@@ -141,11 +137,13 @@ class AdsBudgetService:
             "revision": (revision or 0) + 1,
             "daily_blocked_at": daily_cutoff,
             "total_blocked_at": total_cutoff,
-            "log_relay": deepcopy(previous["log_relay"]) if previous is not None else None,
+            "log_record": deepcopy(previous.get("log_record")) if previous is not None else None,
         }
         blocked = daily_cutoff is not None or total_cutoff is not None
-        if blocked and state["log_relay"] is None:
-            state["log_relay"] = self._stop_log(state)
+        if previous is not None and "log_relay" in previous:
+            state["log_relay"] = deepcopy(previous["log_relay"])
+        if blocked and state["log_record"] is None and not state.get("log_relay"):
+            state["log_record"] = self._stop_log(state)
         validate_bson_size(state)
         repository.save_budget_state(state, revision)
         if total_cutoff is not None:

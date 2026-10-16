@@ -10,6 +10,8 @@ usage_rows는 ESTIMATED 원장만 발생일KST/위치별 합산합니다. replac
 
 metrics_summary는 오늘/보관 범위 누적 수치·as_of·READY/PARTIAL/PENDING·광고/위치 coverage·coverage_from/through·is_stale를 반환합니다. 미연결 null과 실제0을 구분하고 보관 범위를 영구 누적으로 설명하지 않습니다. 현재 광고 잠금과 정책/집계 트랜잭션의 조율은 업무 서비스가 수행합니다. 실제 배포·PostgreSQL 로그 쓰기·TTL 삭제는 수행하지 않습니다.
 
+현행 로그 구조와 이전 자료 보존은 [광고 로그 저장 계약](../../../../../development/ads/MongoDB_광고_로그_저장_계약.md)을 따릅니다.
+
 ## AST 시그니처
 
 ```python

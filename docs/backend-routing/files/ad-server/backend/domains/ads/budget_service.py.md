@@ -10,6 +10,8 @@
 
 예산 버전/발생일별 상태로 과거 일일 차단과 전체 최초 cutoff를 유지합니다. annotation의 최초 차단 시각은 daily/total 중 이른 값이며 전체 종료에는 자동 시간 해제를 두지 않습니다. 관리자의 paused/일정/수정 version/updated_at/신원을 바꾸지 않고 수동 중단을 해제하지 않습니다. budget_occurrence_eligible은 발생 당시 관리 snapshot의 예산 버전과 cutoff를 비교하며 최초 응답 재반환은 공개 서비스가 먼저 처리합니다.
 
+현행 로그 구조와 이전 자료 보존은 [광고 로그 저장 계약](../../../../../../development/ads/MongoDB_광고_로그_저장_계약.md)을 따릅니다.
+
 ## AST 시그니처
 
 ```python

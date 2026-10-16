@@ -256,7 +256,7 @@ class AdsBudgetServiceTests(SimpleTestCase):
         delivery = self.exhaust_daily_and_refresh()
         first_state = self.current_state()
         first_cutoff = first_state["daily_blocked_at"]
-        first_relay = deepcopy(first_state["log_relay"])
+        first_relay = deepcopy(first_state["log_record"])
         self.now += timedelta(seconds=1)
         self.record(
             delivery,
@@ -266,7 +266,7 @@ class AdsBudgetServiceTests(SimpleTestCase):
         self.assertEqual(self.batch.run_once()["blocked"], 0)
         second = self.current_state()
         self.assertEqual(second["daily_blocked_at"], first_cutoff)
-        self.assertEqual(second["log_relay"], first_relay)
+        self.assertEqual(second["log_record"], first_relay)
         self.assertEqual(second["daily_tokens"], 23)
         self.assertEqual(self.repository.metrics_summary(self.now)["today_estimated_tokens"], 23)
         self.batch.run_once()

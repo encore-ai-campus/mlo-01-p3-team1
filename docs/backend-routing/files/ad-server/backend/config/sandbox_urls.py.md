@@ -1,7 +1,7 @@
 # ad-server/backend/config/sandbox_urls.py
 
 - 작성일: 2026-10-15
-- 수정일: 2026-10-15
+- 수정일: 2026-10-16
 - [원본 코드](../../../../../../ad-server/backend/config/sandbox_urls.py)
 
 로컬 확인 도구에서만 사용하는 URLconf입니다. `/` 이동과 `/dev/ads/` 대시보드·login/logout·status/refresh를 등록하고 기존 `config.urls`의 광고/health API를 함께 연결합니다.
@@ -13,3 +13,7 @@ URL 목록 대입으로 구성되며 AST 클래스·함수 심볼은 없습니�
 ## AST 시그니처
 
 검사기가 추출한 클래스·함수·메서드 심볼은 없습니다.
+
+## 2026-10-16 로컬 화면 연결
+
+`GET /dev/ads/assets/<str:name>`을 presentation_asset에 연결했습니다. 이 경로는 별도 sandbox URLconf에만 있으며 일반 서비스에는 없습니다.

@@ -31,7 +31,8 @@ TEMPLATES = [
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": False,
-        "OPTIONS": {},
+        # 로컬 화면 인계: HTML 수정도 서버 재시작 없이 다음 요청에 반영합니다.
+        "OPTIONS": {"loaders": ["django.template.loaders.filesystem.Loader"]},
     }
 ]
 LANGUAGE_CODE = "ko-kr"
@@ -60,5 +61,4 @@ ADS_GUEST_CONTEXT_PROVIDER = "api.ads_sandbox.sandbox_guest"
 ADS_PUBLIC_POLICY_PROVIDER = "domains.ads.runtime_policy.get_public_policy"
 ADS_DELIVERY_SIGNING_KEY = secrets.token_urlsafe(48)
 ADS_PUBLIC_BASE_URL = "https://127.0.0.1:8001"
-ADS_LOG_SINK = ""
 ADS_API_CONTRACT_VERSION = ""

@@ -12,5 +12,6 @@ urlpatterns = [
     path("dev/ads/logout", ads_sandbox.logout, name="ads-sandbox-logout"),
     path("dev/ads/status", ads_sandbox.status, name="ads-sandbox-status"),
     path("dev/ads/refresh", ads_sandbox.refresh, name="ads-sandbox-refresh"),
+    path("dev/ads/assets/<str:name>", ads_sandbox.presentation_asset, name="ads-sandbox-asset"),
     *api_patterns,
 ]

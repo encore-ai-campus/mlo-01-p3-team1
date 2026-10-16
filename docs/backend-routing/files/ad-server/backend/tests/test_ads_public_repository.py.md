@@ -8,6 +8,8 @@ driver/session 대역으로 공개 저장 어댑터의 트랜잭션 상속·환�
 
 스키마 시험은 공개5컬렉션·TTL 없음·선택 발급 키 partial unique·명령 dry-run 무연결·공유 호스트 선차단·strict validator/index 옵션 전달을 확인합니다. 운영 DB 적용이나 미정 정책 확정이 아닙니다.
 
+현행 로그 구조와 이전 자료 보존은 [광고 로그 저장 계약](../../../../../development/ads/MongoDB_광고_로그_저장_계약.md)을 따릅니다.
+
 ## AST 시그니처
 
 ```python

@@ -1,5 +1,5 @@
 {
-  "schema_version": "phase3-ads-public-20261015.1",
+  "schema_version": "phase3-ads-public-20261015.2",
   "scope": "public_delivery_and_measurement",
   "note": "관리 3컬렉션과 별도로 적용하는 공개 상태 5컬렉션. delivery 수명·소재 변경·예산은 확정된 외부 정책만 사용합니다. TTL 삭제나 운영값은 설정하지 않습니다.",
   "collections": {
@@ -28,7 +28,8 @@
             "schema_version": {
               "bsonType": "string",
               "enum": [
-                "phase3-ads-public-20261015.1"
+                "phase3-ads-public-20261015.1",
+                "phase3-ads-public-20261015.2"
               ]
             },
             "placement": {
@@ -112,7 +113,8 @@
                 "schema_version": {
                   "bsonType": "string",
                   "enum": [
-                    "phase3-ads-public-20261015.1"
+                    "phase3-ads-public-20261015.1",
+                    "phase3-ads-public-20261015.2"
                   ]
                 },
                 "owner_guest_id": {
@@ -528,7 +530,6 @@
                 "estimated_tokens",
                 "ads_policy_version",
                 "response_snapshot",
-                "log_relay",
                 "retention_due_at"
               ],
               "additionalProperties": false,
@@ -543,7 +544,8 @@
                 "schema_version": {
                   "bsonType": "string",
                   "enum": [
-                    "phase3-ads-public-20261015.1"
+                    "phase3-ads-public-20261015.1",
+                    "phase3-ads-public-20261015.2"
                   ]
                 },
                 "event_id": {
@@ -790,8 +792,52 @@
                     "date",
                     "null"
                   ]
+                },
+                "log_record": {
+                  "bsonType": "object",
+                  "required": [
+                    "log_schema_version",
+                    "log_event_id",
+                    "payload",
+                    "payload_hash",
+                    "stored_at"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "log_schema_version": {
+                      "enum": [
+                        "ads-mongo-log-20261015.1"
+                      ]
+                    },
+                    "log_event_id": {
+                      "bsonType": "string",
+                      "minLength": 1
+                    },
+                    "payload": {
+                      "bsonType": "object"
+                    },
+                    "payload_hash": {
+                      "bsonType": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    "stored_at": {
+                      "bsonType": "date"
+                    }
+                  }
                 }
-              }
+              },
+              "anyOf": [
+                {
+                  "required": [
+                    "log_record"
+                  ]
+                },
+                {
+                  "required": [
+                    "log_relay"
+                  ]
+                }
+              ]
             }
           },
           {
@@ -899,19 +945,6 @@
           ]
         },
         {
-          "name": "public_pending_log_relay",
-          "keys": [
-            [
-              "log_relay.status",
-              1
-            ],
-            [
-              "log_relay.next_retry_at",
-              1
-            ]
-          ]
-        },
-        {
           "name": "event_metric_day",
           "keys": [
             [
@@ -936,6 +969,23 @@
             ],
             [
               "counted",
+              1
+            ]
+          ]
+        },
+        {
+          "name": "mongo_log_created",
+          "keys": [
+            [
+              "is_test",
+              1
+            ],
+            [
+              "log_record.stored_at",
+              -1
+            ],
+            [
+              "_id",
               1
             ]
           ]
@@ -969,7 +1019,8 @@
             "schema_version": {
               "bsonType": "string",
               "enum": [
-                "phase3-ads-public-20261015.1"
+                "phase3-ads-public-20261015.1",
+                "phase3-ads-public-20261015.2"
               ]
             },
             "owner_guest_id": {
@@ -1073,7 +1124,8 @@
                 "schema_version": {
                   "bsonType": "string",
                   "enum": [
-                    "phase3-ads-public-20261015.1"
+                    "phase3-ads-public-20261015.1",
+                    "phase3-ads-public-20261015.2"
                   ]
                 },
                 "event_id": {

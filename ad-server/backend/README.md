@@ -1,14 +1,16 @@
 # 광고 서버 — 관리·공개 API와 MongoDB 원자 저장
 
+- 수정일: 2026-10-16
+
 - 작성일: 2026-10-15
-- 수정일: 2026-10-15
+- 수정일: 2026-10-16
 - 브랜치: `feature/ad-logic`
 - 범위: 광고 로직·MongoDB 컬렉션 설계와 서버 개발 기반. 관리자 화면은 별도 담당자가 제작합니다.
 
 Python 3.12.13, Django/DRF, PyMongo를 사용합니다. 실제 설치 버전은 `uv.lock`에
 고정했습니다. Django는 PostgreSQL 공통 업무에, 별도 PyMongo 어댑터는 광고 MongoDB에
-사용합니다. 이미지 업로드·광고 등록/수정/중단·목록/요약/미리보기와 감사·멱등·로그 relay를
-구현했습니다. 공유 ADMIN 인증과 PostgreSQL 로그 sink는 담당자의 연결이 필요합니다.
+사용합니다. 이미지 업로드·광고 등록/수정/중단·목록/요약/미리보기와 감사·멱등·내장 로그 저장를
+구현했습니다. 공유 ADMIN 인증는 담당자의 연결이 필요합니다.
 공개 delivery 발급/재확인·이미지 제공·노출/클릭 판정과 예상 토큰 원장도 연결했습니다.
 5분 원장 예산 검증·주기 통계와 최초 소진 로그 코드를 연결했습니다. 상시 watch와 실제 공유/운영 연결은 후속 검증입니다.
 
@@ -17,15 +19,28 @@ Python 3.12.13, Django/DRF, PyMongo를 사용합니다. 실제 설치 버전은 
 [공개 선정·측정 인계](../../docs/development/ads/공개_선정과_측정_로직_인계.md)를 따릅니다.
 운영 guest·정책·서명·공개 주소가 미설정이면 503으로 차단하며 테스트 fixture로 대체하지 않습니다.
 
+
+## 2026-10-16 로컬 광고 프레젠테이션
+
+최신 사용자 요청으로 저장소 시안을 참고한 로컬 광고 제어 화면을 구성하고
+HTML·CSS·문구·브라우저 동작을 분리했습니다. 개발 총괄의 수정 위치와 이식 경계는
+[프레젠테이션 수정 가이드](../../docs/development/ads/광고_로컬_화면과_프레젠테이션_수정_가이드.md)를
+따릅니다. 이번 예외는 기존 sandbox·시험 DB 범위이며 정식 관리자·공유 인증·운영 연결의
+완료와 구분합니다. 광고 정책·태스크 ID/직접 선행 관계는 유지합니다.
+
+## 2026-10-15 광고 로그 MongoDB 독립 관리
+
+최신 사용자 결정으로 광고 관리·측정·소진 로그는 광고 MongoDB에 저장합니다. PostgreSQL 전달과 공통 로그 테이블 규격은 사용하지 않습니다. 새 `log_record`와 기존 기록 보존·점검/스키마 적용은 [광고 로그 저장 계약](../../docs/development/ads/MongoDB_광고_로그_저장_계약.md)을 따릅니다. 관리3+공개5+정책2 구조와 공유 ADMIN/guest 인증 경계는 유지합니다.
+
 ## 로컬 임시 관리 도구
 
-사용자 요청으로 기존 광고 API를 확인하는 [로컬 도구](../../docs/development/ads/임시_광고_관리_도구.md)를 별도 제공합니다. `sandbox.py`는 기존 `.env`를 읽지 않는 sandbox 설정/URLconf로 `127.0.0.1:8001/dev/ads/`와 별도 `ads_sandbox_dev/is_test=true`를 사용합니다. Edge/Chrome에서 이 주소를 직접 열고 Git 제외 `.local/ads-sandbox/access.txt`의 실행별 코드를 입력합니다. 앱 내장 브라우저 자동 로그인의 Origin 거부 확인은 도구 안내의 검증 제약을 따릅니다. 저장소 루트의 진입 명령은 다음과 같으며 실제 실행 상태는 검증 기록을 따릅니다.
+사용자 요청으로 기존 광고 API를 확인하는 [로컬 도구](../../docs/development/ads/임시_광고_관리_도구.md)를 별도 제공합니다. `sandbox.py`는 기존 `.env`를 읽지 않는 sandbox 설정/URLconf로 `127.0.0.1:8001/dev/ads/`와 별도 `ads_sandbox_dev/is_test=true`를 사용합니다. Edge/Chrome에서 이 주소를 직접 열고 Git 제외 `.local/ads-sandbox/access.txt`의 실행별 코드를 입력합니다. 2026-10-16 no-referrer와 폼 Origin 충돌을 수정했고 내장 브라우저 로그인·미리보기·수동 갱신을 확인했습니다. 상세는 도구 안내의 최신 정정을 따릅니다. 저장소 루트의 진입 명령은 다음과 같으며 실제 실행 상태는 검증 기록을 따릅니다.
 
 ```powershell
 .\ad-server\backend\.venv\Scripts\python.exe .\ad-server\backend\sandbox.py --start-mongo
 ```
 
-`--start-mongo`는 `.tools/mongodb-test/mongod.exe`가 있을 때 전용 로컬 프로세스를 시작하는 선택 기능입니다. 직접 시작한 프로세스만 종료합니다. 기존 관리API·5분 작업/수동 갱신을 확인하며 로그는 PENDING으로 보존합니다. is_test=true 측정은 운영 카운트/예상량0이며 소진을 만들기 위한 운영 flag 우회/가짜 원장은 사용하지 않습니다. 정식 Django admin·React 관리자·공유 ADMIN/guest·PostgreSQL/AWS 연결을 대체하지 않습니다. 아래 일반 서버 안내의 관리자 화면 제외는 이 로컬 확인 도구와 구분합니다.
+`--start-mongo`는 `.tools/mongodb-test/mongod.exe`가 있을 때 전용 로컬 프로세스를 시작하는 선택 기능입니다. 직접 시작한 프로세스만 종료합니다. 기존 관리API·5분 작업/수동 갱신을 확인하며 새 광고 로그는 MongoDB log_record에 저장하고 이전 기록은 보존합니다. is_test=true 측정은 운영 카운트/예상량0이며 소진을 만들기 위한 운영 flag 우회/가짜 원장은 사용하지 않습니다. 정식 Django admin·React 관리자·공유 ADMIN/guest·AWS 연결을 대체하지 않습니다. 아래 일반 서버 안내의 관리자 화면 제외는 이 로컬 확인 도구와 구분합니다.
 
 ## 준비와 실행
 
@@ -60,7 +75,7 @@ Django admin/관리 화면은 만들지 않았습니다. `run_ads_dev`는 loopba
 | `domains/ads/schemas/public_manifest.json` | 다섯 공개 컬렉션 BSON validator·고유키/CAS 조회 인덱스 |
 | `domains/ads/schemas/policy_manifest.json` | 정책2컬렉션·예산 버전별 소진/일별 통계 validator·인덱스 |
 | `repositories/` | MongoDB 업무 트랜잭션·광고 잠금·배달/이벤트 멱등·커서/claim/반복 창 CAS |
-| `workers/` | PostgreSQL sink로 전달하는 로그 relay |
+| `workers/` | MongoDB 정책 작업·스키마/광고 로그 읽기 점검 |
 | `tests/` | 개발 기반 검증 |
 
 MongoDB의 관리 상태는 `ads`, `ad_assets`, `ad_admin_changes` 세 컬렉션입니다. 공개 상태는
@@ -118,10 +133,19 @@ guest 연결 실패는 `GUEST_UNAVAILABLE`/503, 정책/서명/주소 미설정�
 
 새 delivery는 광고 문서의 실제 쓰기 잠금·위치별 순환·배달을 한 트랜잭션으로 저장합니다.
 재확인은 같은 배달을 유지하고 현재 종료 단축도 표시 기한에 반영합니다. 측정은 최초 판정·내장
-claim·반복 창·인정 시 예상 원장·내장 PENDING 로그를 함께 커밋하며, 재전송은 최초 응답을 보존합니다.
+claim·반복 창·인정 시 예상 원장·내장 광고 로그를 함께 커밋하며, 재전송은 최초 응답을 보존합니다.
 summary는 오늘, 목록 행 measurement는 보존 범위 누적입니다. as_of·aggregation_status·coverage·coverage_from/coverage_through·is_stale를 표시하고 미연결 null/PENDING과 실제0을 구분합니다.
 
 ## 공통 환경 연결과 실행 경계
+
+2026-10-16 후속으로 `check_ads_retention --limit 100`의 읽기 전용90/365일 보관/참조 점검과
+watch의 SIGTERM/키보드 종료를 추가했습니다. 삭제/TTL·운영 설치는 포함하지 않습니다.
+실행과 실제 검증은 [보관 점검·배치 종료](../../docs/runbook/광고_보관_점검과_배치_종료.md)를 따릅니다.
+
+후속 실행/점검과 남은 연결은 [광고 남은 작업·연결 계획](../../docs/development/ads/광고_남은_작업과_연결_계획.md)을
+따릅니다. `run_ads_workers`는 예산 검증·통계를 단발 실행하고, 명시 `--watch`는 독립 반복/재시도를
+제공합니다. `check_ads_runtime --database`는 기존 스키마와 MongoDB 로그를 읽기만 합니다.
+실제 공유 인증 연결·운영 서비스 등록은 별도입니다.
 
 `ADS_ADMIN_AUTHORIZER`는 서버 callable의 import 경로입니다. `(django_request, action)`을 받아
 공유 환경의 현재 세션·활성·ADMIN·광고 권한을 확인한 `api.ads_auth.AdminIdentity`를 반환합니다.
@@ -129,24 +153,16 @@ summary는 오늘, 목록 행 measurement는 보존 범위 누적입니다. as_o
 미로그인은 None, 장애는 예외로 처리합니다. 클라이언트 역할·ID 헤더를 인증 근거로 쓰지 않습니다.
 상태 변경에는 원본 Django request로 Origin/CSRF를 먼저 검사합니다.
 
-`ADS_LOG_SINK`는 `(log_event_id, payload, payload_hash)`를 받는 서버 callable입니다.
-공통 PostgreSQL에서 unique ID 저장 커밋 또는 기존 동일 payload 확인 뒤 **True**를 반환해야 합니다.
-설정이 없으면 claim 전에 차단하고, 전달 실패는 MongoDB PENDING으로 남깁니다.
+광고 로그는 MongoDB 관리·측정·최초 소진 문서의 log_record에 원자 저장합니다.
+외부 로그 설정·전달 작업은 없으며 기존 기록은 보존합니다.
 
 ```powershell
-.\.venv\Scripts\python.exe manage.py relay_ads_logs --limit 20
-.\.venv\Scripts\python.exe manage.py relay_ads_event_logs --limit 20
-.\.venv\Scripts\python.exe manage.py relay_ads_budget_logs --limit 20
-# 기본 1회 검증·통계 재계산
-.\.venv\Scripts\python.exe manage.py refresh_ads_policy
-# 상시 실행이 필요할 때: 300초 시작 간격, Ctrl+C 종료
-.\.venv\Scripts\python.exe manage.py refresh_ads_policy --watch
+.\.venv\Scripts\python.exe manage.py check_ads_logs --limit 20
+.\.venv\Scripts\python.exe manage.py check_ads_runtime --database
+.\.venv\Scripts\python.exe manage.py run_ads_workers --watch
 ```
 
-`ADS_API_CONTRACT_VERSION`은 공통 담당자 확인 후 설정하며 지정한 값만 X-Contract-Version으로
-반환합니다. 기존 피드백 이벤트 버전 불일치를 이 광고 구현에서 자동 통합하지 않습니다.
-관리·측정·소진 relay는 MongoDB 문서의 PENDING 로그를 각각 처리하며 PostgreSQL 실제 연결 완료를 뜻하지 않습니다. 실제 watch·공유 guest·PostgreSQL·AWS·브라우저/복구도 미실행입니다.
-새 계정/로그 테이블·재개·삭제·업종 태그·예산 운영값은 추가하지 않았습니다.
+광고 관리·측정·소진 로그는 MongoDB의 log_record에 업무와 원자 저장합니다. 외부 로그 전달은 사용하지 않으며 check_ads_logs로 조회/표본 무결성을 점검합니다.
 
 구현된 HTTP 경로와 파일/기획 연결은 [라우팅 색인](../../docs/backend-routing/README.md)을 따릅니다.
 새 `GET /api/admin/ad-assets/{asset_id}`는 인증된 관리 미리보기 이미지 조회용 기술 경로이며,

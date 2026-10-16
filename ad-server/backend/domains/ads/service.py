@@ -19,7 +19,7 @@ from .validation import (
     validate_stop_input,
 )
 
-SCHEMA_VERSION = "phase3-ads-data-20261014.3"
+SCHEMA_VERSION = "phase3-ads-data-20261015.4"
 CREATIVE_FIELDS = frozenset({"title", "asset_id", "link_url"})
 AD_RESPONSE_FIELDS = (
     "title",
@@ -199,7 +199,6 @@ class AdsService:
         payload = _json_value(
             {
                 "log_event_id": f"ads-management:{context['log_id']}",
-                "source_domain": "ADS",
                 "source_event_id": context["log_id"],
                 "schema_version": SCHEMA_VERSION,
                 "operation": context["operation"],
@@ -241,17 +240,14 @@ class AdsService:
             "response_snapshot": {"http_status": result.http_status, "body": deepcopy(result.body)},
             "completed_at": now,
             "occurred_at": now,
-            # 감사/멱등 양쪽 기한과 pending 보호를 해제하는 정책은 아직 미정입니다.
+            # 감사/멱등 양쪽 기한과 참조 보호를 해제하는 정리 정책은 아직 미정입니다.
             "retention_due_at": None,
-            "log_relay": {
+            "log_record": {
                 "log_event_id": payload["log_event_id"],
                 "payload": payload,
                 "payload_hash": canonical_hash(payload),
-                "status": "PENDING",
-                "attempt_count": 0,
-                "next_retry_at": None,
-                "last_error": None,
-                "sent_at": None,
+                "stored_at": now,
+                "log_schema_version": "ads-mongo-log-20261015.1",
             },
         }
         validate_bson_size(record)

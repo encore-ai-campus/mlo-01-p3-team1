@@ -28,7 +28,7 @@ from tests.test_ads_mongo_integration import (
     _cleanup_test_database,
     _image_bytes,
 )
-from workers.ads_log_relay import AdsLogRelay
+from workers.ads_logs import inspect_logs
 
 
 class AdsPublicMongoIntegrationTests(SimpleTestCase):
@@ -243,7 +243,7 @@ class AdsPublicMongoIntegrationTests(SimpleTestCase):
         )
         self.assertEqual(self.provide()["ad"]["ad_id"], top_leaders[0])
 
-    def test_real_counted_event_commits_claim_repeat_ledger_and_pending_log_together(self):
+    def test_real_counted_event_commits_claim_repeat_ledger_and_local_log_together(self):
         delivery = self.provide()
         data = self.event_data(delivery)
         result = self.record(delivery, data)
@@ -259,11 +259,11 @@ class AdsPublicMongoIntegrationTests(SimpleTestCase):
         self.assertEqual(usage["estimated_tokens"], 8)
         self.assertEqual(usage["status"], "ESTIMATED")
         self.assertEqual(event["metric_date_kst"], "2026-10-15")
-        self.assertEqual(event["log_relay"]["status"], "PENDING")
+        self.assertEqual(event["log_record"]["log_schema_version"], "ads-mongo-log-20261015.1")
         self.assertEqual(
-            event["log_relay"]["payload_hash"], canonical_hash(event["log_relay"]["payload"])
+            event["log_record"]["payload_hash"], canonical_hash(event["log_record"]["payload"])
         )
-        self.assertNotIn(delivery["ad"]["delivery_token"], str(event["log_relay"]))
+        self.assertNotIn(delivery["ad"]["delivery_token"], str(event["log_record"]))
 
     def test_real_bottom_impression_and_click_keep_distinct_claims_and_units(self):
         self.create_ad(placement="bottom")
@@ -277,37 +277,6 @@ class AdsPublicMongoIntegrationTests(SimpleTestCase):
         }
         self.assertEqual(units, {"VIEWABLE_IMPRESSION": 5, "CLICK": 15})
         self.assertEqual(len(self.database.ad_deliveries.find_one()["claims"]), 2)
-
-    def test_real_event_log_retry_preserves_measurement_and_original_response(self):
-        delivery = self.provide()
-        data = self.event_data(delivery)
-        first = self.record(delivery, data)
-        before = self.public_state()
-        delivered = []
-
-        def sink(event_id, payload, payload_hash):
-            delivered.append((event_id, deepcopy(payload), payload_hash))
-            return len(delivered) > 1
-
-        worker = AdsLogRelay(
-            self.database.ad_events,
-            sink,
-            is_test=False,
-            sort_field="processed_at",
-            clock=lambda: self.now,
-        )
-        self.assertEqual(worker.run_once()["failed"], 1)
-        pending = self.database.ad_events.find_one({"_id": data["event_id"]})
-        self.assertEqual(pending["log_relay"]["status"], "PENDING")
-        self.now += timedelta(seconds=31)
-        self.assertEqual(worker.run_once()["sent"], 1)
-        after = self.public_state()
-        self.assertEqual(delivered[0], delivered[1])
-        self.assertEqual(after["ad_events"][0]["log_relay"]["status"], "SENT")
-        for state in (before, after):
-            state["ad_events"][0].pop("log_relay")
-        self.assertEqual(before, after)
-        self.assertEqual(self.record(delivery, data), first)
 
     def test_real_replay_after_stop_and_expiry_preserves_first_response_and_all_state(self):
         delivery = self.provide()
@@ -489,3 +458,14 @@ class AdsPublicMongoIntegrationTests(SimpleTestCase):
                 with self.assertRaises(OperationFailure) as raised:
                     self.database[collection].insert_one(document)
                 self.assertEqual(raised.exception.code, 121)
+
+    def test_real_log_inspection_and_event_replay_preserve_all_state(self):
+        delivery = self.provide()
+        data = self.event_data(delivery)
+        first = self.record(delivery, data)
+        before = self.public_state()
+        report = inspect_logs(self.database, is_test=False)
+        self.assertEqual(report["ad_events"]["stored"], 1)
+        self.assertEqual(report["ad_events"]["sample_invalid"], 0)
+        self.assertEqual(self.record(delivery, data), first)
+        self.assertEqual(self.public_state(), before)

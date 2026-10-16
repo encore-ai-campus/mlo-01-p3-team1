@@ -250,7 +250,7 @@ class AdsPublicServiceTests(SimpleTestCase):
             self.event(response, estimated_tokens=100, counted=True, guest_id="forged")
         self.assertFalse(self.repository.events)
 
-    def test_counted_event_saves_claim_window_usage_and_pending_log_together(self):
+    def test_counted_event_saves_claim_window_usage_and_local_log_together(self):
         response = self.provide()
         data, result = self.event(response)
         self.assertEqual(result["result"], "COUNTED")
@@ -274,12 +274,12 @@ class AdsPublicServiceTests(SimpleTestCase):
         self.assertEqual(len(self.repository.usage), 1)
         self.assertEqual(self.usage_entry(data["event_id"])["estimated_tokens"], 8)
         stored = self.repository.events[data["event_id"]]
-        self.assertEqual(stored["log_relay"]["status"], "PENDING")
+        self.assertEqual(stored["log_record"]["log_schema_version"], "ads-mongo-log-20261015.1")
         self.assertEqual(
-            stored["log_relay"]["payload_hash"], canonical_hash(stored["log_relay"]["payload"])
+            stored["log_record"]["payload_hash"], canonical_hash(stored["log_record"]["payload"])
         )
-        self.assertNotIn(response["ad"]["delivery_token"], str(stored["log_relay"]))
-        self.assertNotIn("image_bytes", str(stored["log_relay"]))
+        self.assertNotIn(response["ad"]["delivery_token"], str(stored["log_record"]))
+        self.assertNotIn("image_bytes", str(stored["log_record"]))
 
     def test_bottom_impression_and_click_record_distinct_expected_tokens(self):
         self.create_ad(placement="bottom")

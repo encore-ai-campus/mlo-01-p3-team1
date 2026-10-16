@@ -8,6 +8,8 @@
 
 검증 전 초과 사용 후 예산 종료·정확 cutoff 제외/이전 발생 지연 인정·지표/상태/광고 rollback·증액 새 버전 검증/옛 cutoff 보존·측정/검증 경합 직렬화·실제0지표/첫 소진 로그 재시도·ENDED cursor의 기간/예산 종료 조건 보존을 검증합니다. 실제 PostgreSQL과 AWS 운영/복구는 별도이며 정책값은 시험용입니다.
 
+현행 로그 구조와 이전 자료 보존은 [광고 로그 저장 계약](../../../../../development/ads/MongoDB_광고_로그_저장_계약.md)을 따릅니다.
+
 ## AST 시그니처
 
 ```python
@@ -22,6 +24,7 @@ AdsPolicyMongoIntegrationTests.test_real_cutoff_excludes_boundary_but_accepts_ea
 AdsPolicyMongoIntegrationTests.test_real_batch_failure_rolls_back_metrics_state_and_ad_annotation(self)
 AdsPolicyMongoIntegrationTests.test_real_budget_increase_revalidates_and_preserves_old_cutoff(self)
 AdsPolicyMongoIntegrationTests.test_real_event_and_verification_race_is_serialized_without_lost_usage(self)
-AdsPolicyMongoIntegrationTests.test_real_zero_metrics_and_budget_relay_retry_remain_distinct(self)
 AdsPolicyMongoIntegrationTests.test_real_ended_cursor_keeps_budget_or_period_filter(self)
+AdsPolicyMongoIntegrationTests.test_real_first_stop_log_is_atomic_and_immutable_across_refresh(self)
+AdsPolicyMongoIntegrationTests.test_real_legacy_first_stop_log_survives_policy_refresh_without_new_log(self)
 ```

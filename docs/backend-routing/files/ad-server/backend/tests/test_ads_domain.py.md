@@ -10,6 +10,8 @@
 
 예산 선택 쌍·새 opaque 버전·생략/no-op/멱등·감사/rollback·수동 paused 유지와 서버 전용 자동 종료/사유를 추가 검증합니다.
 
+현행 로그 구조와 이전 자료 보존은 [광고 로그 저장 계약](../../../../../development/ads/MongoDB_광고_로그_저장_계약.md)을 따릅니다.
+
 ## AST 시그니처
 
 ```python
@@ -41,7 +43,7 @@ AdsDomainTests.test_unknown_tag_boolean_priority_and_invalid_duration_rejected(s
 AdsDomainTests.test_normalized_utc_inputs_hash_the_same(self)
 AdsDomainTests.test_missing_asset_and_tampered_sha_are_not_accepted(self)
 AdsDomainTests.test_image_limit_decode_and_animation_validation(self)
-AdsDomainTests.test_log_payload_is_pending_immutable_and_has_no_image_or_auth_secret(self)
+AdsDomainTests.test_log_payload_is_locally_stored_immutable_and_has_no_image_or_auth_secret(self)
 AdsDomainTests.test_budget_fields_are_optional_pair_and_do_not_expand_required_edit_fields(self)
 AdsDomainTests.test_budget_pair_missing_one_field_is_rejected_before_storage(self)
 AdsDomainTests.test_budgets_are_strict_positive_bson_int64_and_cannot_be_cleared_with_null(self)

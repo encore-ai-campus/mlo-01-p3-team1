@@ -1,5 +1,5 @@
 {
-  "schema_version": "phase3-ads-data-20261014.3",
+  "schema_version": "phase3-ads-data-20261015.4",
   "scope": "initial_management",
   "note": "기본 BSON 타입·금지 필드·기간·고유키 검증 초안. 인증·참조·이미지 디코딩·HTTP/동시성 검증을 대신하지 않습니다. 보관 미정/relay pending은 자동 TTL을 설정하지 않습니다.",
   "collections": {
@@ -39,7 +39,8 @@
                 "schema_version": {
                   "bsonType": "string",
                   "enum": [
-                    "phase3-ads-data-20261014.3"
+                    "phase3-ads-data-20261014.3",
+                    "phase3-ads-data-20261015.4"
                   ]
                 },
                 "is_test": {
@@ -316,7 +317,8 @@
             "schema_version": {
               "bsonType": "string",
               "enum": [
-                "phase3-ads-data-20261014.3"
+                "phase3-ads-data-20261014.3",
+                "phase3-ads-data-20261015.4"
               ]
             },
             "is_test": {
@@ -403,8 +405,7 @@
                 "response_snapshot",
                 "completed_at",
                 "occurred_at",
-                "retention_due_at",
-                "log_relay"
+                "retention_due_at"
               ],
               "additionalProperties": false,
               "properties": {
@@ -415,7 +416,8 @@
                 "schema_version": {
                   "bsonType": "string",
                   "enum": [
-                    "phase3-ads-data-20261014.3"
+                    "phase3-ads-data-20261014.3",
+                    "phase3-ads-data-20261015.4"
                   ]
                 },
                 "is_test": {
@@ -664,8 +666,52 @@
                       ]
                     }
                   }
+                },
+                "log_record": {
+                  "bsonType": "object",
+                  "required": [
+                    "log_schema_version",
+                    "log_event_id",
+                    "payload",
+                    "payload_hash",
+                    "stored_at"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "log_schema_version": {
+                      "enum": [
+                        "ads-mongo-log-20261015.1"
+                      ]
+                    },
+                    "log_event_id": {
+                      "bsonType": "string",
+                      "minLength": 1
+                    },
+                    "payload": {
+                      "bsonType": "object"
+                    },
+                    "payload_hash": {
+                      "bsonType": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    "stored_at": {
+                      "bsonType": "date"
+                    }
+                  }
                 }
-              }
+              },
+              "anyOf": [
+                {
+                  "required": [
+                    "log_record"
+                  ]
+                },
+                {
+                  "required": [
+                    "log_relay"
+                  ]
+                }
+              ]
             }
           },
           {
@@ -735,14 +781,18 @@
           "unique": true
         },
         {
-          "name": "pending_log_relay",
+          "name": "mongo_log_created",
           "keys": [
             [
-              "log_relay.status",
+              "is_test",
               1
             ],
             [
-              "log_relay.next_retry_at",
+              "log_record.stored_at",
+              -1
+            ],
+            [
+              "_id",
               1
             ]
           ]

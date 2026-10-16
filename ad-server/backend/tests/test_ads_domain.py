@@ -288,11 +288,11 @@ class AdsDomainTests(SimpleTestCase):
         with self.assertRaises(ValidationError):
             validate_image(output.getvalue())
 
-    def test_log_payload_is_pending_immutable_and_has_no_image_or_auth_secret(self):
+    def test_log_payload_is_locally_stored_immutable_and_has_no_image_or_auth_secret(self):
         self.create()
         for record in self.repository.mutations.values():
-            relay = record["log_relay"]
-            self.assertEqual(relay["status"], "PENDING")
+            relay = record["log_record"]
+            self.assertEqual(relay["log_schema_version"], "ads-mongo-log-20261015.1")
             self.assertEqual(relay["payload_hash"], canonical_hash(relay["payload"]))
             self.assertEqual(relay["payload"]["request_id"], "request-first")
             self.assertIsNone(record["retention_due_at"])
@@ -358,10 +358,10 @@ class AdsDomainTests(SimpleTestCase):
         self.assertEqual(record["after_snapshot"]["budget_version"], ad["budget_version"])
         self.assertEqual(record["response_snapshot"]["body"]["daily_budget_tokens"], 100)
         self.assertEqual(
-            record["log_relay"]["payload"]["after_snapshot"]["total_budget_tokens"], 1000
+            record["log_record"]["payload"]["after_snapshot"]["total_budget_tokens"], 1000
         )
         self.assertEqual(
-            record["log_relay"]["payload_hash"], canonical_hash(record["log_relay"]["payload"])
+            record["log_record"]["payload_hash"], canonical_hash(record["log_record"]["payload"])
         )
 
     def test_production_id_factory_creates_uuid_budget_version(self):

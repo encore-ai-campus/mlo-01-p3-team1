@@ -207,7 +207,7 @@ class AdsApiTests(SimpleTestCase):
         )
         self.assertEqual(record["actor_account_id"], "shared-admin")
         self.assertEqual(record["identity_source"], "common-auth")
-        self.assertEqual(record["log_relay"]["payload"]["request_id"], original["X-Request-ID"])
+        self.assertEqual(record["log_record"]["payload"]["request_id"], original["X-Request-ID"])
         self.assertEqual(record["response_snapshot"]["body"], original.json())
 
     def test_same_key_different_body_returns_conflict(self):

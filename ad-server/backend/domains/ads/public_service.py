@@ -18,7 +18,7 @@ from .selection import AdCandidate, RotationCursor, display_valid_until, select_
 from .service import ASSET_METADATA_FIELDS, canonical_hash
 from .validation import utc_datetime, utc_string, validate_bson_size, validate_image
 
-PUBLIC_SCHEMA_VERSION = "phase3-ads-public-20261015.1"
+PUBLIC_SCHEMA_VERSION = "phase3-ads-public-20261015.2"
 SNAPSHOT_FIELDS = (
     "title",
     "asset_id",
@@ -373,10 +373,9 @@ class AdsPublicService:
 
         return self.repository.run(commit)
 
-    def _log_relay(self, event, decision, delivery, request_id):
+    def _log_record(self, event, decision, delivery, request_id):
         payload = {
             "log_event_id": f"ads-event:{event.event_id}",
-            "source_domain": "ADS",
             "source_event_id": event.event_id,
             "schema_version": PUBLIC_SCHEMA_VERSION,
             "request_id": request_id,
@@ -397,11 +396,8 @@ class AdsPublicService:
             "log_event_id": payload["log_event_id"],
             "payload": payload,
             "payload_hash": canonical_hash(payload),
-            "status": "PENDING",
-            "attempt_count": 0,
-            "next_retry_at": None,
-            "last_error": None,
-            "sent_at": None,
+            "stored_at": decision.processed_at,
+            "log_schema_version": "ads-mongo-log-20261015.1",
         }
 
     def record_event(
@@ -534,7 +530,7 @@ class AdsPublicService:
                 "ads_policy_version": decision.ads_policy_version,
                 "response_snapshot": deepcopy(response),
                 "retention_due_at": None,
-                "log_relay": self._log_relay(event, decision, delivery, request_id),
+                "log_record": self._log_record(event, decision, delivery, request_id),
             }
             validate_bson_size(record)
             repository.insert_event(record)

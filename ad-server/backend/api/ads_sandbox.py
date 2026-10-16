@@ -1,14 +1,16 @@
 """loopback·시험 DB 전용 확인 화면. 정식 ADMIN/guest 인증은 변경하지 않습니다."""
 
 import ipaddress
+import json
 import secrets
+from pathlib import Path
 from urllib.parse import urlsplit
 from uuid import uuid4
 
 from django.conf import settings
 from django.core import signing
 from django.core.exceptions import DisallowedHost
-from django.http import JsonResponse
+from django.http import FileResponse, Http404, JsonResponse
 from django.middleware.csrf import rotate_token
 from django.shortcuts import redirect, render
 from django.utils.crypto import constant_time_compare
@@ -26,6 +28,36 @@ GUEST_COOKIE = "ads_sandbox_guest"
 ADMIN_SALT = "ads-sandbox-admin-v1"
 GUEST_SALT = "ads-sandbox-guest-v1"
 COOKIE_SECONDS = 8 * 60 * 60
+PRESENTATION_DIR = Path(__file__).resolve().parents[1] / "presentation" / "ads"
+PRESENTATION_ASSETS = {
+    "ads.css": (PRESENTATION_DIR / "ads.css", "text/css"),
+    "ads-page.mjs": (PRESENTATION_DIR / "ads-page.mjs", "text/javascript"),
+    "ads-api.mjs": (PRESENTATION_DIR / "ads-api.mjs", "text/javascript"),
+    "time.mjs": (PRESENTATION_DIR / "time.mjs", "text/javascript"),
+    "penguin.png": (
+        PRESENTATION_DIR.parents[3] / "docs" / "assets" / "penguin" / "penguin-guide-first.png",
+        "image/png",
+    ),
+}
+
+
+def presentation_context(request):
+    """문구를 요청마다 읽어 총괄 담당자의 수정이 새로고침에 반영되게 합니다."""
+    content = json.loads((PRESENTATION_DIR / "content.json").read_text(encoding="utf-8"))
+    if not isinstance(content, dict) or not all(
+        isinstance(key, str) and isinstance(value, str) for key, value in content.items()
+    ):
+        raise ValueError("광고 presentation 문구는 문자열 키·값이어야 합니다.")
+    return {"presentation": content, "csp_nonce": request.csp_nonce}
+
+
+@require_GET
+def presentation_asset(request, name):
+    """고정 허용 목록만 제공합니다. 원본 저장소의 임의 파일은 열지 않습니다."""
+    asset = PRESENTATION_ASSETS.get(name)
+    if asset is None or not asset[0].is_file():
+        raise Http404
+    return FileResponse(asset[0].open("rb"), content_type=asset[1])
 
 
 def local_guard(request):
@@ -95,7 +127,11 @@ class SandboxMiddleware:
         request.csp_nonce = secrets.token_urlsafe(18)
         if not local_guard(request):
             response = JsonResponse({"code": "SANDBOX_LOCAL_ONLY"}, status=403)
-        elif request.path != "/dev/ads/login" and not read_admin(request):
+        elif (
+            request.path != "/dev/ads/login"
+            and request.path not in {f"/dev/ads/assets/{name}" for name in PRESENTATION_ASSETS}
+            and not read_admin(request)
+        ):
             response = (
                 JsonResponse(
                     {"code": "AUTH_REQUIRED", "message": "로컬 로그인이 필요합니다."}, status=401
@@ -114,8 +150,11 @@ class SandboxMiddleware:
             "frame-ancestors 'none'; form-action 'self'; base-uri 'none'"
         )
         response["Cache-Control"] = "no-store"
-        response["Referrer-Policy"] = "no-referrer"
+        # no-referrer는 일반 HTML POST의 Origin까지 null로 만들어 CSRF와 충돌합니다.
+        # 같은 출처의 로그인/제어는 유지하고 외부 출처로는 Referer를 보내지 않습니다.
+        response["Referrer-Policy"] = "same-origin"
         response["X-Frame-Options"] = "DENY"
+        response["X-Content-Type-Options"] = "nosniff"
         return response
 
 
@@ -155,7 +194,7 @@ def login(request):
     return render(
         request,
         "ads_sandbox_login.html",
-        {"error": error, "csp_nonce": request.csp_nonce},
+        {"error": error, **presentation_context(request)},
         status=401 if error else 200,
     )
 
@@ -164,7 +203,7 @@ def login(request):
 @ensure_csrf_cookie
 @require_GET
 def dashboard(request):
-    return render(request, "ads_sandbox.html", {"csp_nonce": request.csp_nonce})
+    return render(request, "ads_sandbox.html", presentation_context(request))
 
 
 @require_POST
@@ -183,7 +222,7 @@ def status(request):
             "budget_worker": sandbox_runtime.worker_status(),
             "database": settings.ADS_MONGODB_DATABASE,
             "is_test": settings.ADS_IS_TEST,
-            "log_sink": "NOT_CONNECTED",
+            "log_storage": "MONGODB",
         }
     )
 

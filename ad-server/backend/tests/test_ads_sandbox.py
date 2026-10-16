@@ -102,9 +102,51 @@ class AdsSandboxTests(SimpleTestCase):
 
     def test_general_urlconf_does_not_expose_temporary_admin(self):
         with self.settings(ROOT_URLCONF="config.urls", MIDDLEWARE=[]):
-            for route in ("/dev/ads/", "/dev/ads/login", "/dev/ads/status", "/dev/ads/refresh"):
+            for route in (
+                "/dev/ads/",
+                "/dev/ads/login",
+                "/dev/ads/status",
+                "/dev/ads/refresh",
+                "/dev/ads/assets/ads.css",
+            ):
                 with self.subTest(route=route):
                     self.assertEqual(self.client.get(route, **self.transport).status_code, 404)
+
+    def test_login_assets_are_local_allowlisted_and_do_not_expose_source_or_content(self):
+        from api.ads_sandbox import PRESENTATION_ASSETS
+
+        for name, (path, mime) in PRESENTATION_ASSETS.items():
+            with self.subTest(name=name):
+                response = self.client.get(f"/dev/ads/assets/{name}", **self.transport)
+                self.assertEqual(response.status_code, 200)
+                self.assertEqual(response["Content-Type"], mime)
+                self.assertEqual(b"".join(response.streaming_content), path.read_bytes())
+                self.assertEqual(response["X-Content-Type-Options"], "nosniff")
+        self.login()
+        for name in ("content.json", "settings.py", "access.txt", "unknown.css"):
+            with self.subTest(name=name):
+                self.assertEqual(
+                    self.client.get(f"/dev/ads/assets/{name}", **self.transport).status_code, 404
+                )
+        blocked = self.client.get(
+            "/dev/ads/assets/ads.css", **{**self.transport, "REMOTE_ADDR": "192.0.2.12"}
+        )
+        self.assertEqual(blocked.status_code, 403)
+
+    def test_presentation_copy_is_read_again_and_escaped_without_relaxing_csp(self):
+        from api.ads_sandbox import PRESENTATION_DIR
+
+        content = (PRESENTATION_DIR / "content.json").read_text(encoding="utf-8")
+        changed = content.replace('"page_title": "광고 관리"', '"page_title": "<img src=x>"')
+        self.login()
+        with patch("api.ads_sandbox.Path.read_text", side_effect=[content, changed]):
+            first = self.client.get("/dev/ads/", **self.transport)
+            second = self.client.get("/dev/ads/", **self.transport)
+        self.assertContains(first, "광고 관리")
+        self.assertContains(second, "&lt;img src=x&gt;")
+        self.assertNotContains(second, "<img src=x>")
+        self.assertNotIn("unsafe-inline", second["Content-Security-Policy"])
+        self.assertContains(second, 'type="module" src="/dev/ads/assets/ads-page.mjs"')
 
     def test_login_requires_csrf_and_correct_access_code(self):
         denied = self.client.post(
@@ -212,7 +254,13 @@ class AdsSandboxTests(SimpleTestCase):
         second = self.client.get("/dev/ads/login", **self.transport)
         self.assertEqual(first.status_code, 200)
         self.assertIn("no-store", first["Cache-Control"])
-        self.assertEqual(first["Referrer-Policy"], "no-referrer")
+        self.assertEqual(first["Referrer-Policy"], "same-origin")
+        self.assertContains(first, '<meta name="referrer" content="same-origin">')
+        self.assertNotContains(first, '<meta name="referrer" content="no-referrer">')
+        self.login()
+        dashboard = self.client.get("/dev/ads/", **self.transport)
+        self.assertEqual(dashboard["Referrer-Policy"], "same-origin")
+        self.assertContains(dashboard, '<meta name="referrer" content="same-origin">')
         self.assertEqual(first["X-Frame-Options"], "DENY")
         self.assertIn("frame-ancestors 'none'", first["Content-Security-Policy"])
         self.assertNotIn("'unsafe-inline'", first["Content-Security-Policy"])
@@ -228,7 +276,7 @@ class AdsSandboxTests(SimpleTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()["database"], "ads_sandbox_dev")
         self.assertIs(response.json()["is_test"], True)
-        self.assertEqual(response.json()["log_sink"], "NOT_CONNECTED")
+        self.assertEqual(response.json()["log_storage"], "MONGODB")
         self.assertNotContains(response, settings.ADS_SANDBOX_ACCESS_TOKEN)
 
     def test_runtime_guard_rejects_remote_and_malformed_uris_without_database_connection(self):
@@ -263,14 +311,17 @@ class AdsSandboxTests(SimpleTestCase):
 
     def test_cross_origin_login_is_rejected_with_valid_csrf_token(self):
         headers = self.csrf_headers()
-        headers["HTTP_ORIGIN"] = "https://untrusted.example"
-        response = self.client.post(
-            "/dev/ads/login",
-            {"access_code": settings.ADS_SANDBOX_ACCESS_TOKEN},
-            **headers,
-            **self.transport,
-        )
-        self.assertEqual(response.status_code, 403)
+        for origin in ("https://untrusted.example", "null", "http://127.0.0.1:8002"):
+            with self.subTest(origin=origin):
+                headers["HTTP_ORIGIN"] = origin
+                response = self.client.post(
+                    "/dev/ads/login",
+                    {"access_code": settings.ADS_SANDBOX_ACCESS_TOKEN},
+                    **headers,
+                    **self.transport,
+                )
+                self.assertEqual(response.status_code, 403)
+                self.assertNotIn("ads_sandbox_admin", response.cookies)
 
     def test_logout_requires_post_csrf_and_revokes_browser_cookie(self):
         self.login()

@@ -118,7 +118,10 @@ class AdsPolicyApiTests(SimpleTestCase):
             "STOPPED": 0,
             "RESERVED": 0,
         }
-        with patch("api.ads.get_ads_repository", return_value=self.repository):
+        with (
+            patch("api.ads.get_ads_repository", return_value=self.repository),
+            patch("api.ads.timezone.now", side_effect=lambda: self.now),
+        ):
             response = self.client.get("/api/admin/ads/summary")
         self.assertEqual(response.status_code, 200)
         metrics = response.json()["measurement"]

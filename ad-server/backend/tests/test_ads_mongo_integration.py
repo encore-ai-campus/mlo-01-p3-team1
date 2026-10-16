@@ -142,12 +142,14 @@ class AdsMongoIntegrationTests(SimpleTestCase):
         self.assertEqual(self.database.ad_assets.count_documents({}), 1)
         self.assertEqual(self.database.ad_admin_changes.count_documents({}), 4)
         for mutation in self.database.ad_admin_changes.find():
-            self.assertEqual(mutation["log_relay"]["status"], "PENDING")
             self.assertEqual(
-                mutation["log_relay"]["payload_hash"],
-                canonical_hash(mutation["log_relay"]["payload"]),
+                mutation["log_record"]["log_schema_version"], "ads-mongo-log-20261015.1"
             )
-            self.assertNotIn("image_bytes", str(mutation["log_relay"]["payload"]))
+            self.assertEqual(
+                mutation["log_record"]["payload_hash"],
+                canonical_hash(mutation["log_record"]["payload"]),
+            )
+            self.assertNotIn("image_bytes", str(mutation["log_record"]["payload"]))
 
     def test_upload_replay_and_replacement_preserve_original_bytes(self):
         replay = self.service.upload_asset(

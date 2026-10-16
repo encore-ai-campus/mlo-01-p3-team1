@@ -63,7 +63,7 @@ REST_FRAMEWORK = {
 SPECTACULAR_SETTINGS = {
     "TITLE": "광고 API",
     "DESCRIPTION": (
-        "광고 관리·공개 배달·측정 연결. 공유 ADMIN/guest 인증과 PostgreSQL 로그 sink는 "
+        "광고 관리·공개 배달·측정 연결. 광고 로그는 MongoDB에 저장합니다. 공유 ADMIN/guest 인증은 "
         "외부 연결입니다. 공개 운영 정책은 명시 서버 어댑터가 제공하며 미연결 시 503입니다."
     ),
     "VERSION": "0.1.0",
@@ -73,7 +73,6 @@ ADS_MONGODB_URI = os.environ.get("ADS_MONGODB_URI", "")
 ADS_MONGODB_DATABASE = os.environ.get("ADS_MONGODB_DATABASE", "advertising_dev")
 ADS_IS_TEST = os.environ.get("ADS_IS_TEST", "1" if DEBUG else "0") == "1"
 ADS_ADMIN_AUTHORIZER = os.environ.get("ADS_ADMIN_AUTHORIZER", "")
-ADS_LOG_SINK = os.environ.get("ADS_LOG_SINK", "")
 # 공통 계약의 이벤트 버전 불일치는 이 설정으로 임의 통합하지 않습니다.
 ADS_API_CONTRACT_VERSION = os.environ.get("ADS_API_CONTRACT_VERSION", "")
 # 미확정 수명·소재 변경·예산을 환경 기본값으로 확정하지 않습니다.

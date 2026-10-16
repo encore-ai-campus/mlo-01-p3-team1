@@ -28,7 +28,7 @@ from tests.test_ads_mongo_integration import (
     _cleanup_test_database,
     _image_bytes,
 )
-from workers.ads_log_relay import AdsLogRelay
+from workers.ads_logs import inspect_logs
 
 
 class AdsPolicyMongoIntegrationTests(SimpleTestCase):
@@ -253,27 +253,6 @@ class AdsPolicyMongoIntegrationTests(SimpleTestCase):
         self.assertEqual(self.state()["daily_tokens"], 23)
         self.assertEqual(self.database.ad_estimated_usage_ledger.count_documents({}), 2)
 
-    def test_real_zero_metrics_and_budget_relay_retry_remain_distinct(self):
-        self.assertEqual(self.repository.metrics_summary(self.now)["today_estimated_tokens"], 0)
-        self.assertEqual(self.repository.metrics_summary(self.now)["aggregation_status"], "READY")
-        self.event(self.provide())
-        self.now += timedelta(seconds=300)
-        self.batch.run_once()
-        cutoff = self.state()["daily_blocked_at"]
-        worker = AdsLogRelay(
-            self.database.ad_budget_states,
-            lambda *args: False,
-            is_test=False,
-            clock=lambda: self.now,
-        )
-        self.assertEqual(worker.run_once()["failed"], 1)
-        self.now += timedelta(seconds=31)
-        worker.sink = lambda *args: True
-        self.assertEqual(worker.run_once()["sent"], 1)
-        self.assertEqual(self.state()["daily_blocked_at"], cutoff)
-        self.batch.run_once()
-        self.assertEqual(self.state()["log_relay"]["status"], "SENT")
-
     def test_real_ended_cursor_keeps_budget_or_period_filter(self):
         self.event(self.provide())
         self.now += timedelta(seconds=300)
@@ -300,3 +279,47 @@ class AdsPolicyMongoIntegrationTests(SimpleTestCase):
         )
         self.assertEqual(second[0]["_id"], self.ad["ad_id"])
         self.assertNotEqual(second[0]["_id"], active["ad_id"])
+
+    def test_real_first_stop_log_is_atomic_and_immutable_across_refresh(self):
+        self.assertEqual(self.repository.metrics_summary(self.now)["today_estimated_tokens"], 0)
+        self.event(self.provide())
+        self.now += timedelta(seconds=300)
+        self.batch.run_once()
+        first = deepcopy(self.state())
+        logs = inspect_logs(self.database, is_test=False)
+        self.assertEqual(logs["ad_budget_states"]["stored"], 1)
+        self.assertEqual(logs["ad_budget_states"]["sample_invalid"], 0)
+        self.now += timedelta(seconds=300)
+        self.batch.run_once()
+        self.assertEqual(self.state()["log_record"], first["log_record"])
+        self.assertEqual(self.state()["daily_blocked_at"], first["daily_blocked_at"])
+
+    def test_real_legacy_first_stop_log_survives_policy_refresh_without_new_log(self):
+        self.event(self.provide())
+        self.now += timedelta(seconds=300)
+        self.batch.run_once()
+        state = self.state()
+        record = state["log_record"]
+        legacy = {
+            "log_event_id": record["log_event_id"],
+            "payload": record["payload"],
+            "payload_hash": record["payload_hash"],
+            "status": "PENDING",
+            "attempt_count": 1,
+            "next_retry_at": None,
+            "last_error": "old-error",
+            "sent_at": None,
+        }
+        self.database.ad_budget_states.update_one(
+            {"_id": state["_id"]},
+            {"$set": {"log_relay": legacy}, "$unset": {"log_record": ""}},
+        )
+        self.now += timedelta(seconds=300)
+        self.batch.run_once()
+        updated = self.state()
+        self.assertEqual(updated["log_relay"], legacy)
+        self.assertIsNone(updated["log_record"])
+        self.assertEqual(updated["daily_blocked_at"], state["daily_blocked_at"])
+        report = inspect_logs(self.database, is_test=False)
+        self.assertEqual(report["ad_budget_states"]["legacy_preserved"], 1)
+        self.assertEqual(report["ad_budget_states"]["sample_invalid"], 0)

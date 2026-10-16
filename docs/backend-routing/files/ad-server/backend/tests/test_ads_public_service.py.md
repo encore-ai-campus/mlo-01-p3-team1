@@ -4,7 +4,7 @@
 - 수정일: 2026-10-15
 - [원본 코드](../../../../../../ad-server/backend/tests/test_ads_public_service.py)
 
-실제 AdsPublicService와 원자 rollback 메모리 fixture를 연결한 도메인 시험입니다. 선정/위치별 순환·발급 키 재전송·기존 delivery 재확인·만료/중단·서명/소유·쿠키 불가·허용 입력·최초 판정/예상 항목/PENDING 로그 원자성·8/5/15 단가를 검증합니다.
+실제 AdsPublicService와 원자 rollback 메모리 fixture를 연결한 도메인 시험입니다. 선정/위치별 순환·발급 키 재전송·기존 delivery 재확인·만료/중단·서명/소유·쿠키 불가·허용 입력·최초 판정/예상 항목/MongoDB 내장 로그 원자성·8/5/15 단가를 검증합니다.
 
 최초 응답은 중단/만료 뒤에도 보존하며 다른 본문 충돌·동시 최초 처리·억제 delivery 소비·정확한60/300초 경계·과거 게시 상태·KST 발생일·저장 실패 rollback을 확인합니다. 잠금 대기 중 중단 시각 소급 방지와 현재 종료 시각 단축의 표시 기한 반영도 검증합니다.
 
@@ -13,6 +13,8 @@
 split_deadlines=True를 명시한 선택 fixture에서 표시/보고 마감 분리·KST 자정 전 발생의 다음날 수신·정확한 표시 만료 발생 제외·300초 경계 수용·표시 마감의 HMAC 서명 포함을 추가 확인합니다. 기본False와 기존 delivery 동작은 유지하며 운영 provider를 활성화하지 않습니다.
 
 측정 잠금 대기 이후의 실제 판정 시각으로 반복 창을 시작해52초 조기 재인정을 억제하는 재현도 포함합니다.
+
+현행 로그 구조와 이전 자료 보존은 [광고 로그 저장 계약](../../../../../development/ads/MongoDB_광고_로그_저장_계약.md)을 따릅니다.
 
 ## AST 시그니처
 
@@ -37,7 +39,7 @@ AdsPublicServiceTests.test_stopped_ad_is_removed_on_reconfirm_without_replacemen
 AdsPublicServiceTests.test_wrong_owner_or_tampered_delivery_proof_is_hidden(self)
 AdsPublicServiceTests.test_cookie_unavailable_can_display_without_inventing_a_guest(self)
 AdsPublicServiceTests.test_unknown_body_fields_cannot_supply_accounting_decisions(self)
-AdsPublicServiceTests.test_counted_event_saves_claim_window_usage_and_pending_log_together(self)
+AdsPublicServiceTests.test_counted_event_saves_claim_window_usage_and_local_log_together(self)
 AdsPublicServiceTests.test_bottom_impression_and_click_record_distinct_expected_tokens(self)
 AdsPublicServiceTests.test_replay_retains_first_decision_after_stop_and_expiration(self)
 AdsPublicServiceTests.test_same_event_id_changed_input_conflicts_without_new_mutations(self)
