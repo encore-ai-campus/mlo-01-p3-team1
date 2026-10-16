@@ -2,8 +2,28 @@
 
 지역의 날씨와 음악 취향을 반영해 카페 운영자에게 선곡표를 제공하는 서비스입니다.
 
-- 수정일: 2026-10-14
-- 현재 단계: 제품 설계·데이터 인계·개발 계약 정리. 애플리케이션 코드는 구현 전입니다.
+- 수정일: 2026-10-16
+- 현재 단계: 제품 계약·데이터 인계와 광고 관리·공개 API/MongoDB 원자 저장 구현. 광고5분 예산/통계 코드 연결. 공유 인증·상시 배치·MongoDB 복구 검증과 후속 기능은 인계 대기입니다.
+
+
+## 2026-10-16 로컬 광고 프레젠테이션
+
+최신 사용자 요청으로 저장소 시안을 참고한 로컬 광고 제어 화면을 구성하고
+HTML·CSS·문구·브라우저 동작을 분리했습니다. 개발 총괄의 수정 위치와 이식 경계는
+[프레젠테이션 수정 가이드](./docs/development/ads/광고_로컬_화면과_프레젠테이션_수정_가이드.md)를
+따릅니다. 이번 예외는 기존 sandbox·시험 DB 범위이며 정식 관리자·공유 인증·운영 연결의
+완료와 구분합니다. 광고 정책·태스크 ID/직접 선행 관계는 유지합니다.
+
+## 2026-10-15 광고 로그 MongoDB 독립 관리
+
+최신 사용자 결정으로 광고 관리·측정·소진 로그는 광고 MongoDB에 저장합니다. PostgreSQL 전달과 공통 로그 테이블 규격은 사용하지 않습니다. 새 `log_record`와 기존 기록 보존·점검/스키마 적용은 [광고 로그 저장 계약](docs/development/ads/MongoDB_광고_로그_저장_계약.md)을 따릅니다. 관리3+공개5+정책2 구조와 공유 ADMIN/guest 인증 경계는 유지합니다.
+
+## 로컬 광고 제어 확인
+
+광고의 후속 진행은 [남은 작업·연결 계획](./docs/development/ads/광고_남은_작업과_연결_계획.md)에 정리했습니다.
+독립 배치/재시도와 읽기 전용 설정·스키마·내장 광고 로그 점검을 추가했으며 공유 인증·화면/운영 연결과 구분합니다.
+
+사용자 요청으로 기존 광고 API를 직접 확인하는 [임시 관리 도구](./docs/development/ads/임시_광고_관리_도구.md)를 추가합니다. 별도 설정·테스트 DB의 `http://127.0.0.1:8001/dev/ads/`에서 광고 저장/중단·미리보기·예산/통계를 확인하는 범위입니다. 정식 React 관리자·공유 인증/로그·공개 배너/운영 연결의 완료와 구분하며 실행 방법과 실제 검증 상태는 도구 안내/수용 기록을 따릅니다.
 
 ## 2026-10-14 음악 담당 수령 문서 우선 적용
 
@@ -11,7 +31,7 @@
 
 ## 2026-10-14 저장소 결정과 광고 인계
 
-2026-10-14 새 음악 문서 우선 지시로 음악 기준 저장은 **RDB 4개 테이블**과 추천·표시18개/검수 보조1개로 변경합니다. 음악 원본 CSV·백업/불변 내보내기는 로컬/S3 보관 가능하며 S3만을 음악 기준 DB로 사용하지 않습니다. 로그·피드백/공통 업무 상태는 PostgreSQL, 광고는 MongoDB, 날씨 MongoDB/Elasticsearch·원문 로컬/S3는 유지합니다. 3차 음원 파일·직접 재생은 추가하지 않습니다. [저장 경계와 발행 계약](./docs/product/3차_저장소_경계와_발행_계약.md)과 [ADS 인계](./docs/handoff/ads/README.md)를 적용하며 실제 설치·접속·운영 검증 완료와 구분합니다.
+2026-10-14 새 음악 문서 우선 지시로 음악 기준 저장은 **RDB 4개 테이블**과 추천·표시18개/검수 보조1개로 변경합니다. 음악 원본 CSV·백업/불변 내보내기는 로컬/S3 보관 가능하며 S3만을 음악 기준 DB로 사용하지 않습니다. 공통·피드백 로그/공통 업무 상태는 PostgreSQL, 광고와 광고 로그는 MongoDB, 날씨 MongoDB/Elasticsearch·원문 로컬/S3는 유지합니다. 3차 음원 파일·직접 재생은 추가하지 않습니다. [저장 경계와 발행 계약](./docs/product/3차_저장소_경계와_발행_계약.md)과 [ADS 인계](./docs/handoff/ads/README.md)를 적용하며 실제 설치·접속·운영 검증 완료와 구분합니다.
 
 
 ## 1. 프로젝트 소개
@@ -99,12 +119,14 @@ flowchart TB
         ADSTORE --> DELIVERY[위치별 광고 제공 API]
         DELIVERY --> BANNERS[공개 화면 상단·하단 배너]
         BANNERS --> ADEVENT[광고 전용 노출·클릭 수신/검증]
-        ADEVENT --> ADMETRICS[MongoDB 광고 판정·집계·예상 원장]
-        ADMETRICS --> ADSTATS[오늘 요약·광고별 누적 노출/클릭]
+        ADEVENT --> ADMETRICS[MongoDB 광고 판정·예상 원장]
+        ADMETRICS --> ADSTATS[5분 원장 검증·통계 · 오늘/보존범위 누적]
+        ADSTATS --> ADBUDGET[최초 소진 cutoff·표시 차단]
+        ADBUDGET --> DELIVERY
         ADSTATS --> ADADMIN
-        ADSTORE --> ADOUTBOX[MongoDB 광고 로그 outbox]
+        ADSTORE --> ADOUTBOX[관리·측정·소진 문서 내장 log_record]
         ADMETRICS --> ADOUTBOX
-        ADOUTBOX --> ADLOG[PostgreSQL 광고 로그·진단]
+        ADOUTBOX --> ADLOG[MongoDB 광고 전용 로그·hash 보존]
     end
     BANNERS -.-> WEB
 ```
@@ -120,6 +142,9 @@ flowchart TB
 ├─ README.md                 프로젝트 안내
 ├─ AGENTS.md                 담당 경계·작업 기준
 ├─ CONTRIBUTING.md           GitHub 협업 방침
+├─ ad-server/                광고 서버 코드와 환경 설정
+│  ├─ backend/               Django/DRF·광고 로직·MongoDB 저장·테스트
+│  └─ config/environments/ads/ 로컬 MongoDB replica set·Compose
 └─ docs/
    ├─ product/               기능·설계·추천·태스크·공통 계약
    │  └─ archive/            이전 설계 이력
@@ -130,12 +155,18 @@ flowchart TB
    │  ├─ infra/              인프라 인계
    │  ├─ music/              음악 규격 인계
    │  └─ weather/            날씨 수집·정제·저장 인계
+   ├─ backend-routing/       광고 코드·API의 1:1 라우팅 문서
+   ├─ development/ads/       광고 데이터·로직 구현 인계
+   ├─ runbook/               실행·설정·복구 인계
+   ├─ acceptance/            실제 검증 결과
    └─ assets/
       ├─ mockups/            화면 시안·생성 프롬프트
       └─ penguin/            확정 공통 펭귄 원본
 ```
 
-구현 시 `frontend/`, `backend/`, `pipeline/`, `config/`, 실행 테스트용 `fixtures/`를 추가합니다. 협업 설정은 `.github/`, 실행/검증 기록은 `docs/runbook/`·`docs/acceptance/`에 구성할 예정입니다. 이 경로들은 현재 구현 완료된 폴더가 아닙니다.
+광고의 실제 코드·환경은 [ad-server/](./ad-server/README.md)에 모았습니다. AGENTS·설계도의
+`frontend/`, `backend/`, `pipeline/`, `config/`, `fixtures/`는 전체 팀의 통합 구조 예시이며,
+이번 광고 폴더 재배치가 다른 도메인의 구현이나 배포 완료를 뜻하지 않습니다.
 
 | 담당 | 분야 |
 |---|---|
@@ -149,7 +180,16 @@ flowchart TB
 
 ## 6. 개발 시작 방법
 
-현재 실행 가능한 앱과 의존성/잠금 파일은 없습니다. 설치·실행 명령은 각 기능 구현 후 추가합니다.
+광고 관리·공개 서버의 의존성·잠금 파일과 실행 명령은 [광고 backend 안내](./ad-server/backend/README.md)에
+있습니다. 광고 API와 코드의 연결은 [라우팅 색인](./docs/backend-routing/README.md)을 따릅니다.
+나머지 서비스·공유 인증/로그의 실제 연결은 담당자 인계와 검증이 필요합니다.
+
+광고 선정·표시 상한·측정 판정과 공개 API·MongoDB 원자 저장은
+[공개 선정·측정 인계](./docs/development/ads/공개_선정과_측정_로직_인계.md)에 연결했습니다.
+`GET /api/ads`, `POST /api/ad-events`, `GET /api/ad-deliveries/{delivery_id}/image`를 구현했고
+관리3·공개5·정책2 컬렉션을 사용합니다. 사용자 확정은 배달30분·표시/보고 분리·소재교체 후 옛 배달 차단·통계/예산 검증 모두5분입니다. 소진 확인 cutoff 이후 신규/재확인/이미지를 차단하고 이전 유효 발생만300초 내 초과 인정합니다. 자동 종료는 소진/게시 기간, 수동 paused는 별도 유지합니다. 실예산은 관리API 입력값이며 기본값·예약·최소잔여23/20은 없습니다.
+
+`ADS_PUBLIC_POLICY_PROVIDER=domains.ads.runtime_policy.get_public_policy`를 명시 설정합니다. 상태 누락은 부적격,300초 초과 stale는503입니다. 공유 guest·서명·절대HTTPS 주소도 필수입니다. `apply_ads_policy_schema`는 dry-run 기본, `refresh_ads_policy`는1회/--watch300초 시작 간격, `check_ads_logs`는 MongoDB 내장 로그를 읽기 점검합니다. 관리자 화면은 별도 담당자 작업이며 운영 상주 배치·공유 인증·정식 공개 배너/AWS 연결은 미완료입니다.
 
 1. [서비스 흐름](./docs/product/카페_음악_서비스_기능_및_사용자_흐름_정리.md)과 [공통 개발 계약](./docs/product/3차_공통_개발_계약과_검증_기준.md)으로 기능·API·상태 기준을 확인합니다.
 2. [구현 태스크](./docs/product/카페_음악_추천_서비스_3차_구현_태스크.md)에서 담당 작업 ID와 직접 선행 조건을 확인합니다.
@@ -161,7 +201,7 @@ flowchart TB
 
 ## 7. 협업 방법과 상세 문서
 
-광고는 [통합·추가 인계](./docs/handoff/ads/05_광고_간소화_통합과_추가_인계.md)를 기준으로 합니다. 3차는 카페 전용으로 세 컬렉션·MongoDB 이미지 Binary·관리 기능을 구현한 뒤 공개 배치/측정·주기 통계/예산을 연결합니다. 업종 선택·태그·업종별 매칭은 [4차 확장 가이드](./docs/handoff/ads/06_4차_광고_업종매칭_확장_가이드.md)로 분리합니다.
+광고는 [통합·추가 인계](./docs/handoff/ads/05_광고_간소화_통합과_추가_인계.md)를 기준으로 합니다. 3차는 카페 전용으로 MongoDB 이미지 Binary·관리3·공개5·정책2 컬렉션·관리/공개 API·5분 통계/예산 검증을 연결했습니다. 실제 공유 환경·상시 배치·공개 배너·AWS 운영 검증은 별도입니다. 업종 선택·태그·업종별 매칭은 [4차 확장 가이드](./docs/handoff/ads/06_4차_광고_업종매칭_확장_가이드.md)로 분리합니다.
 
 브랜치 기본안은 `main`(검증된 기준/릴리스)·`develop`(통합)·작업별 브랜치입니다. develop에서 분기해 PR·리뷰로 통합하고 검증 후 main에 반영합니다. 2026-10-14 확인 기준으로 origin과 로컬/원격 main·develop은 구성되어 있으며 GitHub 기본 브랜치는 main입니다. `.github` 파일은 없고 실제 팀 계정/병합 권한·보호·CI·배포는 검증 대기입니다. 확인 상태와 상세 절차는 [CONTRIBUTING.md](./CONTRIBUTING.md#2-브랜치-구성과-작업-시작)를 따릅니다.
 
@@ -176,8 +216,8 @@ flowchart TB
 | [확인·인계 목록](./docs/product/3차_사용자_확인과_담당자_인계_목록.md) | 남은 결정·담당 자료·보완 사항 |
 | [구현 결정과 원문 보관](./docs/product/3차_구현_결정과_익명문맥_원문보관_가이드.md) | 최신 결정·익명 소유·로컬/S3·인프라 수령 상태 |
 | [광고 정책과 결정사항](./docs/product/3차_광고_운영_회의_결정사항_목록.md) | 광고 운영·측정·초기 정책과 남은 결정 |
-| [ADS 인계](./docs/handoff/ads/README.md) | 관리/공개 연결·MongoDB 저장·PostgreSQL 로그·환경/검증 |
-| [저장 경계와 발행 계약](./docs/product/3차_저장소_경계와_발행_계약.md) | 음악RDB4개·원본/백업S3·로그 PostgreSQL·광고 MongoDB |
+| [ADS 인계](./docs/handoff/ads/README.md) | 관리/공개 연결·MongoDB 저장·내장 광고 로그·환경/검증 |
+| [저장 경계와 발행 계약](./docs/product/3차_저장소_경계와_발행_계약.md) | 음악RDB4개·원본/백업S3·공통·피드백 로그 PostgreSQL·광고/광고 로그 MongoDB |
 | [음악 컬럼 정의](./docs/handoff/music/음악_분류_컬럼_정의.md) | 음악18개·변환·검수 특성·검수 입력 |
 | [날씨 인계 자료](./docs/handoff/weather/01_날씨_수집과_지역매핑.md) | 수집/지역 매핑부터 정제·저장·분류로 연결 |
 | [인프라 인계 안내](./docs/handoff/infra/README.md) · [AWS 구축 계획](./docs/handoff/infra/AWS_인프라_구축_계획서.md) | 로컬 개발에서 AWS 이전으로 연결·원문 수령 상태·서비스 조율 사항 |

@@ -1,0 +1,1253 @@
+{
+  "schema_version": "phase3-ads-public-20261015.2",
+  "scope": "public_delivery_and_measurement",
+  "note": "관리 3컬렉션과 별도로 적용하는 공개 상태 5컬렉션. delivery 수명·소재 변경·예산은 확정된 외부 정책만 사용합니다. TTL 삭제나 운영값은 설정하지 않습니다.",
+  "collections": {
+    "ad_rotation_state": {
+      "validator": {
+        "$jsonSchema": {
+          "bsonType": "object",
+          "required": [
+            "_id",
+            "is_test",
+            "schema_version",
+            "placement",
+            "last_ad_id",
+            "revision",
+            "updated_at"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "_id": {
+              "bsonType": "string",
+              "minLength": 1
+            },
+            "is_test": {
+              "bsonType": "bool"
+            },
+            "schema_version": {
+              "bsonType": "string",
+              "enum": [
+                "phase3-ads-public-20261015.1",
+                "phase3-ads-public-20261015.2"
+              ]
+            },
+            "placement": {
+              "bsonType": "string",
+              "enum": [
+                "top",
+                "bottom"
+              ]
+            },
+            "last_ad_id": {
+              "bsonType": "string",
+              "minLength": 1
+            },
+            "revision": {
+              "bsonType": [
+                "int",
+                "long"
+              ],
+              "minimum": 1
+            },
+            "updated_at": {
+              "bsonType": "date"
+            }
+          }
+        }
+      },
+      "indexes": [
+        {
+          "name": "placement_rotation",
+          "keys": [
+            [
+              "placement",
+              1
+            ],
+            [
+              "is_test",
+              1
+            ]
+          ],
+          "unique": true
+        }
+      ]
+    },
+    "ad_deliveries": {
+      "validator": {
+        "$and": [
+          {
+            "$jsonSchema": {
+              "bsonType": "object",
+              "required": [
+                "_id",
+                "is_test",
+                "schema_version",
+                "owner_guest_id",
+                "measurement_available",
+                "ad_id",
+                "ad_version",
+                "creative_version",
+                "placement",
+                "ad_snapshot",
+                "issued_at",
+                "event_expires_at",
+                "last_used_at",
+                "last_received_at",
+                "claims",
+                "request_key_hash",
+                "request_hash",
+                "response_snapshot",
+                "token_hash",
+                "policy_version"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "_id": {
+                  "bsonType": "string",
+                  "minLength": 1
+                },
+                "is_test": {
+                  "bsonType": "bool"
+                },
+                "schema_version": {
+                  "bsonType": "string",
+                  "enum": [
+                    "phase3-ads-public-20261015.1",
+                    "phase3-ads-public-20261015.2"
+                  ]
+                },
+                "owner_guest_id": {
+                  "bsonType": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "measurement_available": {
+                  "bsonType": "bool"
+                },
+                "ad_id": {
+                  "bsonType": "string",
+                  "minLength": 1
+                },
+                "ad_version": {
+                  "bsonType": [
+                    "int",
+                    "long"
+                  ],
+                  "minimum": 1
+                },
+                "creative_version": {
+                  "bsonType": "string",
+                  "minLength": 1
+                },
+                "placement": {
+                  "bsonType": "string",
+                  "enum": [
+                    "top",
+                    "bottom"
+                  ]
+                },
+                "ad_snapshot": {
+                  "bsonType": "object",
+                  "required": [
+                    "ad_id",
+                    "title",
+                    "asset_id",
+                    "link_url",
+                    "placement",
+                    "starts_at",
+                    "ends_at",
+                    "priority",
+                    "paused",
+                    "version",
+                    "creative_version",
+                    "stopped_at"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "ad_id": {
+                      "bsonType": "string",
+                      "minLength": 1
+                    },
+                    "title": {
+                      "bsonType": "string",
+                      "minLength": 1
+                    },
+                    "asset_id": {
+                      "bsonType": "string",
+                      "minLength": 1
+                    },
+                    "link_url": {
+                      "bsonType": "string",
+                      "pattern": "^https://[^/\\s?#]+"
+                    },
+                    "placement": {
+                      "bsonType": "string",
+                      "enum": [
+                        "top",
+                        "bottom"
+                      ]
+                    },
+                    "starts_at": {
+                      "bsonType": "date"
+                    },
+                    "ends_at": {
+                      "bsonType": "date"
+                    },
+                    "priority": {
+                      "bsonType": [
+                        "int",
+                        "long"
+                      ]
+                    },
+                    "paused": {
+                      "bsonType": "bool"
+                    },
+                    "version": {
+                      "bsonType": [
+                        "int",
+                        "long"
+                      ],
+                      "minimum": 1
+                    },
+                    "creative_version": {
+                      "bsonType": "string",
+                      "minLength": 1
+                    },
+                    "stopped_at": {
+                      "bsonType": [
+                        "date",
+                        "null"
+                      ]
+                    }
+                  }
+                },
+                "issued_at": {
+                  "bsonType": "date"
+                },
+                "event_expires_at": {
+                  "bsonType": "date"
+                },
+                "display_expires_at": {
+                  "bsonType": "date"
+                },
+                "last_used_at": {
+                  "bsonType": "date"
+                },
+                "last_received_at": {
+                  "bsonType": [
+                    "date",
+                    "null"
+                  ]
+                },
+                "claims": {
+                  "bsonType": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "VIEWABLE_IMPRESSION": {
+                      "bsonType": "object",
+                      "required": [
+                        "event_id",
+                        "result",
+                        "processed_at"
+                      ],
+                      "additionalProperties": false,
+                      "properties": {
+                        "event_id": {
+                          "bsonType": "string",
+                          "minLength": 1
+                        },
+                        "result": {
+                          "bsonType": "string",
+                          "enum": [
+                            "COUNTED",
+                            "REPEAT_SUPPRESSED"
+                          ]
+                        },
+                        "processed_at": {
+                          "bsonType": "date"
+                        }
+                      }
+                    },
+                    "CLICK": {
+                      "bsonType": "object",
+                      "required": [
+                        "event_id",
+                        "result",
+                        "processed_at"
+                      ],
+                      "additionalProperties": false,
+                      "properties": {
+                        "event_id": {
+                          "bsonType": "string",
+                          "minLength": 1
+                        },
+                        "result": {
+                          "bsonType": "string",
+                          "enum": [
+                            "COUNTED",
+                            "REPEAT_SUPPRESSED"
+                          ]
+                        },
+                        "processed_at": {
+                          "bsonType": "date"
+                        }
+                      }
+                    }
+                  }
+                },
+                "request_key_hash": {
+                  "bsonType": [
+                    "string",
+                    "null"
+                  ],
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "request_hash": {
+                  "bsonType": [
+                    "string",
+                    "null"
+                  ],
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "response_snapshot": {
+                  "bsonType": "object",
+                  "required": [
+                    "ad",
+                    "evaluated_at",
+                    "valid_until",
+                    "measurement_available"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "ad": {
+                      "bsonType": [
+                        "object",
+                        "null"
+                      ],
+                      "required": [
+                        "ad_id",
+                        "creative_version",
+                        "placement",
+                        "title",
+                        "image_url",
+                        "link_url",
+                        "delivery_id",
+                        "delivery_token"
+                      ],
+                      "additionalProperties": false,
+                      "properties": {
+                        "ad_id": {
+                          "bsonType": "string",
+                          "minLength": 1
+                        },
+                        "creative_version": {
+                          "bsonType": "string",
+                          "minLength": 1
+                        },
+                        "placement": {
+                          "bsonType": "string",
+                          "enum": [
+                            "top",
+                            "bottom"
+                          ]
+                        },
+                        "title": {
+                          "bsonType": "string",
+                          "minLength": 1
+                        },
+                        "image_url": {
+                          "bsonType": "string",
+                          "minLength": 1
+                        },
+                        "link_url": {
+                          "bsonType": "string",
+                          "minLength": 1
+                        },
+                        "delivery_id": {
+                          "bsonType": "string",
+                          "minLength": 1
+                        },
+                        "delivery_token": {
+                          "bsonType": "string",
+                          "minLength": 1
+                        }
+                      }
+                    },
+                    "evaluated_at": {
+                      "bsonType": "string",
+                      "minLength": 1
+                    },
+                    "valid_until": {
+                      "bsonType": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "measurement_available": {
+                      "bsonType": "bool"
+                    }
+                  }
+                },
+                "token_hash": {
+                  "bsonType": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "policy_version": {
+                  "bsonType": "string",
+                  "minLength": 1
+                },
+                "budget_policy_version": {
+                  "bsonType": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          },
+          {
+            "$expr": {
+              "$lt": [
+                "$issued_at",
+                "$event_expires_at"
+              ]
+            }
+          },
+          {
+            "$expr": {
+              "$lt": [
+                "$ad_snapshot.starts_at",
+                "$ad_snapshot.ends_at"
+              ]
+            }
+          },
+          {
+            "$expr": {
+              "$cond": [
+                {
+                  "$eq": [
+                    {
+                      "$type": "$display_expires_at"
+                    },
+                    "date"
+                  ]
+                },
+                {
+                  "$and": [
+                    {
+                      "$lt": [
+                        "$issued_at",
+                        "$display_expires_at"
+                      ]
+                    },
+                    {
+                      "$lte": [
+                        "$display_expires_at",
+                        "$event_expires_at"
+                      ]
+                    }
+                  ]
+                },
+                true
+              ]
+            }
+          }
+        ]
+      },
+      "indexes": [
+        {
+          "name": "public_delivery_request",
+          "keys": [
+            [
+              "owner_guest_id",
+              1
+            ],
+            [
+              "placement",
+              1
+            ],
+            [
+              "request_key_hash",
+              1
+            ],
+            [
+              "is_test",
+              1
+            ]
+          ],
+          "unique": true,
+          "partialFilterExpression": {
+            "request_key_hash": {
+              "$type": "string"
+            }
+          }
+        },
+        {
+          "name": "delivery_ad_reference",
+          "keys": [
+            [
+              "ad_id",
+              1
+            ],
+            [
+              "is_test",
+              1
+            ],
+            [
+              "event_expires_at",
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    "ad_events": {
+      "validator": {
+        "$and": [
+          {
+            "$jsonSchema": {
+              "bsonType": "object",
+              "required": [
+                "_id",
+                "is_test",
+                "schema_version",
+                "event_id",
+                "owner_guest_id",
+                "request_hash",
+                "request_payload",
+                "delivery_id",
+                "ad_id",
+                "creative_version",
+                "placement",
+                "event_type",
+                "occurred_at",
+                "received_at",
+                "processed_at",
+                "accepted_at",
+                "result",
+                "counted",
+                "metric_date_kst",
+                "estimated_tokens",
+                "ads_policy_version",
+                "response_snapshot",
+                "retention_due_at"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "_id": {
+                  "bsonType": "string",
+                  "minLength": 1
+                },
+                "is_test": {
+                  "bsonType": "bool"
+                },
+                "schema_version": {
+                  "bsonType": "string",
+                  "enum": [
+                    "phase3-ads-public-20261015.1",
+                    "phase3-ads-public-20261015.2"
+                  ]
+                },
+                "event_id": {
+                  "bsonType": "string",
+                  "minLength": 1
+                },
+                "owner_guest_id": {
+                  "bsonType": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "request_hash": {
+                  "bsonType": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                },
+                "request_payload": {
+                  "bsonType": "object",
+                  "required": [
+                    "event_id",
+                    "delivery_id",
+                    "event_type",
+                    "occurred_at"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "event_id": {
+                      "bsonType": "string",
+                      "minLength": 1
+                    },
+                    "delivery_id": {
+                      "bsonType": "string",
+                      "minLength": 1
+                    },
+                    "event_type": {
+                      "bsonType": "string",
+                      "enum": [
+                        "VIEWABLE_IMPRESSION",
+                        "CLICK"
+                      ]
+                    },
+                    "occurred_at": {
+                      "bsonType": "string",
+                      "minLength": 1
+                    }
+                  }
+                },
+                "delivery_id": {
+                  "bsonType": "string",
+                  "minLength": 1
+                },
+                "ad_id": {
+                  "bsonType": "string",
+                  "minLength": 1
+                },
+                "creative_version": {
+                  "bsonType": "string",
+                  "minLength": 1
+                },
+                "placement": {
+                  "bsonType": "string",
+                  "enum": [
+                    "top",
+                    "bottom"
+                  ]
+                },
+                "event_type": {
+                  "bsonType": "string",
+                  "enum": [
+                    "VIEWABLE_IMPRESSION",
+                    "CLICK"
+                  ]
+                },
+                "occurred_at": {
+                  "bsonType": "date"
+                },
+                "received_at": {
+                  "bsonType": "date"
+                },
+                "processed_at": {
+                  "bsonType": "date"
+                },
+                "accepted_at": {
+                  "bsonType": [
+                    "date",
+                    "null"
+                  ]
+                },
+                "result": {
+                  "bsonType": "string",
+                  "enum": [
+                    "COUNTED",
+                    "REPEAT_SUPPRESSED",
+                    "DELIVERY_DUPLICATE",
+                    "DELIVERY_INVALID",
+                    "LATE_EVENT",
+                    "MEASUREMENT_UNAVAILABLE"
+                  ]
+                },
+                "counted": {
+                  "bsonType": "bool"
+                },
+                "metric_date_kst": {
+                  "bsonType": [
+                    "string",
+                    "null"
+                  ],
+                  "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+                },
+                "estimated_tokens": {
+                  "bsonType": [
+                    "int",
+                    "long"
+                  ],
+                  "minimum": 0
+                },
+                "ads_policy_version": {
+                  "bsonType": "string",
+                  "minLength": 1
+                },
+                "response_snapshot": {
+                  "bsonType": "object",
+                  "required": [
+                    "event_id",
+                    "delivery_id",
+                    "event_type",
+                    "result",
+                    "counted",
+                    "occurred_at",
+                    "received_at",
+                    "processed_at",
+                    "ads_policy_version"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "event_id": {
+                      "bsonType": "string",
+                      "minLength": 1
+                    },
+                    "delivery_id": {
+                      "bsonType": "string",
+                      "minLength": 1
+                    },
+                    "event_type": {
+                      "bsonType": "string",
+                      "enum": [
+                        "VIEWABLE_IMPRESSION",
+                        "CLICK"
+                      ]
+                    },
+                    "result": {
+                      "bsonType": "string",
+                      "enum": [
+                        "COUNTED",
+                        "REPEAT_SUPPRESSED",
+                        "DELIVERY_DUPLICATE",
+                        "DELIVERY_INVALID",
+                        "LATE_EVENT",
+                        "MEASUREMENT_UNAVAILABLE"
+                      ]
+                    },
+                    "counted": {
+                      "bsonType": "bool"
+                    },
+                    "occurred_at": {
+                      "bsonType": "string",
+                      "minLength": 1
+                    },
+                    "received_at": {
+                      "bsonType": "string",
+                      "minLength": 1
+                    },
+                    "processed_at": {
+                      "bsonType": "string",
+                      "minLength": 1
+                    },
+                    "ads_policy_version": {
+                      "bsonType": "string",
+                      "minLength": 1
+                    }
+                  }
+                },
+                "log_relay": {
+                  "bsonType": "object",
+                  "required": [
+                    "log_event_id",
+                    "payload",
+                    "payload_hash",
+                    "status",
+                    "attempt_count",
+                    "next_retry_at",
+                    "last_error",
+                    "sent_at"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "log_event_id": {
+                      "bsonType": "string",
+                      "minLength": 1
+                    },
+                    "payload": {
+                      "bsonType": "object"
+                    },
+                    "payload_hash": {
+                      "bsonType": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    "status": {
+                      "bsonType": "string",
+                      "enum": [
+                        "PENDING",
+                        "SENT"
+                      ]
+                    },
+                    "attempt_count": {
+                      "bsonType": [
+                        "int",
+                        "long"
+                      ],
+                      "minimum": 0
+                    },
+                    "next_retry_at": {
+                      "bsonType": [
+                        "date",
+                        "null"
+                      ]
+                    },
+                    "last_error": {
+                      "bsonType": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "sent_at": {
+                      "bsonType": [
+                        "date",
+                        "null"
+                      ]
+                    }
+                  }
+                },
+                "retention_due_at": {
+                  "bsonType": [
+                    "date",
+                    "null"
+                  ]
+                },
+                "log_record": {
+                  "bsonType": "object",
+                  "required": [
+                    "log_schema_version",
+                    "log_event_id",
+                    "payload",
+                    "payload_hash",
+                    "stored_at"
+                  ],
+                  "additionalProperties": false,
+                  "properties": {
+                    "log_schema_version": {
+                      "enum": [
+                        "ads-mongo-log-20261015.1"
+                      ]
+                    },
+                    "log_event_id": {
+                      "bsonType": "string",
+                      "minLength": 1
+                    },
+                    "payload": {
+                      "bsonType": "object"
+                    },
+                    "payload_hash": {
+                      "bsonType": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    },
+                    "stored_at": {
+                      "bsonType": "date"
+                    }
+                  }
+                }
+              },
+              "anyOf": [
+                {
+                  "required": [
+                    "log_record"
+                  ]
+                },
+                {
+                  "required": [
+                    "log_relay"
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "$expr": {
+              "$eq": [
+                "$_id",
+                "$event_id"
+              ]
+            }
+          },
+          {
+            "$expr": {
+              "$gte": [
+                "$processed_at",
+                "$received_at"
+              ]
+            }
+          },
+          {
+            "$expr": {
+              "$eq": [
+                "$counted",
+                {
+                  "$eq": [
+                    "$result",
+                    "COUNTED"
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "$expr": {
+              "$cond": [
+                "$counted",
+                {
+                  "$and": [
+                    {
+                      "$ne": [
+                        "$accepted_at",
+                        null
+                      ]
+                    },
+                    {
+                      "$ne": [
+                        "$metric_date_kst",
+                        null
+                      ]
+                    },
+                    {
+                      "$gt": [
+                        "$estimated_tokens",
+                        0
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "$and": [
+                    {
+                      "$eq": [
+                        "$accepted_at",
+                        null
+                      ]
+                    },
+                    {
+                      "$eq": [
+                        "$estimated_tokens",
+                        0
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "indexes": [
+        {
+          "name": "public_event_id",
+          "keys": [
+            [
+              "event_id",
+              1
+            ]
+          ],
+          "unique": true
+        },
+        {
+          "name": "delivery_event_history",
+          "keys": [
+            [
+              "delivery_id",
+              1
+            ],
+            [
+              "is_test",
+              1
+            ],
+            [
+              "processed_at",
+              -1
+            ]
+          ]
+        },
+        {
+          "name": "event_metric_day",
+          "keys": [
+            [
+              "is_test",
+              1
+            ],
+            [
+              "metric_date_kst",
+              1
+            ],
+            [
+              "ad_id",
+              1
+            ],
+            [
+              "placement",
+              1
+            ],
+            [
+              "event_type",
+              1
+            ],
+            [
+              "counted",
+              1
+            ]
+          ]
+        },
+        {
+          "name": "mongo_log_created",
+          "keys": [
+            [
+              "is_test",
+              1
+            ],
+            [
+              "log_record.stored_at",
+              -1
+            ],
+            [
+              "_id",
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    "ad_repeat_windows": {
+      "validator": {
+        "$jsonSchema": {
+          "bsonType": "object",
+          "required": [
+            "_id",
+            "is_test",
+            "schema_version",
+            "owner_guest_id",
+            "ad_id",
+            "placement",
+            "event_type",
+            "accepted_at",
+            "revision"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "_id": {
+              "bsonType": "string",
+              "minLength": 1
+            },
+            "is_test": {
+              "bsonType": "bool"
+            },
+            "schema_version": {
+              "bsonType": "string",
+              "enum": [
+                "phase3-ads-public-20261015.1",
+                "phase3-ads-public-20261015.2"
+              ]
+            },
+            "owner_guest_id": {
+              "bsonType": "string",
+              "minLength": 1
+            },
+            "ad_id": {
+              "bsonType": "string",
+              "minLength": 1
+            },
+            "placement": {
+              "bsonType": "string",
+              "enum": [
+                "top",
+                "bottom"
+              ]
+            },
+            "event_type": {
+              "bsonType": "string",
+              "enum": [
+                "VIEWABLE_IMPRESSION",
+                "CLICK"
+              ]
+            },
+            "accepted_at": {
+              "bsonType": "date"
+            },
+            "revision": {
+              "bsonType": [
+                "int",
+                "long"
+              ],
+              "minimum": 1
+            }
+          }
+        }
+      },
+      "indexes": [
+        {
+          "name": "public_repeat_key",
+          "keys": [
+            [
+              "owner_guest_id",
+              1
+            ],
+            [
+              "ad_id",
+              1
+            ],
+            [
+              "placement",
+              1
+            ],
+            [
+              "event_type",
+              1
+            ],
+            [
+              "is_test",
+              1
+            ]
+          ],
+          "unique": true
+        }
+      ]
+    },
+    "ad_estimated_usage_ledger": {
+      "validator": {
+        "$and": [
+          {
+            "$jsonSchema": {
+              "bsonType": "object",
+              "required": [
+                "_id",
+                "is_test",
+                "schema_version",
+                "event_id",
+                "delivery_id",
+                "ad_id",
+                "creative_version",
+                "placement",
+                "event_type",
+                "metric_date_kst",
+                "occurred_at",
+                "processed_at",
+                "ads_policy_version",
+                "unit_tokens",
+                "estimated_tokens",
+                "status",
+                "retention_due_at"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "_id": {
+                  "bsonType": "string",
+                  "minLength": 1
+                },
+                "is_test": {
+                  "bsonType": "bool"
+                },
+                "schema_version": {
+                  "bsonType": "string",
+                  "enum": [
+                    "phase3-ads-public-20261015.1",
+                    "phase3-ads-public-20261015.2"
+                  ]
+                },
+                "event_id": {
+                  "bsonType": "string",
+                  "minLength": 1
+                },
+                "delivery_id": {
+                  "bsonType": "string",
+                  "minLength": 1
+                },
+                "ad_id": {
+                  "bsonType": "string",
+                  "minLength": 1
+                },
+                "creative_version": {
+                  "bsonType": "string",
+                  "minLength": 1
+                },
+                "placement": {
+                  "bsonType": "string",
+                  "enum": [
+                    "top",
+                    "bottom"
+                  ]
+                },
+                "event_type": {
+                  "bsonType": "string",
+                  "enum": [
+                    "VIEWABLE_IMPRESSION",
+                    "CLICK"
+                  ]
+                },
+                "metric_date_kst": {
+                  "bsonType": "string",
+                  "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+                },
+                "occurred_at": {
+                  "bsonType": "date"
+                },
+                "processed_at": {
+                  "bsonType": "date"
+                },
+                "ads_policy_version": {
+                  "bsonType": "string",
+                  "minLength": 1
+                },
+                "unit_tokens": {
+                  "bsonType": [
+                    "int",
+                    "long"
+                  ],
+                  "minimum": 1
+                },
+                "estimated_tokens": {
+                  "bsonType": [
+                    "int",
+                    "long"
+                  ],
+                  "minimum": 1
+                },
+                "status": {
+                  "bsonType": "string",
+                  "enum": [
+                    "ESTIMATED"
+                  ]
+                },
+                "retention_due_at": {
+                  "bsonType": [
+                    "date",
+                    "null"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "$expr": {
+              "$eq": [
+                "$unit_tokens",
+                "$estimated_tokens"
+              ]
+            }
+          }
+        ]
+      },
+      "indexes": [
+        {
+          "name": "estimated_event_id",
+          "keys": [
+            [
+              "event_id",
+              1
+            ]
+          ],
+          "unique": true
+        },
+        {
+          "name": "estimated_metric_day",
+          "keys": [
+            [
+              "is_test",
+              1
+            ],
+            [
+              "metric_date_kst",
+              1
+            ],
+            [
+              "ad_id",
+              1
+            ],
+            [
+              "placement",
+              1
+            ],
+            [
+              "event_type",
+              1
+            ]
+          ]
+        }
+      ]
+    }
+  }
+}
