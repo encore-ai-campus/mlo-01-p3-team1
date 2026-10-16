@@ -2,7 +2,7 @@
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description": "Administrator binds peering acceptance to one actual project VPC; requester trust lives in bootstrap.",
   "Metadata": {
-    "ProjectCodeVersion": "0.3.19",
+    "ProjectCodeVersion": "0.3.20",
     "AWSToolsMetrics": {
       "AWSAgentToolkit": "aws-cloudformation@3"
     },
