@@ -162,6 +162,34 @@ class WeatherTests(TestCase):
 class SolverTests(TestCase):
     def tracks(self,durations):
         return [{'track_id':str(i),'duration_ms':d,'scores':{'S':Fraction(100)}} for i,d in enumerate(durations)]
+    def test_equal_score_search_matches_exhaustive_time_and_tie_objectives(self):
+        import random
+        for seed in range(2):
+            rng = random.Random(seed)
+            tracks = [{'track_id': f't{i:02}', 'duration_ms': rng.randint(500000,2000000),
+                       'scores': {'S': Fraction(100)}} for i in range(14)]
+            choices = []
+            for mask in range(1,1 << len(tracks)):
+                total = sum(track['duration_ms'] for i,track in enumerate(tracks) if mask >> i & 1)
+                if not 10560000 <= total <= 11040000: continue
+                priority = (0,0) if total == 10800000 else (1,total-10800000) if total > 10800000 else (2,10800000-total)
+                choices.append(((*priority,tuple(-((mask >> i) & 1) for i in range(len(tracks)))),mask))
+            expected = min(choices)[1]
+            actual = choose(tracks,14,5)
+            self.assertEqual([t['track_id'] for t in actual],
+                             [t['track_id'] for i,t in enumerate(tracks) if expected >> i & 1])
+
+    def test_dense_equal_score_window_avoids_repeated_mixed_integer_search(self):
+        import random
+        from unittest.mock import patch
+        rng = random.Random(23)
+        tracks = [{'track_id': f't{i:03}', 'duration_ms': rng.randint(90,300)*1000,
+                   'genre_group_codes': ['POP'], 'scores': {'S': Fraction(100)}} for i in range(200)]
+        with patch('backend.recommendation.solver.cp_model.CpSolver',side_effect=AssertionError('unnecessary general solver')):
+            result = choose(tracks,200,5,'OFF',['POP'],'fixed-seed')
+        self.assertEqual(sum(t['duration_ms'] for t in result),10800000)
+        self.assertEqual(len({t['track_id'] for t in result}),len(result))
+
     def test_time_priority_excess_before_shorter(self):
         result=choose(self.tracks([10740000,10920000]),4,5)
         self.assertEqual(result[0]['duration_ms'],10920000)

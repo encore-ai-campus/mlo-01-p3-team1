@@ -157,11 +157,17 @@ class Readiness(Endpoint):
         from backend.music.catalog import export_tracks
         from backend.recommendation.policy import eligible,weather_fit,GENRES,SPEEDS,WEATHER_WEIGHTS
         from backend.recommendation.inputs import DEFAULTS
-        rows=list(export_tracks())
-        common=[t for t in rows if eligible(t,{**DEFAULTS,'weather_influence_mode':'OFF'},list(GENRES),list(SPEEDS),[])]
-        return Response({'registered_count':len(rows),'approved_review_count':Review.objects.filter(status='approved').count(),
-                         'common_eligible_count':len(common),'duration_ms':sum(t['duration_ms'] for t in common),
-                         'weather_counts':{w:sum(weather_fit(t,w) is not None for t in common) for w in WEATHER_WEIGHTS},
+        registered_count=common_count=duration=0
+        weather_counts={code:0 for code in WEATHER_WEIGHTS}
+        options={**DEFAULTS,'weather_influence_mode':'OFF'}
+        for track in export_tracks():
+            registered_count+=1
+            if not eligible(track,options,list(GENRES),list(SPEEDS),[]):continue
+            common_count+=1;duration+=track['duration_ms']
+            for code in weather_counts:weather_counts[code]+=weather_fit(track,code) is not None
+        return Response({'registered_count':registered_count,'approved_review_count':Review.objects.filter(status='approved').count(),
+                         'common_eligible_count':common_count,'duration_ms':duration,
+                         'weather_counts':weather_counts,
                          'catalog_versions':list(Catalog.objects.order_by('-created_at').values('version','ready','is_test')[:10]),
                          'is_test':settings.LOCAL_DEMO,'as_of':timezone.now().isoformat().replace('+00:00','Z')})
 
@@ -176,7 +182,9 @@ class Publish(Endpoint):
             require(Review.objects.filter(status='approved').exists(),'REVIEW_PENDING','승인된 곡이 없습니다.',409)
             source=MusicSource.objects.filter(pk=body['source_sha256']).first()
             require(source is not None and body['source_ref']=='music-source:'+source.pk,'SOURCE_REQUIRED','등록된 불변 원본 참조가 필요합니다.',422)
-            require(settings.LOCAL_DEMO or source.archive.get('mode')=='S3','SOURCE_ARCHIVE_REQUIRED','운영 카탈로그는 S3 원본 보관이 필요합니다.',503)
+            require(settings.LOCAL_DEMO or source.archive.get('mode')=='S3' or
+                    (settings.MUSIC_S3_ARCHIVE_DEFERRED and source.archive.get('mode')=='S3_DEFERRED'),
+                    'SOURCE_ARCHIVE_REQUIRED','운영 카탈로그는 원본 보관 상태를 확인해야 합니다.',503)
             require(Path(source.raw_path).is_file() and hashlib.sha256(Path(source.raw_path).read_bytes()).hexdigest()==source.pk,
                     'SOURCE_CORRUPT','보관 원본을 확인해 주세요.',503)
             catalog=publish(**body,is_test=settings.LOCAL_DEMO)

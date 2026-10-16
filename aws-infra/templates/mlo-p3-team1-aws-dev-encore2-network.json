@@ -2,7 +2,7 @@
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description": "One private project VPC, three AZ-ID subnet pairs, one zonal NAT, S3 endpoint and stable per-node ENIs.",
   "Metadata": {
-    "ProjectCodeVersion": "0.3.2",
+    "ProjectCodeVersion": "0.3.19",
     "AWSToolsMetrics": {
       "AWSAgentToolkit": "aws-cloudformation@3"
     },

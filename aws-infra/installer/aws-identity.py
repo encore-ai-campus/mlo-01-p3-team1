@@ -12,8 +12,9 @@ def verify(c,fetch):
     actual=fetch()
     expected=c['node']
     if (actual['accountId']!=expected['account_id'] or actual['instanceId']!=expected['instance_id']
+        or not expected.get('instance_type') or actual.get('instanceType')!=expected['instance_type']
         or actual['privateIp']!=expected['address'] or actual['region']!=c['env']['AWS_REGION']):
-        raise ValueError('EC2 identity does not match account, InstanceId, private IP and region')
+        raise ValueError('EC2 identity does not match account, InstanceId, instance type, private IP and region')
 
 
 def identity():

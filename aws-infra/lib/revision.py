@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def source_identity():
     digest = hashlib.sha256()
-    paths = [ROOT / 'VERSION', ROOT / 'config/project.example.json']
+    paths = [ROOT / 'VERSION', *sorted((ROOT / 'config').glob('*.example.json'))]
     paths += [p for folder in ('bin', 'lib', 'installer') for p in (ROOT / folder).rglob('*')
               if p.is_file() and '__pycache__' not in p.parts and p.suffix != '.pyc']
     for path in sorted(paths):

@@ -2,7 +2,7 @@
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description": "One private project VPC, three AZ-ID subnet pairs, one zonal NAT, S3 endpoint and stable per-node ENIs.",
   "Metadata": {
-    "ProjectCodeVersion": "0.3.2",
+    "ProjectCodeVersion": "0.3.19",
     "AWSToolsMetrics": {
       "AWSAgentToolkit": "aws-cloudformation@3"
     },
@@ -876,7 +876,9 @@
         "com.aws.cloudformation.Context": {
           "why": "Exact node /32 sources and service ports derived from pinned Ubuntu renderer.",
           "must": [
-            "No public SSH/DB/Kibana/Spark UI; Spark maxRetries=32 is included."
+            "No public SSH/DB/Kibana/Spark UI; Spark maxRetries=32 is included.",
+            "MongoDB27017 admits only advertising and the two Control /32 addresses; weather uses a separate database/user.",
+            "Spark executors remain excluded; no transitive peering or additional peering is assumed."
           ]
         }
       },
@@ -886,6 +888,18 @@
         },
         "GroupDescription": "Project private mongodb",
         "SecurityGroupIngress": [
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 27017,
+            "ToPort": 27017,
+            "CidrIp": "10.80.16.10/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 27017,
+            "ToPort": 27017,
+            "CidrIp": "10.80.17.11/32"
+          },
           {
             "IpProtocol": "tcp",
             "FromPort": 27017,

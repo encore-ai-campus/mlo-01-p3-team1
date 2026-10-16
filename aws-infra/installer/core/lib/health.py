@@ -96,7 +96,7 @@ def zk_mode(address, *, tls=True, port=None, tls_directory=None):
 
 def zookeeper(c):
     nodes = [n for n in c['inventory']['nodes'] if 'spark' in n['roles']]
-    modes = [zk_mode(n['address']) for n in nodes]
+    modes = [zk_mode(n['address'], tls_directory=CONF + '/zookeeper/tls') for n in nodes]
     if modes.count('leader') != 1 or modes.count('follower') != 2:
         raise ValueError('ZooKeeper ensemble membership is incomplete')
     print('[PASS] ZooKeeper verified client TLS, one leader and two followers')

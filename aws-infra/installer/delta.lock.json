@@ -1,0 +1,215 @@
+{
+  "schema_version": 1,
+  "candidate": "io.delta:delta-spark_4.1_2.13:4.3.1",
+  "spark_version": "4.1.3",
+  "hadoop_version": "3.4.2",
+  "base_connector_lock_sha256": "3cd670ca7d5d24058be3717b07fab17f2f4c5bdb95fef68b99dcd746ab64da29",
+  "provided_dependencies": [
+    {
+      "coordinate": "org.scala-lang:scala-library:2.13.17",
+      "filename": "scala-library-2.13.17.jar",
+      "sha256": "b7822c4225243215f185925724a6edff92cf18777a136cc738276c4446fac76c"
+    },
+    {
+      "coordinate": "org.apache.logging.log4j:log4j-slf4j2-impl:2.24.3",
+      "filename": "log4j-slf4j2-impl-2.24.3.jar",
+      "sha256": "cdaac22e40ec30c4096e1ebe8c454c8826c0d1c378d7db5d7b3ad166354b0bd3"
+    },
+    {
+      "coordinate": "org.apache.logging.log4j:log4j-core:2.24.3",
+      "filename": "log4j-core-2.24.3.jar",
+      "sha256": "7eb4084596ae25bd3c61698e48e8d0ab65a9260758884ed5cbb9c6e55c44a56a"
+    },
+    {
+      "coordinate": "org.apache.logging.log4j:log4j-api:2.24.3",
+      "filename": "log4j-api-2.24.3.jar",
+      "sha256": "5b4a0a0cd0e751ded431c162442bdbdd53328d1f8bb2bae5fc1bbeee0f66d80f"
+    },
+    {
+      "coordinate": "org.roaringbitmap:RoaringBitmap:1.3.0",
+      "filename": "RoaringBitmap-1.3.0.jar",
+      "sha256": "73443a71a2e2401c7d518a487983539fcaf5f9652efbd178f929e7b6d36881d0"
+    },
+    {
+      "coordinate": "org.slf4j:slf4j-api:2.0.17",
+      "filename": "slf4j-api-2.0.17.jar",
+      "sha256": "7b751d952061954d5abfed7181c1f645d336091b679891591d63329c622eb832"
+    },
+    {
+      "coordinate": "com.fasterxml.jackson.core:jackson-databind:2.21.2",
+      "filename": "jackson-databind-2.21.2.jar",
+      "sha256": "8c982f01f148d805f0aaac2339011244757e0df7c6ff8951f2fa3f433b8ed849"
+    },
+    {
+      "coordinate": "com.fasterxml.jackson.core:jackson-core:2.21.2",
+      "filename": "jackson-core-2.21.2.jar",
+      "sha256": "12e8655b100267b44d0f14d01b1f5082a5105e616174dc4307be1a761e92407b"
+    },
+    {
+      "coordinate": "com.fasterxml.jackson.core:jackson-annotations:2.21",
+      "filename": "jackson-annotations-2.21.jar",
+      "sha256": "53ca085f4a150f703f49e1aabd935bd03b43e1ea3d55d135438292af22cef56b"
+    },
+    {
+      "coordinate": "com.google.code.findbugs:jsr305:3.0.0",
+      "filename": "jsr305-3.0.0.jar",
+      "sha256": "bec0b24dcb23f9670172724826584802b80ae6cbdaba03bdebdef9327b962f6a"
+    },
+    {
+      "coordinate": "org.apache.hadoop:hadoop-client-runtime:3.4.2",
+      "filename": "hadoop-client-runtime-3.4.2.jar",
+      "sha256": "18d071c7f72f8a946677b398a57af9c7afa2dd41a81023c310f99373fec200b3"
+    },
+    {
+      "coordinate": "org.apache.hadoop:hadoop-client-api:3.4.2",
+      "filename": "hadoop-client-api-3.4.2.jar",
+      "sha256": "607c0299f4df33013bd0a0f37c8cf255c635bbaddd247b8fec68c210cc17d19f"
+    },
+    {
+      "coordinate": "org.xerial.snappy:snappy-java:1.1.10.8",
+      "filename": "snappy-java-1.1.10.8.jar",
+      "sha256": "50485d06037fea3d6e40c968386feeca6338cc9872e25549593ff3eb352cefcc"
+    },
+    {
+      "coordinate": "org.apache.parquet:parquet-hadoop:1.16.0",
+      "filename": "parquet-hadoop-1.16.0.jar",
+      "sha256": "06d9ecec624434c21680d736833aa4873655438dda9e64ccbeec1772d52cdfd5"
+    },
+    {
+      "coordinate": "org.apache.parquet:parquet-column:1.16.0",
+      "filename": "parquet-column-1.16.0.jar",
+      "sha256": "034ec38dc4c58a0677bdaed666c9a7a8c68c269cce0d61dce4b7b49f7a0b9d7e"
+    },
+    {
+      "coordinate": "org.apache.parquet:parquet-encoding:1.16.0",
+      "filename": "parquet-encoding-1.16.0.jar",
+      "sha256": "da7b8f3a458871e70de6f883539a39d8dc9e8ec67312d3b95ea1dbca4b68f5b3"
+    },
+    {
+      "coordinate": "org.locationtech.jts:jts-core:1.20.0",
+      "filename": "jts-core-1.20.0.jar",
+      "sha256": "6a783d8f9dba3d3cf7265435f134402f63c05838aa6cbcc4297ad3a5b2842baf"
+    },
+    {
+      "coordinate": "org.apache.parquet:parquet-format-structures:1.16.0",
+      "filename": "parquet-format-structures-1.16.0.jar",
+      "sha256": "aae70622e2ab2f6a6678d03054a8bf94731ecea98025dedbea6c7a6defbc9ee0"
+    },
+    {
+      "coordinate": "org.apache.parquet:parquet-common:1.16.0",
+      "filename": "parquet-common-1.16.0.jar",
+      "sha256": "7c7d120b83c923f9f5044e53518e6e8cc26d7993b89051b2a9979c3afdbc7811"
+    },
+    {
+      "coordinate": "org.apache.parquet:parquet-jackson:1.16.0",
+      "filename": "parquet-jackson-1.16.0.jar",
+      "sha256": "12e8fbc43d989fc26336c2649b7cfcc82f5ee82b808258b6f79c24320aee001f"
+    },
+    {
+      "coordinate": "io.airlift:aircompressor:2.0.3",
+      "filename": "aircompressor-2.0.3.jar",
+      "sha256": "b86bb66f610079e0bf790d62e2ff68853eb0dc4748a6d68ae28bce92b68094aa"
+    },
+    {
+      "coordinate": "commons-pool:commons-pool:1.5.4",
+      "filename": "commons-pool-1.5.4.jar",
+      "sha256": "22095672ac3ad6503e42ec6d4cbc330cd1318040223f6c5d9605473b6d2aa0fd"
+    },
+    {
+      "coordinate": "com.github.luben:zstd-jni:1.5.7-6",
+      "filename": "zstd-jni-1.5.7-6.jar",
+      "sha256": "8d6feb1da335f3ab13c584c613e23c7b3c61b392e37956872057baf8f0ca1d6f"
+    }
+  ],
+  "managed_versions": {
+    "org.scala-lang:scala-library": "2.13.17",
+    "org.apache.logging.log4j:log4j-slf4j2-impl": "2.24.3",
+    "org.apache.logging.log4j:log4j-core": "2.24.3",
+    "org.apache.logging.log4j:log4j-api": "2.24.3",
+    "org.roaringbitmap:RoaringBitmap": "1.3.0",
+    "org.slf4j:slf4j-api": "2.0.17",
+    "com.fasterxml.jackson.core:jackson-databind": "2.21.2",
+    "com.fasterxml.jackson.core:jackson-core": "2.21.2",
+    "com.fasterxml.jackson.core:jackson-annotations": "2.21",
+    "com.google.code.findbugs:jsr305": "3.0.0",
+    "org.apache.hadoop:hadoop-client-runtime": "3.4.2",
+    "org.apache.hadoop:hadoop-client-api": "3.4.2",
+    "org.xerial.snappy:snappy-java": "1.1.10.8",
+    "org.apache.parquet:parquet-hadoop": "1.16.0",
+    "org.apache.parquet:parquet-column": "1.16.0",
+    "org.apache.parquet:parquet-encoding": "1.16.0",
+    "org.locationtech.jts:jts-core": "1.20.0",
+    "org.apache.parquet:parquet-format-structures": "1.16.0",
+    "org.apache.parquet:parquet-common": "1.16.0",
+    "org.apache.parquet:parquet-jackson": "1.16.0",
+    "io.airlift:aircompressor": "2.0.3",
+    "commons-pool:commons-pool": "1.5.4",
+    "com.github.luben:zstd-jni": "1.5.7-6",
+    "com.fasterxml.jackson.datatype:jackson-datatype-jdk8": "2.21.2"
+  },
+  "excluded_dependencies": [
+    {
+      "coordinate": "commons-logging:commons-logging",
+      "provided_by": "org.slf4j:jcl-over-slf4j:2.0.17"
+    }
+  ],
+  "jars": [
+    {
+      "coordinate": "io.delta:delta-spark_4.1_2.13:4.3.1",
+      "filename": "delta-spark_4.1_2.13-4.3.1.jar",
+      "sha256": "ebf35a4383f0a653c3ee3c7882c0edcac2f846be31ac61af4b96ccfaaf36c171",
+      "url": "https://repo.maven.apache.org/maven2/io/delta/delta-spark_4.1_2.13/4.3.1/delta-spark_4.1_2.13-4.3.1.jar"
+    },
+    {
+      "coordinate": "io.delta:delta-storage:4.3.1",
+      "filename": "delta-storage-4.3.1.jar",
+      "sha256": "577c12c7e371be4c041714fb48e88ad86e3c3512beea2bdaffbe7a4debf79718",
+      "url": "https://repo.maven.apache.org/maven2/io/delta/delta-storage/4.3.1/delta-storage-4.3.1.jar"
+    },
+    {
+      "coordinate": "io.unitycatalog:unitycatalog-client:0.5.0",
+      "filename": "unitycatalog-client-0.5.0.jar",
+      "sha256": "9de6812122b411e74ee06c831dac5ccd5f87d69002c29170a37a8bce5e503615",
+      "url": "https://repo.maven.apache.org/maven2/io/unitycatalog/unitycatalog-client/0.5.0/unitycatalog-client-0.5.0.jar"
+    },
+    {
+      "coordinate": "io.unitycatalog:unitycatalog-hadoop:0.5.0",
+      "filename": "unitycatalog-hadoop-0.5.0.jar",
+      "sha256": "baca7b2928afe2a1b1789b423ab817d5d4165218999a10ebeab4a8712683beb5",
+      "url": "https://repo.maven.apache.org/maven2/io/unitycatalog/unitycatalog-hadoop/0.5.0/unitycatalog-hadoop-0.5.0.jar"
+    },
+    {
+      "coordinate": "io.delta:delta-kernel-api:4.3.1",
+      "filename": "delta-kernel-api-4.3.1.jar",
+      "sha256": "b081b818d6f5686c7d6406588af72c9f8baf6765a41ada8197364aef90a260e8",
+      "url": "https://repo.maven.apache.org/maven2/io/delta/delta-kernel-api/4.3.1/delta-kernel-api-4.3.1.jar"
+    },
+    {
+      "coordinate": "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.21.2",
+      "filename": "jackson-datatype-jdk8-2.21.2.jar",
+      "sha256": "e581bbf3fc5622d16b57366dd41e10fc56921fb202879de2ef487f87dd9b30e7",
+      "url": "https://repo.maven.apache.org/maven2/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.21.2/jackson-datatype-jdk8-2.21.2.jar"
+    },
+    {
+      "coordinate": "io.delta:delta-kernel-defaults:4.3.1",
+      "filename": "delta-kernel-defaults-4.3.1.jar",
+      "sha256": "27471cca7dd7a36289af2c8d52d2babb37e9e5a13cdaaea76730120f4c72e62f",
+      "url": "https://repo.maven.apache.org/maven2/io/delta/delta-kernel-defaults/4.3.1/delta-kernel-defaults-4.3.1.jar"
+    },
+    {
+      "coordinate": "javax.annotation:javax.annotation-api:1.3.2",
+      "filename": "javax.annotation-api-1.3.2.jar",
+      "sha256": "e04ba5195bcd555dc95650f7cc614d151e4bcd52d29a10b8aa2197f3ab89ab9b",
+      "url": "https://repo.maven.apache.org/maven2/javax/annotation/javax.annotation-api/1.3.2/javax.annotation-api-1.3.2.jar"
+    },
+    {
+      "coordinate": "io.delta:delta-kernel-unitycatalog:4.3.1",
+      "filename": "delta-kernel-unitycatalog-4.3.1.jar",
+      "sha256": "a288342b7e53da34a608a1a227c8109aa4681fcb582da499ed19347f2193362b",
+      "url": "https://repo.maven.apache.org/maven2/io/delta/delta-kernel-unitycatalog/4.3.1/delta-kernel-unitycatalog-4.3.1.jar"
+    }
+  ],
+  "duplicate_class_findings": 0,
+  "scope": "Classic path-based Delta tables; Unity Catalog service access, AWS distributed execution and S3 Delta transactions unverified",
+  "trust": "Official Maven Central HTTPS plus reviewed SHA256; no runtime dependency resolution"
+}
