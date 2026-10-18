@@ -47,6 +47,7 @@ class Endpoint(APIView):
         response['X-Request-ID']=getattr(request,'request_id',str(uuid.uuid4()))
         # Version disagreement is preserved; B integration must bind X-Contract-Version.
         response['Cache-Control']='no-store'
+        response['X-Contract-Version']=settings.API_CONTRACT_VERSION
         return response
 
     def owner(self,request):
@@ -70,11 +71,21 @@ class DemoContext(Endpoint):
     def get(self,request):
         require(settings.LOCAL_DEMO,'NOT_FOUND','찾을 수 없어요.',404)
         self.owner(request)
-        return Response({'is_test':True,'csrf_token':get_token(request),'regions':[{'region_id':'demo-region','name':'성수동 · 검증 자료'}]})
+        from backend.weather.regions import bundled,choice
+        catalog=service.catalog()
+        return Response({'is_test':True,'csrf_token':get_token(request),'regions':[choice(row) for row in bundled()],
+                         'music_source':{'kind':'CSV' if catalog.source_ref.startswith('local-preview:') else 'SYNTHETIC',
+                                         'catalog_version':catalog.version}})
 
 
 class Weather(Endpoint):
     def get(self,request):
+        if settings.WEATHER_PROVIDER == 'backend.weather.live.obtain':
+            from backend.weather.live import display
+            return Response(display(request.query_params.get('region_id'),timezone.now()))
+        if settings.INTEGRATION_ENABLED and settings.WEATHER_PROVIDER == 'backend.weather.adapter.obtain':
+            from backend.weather.adapter import display
+            return Response(display(request.query_params.get('region_id'),timezone.now()))
         return Response(obtain(request.query_params.get('region_id'),timezone.now()))
 
 
@@ -123,20 +134,32 @@ class Approve(Endpoint):
         return Response(value,status=status)
 
 
+class WeatherRefresh(Endpoint):
+    def post(self,request,pk):
+        value,status=service.refresh_weather(self.owner(request),pk,self.key(request),request.data,request.request_id)
+        return Response(value,status=status)
+
+
 class Feedback(Endpoint):
     def get(self,request,pk):
-        return Response(demo_feedback.read(self.owner(request),pk))
+        from backend.common import feedback
+        handler = feedback if settings.INTEGRATION_ENABLED else demo_feedback
+        return Response(handler.read(self.owner(request),pk))
 
 
 class TrackReaction(Endpoint):
     def put(self,request,pk,track_id):
-        value,status=demo_feedback.save(self.owner(request),pk,'TRACK',track_id,
+        from backend.common import feedback
+        handler = feedback if settings.INTEGRATION_ENABLED else demo_feedback
+        value,status=handler.save(self.owner(request),pk,'TRACK',track_id,
                                         request.data,self.key(request),request.request_id)
         return Response(value,status=status)
 
 
 class PlaylistRating(Endpoint):
     def put(self,request,pk):
-        value,status=demo_feedback.save(self.owner(request),pk,'PLAYLIST','',
+        from backend.common import feedback
+        handler = feedback if settings.INTEGRATION_ENABLED else demo_feedback
+        value,status=handler.save(self.owner(request),pk,'PLAYLIST','',
                                         request.data,self.key(request),request.request_id)
         return Response(value,status=status)

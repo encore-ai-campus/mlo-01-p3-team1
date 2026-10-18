@@ -1,0 +1,60 @@
+.ads-header{padding:0 40px;gap:18px}
+.ads-admin-badge{background:#087bf1;color:#fff;border-radius:5px;padding:4px 12px;font-weight:700;font-size:14px}
+.ads-header nav{margin-left:auto;gap:18px}.ads-header nav a[aria-current=page]{color:#087bf1;font-weight:700}
+.ads-account{color:#5d7297;border-left:1px solid #dce7f4;padding-left:18px;font-size:13px}
+.admin.ads-admin{max-width:1536px;margin:0 auto;padding:25px 40px 35px;color:#0e234e}
+.ads-admin h1{font-size:36px;line-height:1.25;margin:0 0 6px;font-weight:800}
+.ads-subtitle{font-size:18px;color:#536c95;margin:0 0 18px}
+.admin.ads-admin .card{border:1px solid #d5e6fa;border-radius:9px;background:#fff;box-shadow:none;margin:0;padding:20px}
+.admin.ads-admin label{margin:0}
+.admin.ads-admin input,.admin.ads-admin select{margin-top:0}
+.admin.ads-admin input[type=radio]{width:auto;margin:0}
+.admin.ads-admin .ads-field{display:grid;margin-bottom:20px;font-size:14px}
+.admin.ads-admin .ads-image-upload{display:inline-flex;margin:10px 0 4px}
+.admin.ads-admin .ads-status-filter{margin-left:auto}
+.ads-admin h2{font-size:22px;line-height:1.25;margin:0 0 14px;font-weight:750}
+.ads-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;margin-bottom:18px}
+.admin.ads-admin .ads-metric{display:flex;align-items:center;gap:18px;min-height:105px;padding:16px 22px}
+.ads-metric h2{font-size:16px;margin:0 0 7px}.ads-metric strong{font-size:29px;line-height:1.1}
+.ads-metric-icon{height:66px;width:66px;flex:0 0 66px;display:grid;place-items:center;font-size:35px;border-radius:20px;color:#087bf1;background:#edf8ff}
+.ads-metric-icon.active{background:#e9fbf1;color:#00aa70}.ads-metric-icon .icon{width:35px;height:35px}
+.ads-stats-basis{font-size:12px;color:#637a9d;margin:-7px 0 14px}
+.ads-workspace{display:grid;grid-template-columns:minmax(0,2.1fr) minmax(360px,1fr);gap:12px;align-items:stretch}
+.ads-left{display:flex;flex-direction:column;gap:14px;min-width:0}
+.ads-list-panel{min-height:355px}.ads-list-tools{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.ads-admin .segments{display:inline-flex;flex-shrink:0;gap:0;border:1px solid #ceddf0;border-radius:6px;overflow:hidden}
+.ads-admin .segments button{border:0;border-right:1px solid #ceddf0;border-radius:0;min-width:68px;height:38px;padding:0 17px;color:#38517b;background:#fff}
+.ads-admin .segments button:last-child{border-right:0}.ads-admin .segments button[aria-pressed=true]{color:#fff;background:#087bf1}
+.ads-status-filter{margin-left:auto}.ads-status-filter select{min-width:135px;height:38px}
+.ads-admin button{white-space:nowrap}.ads-admin .primary{background:#087bf1;color:#fff;border-color:#087bf1}
+.ads-list-tools>.primary{height:39px;padding:0 16px;font-size:14px}
+.ads-admin .table-scroll{overflow:auto;width:100%}.ads-table{width:100%;border-collapse:collapse;font-size:12px}
+.ads-table th{font-weight:500;background:#f6f9fe;color:#42608b;text-align:left;padding:12px 8px;border-bottom:1px solid #e1ebf9;white-space:nowrap}
+.ads-table td{padding:14px 8px;border-bottom:1px solid #e6eff9;vertical-align:middle}
+.ads-table tr.selected{background:#f5faff}.ads-title-cell{display:flex;align-items:center;gap:10px;min-width:150px;max-width:245px}
+.ads-title-cell img{width:60px;height:46px;object-fit:cover;border-radius:5px;flex-shrink:0}.ads-title-cell strong{font-size:12px;line-height:1.5}
+.ads-status{display:inline-flex;border:1px solid #acdccc;border-radius:20px;padding:4px 9px;color:#03966b;background:#edfff5;white-space:nowrap}
+.ads-status.RESERVED{color:#087bf1;background:#eff8ff;border-color:#bcddff}.ads-status.ENDED,.ads-status.STOPPED{color:#62728a;background:#f5f7fa;border-color:#d9e0e9}
+.ads-period{white-space:nowrap;font-size:11px}.ads-row-actions{display:flex;gap:6px}.ads-row-actions button{padding:7px 8px;height:34px;font-size:11px}
+.ads-empty{text-align:center;color:#637a9d;padding:48px 12px;line-height:1.7;font-size:14px}
+.ads-preview-panel{flex:1;min-height:250px}.ads-panel-heading{display:flex;align-items:center;gap:15px;margin-bottom:18px}
+.ads-panel-heading h2{margin:0 auto 0 0}.ads-preview-device{max-width:100%;border-radius:8px;overflow:hidden;background:#f6f9fe;display:flex;align-items:center;justify-content:center;border:1px dashed #d4e3f5}
+.ads-preview-device.mobile{width:390px;margin:0 auto}.ads-preview-device img{width:100%;height:100%;object-fit:cover}.ads-preview-device p{font-size:13px;padding:14px;color:#6b809f;text-align:center;line-height:1.7}
+.ads-preview-note{font-size:13px;color:#7088af;margin:18px 0 0}
+.ads-editor h2{margin-bottom:25px}.ads-editor form,.ads-editor fieldset{padding:0;margin:0;border:0;min-width:0}
+.ads-field{display:grid;grid-template-columns:72px minmax(0,1fr);gap:12px;align-items:center;margin-bottom:20px;font-size:14px;font-weight:600}
+.ads-field>span{white-space:nowrap}.ads-field input:not([type=radio]){width:100%;min-width:0;height:40px;font-size:13px;font-weight:400}
+.ads-editor-image{height:150px;display:flex;align-items:center;justify-content:center;border:1px solid #e3eaf4;border-radius:8px;background:#fbfcfe;overflow:hidden}
+.ads-editor-image img{height:100%;width:100%;object-fit:cover}.ads-editor-image p{font-size:12px;font-weight:400;color:#7384a1;text-align:center}
+.ads-image-upload{border:1px solid #ccdbee;border-radius:5px;padding:8px 12px;display:inline-flex;align-items:center;margin:10px 0 4px;cursor:pointer;color:#334c76;position:relative;overflow:hidden;font-size:13px}
+.ads-image-upload input{position:absolute;opacity:0;inset:0;width:100%;cursor:pointer}.ads-field small{display:block;color:#8191a9;font-size:10px;font-weight:400}
+.ads-field .radio-options{display:flex;gap:25px}.ads-field .radio-options label{display:flex;align-items:center;gap:7px;font-weight:400}.ads-field input[type=radio]{accent-color:#087bf1}
+.ads-date-fields{display:flex;align-items:center;gap:5px;flex-wrap:wrap}.ads-date-fields label{flex:1;min-width:150px}.ads-date-fields input{font-size:11px!important}
+.ads-budget{margin:0 0 18px 84px;font-size:12px;color:#596e91}.ads-budget summary{cursor:pointer;padding:5px 0}.ads-budget p{font-size:11px;line-height:1.6}.ads-budget label{display:flex;align-items:center;gap:8px;margin-top:8px}.ads-budget input{min-width:0;width:100%;height:34px}
+.ads-paused-note{font-size:12px;color:#786548;line-height:1.6}.ads-preview-button{display:block;margin:0 0 12px auto;font-size:12px;padding:8px 12px}
+.ads-editor-actions{display:grid;grid-template-columns:1.25fr 1fr;gap:12px;margin-top:14px}.ads-editor-actions button{height:46px;font-size:17px;font-weight:700}
+@media(max-width:1250px){.admin.ads-admin .card{padding:16px}.admin.ads-admin .ads-metric{padding:14px;gap:12px}}
+@media(max-width:650px){.admin.ads-admin .ads-metric{min-height:86px;padding:12px;gap:10px}.admin.ads-admin .ads-status-filter{margin-left:0}}
+@media(max-width:1250px){.ads-header{padding:0 24px}.ads-header nav{gap:10px}.ads-account{display:none}.admin.ads-admin{padding:24px}.ads-workspace{grid-template-columns:minmax(0,1.6fr) minmax(330px,1fr)}.ads-admin .card{padding:16px}.ads-metric strong{font-size:23px}.ads-metric-icon{width:48px;height:48px;flex-basis:48px;font-size:27px}.ads-admin .ads-metric{padding:14px;gap:12px}.ads-field{grid-template-columns:65px minmax(0,1fr);gap:8px}.ads-budget{margin-left:73px}}
+@media(max-width:1000px){.ads-workspace{grid-template-columns:1fr}.ads-editor{max-width:100%}.ads-editor form{max-width:680px}.ads-header nav a{font-size:12px}.ads-preview-panel{min-height:230px}.ads-field{grid-template-columns:100px minmax(0,1fr)}.ads-budget{margin-left:108px}.ads-editor-image{height:190px}}
+@media(max-width:650px){.ads-header{padding:0 15px;gap:8px;flex-wrap:wrap;height:auto;min-height:66px}.ads-header .brand{font-size:17px}.ads-admin-badge{font-size:10px;padding:4px 7px}.ads-header nav{gap:9px}.ads-header nav a:not([aria-current=page]){display:none}.admin.ads-admin{padding:22px 15px}.ads-admin h1{font-size:29px}.ads-subtitle{font-size:14px}.ads-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.ads-admin .ads-metric{min-height:86px}.ads-metric h2{font-size:13px}.ads-metric strong{font-size:20px}.ads-metric-icon{width:38px;height:38px;flex-basis:38px;border-radius:12px}.ads-metric-icon .icon{width:26px;height:26px}.ads-list-tools{flex-wrap:wrap}.ads-status-filter{margin-left:0}.ads-list-tools>.primary{margin-left:auto}.ads-panel-heading{flex-wrap:wrap;gap:8px}.ads-panel-heading h2{width:100%;margin-bottom:5px}.ads-field{grid-template-columns:70px minmax(0,1fr)}.ads-budget{margin-left:78px}.ads-date-fields label{min-width:100%}.ads-date-fields>span{display:none}.ads-editor-image{height:140px}}

@@ -1,0 +1,65 @@
+{
+  "type": "object",
+  "properties": {
+    "region_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "option_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "weather_influence_mode": {
+      "type": "string",
+      "enum": [
+        "ON",
+        "OFF"
+      ]
+    },
+    "vocal_option": {
+      "type": "string",
+      "enum": [
+        "any",
+        "instrumental_only"
+      ]
+    },
+    "tempo_preference": {
+      "type": "string",
+      "enum": [
+        "auto",
+        "slow",
+        "fast"
+      ]
+    },
+    "selected_theme_codes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "selected_genre_codes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "excluded_track_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "maxItems": 0
+    }
+  },
+  "required": [],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cafe-weather:phase3:basic-request:20261016-3",
+  "title": "지역 미설정 시 날씨 제외 기본 추천 요청",
+  "description": "지역 생략/null/빈 문자열/공백은 region_id=null 및 weather_influence_mode=OFF로 정규화합니다. 지역 지정 시 요청 모드를 유지합니다."
+}

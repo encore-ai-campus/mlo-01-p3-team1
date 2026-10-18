@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "weather_mongodb": {
+    "writer_node": "active-control",
+    "writer_process": null,
+    "database": "weather",
+    "username": "weather_app",
+    "auth_source": "weather",
+    "privileges": ["readWrite"],
+    "tls": true,
+    "verify_hostname": true,
+    "credential_reference": "/etc/music-cluster/control/weather-database.env"
+  },
+  "elasticsearch": {
+    "application_transport": null,
+    "writer_execution": null,
+    "document_id_rule": null,
+    "ordering_rule": null,
+    "failure_retry_rule": null,
+    "credential_reference": null
+  },
+  "web": {
+    "asgi_program": null,
+    "asgi_version": null,
+    "entrypoint": null,
+    "workers": null,
+    "start_argv": null,
+    "stop_timeout_seconds": null,
+    "port": 8000,
+    "health_path": "/health/",
+    "working_directory": "/opt/music-apps/control",
+    "dependency_lock_reference": null,
+    "dependency_lock_sha256": null
+  },
+  "single_active": {
+    "supervised_argv": null,
+    "driver_application_identity": null,
+    "query_key": null,
+    "checkpoint_reference": null,
+    "stop_evidence": null,
+    "working_directory": "/opt/music-apps/control"
+  }
+}

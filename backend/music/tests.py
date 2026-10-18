@@ -1,13 +1,15 @@
 import csv
+import hashlib
+import io
 import tempfile
 from pathlib import Path
 from unittest.mock import patch
-from django.test import TestCase, override_settings
-from django.core.management import call_command
+from django.test import TestCase, TransactionTestCase, override_settings
+from django.core.management import call_command, CommandError
 from django.db import IntegrityError, transaction
 from backend.recommendation.models import Catalog
 from backend.recommendation.errors import DomainError
-from .models import Album,Track,Tag,TrackTag
+from .models import Album,Track,Tag,TrackTag,MusicImportRun
 from .catalog import export_tracks,publish
 from pipeline.music.normalize import convert, RAW_FIELDS, RAW_SCHEMA
 
@@ -37,6 +39,9 @@ class CatalogTests(TestCase):
     def test_publish_is_immutable_and_failed_version_does_not_replace(self):
         obj=publish('v1','immutable:source','a'*64,True)
         original=obj.tracks
+        self.assertEqual(len(original[0]['score_cache']['weather']),5)
+        self.assertEqual(len(original[0]['score_cache']['theme']),9)
+        self.assertEqual(original[0]['theme_codes'],['CALM'])
         self.track.track_name='새 이름';self.track.save()
         with self.assertRaises(DomainError):publish('v1','immutable:source','a'*64,True)
         obj.refresh_from_db();self.assertEqual(obj.tracks,original)
@@ -61,3 +66,59 @@ class CatalogTests(TestCase):
         self.track.refresh_from_db()
         self.assertIsNone(self.track.instrumental_review_value)
         self.assertTrue(self.track.instrumental)
+
+
+class ResumableImportTests(TransactionTestCase):
+    def test_quarantined_rows_need_explicit_acknowledgement(self):
+        row={name:'' for name in RAW_FIELDS}
+        row.update(track_id='invalid',artists='A',album_name='앨범',duration_ms='240000',
+            explicit='False',energy='.4',acousticness='.6',valence='.5',mode='1',
+            tempo='90',time_signature='4',instrumentalness='.9',track_genre='jazz')
+        stream=io.StringIO(newline='')
+        writer=csv.DictWriter(stream,fieldnames=sorted(RAW_FIELDS));writer.writeheader();writer.writerow(row)
+        raw=stream.getvalue().encode()
+        with tempfile.TemporaryDirectory(dir=Path.cwd()) as folder:
+            path=Path(folder)/'source.csv';path.write_bytes(raw)
+            with override_settings(LOCAL_DEMO=True,MUSIC_RAW_DIRECTORY=str(Path(folder)/'archive')):
+                with self.assertRaises(CommandError):
+                    call_command('import_music_catalog_source',str(path),schema=RAW_SCHEMA,
+                        expected_sha256=hashlib.sha256(raw).hexdigest(),apply=True,stdout=io.StringIO())
+            self.assertEqual(MusicImportRun.objects.count(),0)
+
+    def test_batches_resume_without_approving_or_publishing(self):
+        rows=[]
+        for identifier in ('a','b','c'):
+            row={name:'' for name in RAW_FIELDS}
+            row.update(track_id=identifier,track_name='곡 '+identifier,artists='A',album_name='앨범',
+                duration_ms='240000',explicit='False',energy='.4',acousticness='.6',valence='.5',
+                mode='1',tempo='90',time_signature='4',instrumentalness='.9',track_genre='jazz')
+            rows.append(row)
+        stream=io.StringIO(newline='')
+        writer=csv.DictWriter(stream,fieldnames=sorted(RAW_FIELDS));writer.writeheader();writer.writerows(rows)
+        raw=stream.getvalue().encode();digest=hashlib.sha256(raw).hexdigest()
+        with tempfile.TemporaryDirectory(dir=Path.cwd()) as folder:
+            path=Path(folder)/'source.csv';path.write_bytes(raw)
+            archive=Path(folder)/'archive'
+            kwargs={'schema':RAW_SCHEMA,'expected_sha256':digest,'batch_size':2}
+            with override_settings(LOCAL_DEMO=True,MUSIC_RAW_DIRECTORY=str(archive)):
+                call_command('import_music_catalog_source',str(path),stdout=io.StringIO(),**kwargs)
+                self.assertEqual(Track.objects.count(),0)
+                from backend.music.management.commands.import_music_catalog_source import apply_track
+                seen=0
+                def interrupt(*args,**inner):
+                    nonlocal seen
+                    seen+=1
+                    if seen==3:raise RuntimeError('simulated interruption')
+                    return apply_track(*args,**inner)
+                with patch('backend.music.management.commands.import_music_catalog_source.apply_track',side_effect=interrupt):
+                    with self.assertRaises(RuntimeError):
+                        call_command('import_music_catalog_source',str(path),apply=True,stdout=io.StringIO(),**kwargs)
+                self.assertEqual(Track.objects.count(),2)
+                self.assertEqual(MusicImportRun.objects.get(pk=digest).processed_count,2)
+                call_command('import_music_catalog_source',str(path),apply=True,stdout=io.StringIO(),**kwargs)
+                self.assertEqual(Track.objects.count(),3)
+                self.assertTrue(MusicImportRun.objects.get(pk=digest).completed)
+                self.assertEqual(Catalog.objects.count(),0)
+                self.assertEqual(set(Track.objects.values_list('review__status',flat=True)),{'draft'})
+                call_command('import_music_catalog_source',str(path),apply=True,stdout=io.StringIO(),**kwargs)
+                self.assertEqual(Track.objects.count(),3)
