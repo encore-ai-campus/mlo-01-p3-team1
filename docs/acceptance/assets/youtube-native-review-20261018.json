@@ -1,0 +1,120 @@
+{
+  "date": "2026-10-18",
+  "source_catalog": "spotify-preview-b202fa49909b-general-c2478b153aa8-yt-39c5056603a0",
+  "source_collection": "analysis/youtube_urls_1000_20261018/youtube-additional-1000-urls.csv",
+  "browser": "ChatGPT in-app browser",
+  "reviewed_count": 5,
+  "accepted_count": 4,
+  "held_count": 1,
+  "items": [
+    {
+      "track_id": "0xzI1KAr0Yd9tv8jlIk3sn",
+      "track_name": "Bad Decisions (with BTS & Snoop Dogg)",
+      "artists_name": "benny blanco;BTS;Snoop Dogg",
+      "video_id": "BGNkkVrJZks",
+      "original_duration_seconds": 172.714,
+      "observed_duration_seconds": 242.761,
+      "difference_seconds": 70.047,
+      "standard_limit_seconds": 20.726,
+      "result": "HOLD_DURATION_MISMATCH",
+      "iframe_status": "BLOCKED",
+      "iframe_error": 150,
+      "evidence_scope": "Metadata match + short native content playback; no full listening or physical sound check"
+    },
+    {
+      "track_id": "5CzixCxDkRXX9mScCmah8O",
+      "track_name": "Un Ratito",
+      "artists_name": "Bad Bunny",
+      "video_id": "tGhyQ7KanMU",
+      "original_duration_seconds": 176.936,
+      "observed_duration_seconds": 177.061,
+      "difference_seconds": 0.125,
+      "standard_limit_seconds": 21.232,
+      "result": "NATIVE_VERIFIED",
+      "iframe_status": "BLOCKED",
+      "iframe_error": 150,
+      "evidence_scope": "Metadata match + short native content playback; no full listening or physical sound check"
+    },
+    {
+      "track_id": "10nyNJ6zNy2YVYLrcwLccB",
+      "track_name": "No Surprises",
+      "artists_name": "Radiohead",
+      "video_id": "u5CVsCnxyXg",
+      "original_duration_seconds": 229.12,
+      "observed_duration_seconds": 227.161,
+      "difference_seconds": 1.959,
+      "standard_limit_seconds": 27.494,
+      "result": "NATIVE_VERIFIED",
+      "iframe_status": "BLOCKED",
+      "iframe_error": 150,
+      "evidence_scope": "Metadata match + short native content playback; no full listening or physical sound check"
+    },
+    {
+      "track_id": "6Rx1DtWW9CDPy7KHQ5WLJw",
+      "track_name": "Vivir Asi",
+      "artists_name": "Maelo Ruiz",
+      "video_id": "SwkqH_ar810",
+      "original_duration_seconds": 294.4,
+      "observed_duration_seconds": 294.501,
+      "difference_seconds": 0.101,
+      "standard_limit_seconds": 35.328,
+      "result": "NATIVE_VERIFIED",
+      "iframe_status": "CANDIDATE",
+      "evidence_scope": "Metadata match + short native content playback; iframe not reviewed in this batch",
+      "source_collection": "analysis/youtube_urls_remaining_20261018/youtube-remaining-url-candidates.csv"
+    },
+    {
+      "track_id": "2bWiY47WIbAXfCe0pFgrMB",
+      "track_name": "Olha o Que o Amor Me Faz - Ao Vivo",
+      "artists_name": "Vitinho",
+      "video_id": "XthQbbcq0T8",
+      "original_duration_seconds": 197.549,
+      "observed_duration_seconds": 197.561,
+      "difference_seconds": 0.012,
+      "standard_limit_seconds": 23.706,
+      "result": "NATIVE_VERIFIED",
+      "iframe_status": "CANDIDATE",
+      "evidence_scope": "Metadata match + short native content playback; iframe not reviewed in this batch",
+      "source_collection": "analysis/youtube_urls_residual_20261018/youtube-residual-new-candidates.csv"
+    }
+  ],
+  "counts": {
+    "mappings_before": 149,
+    "mappings_after": 154,
+    "native_verified_after": 151,
+    "existing_mappings_preserved": 149,
+    "additional_preexisting_mappings_preserved": 152
+  },
+  "source_collections": [
+    "analysis/youtube_urls_1000_20261018/youtube-additional-1000-urls.csv",
+    "analysis/youtube_urls_remaining_20261018/youtube-remaining-url-candidates.csv",
+    "analysis/youtube_urls_residual_20261018/youtube-residual-new-candidates.csv"
+  ],
+  "current_result": {
+    "playlist_id": "0538a04c-76ce-44b4-a108-1f81a26778ae",
+    "total_count": 47,
+    "ready_count": 2,
+    "missing_count": 45,
+    "is_complete": false
+  },
+  "browser_validation": {
+    "browser": "ChatGPT in-app browser",
+    "new_tab_opened_by_existing_queue_component": true,
+    "queue_video_ids_in_order": ["SwkqH_ar810", "XthQbbcq0T8"],
+    "transition_method": "UI seek to end of first song; automatic advance without clicking next; normal YouTube skip-ad button",
+    "first_content_time_seconds": 8.162,
+    "second_content_time_seconds": 19.318,
+    "second_content_duration_seconds": 197.561,
+    "second_content_ad_showing": false,
+    "second_content_error": null,
+    "full_listening_verified": false,
+    "native_chrome_verified": false,
+    "additional_actual_dashboard_result": {
+      "total_count": 46,
+      "ready_count": 0,
+      "center_metadata_visible": true,
+      "unreviewed_playback_link_absent": true,
+      "default_iframe_count": 0
+    }
+  }
+}

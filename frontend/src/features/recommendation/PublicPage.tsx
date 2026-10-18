@@ -222,13 +222,18 @@ export function PublicPage(){
           <section className="representative card representative-playback" aria-labelledby="cover-title">
             <div className="cover-heading"><h2 id="cover-title">음악 재생</h2>{!result&&<span className="badge">기본 이미지</span>}</div>
             {result?<>
+              <div className="cover-wrap"><Cover url={result.items[0]?.cover_image_url}/></div>
+              <h3 className="representative-track">{result.items[0]?.track_name}</h3>
+              <p className="representative-artist">{result.items[0]?.artists_name}</p>
+              <p className="representative-album">{result.items[0]?.album_name}</p>
+              <small className="representative-caption">선곡표 첫 곡 · 실제 재생은 YouTube 새 탭에서 진행됩니다.</small>
               <YoutubeNativePlayback playlistId={result.playlist_id} tracks={result.items} blockReason={youtubeBlockReason} mappingRevision={mappingRevision} onOpen={()=>setIframePlaylistId(null)}/>
               <button className="youtube-iframe-toggle" type="button" aria-expanded={iframeOpen} aria-controls="youtube-iframe-secondary" onClick={()=>setIframePlaylistId(value=>value===result.playlist_id?null:result.playlist_id)}>{iframeOpen?'대시보드 재생 닫기':'대시보드에서 재생 (보조)'}</button>
               {iframeOpen&&<div className="youtube-iframe-secondary" id="youtube-iframe-secondary"><p className="youtube-iframe-caution">이 보조 플레이어는 영상의 삽입 허용 여부에 따라 재생이 제한될 수 있어요.</p><YoutubePlayer playlistId={result.playlist_id} tracks={result.items} blockReason={youtubeBlockReason} mappingRevision={mappingRevision}/></div>}
             </>:<>
               <div className="cover-wrap"><Cover/></div>
               <h3>오늘의 음악을 만나 보세요</h3>
-              <p>선곡표를 받으면 이곳에서 음악을 재생해요.</p>
+              <p>선곡표를 받으면 앨범·곡 정보와 YouTube 재생 버튼이 표시돼요.</p>
             </>}
             {result&&isDemo&&<button className="youtube-review-toggle" type="button" aria-expanded={reviewOpen} aria-controls="youtube-review-panel" onClick={()=>{setReviewOpen(value=>!value);setReviewPreview(false);}}>{reviewOpen?'영상 연결 관리 닫기':'영상 연결 관리'}</button>}
           </section>
