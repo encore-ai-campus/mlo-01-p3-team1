@@ -2,6 +2,7 @@
 import json
 import os
 import hashlib
+from fractions import Fraction
 from django.conf import settings
 from .errors import require, DomainError
 from .policy import MINIMUM, MAXIMUM
@@ -10,6 +11,38 @@ PROPOSAL_SCHEMA = {'type':'object','properties':{
     'track_ids':{'type':'array','items':{'type':'string'}},'summary':{'type':'string'},
     'track_reasons':{'type':'array','items':{'type':'object','properties':{'track_id':{'type':'string'},'reason':{'type':'string'}},'required':['track_id','reason']}}},
     'required':['track_ids','summary','track_reasons']}
+
+
+def candidate_window(candidates, context, parent):
+    """Bound the API input, preserving genre representatives and fresh choices.
+
+    This window is not evidence that the whole catalog is insufficient.
+    """
+    from .solver import representatives
+    limit=settings.GEMINI_MAX_CANDIDATES
+    require(limit>0,'RECONFIGURATION_UNAVAILABLE','Gemini 후보 한도 설정이 필요해요.',503)
+    seed=context['seed']; off=context['options']['weather_influence_mode']=='OFF'
+    def rank(track):
+        tie=hashlib.sha256((seed+'\0'+track['track_id']).encode()).digest() if off else b''
+        return -Fraction(track['scores']['S'] or 0),tie,track['track_id']
+    ordered=sorted(candidates,key=rank)
+    selected=context['options']['selected_genre_codes']
+    # Reserve selected-genre material before optional complementary genres.
+    if off and selected:
+        ordered.sort(key=lambda t:0 if set(t['genre_group_codes']) & set(selected) else 1)
+    assigned=representatives(ordered,selected) if selected else {}
+    require(assigned is not None,'SEARCH_INCOMPLETE','선택 장르의 서로 다른 대표 곡을 확인하지 못했어요.',503)
+    reserved=set(assigned.values())
+    parent=set(parent); needed=max(1,len(parent)//5)
+    fresh=[t for t in ordered if t['track_id'] not in parent and t['track_id'] not in reserved]
+    reserved.update(t['track_id'] for t in fresh[:max(0,needed-len(reserved-parent))])
+    require(len(reserved-parent)>=needed,'NO_MEANINGFUL_CHANGE',
+            '필요한 신규 곡 수를 채우지 못했어요. 현재 선곡표는 유지됩니다.',
+            parent_track_count=len(parent),required_new_count=needed,actual_new_count=len(reserved-parent))
+    require(len(reserved)<=limit,'SEARCH_INCOMPLETE','Gemini 후보 한도로 필수 후보를 전달할 수 없어요.',503)
+    window=[t for t in ordered if t['track_id'] in reserved]
+    window.extend(t for t in ordered if t['track_id'] not in reserved)
+    return sorted(window[:limit],key=rank)
 
 
 def propose(candidates, context, parent):
@@ -43,10 +76,14 @@ def propose(candidates, context, parent):
         raise
     except Exception as exc:
         # Provider errors may contain credentials/request bodies; do not return str(exc).
+        status=getattr(exc,'code',None)
+        if status in (429,503):
+            raise DomainError('PROVIDER_BUSY','Gemini 요청이 몰려 재설정하지 못했어요. 잠시 후 다시 요청해 주세요. 현재 선곡표는 유지됩니다.',503,
+                              {'provider_status':status}) from exc
         raise DomainError('PROVIDER_UNAVAILABLE','재설정 서비스 응답을 받지 못했어요. 현재 선곡표는 유지됩니다.',503) from exc
 
 
-def validate_proposal(proposal, candidates, parent, options):
+def validate_proposal(proposal, candidates, parent, options, all_candidates=None):
     fail = lambda condition: require(condition,'PROVIDER_RESPONSE_INVALID','재설정 응답 검증에 실패했어요.')
     fail(type(proposal) is dict and set(proposal)=={'track_ids','summary','track_reasons'})
     ids, reasons = proposal['track_ids'], proposal['track_reasons']
@@ -69,7 +106,8 @@ def validate_proposal(proposal, candidates, parent, options):
             fail(5*selected_duration >= 4*total)
             if selected_duration < total:
                 from .solver import choose
-                selected_candidates=[t for t in candidates if set(t['genre_group_codes']) & set(selected)]
+                selected_candidates=[t for t in (all_candidates if all_candidates is not None else candidates)
+                                     if set(t['genre_group_codes']) & set(selected)]
                 try:
                     choose(selected_candidates,0,settings.SEARCH_SECONDS,'ON',selected)
                 except DomainError as exc:

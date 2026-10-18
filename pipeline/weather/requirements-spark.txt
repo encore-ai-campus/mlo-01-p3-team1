@@ -1,2 +1,2 @@
 # Match the cluster runtime and Scala connector.
-pyspark==3.5.6
+pyspark==4.1.3

@@ -64,32 +64,55 @@ def catalog():
     return obj
 
 
-def enqueue(family, request_id, parent=None):
+def enqueue(family, request_id, parent=None, weather_refresh=False):
     now = timezone.now()
     on = family.options['weather_influence_mode']=='ON'
     bundle = obtain(family.options['region_id'],now) if on else None
     weather_code = current_profile(bundle,validate(bundle,now),now) if on else None
     speeds = family.allowed_speeds or (initial_speeds(family.options['tempo_preference'],weather_code) if on else [])
     selected_catalog=parent.job.catalog if parent else catalog()
-    csv_preview_reset=bool(parent and settings.LOCAL_DEMO and selected_catalog.is_test
-                           and selected_catalog.source_ref.startswith('local-preview:'))
     fixed = {'options':family.options,'raw_selection':family.raw_selection,'weather':bundle,'weather_code':weather_code,'excluded_track_ids':family.excluded,
-             'seed':request_id if csv_preview_reset else family.pk,
+             'seed':family.pk,
              'score_version':WEATHER_SCORE_VERSION if on else OFF_SCORE_VERSION,
              'exclusion_revision':family.exclusion_revision,'allowed_genre_group_codes':family.allowed_genres or sorted(GENRES),
              'allowed_speed_codes':speeds,'policy_version':family.policy_version,'mapping_version':family.mapping_version}
     job = Job.objects.create(family=family,input=fixed,catalog=selected_catalog,request_id=request_id,
                              parent_id=parent.pk if parent else None,
-                             method='RULE_BASED' if not parent or csv_preview_reset else 'GEMINI_RECONFIGURE')
+                              method='RULE_BASED' if not parent or weather_refresh else 'GEMINI_RECONFIGURE')
+    if settings.INTEGRATION_ENABLED:
+        event('WEATHER_REFRESH_REQUESTED' if weather_refresh else 'RECONFIGURATION_REQUESTED' if parent else 'RECOMMENDATION_REQUESTED',
+              family,request_id,{'source_playlist_id':parent.pk if parent else None,'job_id':job.pk,'context_snapshot':fixed})
     return {'job_id':job.pk,'status':job.status,'poll_url':f'/api/recommendation-jobs/{job.pk}'},202
+
+
+def refresh_weather(owner,playlist_id,key,data,request_id):
+    parent=owned(Playlist,owner,playlist_id)
+    body=shape(data,['exclusion_revision'],['exclusion_revision'])
+    strict_int(body['exclusion_revision'])
+    def operation():
+        family=owned(Family,owner,parent.family_id,True)
+        require(body['exclusion_revision']==family.exclusion_revision,'EXCLUSION_REVISION_CONFLICT','최신 제외 목록을 확인해 주세요.',409)
+        if family.options['weather_influence_mode']=='OFF':
+            return {'changed':False,'playlist_id':parent.pk},200
+        now=timezone.now();latest=obtain(family.options['region_id'],now)
+        code=current_profile(latest,validate(latest,now),now)
+        if code==parent.snapshot['context']['weather_code']:
+            return {'changed':False,'playlist_id':parent.pk},200
+        require(not busy(family),'JOB_IN_PROGRESS','선곡표를 생성하고 있어요.',409)
+        return enqueue(family,request_id,parent,weather_refresh=True)
+    return mutate(owner,'weather-refresh:'+playlist_id,key,body,operation)
 
 
 def basic(owner,key,data,request_id):
     body = shape(data,[*DEFAULTS,'region_id','excluded_track_ids'])
-    require(body.get('region_id') not in (None,''),'REGION_REQUIRED','지역을 선택해 주세요.',400)
-    require(type(body['region_id']) is str and body['region_id'].strip())
+    selected=options(body)
+    region=body.get('region_id')
+    require(region is None or type(region) is str)
+    region=region.strip() or None if isinstance(region,str) else None
+    if region is None:
+        selected['weather_influence_mode']='OFF'
     raw_selection={key:strings(body.get(key,[])) for key in ('selected_theme_codes','selected_genre_codes')}
-    body = {**options(body),'region_id':body['region_id'],'excluded_track_ids':strings(body.get('excluded_track_ids',[]))}
+    body = {**selected,'region_id':region,'excluded_track_ids':strings(body.get('excluded_track_ids',[]))}
     require(not body['excluded_track_ids'])
     def op():
         require(body['option_version']==OPTIONS,'OPTIONS_CHANGED','선택 항목을 새로 확인해 주세요.',409)
@@ -151,12 +174,9 @@ def regenerate(owner,playlist_id,key,data,request_id):
                 'CYCLE_CONDITIONS_CHANGED','조건을 바꾸셨다면 새 선곡표를 받아 주세요.',409)
         require(body['exclusion_revision']==f.exclusion_revision,'EXCLUSION_REVISION_CONFLICT','최신 제외 목록을 확인해 주세요.',409)
         require(not busy(f),'JOB_IN_PROGRESS','선곡표를 생성하고 있어요.',409)
-        preview_reset=(settings.LOCAL_DEMO and parent.snapshot.get('preview_only') is True
-                       and parent.job.catalog.is_test and parent.job.catalog.source_ref.startswith('local-preview:'))
-        if not preview_reset:
-            require(settings.GEMINI_ENABLED and settings.GEMINI_TIMEOUT_MS > 0 and settings.GEMINI_MAX_CANDIDATES > 0
-                    and bool(os.environ.get('GEMINI_API_KEY')) and int(os.environ.get('GEMINI_MAX_OUTPUT_TOKENS','0'))>0,
-                    'RECONFIGURATION_UNAVAILABLE','재설정 서비스 연결을 기다리고 있어요. 현재 선곡표는 유지됩니다.',503)
+        require(settings.GEMINI_ENABLED and settings.GEMINI_TIMEOUT_MS > 0 and settings.GEMINI_MAX_CANDIDATES > 0
+                and bool(os.environ.get('GEMINI_API_KEY')) and int(os.environ.get('GEMINI_MAX_OUTPUT_TOKENS','0'))>0,
+                'RECONFIGURATION_UNAVAILABLE','Gemini API 키와 호출 설정이 필요해요. 현재 선곡표는 유지됩니다.',503)
         return enqueue(f,request_id,parent)
     return mutate(owner,'regenerate:'+playlist_id,key,body,op)
 
@@ -171,6 +191,10 @@ def approve(owner,playlist_id,key,data,request_id):
         require(body['approval_revision']==f.approval_revision,'APPROVAL_REVISION_CONFLICT','최신 승인 상태를 확인해 주세요.',409)
         require(body['exclusion_revision']==f.exclusion_revision,'EXCLUSION_REVISION_CONFLICT','최신 제외 목록을 확인해 주세요.',409)
         require(not busy(f),'JOB_IN_PROGRESS','선곡표를 생성하고 있어요.',409)
+        if settings.INTEGRATION_ENABLED and f.options['weather_influence_mode']=='ON':
+            checked=timezone.now();latest=obtain(f.options['region_id'],checked)
+            require(current_profile(latest,validate(latest,checked),checked)==result.snapshot['context']['weather_code'],
+                    'RESULT_WEATHER_CHANGED','날씨가 바뀌었습니다. 새 선곡표를 확인해 주세요.',409)
         preview_approval=(settings.LOCAL_DEMO and result.snapshot.get('preview_only') is True
                           and result.snapshot.get('is_test') is True and result.job.catalog.is_test
                           and result.job.catalog.source_ref.startswith('local-preview:')

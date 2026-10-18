@@ -1,6 +1,7 @@
 # backend/recommendation/api.py 라우팅
 
-- 작성일/수정일: 2026-10-16
+- 작성일: 2026-10-16
+- 수정일: 2026-10-18
 - 담당: C 공개 대시보드·YouTube 재생 통합
 - 범위: 기존 중앙 iframe 재생·LLM 없는 공식 검색·API 연결 후속
 - 기준 브랜치/커밋: feature/ad-logic / f22f974
@@ -66,3 +67,14 @@ TrackReaction.put(self, request, pk, track_id)
 class PlaylistRating(Endpoint)
 PlaylistRating.put(self, request, pk)
 ```
+
+## 2026-10-18 develop 동기화 보완
+
+POST /api/playlists/{pk}/weather-refresh의 소유·멱등·exclusion_revision 검증과 기존 YouTube 조회를 같은 URLconf에 유지합니다.
+
+```python
+WeatherRefresh(Endpoint)
+WeatherRefresh.post(self, request, pk)
+```
+
+기준 develop `8bdad88`·기존 feature/ad-logic `0a0cc82`의 대조와 실제 재검증은 [통합 기록](../../../../development/feature_전체_동기화_변경_라우팅_20261018.md)을 따릅니다.

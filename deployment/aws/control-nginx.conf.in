@@ -1,0 +1,53 @@
+# Rendered owner-only: @ORIGIN_HEADER_VAR@ and @ORIGIN_SECRET@ are never public values.
+map_hash_bucket_size 128;
+map $http_@ORIGIN_HEADER_VAR@ $music_origin_ok {
+    default 0;
+    "@ORIGIN_SECRET@" 1;
+}
+map "$uri:$music_origin_ok" $music_origin_denied {
+    default 1;
+    ~^/health/: 0;
+    ~:1$ 0;
+}
+upstream music_common { server 127.0.0.1:8001; keepalive 16; }
+upstream music_advertising { server @AD_IP@:8000; keepalive 8; }
+server {
+    listen 8000 default_server;
+    server_name _;
+    root @RELEASE@/frontend/dist;
+    client_max_body_size 25m;
+    if ($music_origin_denied) { return 403; }
+    proxy_http_version 1.1;
+    proxy_set_header Connection "";
+    proxy_set_header Host @PUBLIC_HOST@;
+    proxy_set_header X-Forwarded-Proto https;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_read_timeout 70s;
+    include /etc/nginx/music-ops-public*.locations;
+    location = /health/ { proxy_pass http://music_common; }
+    location ^~ /api/internal/ { return 403; }
+    location ~ ^/api/(?:health$|ads$|ad-events$|ad-deliveries/[^/]+/image$|admin/(?:ads(?:/|$)|ad-assets(?:/|$))) {
+        proxy_pass http://music_advertising;
+        add_header Cache-Control "no-store" always;
+    }
+    location /api/ {
+        proxy_pass http://music_common;
+        add_header Cache-Control "no-store" always;
+    }
+    location / { try_files $uri $uri/ /index.html; }
+}
+# Advertising's server-to-server authentication uses the existing private CA.
+server {
+    listen 8443 ssl;
+    server_name _;
+    ssl_certificate /etc/music-cluster/control/tls/node.crt;
+    ssl_certificate_key /etc/music-cluster/control/tls/node.key;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    client_max_body_size 16k;
+    location = /api/internal/ads-context {
+        proxy_pass http://music_common;
+        proxy_set_header Host @PUBLIC_HOST@;
+        proxy_set_header X-Forwarded-Proto https;
+    }
+    location / { return 404; }
+}

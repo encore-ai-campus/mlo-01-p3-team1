@@ -5,7 +5,7 @@ from pathlib import Path
 from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 from backend.recommendation.models import Catalog
-from backend.recommendation.policy import groups, weather_fit, WEATHER_SCORE_VERSION
+from backend.recommendation.policy import groups, weather_fit, WEATHER_SCORE_VERSION, precompute_scores
 from backend.recommendation.occasion import load_occasion_decisions
 from backend.recommendation.youtube import load_verified_youtube_mappings
 from pipeline.music.normalize import convert, RAW_SCHEMA
@@ -53,9 +53,12 @@ class Command(BaseCommand):
         source=Path(options['source'])
         if not source.is_file(): raise CommandError('CSV source not found')
         data=convert(source,RAW_SCHEMA)
-        if data['source_sha256'] != options['expected_sha256']: raise CommandError('CSV SHA-256 differs from expected source')
+        # Retain the actual byte hash; accept only Git's LF/CRLF transformation.
+        lf_sha256=hashlib.sha256(source.read_bytes().replace(b'\r\n',b'\n')).hexdigest()
+        if options['expected_sha256'] not in {data['source_sha256'],lf_sha256}:
+            raise CommandError('CSV SHA-256 differs from expected source')
         try:
-            decisions, decision_sha256, occasion_policy = load_occasion_decisions(options['general_dir'], data['source_sha256'])
+            decisions, decision_sha256, occasion_policy = load_occasion_decisions(options['general_dir'], options['expected_sha256'])
         except (OSError, ValueError, KeyError) as exc:
             raise CommandError('Verified general-operation occasion decisions are required; no unfiltered fallback') from exc
         rows=[]
@@ -69,7 +72,7 @@ class Command(BaseCommand):
                      'cover_image_url':None,'preview_clear_score_version':WEATHER_SCORE_VERSION}
             fit=weather_fit(preview,'CLEAR') if genres and preview['speed'] else None
             preview['preview_clear_w']=([fit['W'].numerator,fit['W'].denominator] if fit else None)
-            rows.append(preview)
+            rows.append(precompute_scores(preview))
         if not rows: raise CommandError('No GENERAL tracks; the existing catalog is preserved')
         selection_ids, selection_version, selection_sha256 = None, None, None
         if options.get('playback_selection'):
@@ -96,7 +99,7 @@ class Command(BaseCommand):
                      'playback_selection_version': selection_version, 'playback_selection_sha256': selection_sha256}
                     for index, key in enumerate(selection_ids, 1)]
         digest=hashlib.sha256(json.dumps(rows,ensure_ascii=False,sort_keys=True).encode()).hexdigest()
-        version=f'spotify-preview-{data["source_sha256"][:12]}-general-{decision_sha256[:12]}'
+        version=f'spotify-preview-{data["source_sha256"][:12]}-general-{decision_sha256[:12]}-scores-v3'
         if youtube_sha256: version += '-yt-' + youtube_sha256[:12]
         if selection_sha256: version += '-selection-' + selection_sha256[:12]
         source_ref = (f'local-preview:youtube-playback-selection:{source.name}' if selection_sha256
@@ -105,7 +108,8 @@ class Command(BaseCommand):
             'tracks':rows,'sha256':digest,'source_ref':source_ref,
             'source_sha256':data['source_sha256'],'is_test':True,'ready':True})
         if not created and catalog.sha256 != digest: raise CommandError('Existing preview version differs')
-        self.stdout.write(json.dumps({'version':version,'unique_tracks':len(rows),'source_errors':len(data['errors']),
+        self.stdout.write(json.dumps({'version':version,'source_sha256':data['source_sha256'],'unique_tracks':len(rows),
+                                      'source_errors':len(data['errors']),'conflicting_track_ids':len(data['conflicting_track_ids']),
                                       'clear_weather_eligible':sum(row['preview_clear_w'] is not None for row in rows),
                                       'occasion_policy_version':occasion_policy,'occasion_decisions_sha256':decision_sha256,
                                       'not_general_skipped':len(data['tracks'])-general_count,

@@ -1,6 +1,7 @@
 # backend/recommendation/tests/test_api.py 라우팅
 
-- 작성일/수정일: 2026-10-16
+- 작성일: 2026-10-16
+- 수정일: 2026-10-18
 - 담당: C 공개 대시보드·추천/음악 통합
 - 범위: 일반 추천 후보와 고정 재생 시험 카탈로그 분리·오류 진단 후속
 - 기준 브랜치/커밋: feature/ad-logic / f22f974
@@ -43,7 +44,6 @@ ApiTests.test_all_selected_tags_keep_raw_selection_but_use_any_filter(self)
 ApiTests.test_strict_inputs_and_country_language_rejection(self)
 ApiTests.test_exclusion_noop_revision_retry_and_approval_block(self)
 ApiTests.test_cycle_change_409_before_provider_and_failure_preserves_parent(self)
-ApiTests.test_csv_preview_can_request_alternative_and_approve_locally(self)
 ApiTests.test_local_feedback_restores_reactions_and_rating_without_changing_approval(self)
 ApiTests.test_stale_and_invalid_exclusion_roll_back(self)
 ApiTests.test_csrf_is_required_for_anonymous_mutation(self)
@@ -53,3 +53,14 @@ ApiTests.test_snapshot_preserved_after_catalog_mutation(self)
 ApiTests.test_expired_worker_cannot_fail_job_and_recovery_can_finish(self)
 ApiTests.test_expired_worker_exception_does_not_overwrite_recoverable_job(self)
 ```
+
+## 2026-10-18 develop 동기화 보완
+
+부모 카탈로그 고정 시험은 명시 Gemini 설정을 갖춘 enqueue까지만 확인합니다. develop의 키 미설정 시 규칙 대체 금지 시험을 함께 유지하며 실제 Gemini 호출은 하지 않습니다.
+
+```python
+ApiTests.test_csv_uses_gemini_and_preserves_catalog_seed_and_local_approval(self)
+ApiTests.test_csv_missing_key_does_not_fall_back_to_rules(self)
+```
+
+기준 develop `8bdad88`·기존 feature/ad-logic `0a0cc82`의 대조와 실제 재검증은 [통합 기록](../../../../../development/feature_전체_동기화_변경_라우팅_20261018.md)을 따릅니다.

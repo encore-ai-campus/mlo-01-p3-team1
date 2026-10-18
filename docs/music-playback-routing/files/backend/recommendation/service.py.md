@@ -1,6 +1,7 @@
 # backend/recommendation/service.py 라우팅
 
-- 작성일/수정일: 2026-10-16
+- 작성일: 2026-10-16
+- 수정일: 2026-10-18
 - 담당: C 공개 대시보드·추천/음악 통합
 - 범위: 일반 추천 후보와 고정 재생 시험 카탈로그 분리·오류 진단 후속
 - 기준 브랜치/커밋: feature/ad-logic / f22f974
@@ -33,9 +34,20 @@ busy(family)
 mutate(owner, scope, key, data, operation)
 current_catalog()
 catalog()
-enqueue(family, request_id, parent=None)
+enqueue(family, request_id, parent=None, weather_refresh=False)
 basic(owner, key, data, request_id)
 exclusions(owner, family_id, key=None, data=None, request_id='')
 regenerate(owner, playlist_id, key, data, request_id)
 approve(owner, playlist_id, key, data, request_id)
 ```
+
+## 2026-10-18 develop 동기화 보완
+
+최신 develop의 지역 미설정 OFF·날씨 갱신 RULE_BASED·명시 재설정 GEMINI_RECONFIGURE·공통 outbox를 보존합니다. current_catalog의 고정 재생 목록 제외와 부모 카탈로그 고정도 유지합니다.
+
+```python
+enqueue(family, request_id, parent=None, weather_refresh=False)
+refresh_weather(owner, playlist_id, key, data, request_id)
+```
+
+기준 develop `8bdad88`·기존 feature/ad-logic `0a0cc82`의 대조와 실제 재검증은 [통합 기록](../../../../development/feature_전체_동기화_변경_라우팅_20261018.md)을 따릅니다.

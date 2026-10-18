@@ -1,6 +1,7 @@
 # backend/recommendation/solver.py 라우팅
 
-- 작성일/수정일: 2026-10-16
+- 작성일: 2026-10-16
+- 수정일: 2026-10-18
 - 담당: C 공개 대시보드·추천/음악 통합
 - 범위: 일반 추천 후보와 고정 재생 시험 카탈로그 분리·오류 진단 후속
 - 기준 브랜치/커밋: feature/ad-logic / f22f974
@@ -34,3 +35,13 @@ _solve_window(candidates, deadline, selected_genres=(), min_selected_share=0, se
 choose(candidates, max_candidates, seconds, mode='ON', selected_genres=(), seed='', diagnostics=None)
 choose_preview(candidates, mode='ON', selected_genres=(), seed='', parent_ids=())
 ```
+
+## 2026-10-18 develop 동기화 보완
+
+develop의 동일 점수 subset-sum 빠른 경로를 보존하며, YouTube 브랜치의 전체 후보 부족/탐색 미완료 진단도 유지합니다. 목표/허용 시간과 동점 규칙은 변경하지 않습니다.
+
+```python
+_equal_score_window(candidates, deadline, selected_genres)
+```
+
+기준 develop `8bdad88`·기존 feature/ad-logic `0a0cc82`의 대조와 실제 재검증은 [통합 기록](../../../../development/feature_전체_동기화_변경_라우팅_20261018.md)을 따릅니다.

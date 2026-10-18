@@ -9,7 +9,7 @@ from backend.recommendation.worker import run_one
 from backend.recommendation.youtube_queue_api import native_queue
 
 
-@override_settings(LOCAL_DEMO=True, SEARCH_SECONDS=20, SEARCH_MAX_CANDIDATES=96, YOUTUBE_PLAYBACK_MODE='KEYLESS')
+@override_settings(LOCAL_DEMO=True, WEATHER_PROVIDER='', SEARCH_SECONDS=20, SEARCH_MAX_CANDIDATES=96, YOUTUBE_PLAYBACK_MODE='KEYLESS')
 class YoutubeQueueApiTests(TransactionTestCase):
     def setUp(self):
         call_command('seed_c_demo',verbosity=0)

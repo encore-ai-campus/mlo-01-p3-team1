@@ -8,7 +8,7 @@ from backend.recommendation.models import Family, Job, Playlist, PendingEvent
 from backend.recommendation.worker import run_one
 
 
-@override_settings(LOCAL_DEMO=True, SEARCH_SECONDS=20, SEARCH_MAX_CANDIDATES=96, YOUTUBE_DATA_API_KEY='', YOUTUBE_PLAYBACK_MODE='OPTIONAL_SEARCH')
+@override_settings(LOCAL_DEMO=True, WEATHER_PROVIDER='', SEARCH_SECONDS=20, SEARCH_MAX_CANDIDATES=96, YOUTUBE_DATA_API_KEY='', YOUTUBE_PLAYBACK_MODE='OPTIONAL_SEARCH')
 class YoutubePlaybackApiTests(TransactionTestCase):
     def setUp(self):
         cache.clear()

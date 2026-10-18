@@ -1,0 +1,92 @@
+{
+  "type": "object",
+  "properties": {
+    "region_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "option_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "weather_influence_mode": {
+      "type": "string",
+      "enum": [
+        "ON",
+        "OFF"
+      ]
+    },
+    "vocal_option": {
+      "type": "string",
+      "enum": [
+        "any",
+        "instrumental_only"
+      ]
+    },
+    "tempo_preference": {
+      "type": "string",
+      "enum": [
+        "auto",
+        "slow",
+        "fast"
+      ]
+    },
+    "selected_theme_codes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "selected_genre_codes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "excluded_track_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "maxItems": 0
+    }
+  },
+  "required": [],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cafe-weather:phase3:basic-request:20261016-2",
+  "title": "ON 지역 필수 / OFF 지역 선택 기본 추천 요청",
+  "description": "2026-10-16 사용자 결정. 미선택 지역은 서버가 null로 정규화합니다. 수령 schema 원문은 보존합니다.",
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "weather_influence_mode": {
+            "const": "OFF"
+          }
+        },
+        "required": [
+          "weather_influence_mode"
+        ]
+      },
+      "then": {},
+      "else": {
+        "required": [
+          "region_id"
+        ],
+        "properties": {
+          "region_id": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "\\S"
+          }
+        }
+      }
+    }
+  ]
+}

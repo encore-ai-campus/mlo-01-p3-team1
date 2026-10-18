@@ -1,0 +1,47 @@
+.region-picker{position:relative;width:100%;min-width:0;max-width:370px}
+.region-search-field{display:flex;align-items:center;gap:9px;border:1px solid #cfdeef;background:white;border-radius:6px;padding:0 11px}
+.region-search-field>.icon{color:#7798bc;width:16px;height:16px}
+.region-search-field input{width:100%;min-width:0;height:38px;background:transparent;border:0;color:#294568;font-size:12px}
+.region-search-field input::placeholder{color:#8a9db6}
+.region-picker-links{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px;margin-top:5px}
+.region-picker .region-direct{border:0;background:none;padding:3px 0;font-size:11px;color:#537caa;font-weight:400}
+.region-selected{font-size:10px;color:#547399;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%}
+.region-picker .region-message{font-size:11px;color:#687d99;margin:5px 0;line-height:1.5}
+.region-message button{font-size:10px;padding:3px 5px}
+.region-results{position:absolute;top:41px;left:0;width:max(100%,320px);max-width:calc(100vw - 64px);background:white;border:1px solid #d1e1f2;border-radius:8px;box-shadow:0 10px 30px #143b6c25;z-index:35;overflow:hidden}
+.region-results ul{list-style:none;padding:5px;margin:0;max-height:270px;overflow-y:auto;overscroll-behavior:contain}
+.region-results li{display:flex;align-items:center;gap:10px;padding:10px;border-radius:5px;cursor:pointer}
+.region-results li[aria-selected=true]{background:#eaf4ff}
+.region-results li>.icon{color:#7497be;width:15px;height:15px}
+.region-results strong{display:block;font-size:13px;color:#244468}
+.region-results li span{display:block;font-size:11px;color:#8295ac;margin-top:3px}
+.region-results p{font-size:11px;line-height:1.6;padding:10px 14px;margin:0;border-top:1px solid #e7eff8;color:#6d829e}
+.region-dialog{border:1px solid #d1e1f2;border-radius:12px;width:min(540px,calc(100% - 32px));max-height:85dvh;padding:24px;color:var(--navy);box-shadow:0 15px 60px #163b6a30}
+.region-dialog::backdrop{background:#18345d55}
+.region-dialog-heading{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.region-dialog-heading h2{font-size:20px;margin:0}
+.region-dialog-heading button{font-size:24px;border:0;padding:0 6px}
+.region-dialog>p{font-size:12px;line-height:1.7;color:#6e839f;margin:12px 0 18px}
+.region-dialog .region-hierarchy{display:grid;grid-template-columns:1fr;gap:14px}
+.region-dialog .region-hierarchy label{font-size:12px;gap:6px}
+.region-dialog .region-hierarchy select{width:100%;max-width:none;min-width:0;padding:10px;border:1px solid #ccdaed;border-radius:6px;background:white;color:#274568;font-size:14px}
+.region-dialog-actions{display:flex;justify-content:space-between;gap:12px;margin-top:24px}
+.region-dialog-actions button{font-size:12px}
+.weather-panel:has(.region-picker){height:auto;min-height:140px;gap:18px}
+.region-section:has(.region-picker){min-width:0;flex:1.3}
+.region-section:has(.region-picker)>div{width:100%;min-width:0}
+.region-section:has(.region-picker) h1{white-space:normal;font-size:19px;margin-bottom:8px}
+.region-section:has(.region-picker)>.weather-icon{display:none}
+.region-section:has(.region-picker) small{margin:4px 0 0}
+.weather-panel .weather-current{white-space:normal;max-width:180px}
+.weather-panel .weather-current strong{font-size:18px}
+.weather-panel .weather-current span{line-height:1.6}
+.forecast-placeholder{height:35px;display:flex;align-items:center;justify-content:center;color:#a7bbd2;font-size:24px}
+@media(max-width:700px){
+ .weather-panel .region-section:has(.region-picker){flex:1 0 100%;width:100%}
+ .weather-panel .forecast{flex:1;min-width:0}.weather-panel .weather-current{flex:0 0 90px}
+ .region-picker{max-width:none}.region-results{width:100%;max-width:none}
+ .region-dialog{position:fixed;inset:auto 0 0;margin:0;width:100%;max-width:none;border-radius:16px 16px 0 0;padding:22px 24px max(24px,env(safe-area-inset-bottom));max-height:90dvh}
+ .region-dialog-actions{flex-wrap:wrap}.region-dialog-actions button{flex:1;white-space:nowrap}
+ .region-section:has(.region-picker) h1{font-size:17px}.weather-panel .weather-current{max-width:100px}.weather-panel .weather-current strong{font-size:13px}
+}

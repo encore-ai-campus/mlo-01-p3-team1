@@ -1,6 +1,7 @@
 # backend/recommendation/management/commands/seed_csv_preview.py 라우팅
 
-- 작성일/수정일: 2026-10-16
+- 작성일: 2026-10-16
+- 수정일: 2026-10-18
 - 담당: 음악 데이터·기존 대시보드 CSV 추천 연결
 - 기준 브랜치/커밋: feature/ad-logic / f22f974
 - 소스: [backend/recommendation/management/commands/seed_csv_preview.py](../../../../../../../backend/recommendation/management/commands/seed_csv_preview.py)
@@ -29,3 +30,9 @@ Command.handle(self, *args, **options)
 ```
 
 명시 재생 선택 후속: --playback-selection은 GENERAL 원본의 고유 ID와 전곡 VERIFIED 매핑을 검사하고 선택파일 SHA/버전/입력순서를 새 test Catalog에 보존합니다. 기존 worker 정렬·기존 Catalog·운영 경계는 유지합니다. 의미 검증4건 추가 후 백엔드 전체61건이 통과했습니다.
+
+## 2026-10-18 develop 동기화 보완
+
+GENERAL 판정·선택 목록·영상 snapshot 검증을 유지한 채 precompute_scores를 적용합니다. source_sha256와 충돌 track 수를 응답하며 점수 캐시가 추가된 버전은 -scores-v3으로 분리해 기존 카탈로그를 덮어쓰지 않습니다.
+
+기준 develop `8bdad88`·기존 feature/ad-logic `0a0cc82`의 대조와 실제 재검증은 [통합 기록](../../../../../../development/feature_전체_동기화_변경_라우팅_20261018.md)을 따릅니다.

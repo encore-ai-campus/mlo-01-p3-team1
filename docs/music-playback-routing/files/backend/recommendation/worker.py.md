@@ -1,6 +1,7 @@
 # backend/recommendation/worker.py 라우팅
 
-- 작성일/수정일: 2026-10-16
+- 작성일: 2026-10-16
+- 수정일: 2026-10-18
 - 담당: C 공개 대시보드·추천/음악 통합
 - 범위: 일반 추천 후보와 고정 재생 시험 카탈로그 분리·오류 진단 후속
 - 기준 브랜치/커밋: feature/ad-logic / f22f974
@@ -36,3 +37,9 @@ heartbeat(job, stopped)
 active_job(job)
 run_one()
 ```
+
+## 2026-10-18 develop 동기화 보완
+
+current_catalog 사전 로딩과 develop의 압축 카탈로그 unpack·candidate_window·PLAYLIST_GENERATED 원자 이벤트를 함께 유지합니다.
+
+기준 develop `8bdad88`·기존 feature/ad-logic `0a0cc82`의 대조와 실제 재검증은 [통합 기록](../../../../development/feature_전체_동기화_변경_라우팅_20261018.md)을 따릅니다.

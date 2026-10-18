@@ -1,12 +1,35 @@
 """API 응답을 메모리에서 JSON으로 변환하고 Kafka에 전달."""
 import hashlib
 import os
+from pathlib import Path
+import re
 import time
 from datetime import datetime
 from pipeline.weather.common import KST, make_events
 
+ENV_PATH = Path(__file__).with_name('.env')
+
 def configured_key():
-    return os.environ.get('KMA_API_KEY', '').strip()
+    # Service environment wins, including an explicitly empty value.
+    if 'KMA_API_KEY' in os.environ:
+        return os.environ['KMA_API_KEY'].strip()
+    if not ENV_PATH.is_file():
+        return ''
+    for line in ENV_PATH.read_text(encoding='utf-8-sig').splitlines():
+        assignment = line.strip()
+        if assignment.startswith('export '):
+            assignment = assignment[7:].lstrip()
+        name, separator, value = assignment.partition('=')
+        if not separator or name.strip() != 'KMA_API_KEY':
+            continue
+        value = value.strip()
+        if not value or value.startswith('#'):
+            return ''
+        match = re.fullmatch(r'''(?:'([^']*)'|"([^"]*)"|([^\s#'"]+))(?:\s+\#.*)?''', value)
+        if not match:
+            raise RuntimeError('invalid_KMA_API_KEY_assignment')
+        return next(part for part in match.groups() if part is not None).strip()
+    return ''
 
 def stream_request(job, key, session, deliver):
     """응답→JSON→Kafka. 원천 바이트/이벤트 파일 저장 없음."""

@@ -1,6 +1,7 @@
 # backend/recommendation/tests/test_youtube_playback_api.py 라우팅
 
-- 작성일/수정일: 2026-10-16
+- 작성일: 2026-10-16
+- 수정일: 2026-10-18
 - 담당: C 공개 대시보드·YouTube 재생 통합
 - 범위: 기존 중앙 iframe 재생·LLM 없는 공식 검색·API 연결 후속
 - 기준 브랜치/커밋: feature/ad-logic / f22f974
@@ -35,3 +36,9 @@ YoutubePlaybackApiTests.test_unapplied_exclusions_hold_playback_without_mutating
 YoutubePlaybackApiTests.test_client_cannot_submit_a_url_query_password_or_unbounded_exclusions(self)
 YoutubePlaybackApiTests.test_csrf_is_required_before_playback_lookup(self)
 ```
+
+## 2026-10-18 develop 동기화 보완
+
+합성 demo-region의 WEATHER_PROVIDER를 명시해 실제 로컬 날씨 캐시와 분리합니다. 소유·CSRF·제외·키 없는 영상 조회 검증은 유지합니다.
+
+기준 develop `8bdad88`·기존 feature/ad-logic `0a0cc82`의 대조와 실제 재검증은 [통합 기록](../../../../../development/feature_전체_동기화_변경_라우팅_20261018.md)을 따릅니다.

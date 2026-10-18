@@ -1,11 +1,13 @@
 """2026-10-16 ON/OFF candidate contract. Scores use exact decimal fractions."""
 from decimal import Decimal, InvalidOperation
 from fractions import Fraction
+from functools import lru_cache
 from .errors import require
 
-POLICY = 'WEATHER_CHOICE_20261016_V1'
+POLICY = 'WEATHER_CHOICE_20261016_V2'
 WEATHER_SCORE_VERSION = 'WEATHER_SCORE_PROPOSAL_20261016_V2'
 OFF_SCORE_VERSION = 'OFF_THEME_GENRE_20261016_V1'
+THEME_AFFINITY_VERSION = 'OFF_THEME_AFFINITY_20261016_V1'
 MAPPING = 'GENRE_THEME_V4_ON_OFF'
 OPTIONS = 'options-music-v4'
 DURATION_POLICY = 'phase3-duration-20261016.1'
@@ -90,14 +92,28 @@ def eligible(track, options, allowed_genres, allowed_speeds, excluded):
 
 
 def unit(value):
-    try: n = Fraction(Decimal(str(value)))
+    try: text=str(value)
+    except (InvalidOperation, ValueError, TypeError): return None
+    return _unit_text(text)
+
+
+@lru_cache(maxsize=16384)
+def _unit_text(text):
+    try: n = Fraction(Decimal(text))
     except (InvalidOperation, ValueError, TypeError): return None
     return n if 0 <= n <= 1 else None
 
 
 def component(value, interval, width):
-    low, high = map(lambda x: Fraction(Decimal(str(x))), interval)
-    h = Fraction(Decimal(str(width)))
+    low, high = interval
+    return _component_exact(value, str(low), str(high), str(width))
+
+
+@lru_cache(maxsize=65536, typed=True)
+def _component_exact(value, low, high, width):
+    # Immutable inputs/results only; exact decimal arithmetic and gates are unchanged.
+    low, high = Fraction(Decimal(low)), Fraction(Decimal(high))
+    h = Fraction(Decimal(width))
     return 100 * (1 - min(1, max(low-value, 0, value-high) / h))
 
 
@@ -163,23 +179,72 @@ def off_preference(track, options):
     return evidence['P'] if evidence else None
 
 
+def _stored_score(track, kind, code, version):
+    cache=track.get('score_cache') or {}
+    if cache.get(kind+'_version') != version: return False,None
+    values=cache.get(kind) or {}
+    if code not in values: return False,None
+    pair=values[code]
+    return True,(Fraction(*pair) if pair is not None else None)
+
+
+def theme_affinity(track, theme):
+    found,value=_stored_score(track,'theme',theme,THEME_AFFINITY_VERSION)
+    if found:return value
+    evidence=off_preference_details(track,{'selected_theme_codes':[theme],
+        'selected_genre_codes':[],'tempo_preference':'auto'})
+    return evidence['P'] if evidence else None
+
+
+def precompute_scores(track):
+    """Store exact, versioned source-only scores in an immutable catalog row."""
+    def pair(value):return [value.numerator,value.denominator] if value is not None else None
+    # Never derive an approved mood or an instrument tag from these estimates.
+    weather={}
+    for code in WEATHER_WEIGHTS:
+        fit=weather_fit(track,code)
+        weather[code]=pair(fit['W'] if fit else None)
+    themes={code:pair(theme_affinity(track,code)) for code in THEMES}
+    return {**track,'score_cache':{'weather_version':WEATHER_SCORE_VERSION,
+        'theme_version':THEME_AFFINITY_VERSION,'weather':weather,'theme':themes}}
+
+
 def score(track, options, weather=None):
     if options['weather_influence_mode']=='OFF':
-        p=off_preference(track,options)
+        themes=options['selected_theme_codes']
+        if themes and not options['selected_genre_codes'] and options['tempo_preference']=='auto':
+            values=[theme_affinity(track,theme) for theme in themes]
+            p=max(values) if values and all(value is not None for value in values) else None
+        else:p=off_preference(track,options)
         return {'W':None,'P':p,'S':p}
-    if (weather=='CLEAR' and track.get('preview_clear_score_version')==WEATHER_SCORE_VERSION
-            and 'preview_clear_w' in track):
-        cached=track['preview_clear_w']
-        if cached is None: return None
-        w=Fraction(*cached)
+    if weather == 'MIXED':
+        found_rain,rain=_stored_score(track,'weather','RAIN',WEATHER_SCORE_VERSION)
+        found_snow,snow=_stored_score(track,'weather','SNOW',WEATHER_SCORE_VERSION)
+        if found_rain and found_snow:
+            if rain is None or snow is None:return None
+            w=min(rain,snow)
+        else:
+            evidence=weather_fit(track,weather)
+            if evidence is None:return None
+            w=evidence['W']
     else:
-        evidence=weather_fit(track,weather)
-        if evidence is None: return None
-        w=evidence['W']
+        found,w=_stored_score(track,'weather',weather,WEATHER_SCORE_VERSION)
+        if found:
+            if w is None:return None
+        elif (weather=='CLEAR' and track.get('preview_clear_score_version')==WEATHER_SCORE_VERSION
+              and 'preview_clear_w' in track):
+            cached=track['preview_clear_w']
+            if cached is None:return None
+            w=Fraction(*cached)
+        else:
+            evidence=weather_fit(track,weather)
+            if evidence is None: return None
+            w=evidence['W']
     matches=[]
     if options['tempo_preference']!='auto': matches.append(100)
     if options['selected_genre_codes']: matches.append(100)
     if options['selected_theme_codes']:
-        matches.append(100 if set(options['selected_theme_codes']) & set(track['theme_codes']) else 0)
+        affinities=[theme_affinity(track,theme) for theme in options['selected_theme_codes']]
+        matches.append(max((value for value in affinities if value is not None),default=0))
     p=Fraction(sum(matches),len(matches)) if matches else None
     return {'W':w,'P':p,'S':Fraction(3,4)*w+Fraction(1,4)*p if p is not None else w}

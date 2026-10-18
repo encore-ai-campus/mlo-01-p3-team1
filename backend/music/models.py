@@ -54,3 +54,18 @@ class TrackTag(models.Model):
     class Meta:
         db_table = 'track_tag'
         constraints = [models.CheckConstraint(condition=models.Q(review_status__in=['draft','approved']),name='music_link_review')]
+
+
+class MusicImportRun(models.Model):
+    """Operational checkpoint; not a fifth recommendation/music attribute table."""
+    source_sha256 = models.CharField(primary_key=True, max_length=64)
+    source_schema_version = models.CharField(max_length=40)
+    total_count = models.PositiveIntegerField()
+    processed_count = models.PositiveIntegerField(default=0)
+    error_count = models.PositiveIntegerField(default=0)
+    last_track_id = models.TextField(null=True)
+    completed = models.BooleanField(default=False)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'music_import_run'

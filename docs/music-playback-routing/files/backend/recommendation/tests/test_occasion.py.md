@@ -1,6 +1,7 @@
 # backend/recommendation/tests/test_occasion.py 라우팅
 
-- 작성일/수정일: 2026-10-16
+- 작성일: 2026-10-16
+- 수정일: 2026-10-18
 - 담당: 음악 데이터·기존 대시보드 CSV 추천 연결
 - 기준 브랜치/커밋: feature/ad-logic / f22f974
 - 소스: [backend/recommendation/tests/test_occasion.py](../../../../../../backend/recommendation/tests/test_occasion.py)
@@ -42,3 +43,13 @@ OccasionPreviewTests.test_playback_selection_is_local_only_and_requires_mapping_
 ```
 
 명시 재생 선택 후속: --playback-selection은 GENERAL 원본의 고유 ID와 전곡 VERIFIED 매핑을 검사하고 선택파일 SHA/버전/입력순서를 새 test Catalog에 보존합니다. 기존 worker 정렬·기존 Catalog·운영 경계는 유지합니다. 의미 검증4건 추가 후 백엔드 전체61건이 통과했습니다.
+
+## 2026-10-18 develop 동기화 보완
+
+합성 날씨 provider를 명시한 시험에서 GENERAL 필터·영상 매핑과 precompute_scores를 함께 확인합니다. 추가 회귀는 Git LF/CRLF 차이만 허용하고 실제 원본 바이트 SHA 및 판정 sidecar 해시를 보존하는지 확인합니다.
+
+```python
+OccasionPreviewTests.test_crlf_source_keeps_actual_hash_and_general_filter_with_score_cache(self)
+```
+
+기준 develop `8bdad88`·기존 feature/ad-logic `0a0cc82`의 대조와 실제 재검증은 [통합 기록](../../../../../development/feature_전체_동기화_변경_라우팅_20261018.md)을 따릅니다.

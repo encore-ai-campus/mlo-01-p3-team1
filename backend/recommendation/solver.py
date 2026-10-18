@@ -2,7 +2,7 @@
 from fractions import Fraction
 from hashlib import sha256
 from heapq import nsmallest
-from math import lcm
+from math import gcd, lcm
 from time import monotonic
 from ortools.sat.python import cp_model
 from .errors import DomainError, require
@@ -26,12 +26,57 @@ def representatives(tracks, genres):
     return {genre:track_id for track_id,genre in assigned.items()}
 
 
+def _equal_score_window(candidates, deadline, selected_genres):
+    """Exact subset-sum for equal scores; duration and lexicographic ties are unchanged."""
+    scores = [Fraction(track['scores']['S'] or 0) for track in candidates]
+    if any(value != scores[0] for value in scores): return False, None
+    if selected_genres and not (len(selected_genres) == 1 and all(
+            selected_genres[0] in track['genre_group_codes'] for track in candidates)):
+        return False, None
+    unit = gcd(*(track['duration_ms'] for track in candidates))
+    if unit <= 0: return False, None
+    upper = MAXIMUM // unit
+    # Keep the optional fast path bounded even if later windows grow without a cap.
+    if len(candidates) * (upper + 1) > 384 * 1024 * 1024 * 8: return False, None
+    mask = (1 << (upper + 1)) - 1
+    suffix = [0] * (len(candidates) + 1)
+    suffix[-1] = 1
+    for index in range(len(candidates) - 1, -1, -1):
+        if monotonic() >= deadline:
+            raise DomainError('SEARCH_INCOMPLETE', '정해진 시간 안에 탐색을 완료하지 못했어요.', 503)
+        remaining = suffix[index + 1]
+        duration = candidates[index]['duration_ms'] // unit
+        suffix[index] = remaining if duration > upper else (remaining | (remaining << duration)) & mask
+    reachable = suffix[0]
+    if TARGET % unit == 0 and (reachable >> (TARGET // unit)) & 1:
+        goal = TARGET // unit
+    else:
+        first_above = TARGET // unit + 1
+        higher = reachable >> first_above
+        if higher:
+            goal = first_above + (higher & -higher).bit_length() - 1
+        else:
+            below = reachable & ((1 << ((TARGET - 1) // unit + 1)) - 1)
+            goal = below.bit_length() - 1
+    if goal * unit < MINIMUM: return True, None
+    result = []
+    for index, track in enumerate(candidates):
+        duration = track['duration_ms'] // unit
+        if duration <= goal and (suffix[index + 1] >> (goal - duration)) & 1:
+            result.append(track)
+            goal -= duration
+    assert goal == 0
+    return True, sorted(result, key=lambda track: (-Fraction(track['scores']['S'] or 0), track['track_id']))
+
+
 def _solve_window(candidates, deadline, selected_genres=(), min_selected_share=0, seed=''):
     def tie(track):
         key=sha256((seed+'\0'+track['track_id']).encode()).digest() if seed else b''
         return key,track['track_id']
     candidates = sorted(candidates, key=tie)
     if sum(t['duration_ms'] for t in candidates) < MINIMUM: return None
+    handled, exact = _equal_score_window(candidates, deadline, selected_genres)
+    if handled: return exact
     def solve(model):
         solver = cp_model.CpSolver()
         solver.parameters.max_time_in_seconds = max(0.001, deadline-monotonic())

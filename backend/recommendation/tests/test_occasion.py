@@ -15,7 +15,7 @@ from backend.recommendation.worker import run_one
 from pipeline.music.normalize import RAW_FIELDS
 
 
-@override_settings(LOCAL_DEMO=True, SEARCH_SECONDS=10, GEMINI_ENABLED=False)
+@override_settings(LOCAL_DEMO=True, WEATHER_PROVIDER='', SEARCH_SECONDS=10, GEMINI_ENABLED=False)
 class OccasionPreviewTests(TestCase):
     def setUp(self):
         temp_root = Path(__file__).resolve().parent / '.test-tmp'
@@ -83,6 +83,19 @@ class OccasionPreviewTests(TestCase):
         self.assertEqual(value['total_ms'], 10800000)
         self.assertTrue(all(row['occasion_status']=='GENERAL' for row in value['items']))
         self.assertTrue(all(row['occasion_decisions_sha256']==result['occasion_decisions_sha256'] for row in value['items']))
+
+    def test_crlf_source_keeps_actual_hash_and_general_filter_with_score_cache(self):
+        canonical_sha = hashlib.sha256(self.source.read_bytes().replace(b'\r\n', b'\n')).hexdigest()
+        self.write_manifest(canonical_sha)
+        output = io.StringIO()
+        call_command('seed_csv_preview', str(self.source), expected_sha256=canonical_sha,
+                     general_dir=str(self.root), stdout=output)
+        result = json.loads(output.getvalue())
+        catalog = Catalog.objects.get(pk=result['version'])
+        self.assertEqual(catalog.source_sha256, self.source_sha)
+        self.assertEqual(result['source_sha256'], self.source_sha)
+        self.assertEqual({row['track_id'] for row in catalog.tracks}, {'track-0', 'track-1', 'track-2'})
+        self.assertTrue(all(row['occasion_status'] == 'GENERAL' and 'score_cache' in row for row in catalog.tracks))
 
     def test_changed_source_or_artifact_fails_before_catalog_write(self):
         self.write_manifest('0'*64)

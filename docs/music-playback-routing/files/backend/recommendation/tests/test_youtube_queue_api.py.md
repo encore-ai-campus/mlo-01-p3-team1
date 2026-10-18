@@ -1,6 +1,7 @@
 # backend/recommendation/tests/test_youtube_queue_api.py 라우팅
 
-- 작성일/수정일: 2026-10-16
+- 작성일: 2026-10-16
+- 수정일: 2026-10-18
 - 담당: 키 없는 음악 통합팀 / 외부 YouTube 큐
 - 기준 브랜치/커밋: feature/ad-logic / f22f974
 - 소스: `backend/recommendation/tests/test_youtube_queue_api.py`
@@ -25,3 +26,9 @@ YoutubeQueueApiTests.test_pending_native_review_does_not_use_iframe_verification
 YoutubeQueueApiTests.test_foreign_owner_and_unapplied_exclusions_never_read_mapping_registry(self)
 YoutubeQueueApiTests.test_unconfigured_production_has_no_local_registry_fallback(self)
 ```
+
+## 2026-10-18 develop 동기화 보완
+
+합성 날씨 provider를 명시합니다. 순서·소유·추천/승인 불변과 외부 재생/iframe 승인 분리 검증은 유지합니다.
+
+기준 develop `8bdad88`·기존 feature/ad-logic `0a0cc82`의 대조와 실제 재검증은 [통합 기록](../../../../../development/feature_전체_동기화_변경_라우팅_20261018.md)을 따릅니다.
