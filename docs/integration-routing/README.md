@@ -1,7 +1,7 @@
 # 통합 정합성 코드 인계 색인
 
 - 작성일: 2026-10-18
-- 수정일: 2026-10-18
+- 수정일: 2026-10-19
 - 담당: Codex, B 통합 조율 범위의 사용자 승인 수정
 - 기준: develop / 160a66c5ca0a19d4fd22cedd2538dad2d63f5f71
 - 기준 → 코드·저장 → 검증: [통합 정합성 수정 라우팅](../development/통합_정합성_수정_변경_라우팅.md)
@@ -29,3 +29,13 @@
 | `tests/run_browser_integration.py` | [짝 문서](files/tests/run_browser_integration.py.md) |
 | `scripts/audit_routing.py` | [짝 문서](files/scripts/audit_routing.py.md) |
 | `scripts/check_routing.py` | [짝 문서](files/scripts/check_routing.py.md) |
+
+## 2026-10-19 공통 관리자 연결 추가
+
+| 소스 | 함수·클래스 연결 |
+|---|---|
+| `backend/cafe/urls.py` | [짝 문서](files/backend/cafe/urls.py.md) |
+| `backend/common/api.py` | [짝 문서](files/backend/common/api.py.md) |
+| `backend/common/test_youtube_admin.py` | [짝 문서](files/backend/common/test_youtube_admin.py.md) |
+| `backend/common/tests.py` | [짝 문서](files/backend/common/tests.py.md) |
+| `backend/common/youtube_review.py` | [짝 문서](files/backend/common/youtube_review.py.md) |

@@ -1,11 +1,20 @@
 from django.urls import path
 from backend.recommendation import api
 from backend.common import api as common, music_api, history_api
+from backend.common import youtube_review as admin_review
 
 from backend.recommendation import youtube_review_api as review
 from backend.recommendation.youtube_queue_api import YoutubeQueue
 
 urlpatterns = [
+    path('api/admin/youtube-review/status',admin_review.Status.as_view()),
+    path('api/admin/youtube-review/tracks',admin_review.Tracks.as_view()),
+    path('api/admin/youtube-review/mappings',admin_review.Mappings.as_view()),
+    path('api/admin/youtube-review/import',admin_review.Import.as_view()),
+    path('api/admin/youtube-review/verify',admin_review.Verify.as_view()),
+    path('api/admin/youtube-review/block',admin_review.Block.as_view()),
+    path('api/admin/youtube-review/native-verify',admin_review.NativeVerify.as_view()),
+    path('api/admin/youtube-review/native-block',admin_review.NativeBlock.as_view()),
     path('api/youtube-review/status',review.ReviewStatus.as_view()),
     path('api/youtube-review/tracks',review.ReviewTracks.as_view()),
     path('api/youtube-review/mappings',review.ReviewMappings.as_view()),

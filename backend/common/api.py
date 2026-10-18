@@ -10,17 +10,24 @@ from backend.recommendation.errors import require, DomainError
 from .identity import admin, guest, raw_request
 
 
-def account_data(request):
-    user = get_user(raw_request(request))
+def account_data_for_user(user):
     active = user.is_authenticated and user.is_active and user.is_staff
     menus = []
     if active:
         for permission, path, label in [('manage_ads','/admin/ads','광고 관리'),
-                ('manage_music','/admin/music','음악 관리'),('view_feedback','/admin/feedback/exclusions','제외 이력')]:
+                ('manage_music','/admin/music','음악 관리'),
+                ('manage_music','/admin/music/youtube','YouTube 연결 검수'),
+                ('view_feedback','/admin/feedback/exclusions','제외 이력')]:
             if user.has_perm('common.'+permission):
                 menus.append({'path':path,'label':label})
+    return menus
+
+
+def account_data(request):
+    user = get_user(raw_request(request))
+    active = user.is_authenticated and user.is_active and user.is_staff
     return {'authenticated':bool(active), 'role':'ADMIN' if active else None,
-            'allowed_menus':menus, 'csrf_token':get_token(raw_request(request))}
+            'allowed_menus':account_data_for_user(user), 'csrf_token':get_token(raw_request(request))}
 
 
 class Me(Endpoint):
@@ -36,9 +43,11 @@ class Login(Endpoint):
         require(user is not None and user.is_active and user.is_staff,
                 'AUTH_FAILED', '아이디 또는 비밀번호를 확인해 주세요.', 401)
         require(settings.ADMIN_SESSION_SECONDS > 0, 'POLICY_NOT_READY', '관리자 세션 만료 설정이 필요합니다.', 503)
+        menus = account_data_for_user(user)
+        require(bool(menus), 'FORBIDDEN', '사용 가능한 관리자 메뉴가 없습니다.', 403)
         login(raw_request(request), user)
         raw_request(request).session.set_expiry(settings.ADMIN_SESSION_SECONDS)
-        return Response({**account_data(request), 'landing_path':'/admin/ads'})
+        return Response({**account_data(request), 'landing_path':menus[0]['path']})
 
 
 class Logout(Endpoint):

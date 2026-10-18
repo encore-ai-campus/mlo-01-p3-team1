@@ -133,7 +133,7 @@ class IntegrationTests(TestCase):
         self.assertEqual(self.post('/api/auth/login',credentials,client=client).status_code,403)
         response=client.post('/api/auth/login',credentials,content_type='application/json',HTTP_X_CSRFTOKEN=me.json()['csrf_token'])
         self.assertEqual(response.status_code,200,response.content)
-        self.assertEqual(len(response.json()['allowed_menus']),3)
+        self.assertEqual(len(response.json()['allowed_menus']),4)
         self.assertEqual(client.get('/api/admin/music/reviews').status_code,200)
         get_user_model().objects.filter(pk=self.user.pk).update(is_active=False)
         self.assertEqual(client.get('/api/admin/music/reviews').status_code,401)

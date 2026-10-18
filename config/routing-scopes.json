@@ -1,5 +1,7 @@
 {
-  "docs/backend-routing": ["ad-server/backend"],
+  "docs/backend-routing": [
+    "ad-server/backend"
+  ],
   "docs/integration-routing": [
     "backend/music/catalog.py",
     "backend/music/test_occasion_publication.py",
@@ -17,6 +19,11 @@
     "backend/common/test_exclusion_history.py",
     "tests/run_browser_integration.py",
     "scripts/audit_routing.py",
-    "scripts/check_routing.py"
+    "scripts/check_routing.py",
+    "backend/cafe/urls.py",
+    "backend/common/api.py",
+    "backend/common/test_youtube_admin.py",
+    "backend/common/tests.py",
+    "backend/common/youtube_review.py"
   ]
 }
