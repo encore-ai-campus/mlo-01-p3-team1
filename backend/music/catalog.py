@@ -5,6 +5,8 @@ from backend.recommendation.errors import require
 from backend.recommendation.policy import groups, THEMES, precompute_scores
 from backend.recommendation.models import Catalog
 from backend.recommendation.catalog_storage import pack
+from backend.recommendation.occasion import general_eligible
+from music_playback.seasonality import screen_track
 from .models import Track
 
 
@@ -33,6 +35,7 @@ def export_tracks(approved_only=False, source_sha256=None):
                    instrumental_source='REVIEW' if track.instrumental_review_value is not None else 'PRESERVED',
                    cover_image_url=None)
         if track.instrumental_review_value is not None: row['instrumental'] = track.instrumental_review_value
+        row.update(screen_track(row).as_row())
         yield row
 
 
@@ -40,7 +43,8 @@ def publish(version, source_ref, source_sha256, is_test=False):
     """Run after review. Physical source manifest/retention requires C/B/INF integration."""
     require(source_ref and len(source_sha256)==64, message='불변 원본 참조와 해시가 필요합니다.')
     rows = [precompute_scores(row) for row in export_tracks(approved_only=settings.INTEGRATION_ENABLED,
-                             source_sha256=source_sha256 if settings.INTEGRATION_ENABLED else None)]
+                             source_sha256=source_sha256 if settings.INTEGRATION_ENABLED else None)
+            if general_eligible(row)]
     require(rows, message='발행할 음악이 없습니다.')
     stored, digest = pack(rows)
     with transaction.atomic():

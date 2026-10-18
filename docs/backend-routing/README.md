@@ -191,3 +191,16 @@ HTTP 오류는 `api/ads.py:error_response`에서 code/message/request_id 및 필
 ## 2026-10-16 로컬 광고 프레젠테이션
 
 `ad-server/backend/api/ads_sandbox.py`의 문구/허용 에셋 연결과 `ad-server/backend/tests/test_ads_sandbox.py`의 경계 검증을 갱신했습니다. 화면 파일 지도·수정/이식 절차는 [프레젠테이션 가이드](../development/ads/광고_로컬_화면과_프레젠테이션_수정_가이드.md)에 있습니다.
+
+
+## 2026-10-18 통합 연결의 누락 인계 보완
+
+현재 광고 배너 proof/배달 유지와 공통 HTTP .3, 운영 준비/검증은 [통합 정합성 라우팅](../development/통합_정합성_수정_변경_라우팅.md)을 우선합니다. 이전의 화면·공유 인증 대기 설명은 작성 시점의 구현 경계입니다. 아래5개 파일은 기존 코드를 유지하며 짝 문서/색인만 추가합니다.
+
+| 소스 | 함수·클래스 연결 |
+|---|---|
+| `ad-server/backend/api/common_bridge.py` | [짝 문서](files/ad-server/backend/api/common_bridge.py.md) |
+| `ad-server/backend/domains/ads/management/commands/check_ads_configuration.py` | [짝 문서](files/ad-server/backend/domains/ads/management/commands/check_ads_configuration.py.md) |
+| `ad-server/backend/domains/ads/management/commands/prepare_ads_runtime.py` | [짝 문서](files/ad-server/backend/domains/ads/management/commands/prepare_ads_runtime.py.md) |
+| `ad-server/backend/tests/test_common_bridge.py` | [짝 문서](files/ad-server/backend/tests/test_common_bridge.py.md) |
+| `ad-server/backend/tests/test_prepare_runtime.py` | [짝 문서](files/ad-server/backend/tests/test_prepare_runtime.py.md) |

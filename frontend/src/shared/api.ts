@@ -4,10 +4,10 @@ export class ApiError extends Error {
   constructor(public code:string,message:string,public details:Record<string,unknown>={},public status=0){super(message);}
 }
 export const key = () => crypto.randomUUID();
-export async function api<T>(path:string,method='GET',body?:unknown,idempotencyKey?:string,signal?:AbortSignal):Promise<T>{
+export async function api<T>(path:string,method='GET',body?:unknown,idempotencyKey?:string,signal?:AbortSignal,headers:Record<string,string>={}):Promise<T>{
   const token=csrf || document.cookie.split('; ').find(x=>x.startsWith('csrftoken='))?.slice(10) || '';
   const response=await fetch(path,{method,credentials:'same-origin',cache:'no-store',signal,
-    headers:{'Content-Type':'application/json',...(token?{'X-CSRFToken':token}:{}),...(idempotencyKey?{'Idempotency-Key':idempotencyKey}:{})},
+    headers:{...headers,'Content-Type':'application/json',...(token?{'X-CSRFToken':token}:{}),...(idempotencyKey?{'Idempotency-Key':idempotencyKey}:{})},
     body:body===undefined?undefined:JSON.stringify(body)});
   const json=await response.json().catch(()=>null);
   if(!response.ok)throw new ApiError(json?.code || 'SERVICE_UNAVAILABLE',json?.message || '서비스 연결을 확인해 주세요.',json?.details,response.status);

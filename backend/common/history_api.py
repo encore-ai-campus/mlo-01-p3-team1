@@ -2,7 +2,7 @@ import hashlib
 import json
 from datetime import datetime, time, timezone, timedelta
 from django.core import signing
-from django.db.models import OuterRef, Subquery
+from django.db.models import OuterRef, Subquery, F
 from django.utils import timezone as clock
 from rest_framework.response import Response
 from backend.recommendation.api import Endpoint
@@ -48,7 +48,8 @@ class History(Endpoint):
         except (ValueError,KeyError,TypeError,signing.BadSignature):
             require(False,'CURSOR_INVALID','검색 조건과 커서를 확인해 주세요.',422)
         latest=FeedbackEvent.objects.filter(family_id=OuterRef('family_id'),track_id=OuterRef('track_id'),
-                    event_type__in=EXCLUSION_EVENTS,occurred_at__lte=as_of).order_by('-occurred_at','-event_id')
+                    event_type__in=EXCLUSION_EVENTS,occurred_at__lte=as_of).order_by(
+                        F('payload__revision').desc(nulls_last=True),'-occurred_at','-event_id')
         query=FeedbackEvent.objects.filter(event_type__in=EXCLUSION_EVENTS,occurred_at__lte=as_of).annotate(latest_action=Subquery(latest.values('event_type')[:1]))
         for field,compare in [('from','gte'),('to','lt')]:
             if filters.get(field):
@@ -86,7 +87,8 @@ class HistoryDetail(Endpoint):
         admin(request,'view_feedback')
         event=FeedbackEvent.objects.filter(pk=event_id,event_type__in=EXCLUSION_EVENTS).first()
         require(event is not None,'NOT_FOUND','기록을 찾을 수 없습니다.',404)
-        latest=FeedbackEvent.objects.filter(family_id=event.family_id,track_id=event.track_id,event_type__in=EXCLUSION_EVENTS).order_by('-occurred_at','-event_id').first()
+        latest=FeedbackEvent.objects.filter(family_id=event.family_id,track_id=event.track_id,event_type__in=EXCLUSION_EVENTS).order_by(
+            F('payload__revision').desc(nulls_last=True),'-occurred_at','-event_id').first()
         return Response(view(event,latest.event_type))
 
 

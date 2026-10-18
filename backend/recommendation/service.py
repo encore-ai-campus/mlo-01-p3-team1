@@ -53,7 +53,7 @@ def current_catalog():
     query = Catalog.objects.defer('tracks').filter(ready=True,is_test=settings.LOCAL_DEMO)
     if settings.LOCAL_DEMO:
         query = query.exclude(source_ref__startswith='local-preview:youtube-playback-selection:')
-    return query.order_by('-created_at').first()
+    return query.order_by('-publication__id').first()
 
 
 def catalog():

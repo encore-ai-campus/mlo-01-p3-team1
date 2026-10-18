@@ -1,5 +1,5 @@
 import uuid
-from django.db import models
+from django.db import models, router, transaction
 
 
 def uid(): return str(uuid.uuid4())
@@ -18,6 +18,19 @@ class Catalog(models.Model):
     is_test = models.BooleanField(default=False)
     ready = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        using = kwargs.get('using') or router.db_for_write(type(self), instance=self)
+        with transaction.atomic(using=using):
+            new = self._state.adding
+            super().save(*args, **kwargs)
+            if new:
+                CatalogPublication.objects.using(using).create(catalog=self)
+
+
+class CatalogPublication(models.Model):
+    """Database-issued registration order, independent of clock precision and version names."""
+    catalog = models.OneToOneField(Catalog, on_delete=models.CASCADE, related_name='publication')
 
 
 class Family(models.Model):

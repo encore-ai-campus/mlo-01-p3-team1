@@ -1,0 +1,22 @@
+{
+  "docs/backend-routing": ["ad-server/backend"],
+  "docs/integration-routing": [
+    "backend/music/catalog.py",
+    "backend/music/test_occasion_publication.py",
+    "backend/recommendation/models.py",
+    "backend/recommendation/policy.py",
+    "backend/recommendation/occasion.py",
+    "backend/recommendation/service.py",
+    "backend/recommendation/management/commands/seed_c_demo.py",
+    "backend/recommendation/migrations/0005_catalog_publication.py",
+    "backend/recommendation/tests/test_api.py",
+    "backend/recommendation/tests/test_catalog_publication.py",
+    "backend/recommendation/tests/test_catalog_storage.py",
+    "backend/common/history_api.py",
+    "backend/common/music_api.py",
+    "backend/common/test_exclusion_history.py",
+    "tests/run_browser_integration.py",
+    "scripts/audit_routing.py",
+    "scripts/check_routing.py"
+  ]
+}

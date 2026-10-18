@@ -28,7 +28,7 @@ class ApiTests(TransactionTestCase):
         p=Playlist.objects.get(job_id=job)
         return p
     def test_verified_catalog_reuse_and_hash_change(self):
-        catalog=Catalog.objects.defer('tracks').get(pk='c-demo-v2')
+        catalog=Catalog.objects.defer('tracks').get(pk='c-demo-v3')
         tracks=verified_catalog(catalog)
         with patch('backend.recommendation.worker.hashlib.sha256',side_effect=AssertionError('unexpected rehash')):
             self.assertIs(verified_catalog(catalog),tracks)
@@ -36,7 +36,7 @@ class ApiTests(TransactionTestCase):
         with self.assertRaises(DomainError) as failure: verified_catalog(catalog)
         self.assertEqual(failure.exception.code,'CATALOG_INVALID')
     def catalog_copy(self, version, source_ref, is_test=True, ready=True):
-        source=Catalog.objects.get(pk='c-demo-v2')
+        source=Catalog.objects.get(pk='c-demo-v3')
         return Catalog.objects.create(version=version,tracks=source.tracks,sha256=source.sha256,
             source_ref=source_ref,source_sha256=source.source_sha256,is_test=is_test,ready=ready)
     def test_general_recommendation_and_warmup_skip_latest_fixed_playback_catalog(self):

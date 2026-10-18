@@ -13,7 +13,9 @@ class CatalogStorageTests(TestCase):
     def test_large_published_catalog_keeps_exact_tracks_and_digest(self):
         tracks = [{'track_id': 'large-track', 'track_name': '검수된 음악' * 150000,
                    'genre_group_codes': ['JAZZ'], 'speed': 'medium', 'energy': 3,
-                   'duration_ms': 240000, 'mode': True}]
+                   'duration_ms': 240000, 'mode': True,
+                   'occasion_status':'GENERAL','decision_source':'RULE_SCREEN',
+                   'occasion_policy_version':'fixture-v1','occasion_decision_version':'fixture-decision'}]
         with patch('backend.music.catalog.export_tracks', return_value=iter(tracks)):
             catalog = publish('compressed-source', 'music-source:' + 'a' * 64, 'a' * 64)
         self.assertIsInstance(catalog.tracks, dict)

@@ -56,14 +56,11 @@ def main():
                         except OSError:pass
                         if time.monotonic()>deadline:raise RuntimeError('isolated_test_start_timeout')
                         time.sleep(.2)
-                completed=subprocess.run(['node','frontend/scripts/integration-smoke.cjs'],cwd=ROOT,env=env,
-                                         capture_output=True,text=True,timeout=90)
-                if completed.returncode:raise RuntimeError(completed.stderr[-2000:])
-                print(completed.stdout.strip())
-                completed=subprocess.run(['node','frontend/scripts/ads-layout-smoke.cjs'],cwd=ROOT,env=env,
-                                         capture_output=True,text=True,timeout=90)
-                if completed.returncode:raise RuntimeError(completed.stderr[-2000:])
-                print(completed.stdout.strip())
+                for script in ('integration-smoke.cjs','ads-layout-smoke.cjs','ads-banner-smoke.cjs'):
+                    completed=subprocess.run(['node','frontend/scripts/'+script],cwd=ROOT,env=env,
+                                             capture_output=True,text=True,timeout=90)
+                    if completed.returncode:raise RuntimeError(completed.stderr[-2000:])
+                    print(completed.stdout.strip())
             finally:
                 for process in reversed(processes):
                     if process.poll() is None:process.terminate()

@@ -3,7 +3,7 @@
 const {chromium}=require('playwright');
 const base=process.env.SMOKE_BASE_URL||'http://127.0.0.1:19073';
 (async()=>{
-  const browser=await chromium.launch({headless:true,channel:'msedge'});
+  const browser=await chromium.launch({headless:true,...(process.platform==='win32'?{channel:'msedge'}:{})});
   try{
     const page=await browser.newPage({viewport:{width:1440,height:1000}});
     const errors=[];page.on('pageerror',error=>errors.push(error.message));

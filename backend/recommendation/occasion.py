@@ -8,6 +8,14 @@ STATUSES = {'GENERAL', 'SEASONAL_EVENT', 'REVIEW_REQUIRED', 'UNSCREENED'}
 SOURCES = {'RULE_SCREEN', 'APPROVED_RULE', 'HUMAN_REVIEW'}
 
 
+def general_eligible(track):
+    """Missing or unversioned decisions never enter general recommendation candidates."""
+    return (track.get('occasion_status')=='GENERAL'
+            and isinstance(track.get('decision_source'),str) and track['decision_source'] in SOURCES
+            and all(isinstance(track.get(field),str) and bool(track[field].strip())
+                    for field in ('occasion_policy_version','occasion_decision_version')))
+
+
 def load_occasion_decisions(directory, source_sha256):
     """Return screened decisions only after manifest/source/artifact checks."""
     root = Path(directory)

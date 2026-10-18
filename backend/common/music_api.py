@@ -168,7 +168,7 @@ class Readiness(Endpoint):
         return Response({'registered_count':registered_count,'approved_review_count':Review.objects.filter(status='approved').count(),
                          'common_eligible_count':common_count,'duration_ms':duration,
                          'weather_counts':weather_counts,
-                         'catalog_versions':list(Catalog.objects.order_by('-created_at').values('version','ready','is_test')[:10]),
+                         'catalog_versions':list(Catalog.objects.order_by('-publication__id').values('version','ready','is_test')[:10]),
                          'is_test':settings.LOCAL_DEMO,'as_of':timezone.now().isoformat().replace('+00:00','Z')})
 
 

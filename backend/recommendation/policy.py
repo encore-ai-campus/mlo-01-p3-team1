@@ -3,6 +3,7 @@ from decimal import Decimal, InvalidOperation
 from fractions import Fraction
 from functools import lru_cache
 from .errors import require
+from .occasion import general_eligible
 
 POLICY = 'WEATHER_CHOICE_20261016_V2'
 WEATHER_SCORE_VERSION = 'WEATHER_SCORE_PROPOSAL_20261016_V2'
@@ -83,7 +84,8 @@ def initial_speeds(tempo, weather):
 def eligible(track, options, allowed_genres, allowed_speeds, excluded):
     reviewed=track.get('instrumental_review_value')
     final=reviewed if type(reviewed) is bool else track.get('instrumental')
-    return (track['track_id'] not in excluded and type(track['duration_ms']) is int and track['duration_ms'] > 0
+    return (general_eligible(track)
+            and track['track_id'] not in excluded and type(track['duration_ms']) is int and track['duration_ms'] > 0
             and all(isinstance(track.get(key),str) and bool(track[key].strip()) for key in ('track_name','artists_name','album_name'))
             and bool(track.get('genre_group_codes')) and track.get('speed') in SPEEDS
             and (options['weather_influence_mode']=='OFF' or
