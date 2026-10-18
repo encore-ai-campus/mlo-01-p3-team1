@@ -1,0 +1,105 @@
+{
+  "schema_version": "CATALOG_ISOLATION_REPAIR_AUDIT_V1",
+  "captured_at": "2026-10-16T06:42:52.789758+00:00",
+  "catalogs": [
+    {
+      "version": "spotify-preview-b202fa49909b-general-c2478b153aa8",
+      "source_ref": "local-preview:spotify_dataset (1).csv",
+      "track_count": 86485
+    },
+    {
+      "version": "spotify-preview-b202fa49909b-general-c2478b153aa8-yt-39c5056603a0-selection-9b64e386131c",
+      "source_ref": "local-preview:youtube-playback-selection:spotify_dataset (1).csv",
+      "track_count": 47
+    },
+    {
+      "version": "spotify-preview-b202fa49909b-general-c2478b153aa8-yt-39c5056603a0",
+      "source_ref": "local-preview:spotify_dataset (1).csv",
+      "track_count": 86485
+    }
+  ],
+  "before": {
+    "error": {
+      "code": "SEARCH_INCOMPLETE",
+      "message": "실제 CSV 프리뷰 조합을 찾지 못했어요. 조건을 조정해 주세요.",
+      "details": {
+        "catalog_count": 47,
+        "common_eligible_count": 3,
+        "weather_rejected_count": 0,
+        "off_missing_preference_count": 0,
+        "candidate_count": 3
+      }
+    },
+    "options": {
+      "vocal_option": "any",
+      "tempo_preference": "auto",
+      "weather_influence_mode": "ON",
+      "selected_theme_codes": [
+        "BRIGHT",
+        "DREAMY",
+        "EMOTIONAL",
+        "PEACEFUL"
+      ],
+      "selected_genre_codes": [
+        "CLASSICAL",
+        "J-POP",
+        "K-POP",
+        "NEWAGE",
+        "OPERA"
+      ],
+      "option_version": "options-music-v4",
+      "region_id": "demo-region"
+    },
+    "candidate_total_ms_readonly_recalculated": 757825
+  },
+  "after": {
+    "status": "SUCCEEDED",
+    "catalog_version": "spotify-preview-b202fa49909b-general-c2478b153aa8-yt-39c5056603a0",
+    "options": {
+      "vocal_option": "any",
+      "tempo_preference": "auto",
+      "weather_influence_mode": "ON",
+      "selected_theme_codes": [
+        "BRIGHT",
+        "DREAMY",
+        "EMOTIONAL",
+        "PEACEFUL"
+      ],
+      "selected_genre_codes": [
+        "CLASSICAL",
+        "J-POP",
+        "K-POP",
+        "NEWAGE",
+        "OPERA"
+      ],
+      "option_version": "options-music-v4",
+      "region_id": "demo-region"
+    },
+    "item_count": 45,
+    "total_ms": 10560186,
+    "selected_genre_coverage": {
+      "CLASSICAL": 1,
+      "J-POP": 32,
+      "K-POP": 10,
+      "NEWAGE": 2,
+      "OPERA": 1
+    },
+    "verified_youtube_count": 3,
+    "search_diagnostics": {
+      "catalog_count": 86485,
+      "common_eligible_count": 6818,
+      "common_rejected_count": 79667,
+      "common_eligible_total_ms": 1685175437,
+      "weather_rejected_count": 3562,
+      "off_missing_preference_count": 0,
+      "candidate_count": 3256,
+      "candidate_total_ms": 807879234,
+      "solver_status": "FEASIBLE_GREEDY_PREVIEW",
+      "window_size": 400,
+      "genre_share_stage": null
+    }
+  },
+  "original47_exported_item_fields_unchanged": true,
+  "original47_total_ms_unchanged": true,
+  "same_options_as_failed_request": true
+}

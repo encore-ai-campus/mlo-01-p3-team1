@@ -48,9 +48,19 @@ def mutate(owner, scope, key, data, operation):
         return response,status
 
 
+def current_catalog():
+    """Select the current recommendation catalog, excluding local fixed playback lists."""
+    query = Catalog.objects.defer('tracks').filter(ready=True,is_test=settings.LOCAL_DEMO)
+    if settings.LOCAL_DEMO:
+        query = query.exclude(source_ref__startswith='local-preview:youtube-playback-selection:')
+    return query.order_by('-created_at').first()
+
+
 def catalog():
-    obj = Catalog.objects.defer('tracks').filter(ready=True,is_test=settings.LOCAL_DEMO).order_by('-created_at').first()
-    require(obj is not None,'POLICY_NOT_READY','검증된 음악 카탈로그를 준비하고 있어요.',503)
+    obj = current_catalog()
+    message = ('일반 추천용 전체 음악 카탈로그가 준비되지 않았어요. 고정 재생 시험 목록은 일반 추천에 사용하지 않아요.'
+               if settings.LOCAL_DEMO else '검증된 음악 카탈로그를 준비하고 있어요.')
+    require(obj is not None,'POLICY_NOT_READY',message,503)
     return obj
 
 

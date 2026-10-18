@@ -1,0 +1,241 @@
+{
+  "scope": "LOCAL_AUXILIARY_REGISTRY_ONLY",
+  "source": "keyless-47-iframe-recheck-20261016.json",
+  "items": [
+    {
+      "track_id": "000RDCYioLteXcutOjeweY",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "006Bi4j0yzwOc3y69GOlYV",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "00Vp4bBQAZ1s9KEIw5MjgQ",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "00qaydBkSEAZAMkf75CfsU",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "010LzZsO4eqQUdUv1f1y9m",
+      "iframe_status": "VERIFIED",
+      "duration_seconds": 225.901
+    },
+    {
+      "track_id": "012JFkVnfxxnL0dN29j73L",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "014DA3BdnmD3kI5pBogH7c",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "015ASDUjzFvQrKgVI23aki",
+      "iframe_status": "CANDIDATE",
+      "reason": "DURATION_OR_LIVE_VERSION_REVIEW_REQUIRED"
+    },
+    {
+      "track_id": "015SmK4Fvjv13dVwtGoMC0",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "01R8E80wecrjrq6iwrdZx3",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "01xqHIwd7hQLROgelUQ6w2",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "01yDjImCcOaHDT4uy6VOPw",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "01ymAdRAqv2YG5FTXmXTuz",
+      "iframe_status": "VERIFIED",
+      "duration_seconds": 249.581
+    },
+    {
+      "track_id": "022nJwdqNEHRazWpp55bWa",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "02GGlQrUckPW2fJmYVpU8l",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "02Q9pW0hdgO0OuzkxIRgG6",
+      "iframe_status": "VERIFIED",
+      "duration_seconds": 215.001
+    },
+    {
+      "track_id": "02VBYrHfVwfEWXk5DXyf0T",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "02YAbVNakOle4LWElPxcc5",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "02fuv91GGA2FwaOTiKQVa7",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "02gKvoYVXSINVj1HP95yZ6",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "02uRToy7bttYcKCO3vIStA",
+      "iframe_status": "VERIFIED",
+      "duration_seconds": 203.061
+    },
+    {
+      "track_id": "02yEhcqA7tqfca3gwPxXdF",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "0343bYQtSfznf6v90jRLRK",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "03I89EqsberXEAapUd1yWu",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "03N7wdRyQShcktyGpffq79",
+      "iframe_status": "VERIFIED",
+      "duration_seconds": 182.341
+    },
+    {
+      "track_id": "03PjRjDn7JNYY2P57QX8Q5",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "03UnPfDS0FvZzi0Z3I7yue",
+      "iframe_status": "VERIFIED",
+      "duration_seconds": 155.481
+    },
+    {
+      "track_id": "03Y9Gez0KGG8zYY3KWIqdk",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "03YUNUpazIbzwqJq2YSBvB",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "03eJ2DclFWXYU8GWgANdmZ",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "03tF3P98XyiJrQhxx7q0M6",
+      "iframe_status": "VERIFIED",
+      "duration_seconds": 252.641
+    },
+    {
+      "track_id": "045eZUNgQ7hjemzvK7VS2l",
+      "iframe_status": "VERIFIED",
+      "duration_seconds": 236.581
+    },
+    {
+      "track_id": "048KE72zqhDQpy7V7YOyRb",
+      "iframe_status": "VERIFIED",
+      "duration_seconds": 246.221
+    },
+    {
+      "track_id": "04CHEoMbrLOiX8co3EG5dO",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "04fYoQSUTfPhVjyW8aXkix",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "04qx1yENXdu9yN6zzRiVfP",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "0530i8KhAfzyJfHhjlSlUS",
+      "iframe_status": "CANDIDATE",
+      "reason": "DURATION_OR_LIVE_VERSION_REVIEW_REQUIRED"
+    },
+    {
+      "track_id": "0572KbbV9g5j56X5ujG8Ax",
+      "iframe_status": "VERIFIED",
+      "duration_seconds": 147.601
+    },
+    {
+      "track_id": "05OYrX2wIpHZYVuy56Rce8",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "05QsnIXjPo4ZUhvlV1JxfA",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "05f8Hg3RSfiPSCBQOtxl3i",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "05fHQeRbCSjKVS6z0WbQKJ",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "05ngREvdGhL4Omvxw4Hjmo",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "05oFyvdztPdpwSwpoclD4c",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "05y79YGqS94EQe0v29lHIo",
+      "iframe_status": "VERIFIED",
+      "duration_seconds": 272.021
+    },
+    {
+      "track_id": "05zDB03E1WxCLyraJJ2I2r",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    },
+    {
+      "track_id": "0WIeJxgsLtiUGqoSxB9Bht",
+      "iframe_status": "BLOCKED",
+      "reason": "OBSERVED_150"
+    }
+  ]
+}
