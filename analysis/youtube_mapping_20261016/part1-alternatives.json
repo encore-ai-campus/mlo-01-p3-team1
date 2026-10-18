@@ -1,0 +1,105 @@
+{
+  "schema_version": "YOUTUBE_MAPPING_RESEARCH_ALTERNATIVES_V1",
+  "purpose": "Replacement candidates for two items omitted from the root-observed native queue; no automatic selection or source modification.",
+  "mappings": [
+    {
+      "position": 6,
+      "source_track": {
+        "track_id": "012JFkVnfxxnL0dN29j73L",
+        "track_name": "Keep On Running - Remastered 2010",
+        "artists_name": "The Spencer Davis Group",
+        "album_name": "(60's) Sixties Collected Volume 2",
+        "duration_ms": 168280,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "da5b3fe4421581961c35dc43b4d9b2b6d723ae40f7a8c054ff02e712164cae98",
+        "genre_group_codes": [
+          "BLUES",
+          "RNB_SOUL_FUNK",
+          "ROCK"
+        ],
+        "theme_codes": [],
+        "speed": "fast",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "track_id": "012JFkVnfxxnL0dN29j73L",
+      "source_track_name": "Keep On Running - Remastered 2010",
+      "source_artists": "The Spencer Davis Group",
+      "source_album_name": "(60's) Sixties Collected Volume 2",
+      "source_duration_ms": 168280,
+      "omitted_original_video_id": "pH53DfX50-8",
+      "youtube_video_id": "oU2q27LnONw",
+      "youtube_title": "Keep On Running (Remastered 2010)",
+      "youtube_channel": "The Spencer Davis Group - Topic",
+      "youtube_channel_url": "https://www.youtube.com/channel/UC6NoFSCgvc_B0VuSrf-TFsA",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_METADATA_AND_PUBLIC_OEMBED",
+      "evidence_note": "Same explicit Remastered 2010 title and original performer Topic channel. Web metadata lists publication 2019-01-10; public oEmbed confirms the title and Topic author. Duration and native queue inclusion still require root browser verification.",
+      "source_url": "https://www.youtube.com/watch?v=oU2q27LnONw",
+      "oembed_evidence": {
+        "endpoint_url": "https://www.youtube.com/oembed?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DoU2q27LnONw&format=json",
+        "http_status": 200,
+        "title": "Keep On Running (Remastered 2010)",
+        "author_name": "The Spencer Davis Group - Topic",
+        "author_url": "https://www.youtube.com/channel/UC6NoFSCgvc_B0VuSrf-TFsA"
+      },
+      "checked_at": "2026-10-16T05:59:30.033899+00:00",
+      "native_queue_validation_pending": true,
+      "metadata_http_200_is_playback_proof": false
+    },
+    {
+      "position": 10,
+      "source_track": {
+        "track_id": "01R8E80wecrjrq6iwrdZx3",
+        "track_name": "Coração De Rua - Ao Vivo",
+        "artists_name": "Henrique & Juliano",
+        "album_name": "Manifesto Musical (Ao Vivo / Vol. 1)",
+        "duration_ms": 173415,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "535ed4645bc28e5e5096168b3cc173020f5358c41a5dd0f3da1e8de655e4c506",
+        "genre_group_codes": [
+          "LATIN"
+        ],
+        "theme_codes": [],
+        "speed": "fastest",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "track_id": "01R8E80wecrjrq6iwrdZx3",
+      "source_track_name": "Coração De Rua - Ao Vivo",
+      "source_artists": "Henrique & Juliano",
+      "source_album_name": "Manifesto Musical (Ao Vivo / Vol. 1)",
+      "source_duration_ms": 173415,
+      "omitted_original_video_id": "DhIfi18Mvcs",
+      "youtube_video_id": "IIigySjacSg",
+      "youtube_title": "Coração De Rua (Ao Vivo)",
+      "youtube_channel": "Henrique & Juliano - Topic",
+      "youtube_channel_url": "https://www.youtube.com/channel/UCt8Ihy3hj9uHGXKTpO214AQ",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_METADATA_AND_PUBLIC_OEMBED",
+      "evidence_note": "New Virgin Music Group auto-generated release published 2026-03-02, album Manifesto Musical, Vol. 1, original release date 2021-12-10, copyright 2021 Vida Nova Produções. Exact Ao Vivo title, original artists, and source Vol. 1 album context. The older omitted item was a Universal Music Group entry; root must verify duration and queue inclusion.",
+      "source_url": "https://www.youtube.com/watch?v=IIigySjacSg",
+      "oembed_evidence": {
+        "endpoint_url": "https://www.youtube.com/oembed?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DIIigySjacSg&format=json",
+        "http_status": 200,
+        "title": "Coração De Rua (Ao Vivo)",
+        "author_name": "Henrique & Juliano - Topic",
+        "author_url": "https://www.youtube.com/channel/UCt8Ihy3hj9uHGXKTpO214AQ"
+      },
+      "checked_at": "2026-10-16T05:59:30.206360+00:00",
+      "native_queue_validation_pending": true,
+      "metadata_http_200_is_playback_proof": false
+    }
+  ],
+  "verified_playback_claim": false
+}

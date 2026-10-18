@@ -1,0 +1,36 @@
+{
+  "schema_version": "GENERAL_CANDIDATES_MANIFEST_V1",
+  "source_dataset_sha256": "b202fa49909b2d5cef71a04b1d21243cfeb36414535f2ca9272aa646721177bd",
+  "score_formula_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+  "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+  "inputs": {
+    "policy.json": "def75d6885d04464b58bcb60b8148482ecb394de23151e4b4830f25f15626622",
+    "summary.json": "61532e41b6c3a26ac4d7783cf4c5a65de4ea46950f0de090a9f0b908b8b39e47",
+    "pools\\CLEAR.csv": "5e5bd65aba4805cb7bf88372b1fdf84840ef91b3b6b7be6d8cde1a5e18a9d189",
+    "pools\\CLOUDY.csv": "e60ccd8b8658cbb8721578d5be13b2314f429dc9fe4bebc0a52a2998d3ec0147",
+    "pools\\OVERCAST.csv": "dbd5cf3906dc0870ad3c6443de8f8a07bfddf8a54012c6e603a0489548de00c9",
+    "pools\\RAIN.csv": "4368d420e083319ebda844fad177836e2e04ab199437d1f0fd74ffe0a09733ad",
+    "pools\\SNOW.csv": "6aa19a4137a094dac62b88e7655d7549341ce1f9fdc4312d3452d83018f04a91",
+    "pools\\RAIN_SNOW_INTERSECTION.csv": "3f01a07bc13780bda35cb6cfa62c110d1e6f9e5e40ef817a2a182dcfb7c84cd5"
+  },
+  "human_overrides_sha256": null,
+  "artifacts": {
+    "examples/CLEAR_180min.csv": "0c0ad81f8d5d62d0d512d575b335961402b88927226c07ae8f50bf244f08797d",
+    "examples/CLOUDY_180min.csv": "b4ff76d962e02daf2e929c81e9c7d15bbf11224b543f164273ec562671440372",
+    "examples/OVERCAST_180min.csv": "769dfb283b64e47c321c75381928177874152e1ea1516e7b7fbca0a6e197d6c5",
+    "examples/RAIN_180min.csv": "423b25305e27ff8ad07101b5c5d1c0dd4ca775f3881b74d1f12844ab59d413aa",
+    "examples/RAIN_SNOW_INTERSECTION_180min.csv": "0790f9b6c1b919903bc97836e2c3f9aa067b6f9ce4e1e12a22db2142a13f20e5",
+    "examples/SNOW_180min.csv": "c91fb09325444b55e4570bef96d52654b64c42dfab2ba40613bcdba2b409fccf",
+    "occasion_decisions.csv": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+    "occasion_review.csv": "fe428b4d9884d05fe518961b8e4a2f326b26bc3e34f0b6b9013e368b36654e5c",
+    "pools/CLEAR.csv": "5d5f7b7c6f0b87a7c015e0d83d6c29449ef8ac55e5a702cb891345199fe0a6c1",
+    "pools/CLOUDY.csv": "9efccfe76fa90342c1cfb2bad8dd67d7229b645b14c27c19a99e11013c24d176",
+    "pools/OVERCAST.csv": "8636f1e673f922264f7230e4dcc4d28b4aa20abd66a8233f0abcb248bda023e5",
+    "pools/RAIN.csv": "bb836ef2b8b270db4d3b80d1b8d80ecd7b412c1ec401ed134a6d5603159e46fa",
+    "pools/RAIN_SNOW_INTERSECTION.csv": "f6b4b87d662c6817940dde42174c4d36a3106d117f7f64e805243e7bd62c43ed",
+    "pools/SNOW.csv": "b961aeb340bcb6d46fbddba2f579602bdaf469f855cb2d29c842ab34aac8f6bf",
+    "README.md": "91e62526b4682bf7e46c80ad98248479e30d060d79547c6c56253f2bd7f28a4a",
+    "seasonality_policy.json": "980329addcf3ab1f7f39dc8e50c4de0f175e5f8f4ae756f0102fcad62dcaa3e5",
+    "summary.json": "bd8259b67cae124311a417a9aa78c175d0b11ac7bc6dd97dc4ea39e9d3f28813"
+  }
+}

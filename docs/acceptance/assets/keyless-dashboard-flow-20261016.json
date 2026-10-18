@@ -1,0 +1,11 @@
+{
+  "url": "http://127.0.0.1:5174/",
+  "native_primary_count": "46/47",
+  "source": "NEW_GENERAL_DEFAULT_PLAYLIST",
+  "url_registration_observed": true,
+  "csv_upload_and_registration_observed": true,
+  "operator_native_verification_saved": true,
+  "auxiliary_player_text": "음악 재생\nYouTube에서 음악을 이어 들으세요\n46/47곡 외부 연결 준비\n연결된 곡의 원래 순서\n연결된 46곡만 YouTube에서 재생 (전체 47곡 중) ↗\n\n원래 선곡표 47곡은 유지됩니다. 연결되지 않은 곡을 빼고 열기 때문에 실제 재생시간이 짧아집니다.\n\n연결되지 않은 곡 1곡 확인\nYouTube의 임시 목록을 새 탭에서 엽니다. 계정에 저장한 재생목록이 아니며, 실제 영상 순서·광고·재생 가능 여부는 YouTube에서 확인해 주세요. 영상판의 길이는 원본 곡 길이와 다를 수 있어요.\n영상 연결 다시 확인\n대시보드 재생 닫기\n\n이 보조 플레이어는 영상의 삽입 허용 여부에 따라 재생이 제한될 수 있어요.\n\nYouTube 연속 재생\n5/47곡\nSomos Instantes\nGabriel Elias;Vitor Kley\n\nYouTube에서 재생 중이에요.\n\n이전\n일시 정지\n다음\n영상 연결 갱신 · 현재 곡 다시 확인\n영상: Somos Instantes · Gabriel Elias;Vitor Kley\n재생하지 못한 곡 4곡\n선곡표 순서대로 자동 연결합니다. 브라우저에서 자동 재생을 막으면 재생을 한 번 눌러 주세요. 광고·재생 가능 여부는 YouTube에 따릅니다.\n영상 연결 관리",
+  "api_key_registered": false,
+  "llm_required": false
+}

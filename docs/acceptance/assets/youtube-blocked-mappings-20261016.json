@@ -1,0 +1,52 @@
+{
+  "mappings": [
+    {
+      "track_id": "001APMDOl3qtx1526T11n1",
+      "source_track_name": "Better",
+      "source_artists": "Pink Sweat$;Kirby",
+      "source_album_name": "New RnB",
+      "source_duration_ms": 176320,
+      "youtube_video_id": "Q0qrHmYgzn8",
+      "youtube_title": "Pink Sweat$ - Better (feat. Kirby) [Official Audio]",
+      "youtube_channel": "Pink Sweats",
+      "platform_duration_seconds": null,
+      "match_status": "BLOCKED_EMBED",
+      "match_method": "BROWSER_PREVIEW",
+      "verification_note": "로컬 origin http://127.0.0.1:8003 에서 삽입 사전 시험 오류150 관찰. 원곡 매핑 확정과 재생 길이는 미확인. 오류 로그 참조.",
+      "checked_at": "2026-10-16T05:02:37.810Z",
+      "verified_by": null
+    },
+    {
+      "track_id": "027vx3TVLFM1pIWDQFTfnY",
+      "source_track_name": "Aynalı Kemer",
+      "source_artists": "Barış Manço",
+      "source_album_name": "Mançoloji, Vol. 1",
+      "source_duration_ms": 198452,
+      "youtube_video_id": "00fwNAZnass",
+      "youtube_title": "Barış Manço - Aynalı Kemer",
+      "youtube_channel": "Emre Müzik Official",
+      "platform_duration_seconds": null,
+      "match_status": "BLOCKED_EMBED",
+      "match_method": "BROWSER_PREVIEW",
+      "verification_note": "로컬 origin http://127.0.0.1:8003 에서 삽입 사전 시험 오류150 관찰. 원곡 매핑 확정과 재생 길이는 미확인. 오류 로그 참조.",
+      "checked_at": "2026-10-16T05:02:55.115Z",
+      "verified_by": null
+    },
+    {
+      "track_id": "02gH8djuf4t1V0aCaPBfNM",
+      "source_track_name": "Numb Little Bug",
+      "source_artists": "Em Beihold",
+      "source_album_name": "Frühstücksmusik Herbst/Winter 2022/2023",
+      "source_duration_ms": 169237,
+      "youtube_video_id": "Mi5rkJUoqn0",
+      "youtube_title": "Numb Little Bug",
+      "youtube_channel": "Em Beihold",
+      "platform_duration_seconds": null,
+      "match_status": "BLOCKED_EMBED",
+      "match_method": "BROWSER_PREVIEW",
+      "verification_note": "로컬 origin http://127.0.0.1:8003 에서 삽입 사전 시험 오류150 관찰. 원곡 매핑 확정과 재생 길이는 미확인. 오류 로그 참조.",
+      "checked_at": "2026-10-16T05:03:45.942Z",
+      "verified_by": null
+    }
+  ]
+}

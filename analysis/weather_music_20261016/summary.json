@@ -1,0 +1,3448 @@
+{
+  "policy_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+  "score_formula_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+  "model_version": null,
+  "status": "ANALYSIS_FEASIBLE_NOT_PRODUCTION_ACCEPTANCE",
+  "readiness_status": "ANALYSIS_ONLY_NOT_READY",
+  "weather_updates": {
+    "reference": "VALID_OBSERVED_PTY_PLUS_VALID_FORECAST_SKY_AT_ONE_LOCATION",
+    "trigger": "WEATHER_CLASS_CHANGED",
+    "action": "BUILD_NEW_PLAYLIST_VERSION",
+    "forecast_score_average": false,
+    "poll_interval_seconds": null
+  },
+  "source": {
+    "path": "C:\\Users\\이해나\\Downloads\\spotify_dataset (1).csv",
+    "sha256": "b202fa49909b2d5cef71a04b1d21243cfeb36414535f2ca9272aa646721177bd",
+    "bytes": 20118244,
+    "data_rows": 114000,
+    "columns": [
+      "Unnamed: 0",
+      "track_id",
+      "artists",
+      "album_name",
+      "track_name",
+      "popularity",
+      "duration_ms",
+      "explicit",
+      "danceability",
+      "energy",
+      "key",
+      "loudness",
+      "mode",
+      "speechiness",
+      "acousticness",
+      "instrumentalness",
+      "liveness",
+      "valence",
+      "tempo",
+      "time_signature",
+      "track_genre"
+    ],
+    "unique_track_ids": 89741,
+    "extra_duplicate_rows": 24259,
+    "missing_counts": {
+      "Unnamed: 0": 0,
+      "track_id": 0,
+      "artists": 1,
+      "album_name": 1,
+      "track_name": 1,
+      "popularity": 0,
+      "duration_ms": 0,
+      "explicit": 0,
+      "danceability": 0,
+      "energy": 0,
+      "key": 0,
+      "loudness": 0,
+      "mode": 0,
+      "speechiness": 0,
+      "acousticness": 0,
+      "instrumentalness": 0,
+      "liveness": 0,
+      "valence": 0,
+      "tempo": 0,
+      "time_signature": 0,
+      "track_genre": 0
+    },
+    "mapping_path": "docs\\handoff\\music\\테마_장르_정의.md",
+    "mapping_sha256": "f8539ca499f97a9d92a9d240071bc0e48818dec5224732b418797fad7961cf36",
+    "policy_sha256": "def75d6885d04464b58bcb60b8148482ecb394de23151e4b4830f25f15626622"
+  },
+  "source_profile": {
+    "repeated_id_count": 16641,
+    "exact_duplicate_rows_excluding_index": 450,
+    "id_conflict_counts_by_column": {
+      "Unnamed: 0": 16641,
+      "artists": 0,
+      "album_name": 0,
+      "track_name": 0,
+      "popularity": 720,
+      "duration_ms": 0,
+      "explicit": 0,
+      "danceability": 0,
+      "energy": 0,
+      "key": 0,
+      "loudness": 0,
+      "mode": 0,
+      "speechiness": 0,
+      "acousticness": 0,
+      "instrumentalness": 0,
+      "liveness": 0,
+      "valence": 0,
+      "tempo": 0,
+      "time_signature": 0,
+      "track_genre": 16299
+    },
+    "raw_genre_counts": {
+      "acoustic": 1000,
+      "afrobeat": 1000,
+      "alt-rock": 1000,
+      "alternative": 1000,
+      "ambient": 1000,
+      "anime": 1000,
+      "black-metal": 1000,
+      "bluegrass": 1000,
+      "blues": 1000,
+      "brazil": 1000,
+      "breakbeat": 1000,
+      "british": 1000,
+      "cantopop": 1000,
+      "chicago-house": 1000,
+      "children": 1000,
+      "chill": 1000,
+      "classical": 1000,
+      "club": 1000,
+      "comedy": 1000,
+      "country": 1000,
+      "dance": 1000,
+      "dancehall": 1000,
+      "death-metal": 1000,
+      "deep-house": 1000,
+      "detroit-techno": 1000,
+      "disco": 1000,
+      "disney": 1000,
+      "drum-and-bass": 1000,
+      "dub": 1000,
+      "dubstep": 1000,
+      "edm": 1000,
+      "electro": 1000,
+      "electronic": 1000,
+      "emo": 1000,
+      "folk": 1000,
+      "forro": 1000,
+      "french": 1000,
+      "funk": 1000,
+      "garage": 1000,
+      "german": 1000,
+      "gospel": 1000,
+      "goth": 1000,
+      "grindcore": 1000,
+      "groove": 1000,
+      "grunge": 1000,
+      "guitar": 1000,
+      "happy": 1000,
+      "hard-rock": 1000,
+      "hardcore": 1000,
+      "hardstyle": 1000,
+      "heavy-metal": 1000,
+      "hip-hop": 1000,
+      "honky-tonk": 1000,
+      "house": 1000,
+      "idm": 1000,
+      "indian": 1000,
+      "indie-pop": 1000,
+      "indie": 1000,
+      "industrial": 1000,
+      "iranian": 1000,
+      "j-dance": 1000,
+      "j-idol": 1000,
+      "j-pop": 1000,
+      "j-rock": 1000,
+      "jazz": 1000,
+      "k-pop": 1000,
+      "kids": 1000,
+      "latin": 1000,
+      "latino": 1000,
+      "malay": 1000,
+      "mandopop": 1000,
+      "metal": 1000,
+      "metalcore": 1000,
+      "minimal-techno": 1000,
+      "mpb": 1000,
+      "new-age": 1000,
+      "opera": 1000,
+      "pagode": 1000,
+      "party": 1000,
+      "piano": 1000,
+      "pop-film": 1000,
+      "pop": 1000,
+      "power-pop": 1000,
+      "progressive-house": 1000,
+      "psych-rock": 1000,
+      "punk-rock": 1000,
+      "punk": 1000,
+      "r-n-b": 1000,
+      "reggae": 1000,
+      "reggaeton": 1000,
+      "rock-n-roll": 1000,
+      "rock": 1000,
+      "rockabilly": 1000,
+      "romance": 1000,
+      "sad": 1000,
+      "salsa": 1000,
+      "samba": 1000,
+      "sertanejo": 1000,
+      "show-tunes": 1000,
+      "singer-songwriter": 1000,
+      "ska": 1000,
+      "sleep": 1000,
+      "songwriter": 1000,
+      "soul": 1000,
+      "spanish": 1000,
+      "study": 1000,
+      "swedish": 1000,
+      "synth-pop": 1000,
+      "tango": 1000,
+      "techno": 1000,
+      "trance": 1000,
+      "trip-hop": 1000,
+      "turkish": 1000,
+      "world-music": 1000
+    },
+    "unique_id_numeric_quantiles": {
+      "danceability": {
+        "0.0": 0.0,
+        "0.01": 0.123,
+        "0.05": 0.237,
+        "0.25": 0.45,
+        "0.5": 0.576,
+        "0.75": 0.692,
+        "0.95": 0.825,
+        "0.99": 0.9036000000000058,
+        "1.0": 0.985
+      },
+      "energy": {
+        "0.0": 0.0,
+        "0.01": 0.02694,
+        "0.05": 0.142,
+        "0.25": 0.457,
+        "0.5": 0.676,
+        "0.75": 0.853,
+        "0.95": 0.97,
+        "0.99": 0.993,
+        "1.0": 1.0
+      },
+      "key": {
+        "0.0": 0.0,
+        "0.01": 0.0,
+        "0.05": 0.0,
+        "0.25": 2.0,
+        "0.5": 5.0,
+        "0.75": 8.0,
+        "0.95": 11.0,
+        "0.99": 11.0,
+        "1.0": 11.0
+      },
+      "loudness": {
+        "0.0": -49.531,
+        "0.01": -28.542,
+        "0.05": -18.862,
+        "0.25": -10.322,
+        "0.5": -7.185,
+        "0.75": -5.108,
+        "0.95": -3.0,
+        "0.99": -1.628,
+        "1.0": 4.532
+      },
+      "mode": {
+        "0.0": 0.0,
+        "0.01": 0.0,
+        "0.05": 0.0,
+        "0.25": 0.0,
+        "0.5": 1.0,
+        "0.75": 1.0,
+        "0.95": 1.0,
+        "0.99": 1.0,
+        "1.0": 1.0
+      },
+      "speechiness": {
+        "0.0": 0.0,
+        "0.01": 0.0255,
+        "0.05": 0.0283,
+        "0.25": 0.036,
+        "0.5": 0.0489,
+        "0.75": 0.0859,
+        "0.95": 0.284,
+        "0.99": 0.6186000000000349,
+        "1.0": 0.965
+      },
+      "acousticness": {
+        "0.0": 0.0,
+        "0.01": 5.79e-06,
+        "0.05": 0.000124,
+        "0.25": 0.0171,
+        "0.5": 0.188,
+        "0.75": 0.625,
+        "0.95": 0.956,
+        "0.99": 0.992,
+        "1.0": 0.996
+      },
+      "instrumentalness": {
+        "0.0": 0.0,
+        "0.01": 0.0,
+        "0.05": 0.0,
+        "0.25": 0.0,
+        "0.5": 5.8e-05,
+        "0.75": 0.0976,
+        "0.95": 0.911,
+        "0.99": 0.958,
+        "1.0": 1.0
+      },
+      "liveness": {
+        "0.0": 0.0,
+        "0.01": 0.0407,
+        "0.05": 0.0608,
+        "0.25": 0.0982,
+        "0.5": 0.132,
+        "0.75": 0.279,
+        "0.95": 0.694,
+        "0.99": 0.95,
+        "1.0": 1.0
+      },
+      "valence": {
+        "0.0": 0.0,
+        "0.01": 0.0331,
+        "0.05": 0.0641,
+        "0.25": 0.249,
+        "0.5": 0.457,
+        "0.75": 0.682,
+        "0.95": 0.912,
+        "0.99": 0.965,
+        "1.0": 0.995
+      },
+      "tempo": {
+        "0.0": 0.0,
+        "0.01": 65.1654,
+        "0.05": 76.997,
+        "0.25": 99.264,
+        "0.5": 122.013,
+        "0.75": 140.077,
+        "0.95": 174.994,
+        "0.99": 193.65140000000017,
+        "1.0": 243.372
+      },
+      "time_signature": {
+        "0.0": 0.0,
+        "0.01": 1.0,
+        "0.05": 3.0,
+        "0.25": 4.0,
+        "0.5": 4.0,
+        "0.75": 4.0,
+        "0.95": 4.0,
+        "0.99": 5.0,
+        "1.0": 5.0
+      },
+      "duration_ms": {
+        "0.0": 0.0,
+        "0.01": 61859.4,
+        "0.05": 112040.0,
+        "0.25": 173040.0,
+        "0.5": 213293.0,
+        "0.75": 264293.0,
+        "0.95": 394000.0,
+        "0.99": 546010.8,
+        "1.0": 5237295.0
+      },
+      "popularity": {
+        "0.0": 0.0,
+        "0.01": 0.0,
+        "0.05": 0.0,
+        "0.25": 19.0,
+        "0.5": 33.0,
+        "0.75": 49.0,
+        "0.95": 67.0,
+        "0.99": 78.0,
+        "1.0": 100.0
+      }
+    },
+    "unique_id_feature_pearson": {
+      "danceability": {
+        "danceability": 1.0,
+        "energy": 0.14391379633478488,
+        "key": 0.03511425990776258,
+        "loudness": 0.27183879642399117,
+        "mode": -0.06263329542966659,
+        "speechiness": 0.10952015190943715,
+        "acousticness": -0.1770431144793603,
+        "instrumentalness": -0.1947474625754594,
+        "liveness": -0.1322340976871195,
+        "valence": 0.49257069171531964,
+        "tempo": -0.02133120078276,
+        "time_signature": 0.21004143345181503
+      },
+      "energy": {
+        "danceability": 0.14391379633478488,
+        "energy": 1.0,
+        "key": 0.04633401982354702,
+        "loudness": 0.7587737351048869,
+        "mode": -0.07501433492033471,
+        "speechiness": 0.1413322907324708,
+        "acousticness": -0.7325664954270806,
+        "instrumentalness": -0.18103678471830723,
+        "liveness": 0.18894088147596372,
+        "valence": 0.2563133629946417,
+        "tempo": 0.25862769380670086,
+        "time_signature": 0.1865337585443441
+      },
+      "key": {
+        "danceability": 0.03511425990776258,
+        "energy": 0.04633401982354702,
+        "key": 1.0,
+        "loudness": 0.03590188464192633,
+        "mode": -0.14209578572845996,
+        "speechiness": 0.017759380013277985,
+        "acousticness": -0.04515912653885256,
+        "instrumentalness": -0.00528410174237046,
+        "liveness": -0.002583758936220894,
+        "valence": 0.026258480191539323,
+        "tempo": 0.008274944082896972,
+        "time_signature": 0.014801341082321187
+      },
+      "loudness": {
+        "danceability": 0.27183879642399117,
+        "energy": 0.7587737351048869,
+        "key": 0.03590188464192633,
+        "loudness": 1.0,
+        "mode": -0.03710754053603534,
+        "speechiness": 0.0552952894274662,
+        "acousticness": -0.5826627889933842,
+        "instrumentalness": -0.4347169203700059,
+        "liveness": 0.07723927594220278,
+        "valence": 0.28909110336104693,
+        "tempo": 0.22865882290613973,
+        "time_signature": 0.1936947992469999
+      },
+      "mode": {
+        "danceability": -0.06263329542966659,
+        "energy": -0.07501433492033471,
+        "key": -0.14209578572845996,
+        "loudness": -0.03710754053603534,
+        "mode": 1.0,
+        "speechiness": -0.04079778073264017,
+        "acousticness": 0.0910202985459792,
+        "instrumentalness": -0.05257956784315938,
+        "liveness": 0.016776976572453133,
+        "valence": 0.025568217411409508,
+        "tempo": -0.0019025796895278827,
+        "time_signature": -0.023903151636790885
+      },
+      "speechiness": {
+        "danceability": 0.10952015190943715,
+        "energy": 0.1413322907324708,
+        "key": 0.017759380013277985,
+        "loudness": 0.0552952894274662,
+        "mode": -0.04079778073264017,
+        "speechiness": 1.0,
+        "acousticness": 0.005121490923470712,
+        "instrumentalness": -0.09965760158033259,
+        "liveness": 0.22510155007932617,
+        "valence": 0.03293190271057626,
+        "tempo": 0.004031766269473367,
+        "time_signature": -0.006198135133306109
+      },
+      "acousticness": {
+        "danceability": -0.1770431144793603,
+        "energy": -0.7325664954270806,
+        "key": -0.04515912653885256,
+        "loudness": -0.5826627889933842,
+        "mode": 0.0910202985459792,
+        "speechiness": 0.005121490923470712,
+        "acousticness": 1.0,
+        "instrumentalness": 0.09606533961789002,
+        "liveness": -0.01908109328606622,
+        "valence": -0.10376740186953679,
+        "tempo": -0.2202436130904983,
+        "time_signature": -0.17405364636585652
+      },
+      "instrumentalness": {
+        "danceability": -0.1947474625754594,
+        "energy": -0.18103678471830723,
+        "key": -0.00528410174237046,
+        "loudness": -0.4347169203700059,
+        "mode": -0.05257956784315938,
+        "speechiness": -0.09965760158033259,
+        "acousticness": 0.09606533961789002,
+        "instrumentalness": 1.0,
+        "liveness": -0.08715241150397765,
+        "valence": -0.33075909786298135,
+        "tempo": -0.056887846320793724,
+        "time_signature": -0.08223655025916778
+      },
+      "liveness": {
+        "danceability": -0.1322340976871195,
+        "energy": 0.18894088147596372,
+        "key": -0.002583758936220894,
+        "loudness": 0.07723927594220278,
+        "mode": 0.016776976572453133,
+        "speechiness": 0.22510155007932617,
+        "acousticness": -0.01908109328606622,
+        "instrumentalness": -0.08715241150397765,
+        "liveness": 1.0,
+        "valence": 0.012313816254462075,
+        "tempo": -0.006117417896068824,
+        "time_signature": -0.030786854527705545
+      },
+      "valence": {
+        "danceability": 0.49257069171531964,
+        "energy": 0.2563133629946417,
+        "key": 0.026258480191539323,
+        "loudness": 0.28909110336104693,
+        "mode": 0.025568217411409508,
+        "speechiness": 0.03293190271057626,
+        "acousticness": -0.10376740186953679,
+        "instrumentalness": -0.33075909786298135,
+        "liveness": 0.012313816254462075,
+        "valence": 1.0,
+        "tempo": 0.09062236039239839,
+        "time_signature": 0.13552491906346928
+      },
+      "tempo": {
+        "danceability": -0.02133120078276,
+        "energy": 0.25862769380670086,
+        "key": 0.008274944082896972,
+        "loudness": 0.22865882290613973,
+        "mode": -0.0019025796895278827,
+        "speechiness": 0.004031766269473367,
+        "acousticness": -0.2202436130904983,
+        "instrumentalness": -0.056887846320793724,
+        "liveness": -0.006117417896068824,
+        "valence": 0.09062236039239839,
+        "tempo": 1.0,
+        "time_signature": 0.08545553029916639
+      },
+      "time_signature": {
+        "danceability": 0.21004143345181503,
+        "energy": 0.1865337585443441,
+        "key": 0.014801341082321187,
+        "loudness": 0.1936947992469999,
+        "mode": -0.023903151636790885,
+        "speechiness": -0.006198135133306109,
+        "acousticness": -0.17405364636585652,
+        "instrumentalness": -0.08223655025916778,
+        "liveness": -0.030786854527705545,
+        "valence": 0.13552491906346928,
+        "tempo": 0.08545553029916639,
+        "time_signature": 1.0
+      }
+    },
+    "weather_rating_label_available": false,
+    "instrumental_auto_unique_id_counts": {
+      "FALSE": 69466,
+      "UNKNOWN": 8794,
+      "TRUE": 11481
+    }
+  },
+  "eligibility": {
+    "analysis_only": true,
+    "ready_verified": false,
+    "tag_approval_verified": false,
+    "listening_review_verified": false,
+    "database_or_playback_tested": false,
+    "base_definition": "valid names, duration>0, finite raw features in[0,1], mode0/1, finite tempo>0, at least one mapped style; time_signature=3 correction only",
+    "base": {
+      "track_count": 61931,
+      "duration_ms": 14595021161,
+      "duration_minutes": 243250.35268333333
+    },
+    "style_and_metadata_without_tempo_filter": {
+      "track_count": 61934,
+      "duration_ms": 14595312014,
+      "duration_minutes": 243255.20023333334
+    },
+    "speed_counts": {
+      "fast": 28660,
+      "medium": 17305,
+      "fastest": 11096,
+      "slow": 4870
+    },
+    "instrumental_auto_counts": {
+      "FALSE": 48626,
+      "TRUE": 6912,
+      "UNKNOWN": 6393
+    },
+    "no_instrumental_filter_in_weather_pools": true,
+    "raw_unique_track_ids_are_a_separate_denominator": 89741
+  },
+  "numerics": {
+    "screening": "NumPy float64 per pattern for error diagnostics",
+    "decisions_and_scores": "Every pattern component, ceiling-scaled score and threshold is calculated from source decimal strings using exact Fraction",
+    "sort": "exact values normalized before float conversion; exact score strings preserved",
+    "production_numeric_contract": "not implemented; analysis arithmetic is not production publishing acceptance"
+  },
+  "weather": {
+    "CLEAR": {
+      "label": "맑음",
+      "passing_pool": {
+        "track_count": 36395,
+        "duration_ms": 8318465626,
+        "duration_minutes": 138641.09376666666
+      },
+      "pass_percent_of_base": 58.76701490368313,
+      "score_100_count": 4863,
+      "all_base_score": {
+        "interpretation": "maximum among core-passing patterns even below score threshold; raw maximum diagnostic only when no pattern passes core",
+        "mean": 75.43742397837532,
+        "median": 80.0,
+        "min": 14.633928571428571,
+        "max": 100.0
+      },
+      "patterns": {
+        "CLEAR_PRIMARY": {
+          "kind": "PRIMARY",
+          "ceiling": 100,
+          "passing_count": 35636,
+          "representative_count": 34746,
+          "sensitivity_passing_count": {
+            "70": 40894,
+            "75": 35636,
+            "80": 30638
+          }
+        },
+        "CLEAR_SUPPORT": {
+          "kind": "SUPPORT",
+          "ceiling": 80,
+          "passing_count": 26655,
+          "representative_count": 1649,
+          "sensitivity_passing_count": {
+            "70": 28975,
+            "75": 26655,
+            "80": 15657
+          }
+        }
+      },
+      "both_patterns_pass_count": 25896,
+      "exactly_one_pattern_pass_count": 10499,
+      "representative_uses_one_consistent_pattern_all_features": true,
+      "auto_instrumental_true_pool": {
+        "track_count": 2041,
+        "duration_ms": 599621405,
+        "duration_minutes": 9993.690083333333
+      },
+      "example_speed_codes": [
+        "slow",
+        "medium",
+        "fast",
+        "fastest"
+      ],
+      "example_speed_filtered_pool": {
+        "track_count": 36395,
+        "duration_ms": 8318465626,
+        "duration_minutes": 138641.09376666666
+      },
+      "example_speed_and_auto_instrumental_true_pool": {
+        "track_count": 2041,
+        "duration_ms": 599621405,
+        "duration_minutes": 9993.690083333333
+      },
+      "clear_low_score_actual_tracks": [
+        {
+          "track_id": "7xn7mJpuwRSdePLyBVGjcU",
+          "artists": "Johnny Yin",
+          "track_name": "你是我所有的回憶",
+          "energy": 0.225,
+          "acousticness": 0.853,
+          "valence": 0.155,
+          "mode": 0,
+          "weather_score": 14.633928571428571,
+          "selected_pattern_id": "CLEAR_PRIMARY",
+          "component_energy": 21.428571428571427,
+          "component_acousticness": 24.25,
+          "selection_status": "CORE_PASS_SCORE_BELOW_THRESHOLD"
+        },
+        {
+          "track_id": "5tsAOP03wpq2WehkxrAakt",
+          "artists": "Watchhouse",
+          "track_name": "Ships Sail Away",
+          "energy": 0.235,
+          "acousticness": 0.866,
+          "valence": 0.196,
+          "mode": 0,
+          "weather_score": 14.964285714285714,
+          "selected_pattern_id": "CLEAR_PRIMARY",
+          "component_energy": 24.285714285714285,
+          "component_acousticness": 21.0,
+          "selection_status": "CORE_PASS_SCORE_BELOW_THRESHOLD"
+        }
+      ]
+    },
+    "CLOUDY": {
+      "label": "구름낌",
+      "passing_pool": {
+        "track_count": 36597,
+        "duration_ms": 8804989304,
+        "duration_minutes": 146749.82173333335
+      },
+      "pass_percent_of_base": 59.09318435032536,
+      "score_100_count": 910,
+      "all_base_score": {
+        "interpretation": "maximum among core-passing patterns even below score threshold; raw maximum diagnostic only when no pattern passes core",
+        "mean": 72.91164884258085,
+        "median": 76.0,
+        "min": 19.6625,
+        "max": 100.0
+      },
+      "patterns": {
+        "CLOUDY_PRIMARY": {
+          "kind": "PRIMARY",
+          "ceiling": 100,
+          "passing_count": 18371,
+          "representative_count": 17636,
+          "sensitivity_passing_count": {
+            "70": 22794,
+            "75": 18371,
+            "80": 14062
+          }
+        },
+        "CLOUDY_SUPPORT": {
+          "kind": "SUPPORT",
+          "ceiling": 80,
+          "passing_count": 23795,
+          "representative_count": 18961,
+          "sensitivity_passing_count": {
+            "70": 26718,
+            "75": 23795,
+            "80": 9186
+          }
+        }
+      },
+      "both_patterns_pass_count": 5569,
+      "exactly_one_pattern_pass_count": 31028,
+      "representative_uses_one_consistent_pattern_all_features": true,
+      "auto_instrumental_true_pool": {
+        "track_count": 3972,
+        "duration_ms": 1184010364,
+        "duration_minutes": 19733.506066666665
+      },
+      "example_speed_codes": [
+        "slow",
+        "medium",
+        "fast",
+        "fastest"
+      ],
+      "example_speed_filtered_pool": {
+        "track_count": 36597,
+        "duration_ms": 8804989304,
+        "duration_minutes": 146749.82173333335
+      },
+      "example_speed_and_auto_instrumental_true_pool": {
+        "track_count": 3972,
+        "duration_ms": 1184010364,
+        "duration_minutes": 19733.506066666665
+      },
+      "clear_low_score_actual_tracks": [
+        {
+          "track_id": "2Zvyb4Dw2zMXHwQlV6bRX2",
+          "artists": "Wolfgang Amadeus Mozart;Danielle Laval",
+          "track_name": "12 Variations on ‘La belle Françoise’ in E flat, K.353: 8. Variation VII",
+          "energy": 0.061,
+          "acousticness": 0.995,
+          "valence": 0.961,
+          "mode": 1,
+          "weather_score": 19.6625,
+          "selected_pattern_id": "CLOUDY_PRIMARY",
+          "component_energy": 20.333333333333332,
+          "component_acousticness": 38.75,
+          "selection_status": "CORE_PASS_SCORE_BELOW_THRESHOLD"
+        },
+        {
+          "track_id": "1tK29op2PjXpYyYdnWMqT5",
+          "artists": "Camille Saint-Saëns;Isata Kanneh-Mason;Jeneba Kanneh-Mason;Sheku Kanneh-Mason",
+          "track_name": "Carnival of the Animals: The Swan",
+          "energy": 0.0656,
+          "acousticness": 0.992,
+          "valence": 0.0384,
+          "mode": 1,
+          "weather_score": 20.385,
+          "selected_pattern_id": "CLOUDY_PRIMARY",
+          "component_energy": 21.866666666666667,
+          "component_acousticness": 39.5,
+          "selection_status": "CORE_PASS_SCORE_BELOW_THRESHOLD"
+        }
+      ]
+    },
+    "OVERCAST": {
+      "label": "흐림",
+      "passing_pool": {
+        "track_count": 14006,
+        "duration_ms": 3315058666,
+        "duration_minutes": 55250.97776666666
+      },
+      "pass_percent_of_base": 22.615491434015276,
+      "score_100_count": 758,
+      "all_base_score": {
+        "interpretation": "maximum among core-passing patterns even below score threshold; raw maximum diagnostic only when no pattern passes core",
+        "mean": 59.07819699342817,
+        "median": 56.0,
+        "min": 14.133333333333333,
+        "max": 100.0
+      },
+      "patterns": {
+        "OVERCAST_PRIMARY": {
+          "kind": "PRIMARY",
+          "ceiling": 100,
+          "passing_count": 11748,
+          "representative_count": 11625,
+          "sensitivity_passing_count": {
+            "70": 13170,
+            "75": 11748,
+            "80": 10286
+          }
+        },
+        "OVERCAST_SUPPORT": {
+          "kind": "SUPPORT",
+          "ceiling": 80,
+          "passing_count": 3331,
+          "representative_count": 2381,
+          "sensitivity_passing_count": {
+            "70": 4748,
+            "75": 3331,
+            "80": 1050
+          }
+        }
+      },
+      "both_patterns_pass_count": 1073,
+      "exactly_one_pattern_pass_count": 12933,
+      "representative_uses_one_consistent_pattern_all_features": true,
+      "auto_instrumental_true_pool": {
+        "track_count": 2246,
+        "duration_ms": 598582469,
+        "duration_minutes": 9976.374483333333
+      },
+      "example_speed_codes": [
+        "slow",
+        "medium",
+        "fast",
+        "fastest"
+      ],
+      "example_speed_filtered_pool": {
+        "track_count": 14006,
+        "duration_ms": 3315058666,
+        "duration_minutes": 55250.97776666666
+      },
+      "example_speed_and_auto_instrumental_true_pool": {
+        "track_count": 2246,
+        "duration_ms": 598582469,
+        "duration_minutes": 9976.374483333333
+      },
+      "clear_low_score_actual_tracks": [
+        {
+          "track_id": "1wLaZctzZCnr9NJNZOjcVY",
+          "artists": "Jorge Drexler",
+          "track_name": "Uno",
+          "energy": 0.686,
+          "acousticness": 0.227,
+          "valence": 0.86,
+          "mode": 1,
+          "weather_score": 14.133333333333333,
+          "selected_pattern_id": "OVERCAST_PRIMARY",
+          "component_energy": 21.333333333333332,
+          "component_acousticness": 22.0,
+          "selection_status": "CORE_PASS_SCORE_BELOW_THRESHOLD"
+        },
+        {
+          "track_id": "6z7nW6KrG42sUHSNNncgqV",
+          "artists": "Mrs Mills",
+          "track_name": "When You're Smiling - 2003 Remaster",
+          "energy": 0.678,
+          "acousticness": 0.223,
+          "valence": 0.96,
+          "mode": 1,
+          "weather_score": 14.342857142857143,
+          "selected_pattern_id": "OVERCAST_PRIMARY",
+          "component_energy": 24.0,
+          "component_acousticness": 20.857142857142858,
+          "selection_status": "CORE_PASS_SCORE_BELOW_THRESHOLD"
+        }
+      ]
+    },
+    "RAIN": {
+      "label": "비",
+      "passing_pool": {
+        "track_count": 9113,
+        "duration_ms": 2082492424,
+        "duration_minutes": 34708.20706666667
+      },
+      "pass_percent_of_base": 14.714763204211138,
+      "score_100_count": 635,
+      "all_base_score": {
+        "interpretation": "maximum among core-passing patterns even below score threshold; raw maximum diagnostic only when no pattern passes core",
+        "mean": 35.44676737969676,
+        "median": 27.253333333333334,
+        "min": 0.0,
+        "max": 100.0
+      },
+      "patterns": {
+        "RAIN_PRIMARY": {
+          "kind": "PRIMARY",
+          "ceiling": 100,
+          "passing_count": 8842,
+          "representative_count": 8763,
+          "sensitivity_passing_count": {
+            "70": 10311,
+            "75": 8842,
+            "80": 7752
+          }
+        },
+        "RAIN_SUPPORT": {
+          "kind": "SUPPORT",
+          "ceiling": 80,
+          "passing_count": 7720,
+          "representative_count": 350,
+          "sensitivity_passing_count": {
+            "70": 8659,
+            "75": 7720,
+            "80": 1881
+          }
+        }
+      },
+      "both_patterns_pass_count": 7449,
+      "exactly_one_pattern_pass_count": 1664,
+      "representative_uses_one_consistent_pattern_all_features": true,
+      "auto_instrumental_true_pool": {
+        "track_count": 1723,
+        "duration_ms": 431664822,
+        "duration_minutes": 7194.4137
+      },
+      "example_speed_codes": [
+        "slow",
+        "medium"
+      ],
+      "example_speed_filtered_pool": {
+        "track_count": 5117,
+        "duration_ms": 1165491324,
+        "duration_minutes": 19424.8554
+      },
+      "example_speed_and_auto_instrumental_true_pool": {
+        "track_count": 1100,
+        "duration_ms": 273549870,
+        "duration_minutes": 4559.1645
+      },
+      "clear_low_score_actual_tracks": [
+        {
+          "track_id": "000RDCYioLteXcutOjeweY",
+          "artists": "Jordan Sandhu",
+          "track_name": "Teeje Week",
+          "energy": 0.77,
+          "acousticness": 0.0583,
+          "valence": 0.839,
+          "mode": 1,
+          "weather_score": 0.0,
+          "selected_pattern_id": "RAIN_PRIMARY",
+          "component_energy": 0.0,
+          "component_acousticness": 0.0,
+          "selection_status": "RAW_MAX_DIAGNOSTIC_ONLY"
+        },
+        {
+          "track_id": "001YQlnDSduXd5LgBd66gT",
+          "artists": "Soda Stereo",
+          "track_name": "El Tiempo Es Dinero - Remasterizado 2007",
+          "energy": 0.921,
+          "acousticness": 0.0194,
+          "valence": 0.7,
+          "mode": 1,
+          "weather_score": 0.0,
+          "selected_pattern_id": "RAIN_PRIMARY",
+          "component_energy": 0.0,
+          "component_acousticness": 0.0,
+          "selection_status": "RAW_MAX_DIAGNOSTIC_ONLY"
+        }
+      ]
+    },
+    "SNOW": {
+      "label": "눈",
+      "passing_pool": {
+        "track_count": 9406,
+        "duration_ms": 1919502742,
+        "duration_minutes": 31991.712366666667
+      },
+      "pass_percent_of_base": 15.187870371865463,
+      "score_100_count": 1036,
+      "all_base_score": {
+        "interpretation": "maximum among core-passing patterns even below score threshold; raw maximum diagnostic only when no pattern passes core",
+        "mean": 60.374788211827145,
+        "median": 61.44,
+        "min": 36.0,
+        "max": 100.0
+      },
+      "patterns": {
+        "SNOW_PRIMARY": {
+          "kind": "PRIMARY",
+          "ceiling": 100,
+          "passing_count": 6713,
+          "representative_count": 6528,
+          "sensitivity_passing_count": {
+            "70": 8731,
+            "75": 6713,
+            "80": 5585
+          }
+        },
+        "SNOW_SUPPORT": {
+          "kind": "SUPPORT",
+          "ceiling": 80,
+          "passing_count": 6109,
+          "representative_count": 2878,
+          "sensitivity_passing_count": {
+            "70": 8370,
+            "75": 6109,
+            "80": 3455
+          }
+        }
+      },
+      "both_patterns_pass_count": 3416,
+      "exactly_one_pattern_pass_count": 5990,
+      "representative_uses_one_consistent_pattern_all_features": true,
+      "auto_instrumental_true_pool": {
+        "track_count": 855,
+        "duration_ms": 168056393,
+        "duration_minutes": 2800.9398833333335
+      },
+      "example_speed_codes": [
+        "slow",
+        "medium"
+      ],
+      "example_speed_filtered_pool": {
+        "track_count": 4542,
+        "duration_ms": 919527025,
+        "duration_minutes": 15325.450416666667
+      },
+      "example_speed_and_auto_instrumental_true_pool": {
+        "track_count": 417,
+        "duration_ms": 74286673,
+        "duration_minutes": 1238.1112166666667
+      },
+      "clear_low_score_actual_tracks": [
+        {
+          "track_id": "002uYDBLOvJz21C4FuArDS",
+          "artists": "Sigma;Birdy",
+          "track_name": "Find Me - Sigma VIP Remix",
+          "energy": 0.888,
+          "acousticness": 0.0051,
+          "valence": 0.146,
+          "mode": 0,
+          "weather_score": 36.0,
+          "selected_pattern_id": "SNOW_SUPPORT",
+          "component_energy": 0.0,
+          "component_acousticness": 100.0,
+          "selection_status": "RAW_MAX_DIAGNOSTIC_ONLY"
+        },
+        {
+          "track_id": "006c9li2Mybyg5vm6doEfO",
+          "artists": "Logistics;Zara Kershaw",
+          "track_name": "Finish Line",
+          "energy": 0.898,
+          "acousticness": 0.00112,
+          "valence": 0.0394,
+          "mode": 0,
+          "weather_score": 36.0,
+          "selected_pattern_id": "SNOW_SUPPORT",
+          "component_energy": 0.0,
+          "component_acousticness": 100.0,
+          "selection_status": "RAW_MAX_DIAGNOSTIC_ONLY"
+        }
+      ]
+    }
+  },
+  "sensitivity": {
+    "CLEAR": {
+      "70": {
+        "track_count": 41297,
+        "duration_ms": 9581852746,
+        "duration_minutes": 159697.54576666668
+      },
+      "75": {
+        "track_count": 36395,
+        "duration_ms": 8318465626,
+        "duration_minutes": 138641.09376666666
+      },
+      "80": {
+        "track_count": 31484,
+        "duration_ms": 7158982896,
+        "duration_minutes": 119316.3816
+      }
+    },
+    "CLOUDY": {
+      "70": {
+        "track_count": 40892,
+        "duration_ms": 9816272771,
+        "duration_minutes": 163604.54618333332
+      },
+      "75": {
+        "track_count": 36597,
+        "duration_ms": 8804989304,
+        "duration_minutes": 146749.82173333335
+      },
+      "80": {
+        "track_count": 21785,
+        "duration_ms": 5150520274,
+        "duration_minutes": 85842.00456666667
+      }
+    },
+    "OVERCAST": {
+      "70": {
+        "track_count": 16170,
+        "duration_ms": 3822022481,
+        "duration_minutes": 63700.374683333335
+      },
+      "75": {
+        "track_count": 14006,
+        "duration_ms": 3315058666,
+        "duration_minutes": 55250.97776666666
+      },
+      "80": {
+        "track_count": 11058,
+        "duration_ms": 2577199857,
+        "duration_minutes": 42953.33095
+      }
+    },
+    "RAIN": {
+      "70": {
+        "track_count": 10625,
+        "duration_ms": 2372083551,
+        "duration_minutes": 39534.72585
+      },
+      "75": {
+        "track_count": 9113,
+        "duration_ms": 2082492424,
+        "duration_minutes": 34708.20706666667
+      },
+      "80": {
+        "track_count": 7818,
+        "duration_ms": 1805199175,
+        "duration_minutes": 30086.652916666666
+      }
+    },
+    "SNOW": {
+      "70": {
+        "track_count": 12973,
+        "duration_ms": 2765008868,
+        "duration_minutes": 46083.481133333335
+      },
+      "75": {
+        "track_count": 9406,
+        "duration_ms": 1919502742,
+        "duration_minutes": 31991.712366666667
+      },
+      "80": {
+        "track_count": 6965,
+        "duration_ms": 1369558430,
+        "duration_minutes": 22825.973833333333
+      }
+    }
+  },
+  "boundary_checks": {
+    "CLEAR": {
+      "weather_union_classification_changes": {
+        "70": 0,
+        "75": 0,
+        "80": 1
+      },
+      "patterns": {
+        "CLEAR_PRIMARY": {
+          "near_boundary_count": 1521,
+          "classification_changes": {
+            "70": 0,
+            "75": 0,
+            "80": 1
+          },
+          "changed_records": [
+            {
+              "track_id": "4lHhlaay5sKaj3rcAHuwxb",
+              "score_float_before": 79.99999999999999,
+              "score_exact": "80",
+              "energy_exact": "446/7",
+              "acousticness_exact": "100",
+              "changed_thresholds": [
+                80
+              ]
+            }
+          ]
+        },
+        "CLEAR_SUPPORT": {
+          "near_boundary_count": 15694,
+          "classification_changes": {
+            "70": 0,
+            "75": 0,
+            "80": 0
+          },
+          "changed_records": []
+        }
+      }
+    },
+    "CLOUDY": {
+      "weather_union_classification_changes": {
+        "70": 3,
+        "75": 7,
+        "80": 1
+      },
+      "patterns": {
+        "CLOUDY_PRIMARY": {
+          "near_boundary_count": 323,
+          "classification_changes": {
+            "70": 4,
+            "75": 11,
+            "80": 3
+          },
+          "changed_records": [
+            {
+              "track_id": "4Ds4bq6aqOSAp1T7DikOi4",
+              "score_float_before": 74.99999999999999,
+              "score_exact": "75",
+              "energy_exact": "100/3",
+              "acousticness_exact": "100",
+              "changed_thresholds": [
+                75
+              ]
+            },
+            {
+              "track_id": "0SOmYqBeGm7Hrd0lXseV2e",
+              "score_float_before": 74.99999999999999,
+              "score_exact": "75",
+              "energy_exact": "100/3",
+              "acousticness_exact": "100",
+              "changed_thresholds": [
+                75
+              ]
+            },
+            {
+              "track_id": "7kYOulCKFjv81OmoGbPNIC",
+              "score_float_before": 74.99999999999999,
+              "score_exact": "75",
+              "energy_exact": "118/3",
+              "acousticness_exact": "100",
+              "changed_thresholds": [
+                75
+              ]
+            },
+            {
+              "track_id": "3p7QdyY9RFucHRkeEugVTV",
+              "score_float_before": 71.0,
+              "score_exact": "71",
+              "energy_exact": "20",
+              "acousticness_exact": "100",
+              "changed_thresholds": [
+                70
+              ]
+            },
+            {
+              "track_id": "411ZgO67nKxR1lg44sYnlW",
+              "score_float_before": 74.99999999999999,
+              "score_exact": "75",
+              "energy_exact": "100/3",
+              "acousticness_exact": "100",
+              "changed_thresholds": [
+                75
+              ]
+            },
+            {
+              "track_id": "37QXq42xGy7Qmzqsozd1aM",
+              "score_float_before": 74.99999999999999,
+              "score_exact": "75",
+              "energy_exact": "233/3",
+              "acousticness_exact": "100",
+              "changed_thresholds": [
+                75
+              ]
+            },
+            {
+              "track_id": "6rKd9TkHUMvy05iPSeuIrV",
+              "score_float_before": 69.99999999999999,
+              "score_exact": "70",
+              "energy_exact": "97/3",
+              "acousticness_exact": "100",
+              "changed_thresholds": [
+                70
+              ]
+            },
+            {
+              "track_id": "73LcWB5KSzmpa1YsK2xRbg",
+              "score_float_before": 74.99999999999999,
+              "score_exact": "75",
+              "energy_exact": "101/3",
+              "acousticness_exact": "100",
+              "changed_thresholds": [
+                75
+              ]
+            },
+            {
+              "track_id": "2mgzUVvDpb1zMSB4glLQ6T",
+              "score_float_before": 74.99999999999999,
+              "score_exact": "75",
+              "energy_exact": "100/3",
+              "acousticness_exact": "100",
+              "changed_thresholds": [
+                75
+              ]
+            },
+            {
+              "track_id": "63mL1DdcSFfxVJ9XGnSRQz",
+              "score_float_before": 74.99999999999999,
+              "score_exact": "75",
+              "energy_exact": "100/3",
+              "acousticness_exact": "100",
+              "changed_thresholds": [
+                75
+              ]
+            },
+            {
+              "track_id": "7qELh1G8CuBOVpaL50bAAn",
+              "score_float_before": 74.99999999999999,
+              "score_exact": "75",
+              "energy_exact": "239/3",
+              "acousticness_exact": "100",
+              "changed_thresholds": [
+                75
+              ]
+            },
+            {
+              "track_id": "6JHmOcoeEFfCNMyQ5tfZAS",
+              "score_float_before": 79.99999999999999,
+              "score_exact": "80",
+              "energy_exact": "100/3",
+              "acousticness_exact": "100",
+              "changed_thresholds": [
+                80
+              ]
+            },
+            {
+              "track_id": "5GaIwab0GIWICCSVzldmUY",
+              "score_float_before": 74.99999999999999,
+              "score_exact": "75",
+              "energy_exact": "100/3",
+              "acousticness_exact": "100",
+              "changed_thresholds": [
+                75
+              ]
+            },
+            {
+              "track_id": "5Z6QUf4ruCkSMOzxQHulCm",
+              "score_float_before": 79.99999999999999,
+              "score_exact": "80",
+              "energy_exact": "100/3",
+              "acousticness_exact": "100",
+              "changed_thresholds": [
+                80
+              ]
+            },
+            {
+              "track_id": "4kk7W4DWULC2KWHaqbqvf9",
+              "score_float_before": 71.0,
+              "score_exact": "71",
+              "energy_exact": "20",
+              "acousticness_exact": "100",
+              "changed_thresholds": [
+                70
+              ]
+            },
+            {
+              "track_id": "6qAwwONbdsOVArDNW27IC8",
+              "score_float_before": 74.99999999999999,
+              "score_exact": "75",
+              "energy_exact": "100/3",
+              "acousticness_exact": "100",
+              "changed_thresholds": [
+                75
+              ]
+            },
+            {
+              "track_id": "7krkgV2JnGpLlsELMXAISa",
+              "score_float_before": 79.99999999999999,
+              "score_exact": "80",
+              "energy_exact": "100/3",
+              "acousticness_exact": "100",
+              "changed_thresholds": [
+                80
+              ]
+            },
+            {
+              "track_id": "1laVjJnSfGwdWRJWtO40cl",
+              "score_float_before": 71.0,
+              "score_exact": "71",
+              "energy_exact": "20",
+              "acousticness_exact": "100",
+              "changed_thresholds": [
+                70
+              ]
+            }
+          ]
+        },
+        "CLOUDY_SUPPORT": {
+          "near_boundary_count": 9223,
+          "classification_changes": {
+            "70": 0,
+            "75": 0,
+            "80": 0
+          },
+          "changed_records": []
+        }
+      }
+    },
+    "OVERCAST": {
+      "weather_union_classification_changes": {
+        "70": 0,
+        "75": 0,
+        "80": 0
+      },
+      "patterns": {
+        "OVERCAST_PRIMARY": {
+          "near_boundary_count": 405,
+          "classification_changes": {
+            "70": 0,
+            "75": 0,
+            "80": 0
+          },
+          "changed_records": []
+        },
+        "OVERCAST_SUPPORT": {
+          "near_boundary_count": 1188,
+          "classification_changes": {
+            "70": 0,
+            "75": 0,
+            "80": 0
+          },
+          "changed_records": []
+        }
+      }
+    },
+    "RAIN": {
+      "weather_union_classification_changes": {
+        "70": 2,
+        "75": 0,
+        "80": 0
+      },
+      "patterns": {
+        "RAIN_PRIMARY": {
+          "near_boundary_count": 768,
+          "classification_changes": {
+            "70": 1,
+            "75": 0,
+            "80": 0
+          },
+          "changed_records": [
+            {
+              "track_id": "7f2heXmnd24lwz7ng32qZ1",
+              "score_float_before": 69.99999999999999,
+              "score_exact": "70",
+              "energy_exact": "100",
+              "acousticness_exact": "250/3",
+              "changed_thresholds": [
+                70
+              ]
+            }
+          ]
+        },
+        "RAIN_SUPPORT": {
+          "near_boundary_count": 1997,
+          "classification_changes": {
+            "70": 1,
+            "75": 0,
+            "80": 0
+          },
+          "changed_records": [
+            {
+              "track_id": "10LfH6Hkt06jYjXo8FGecm",
+              "score_float_before": 69.99999999999999,
+              "score_exact": "70",
+              "energy_exact": "100",
+              "acousticness_exact": "250/3",
+              "changed_thresholds": [
+                70
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "SNOW": {
+      "weather_union_classification_changes": {
+        "70": 6,
+        "75": 8,
+        "80": 3
+      },
+      "patterns": {
+        "SNOW_PRIMARY": {
+          "near_boundary_count": 1462,
+          "classification_changes": {
+            "70": 15,
+            "75": 8,
+            "80": 3
+          },
+          "changed_records": [
+            {
+              "track_id": "6iQDUHZSnfjZ10gOsouEYy",
+              "score_float_before": 84.0,
+              "score_exact": "84",
+              "energy_exact": "20",
+              "acousticness_exact": "100",
+              "changed_thresholds": [
+                70,
+                75,
+                80
+              ]
+            },
+            {
+              "track_id": "0sqHzaDIlr3PxLQanhO74A",
+              "score_float_before": 78.85,
+              "score_exact": "1577/20",
+              "energy_exact": "20",
+              "acousticness_exact": "299/3",
+              "changed_thresholds": [
+                70,
+                75
+              ]
+            },
+            {
+              "track_id": "37Z5k8wOib7DGYhMZ07EfK",
+              "score_float_before": 71.99999999999999,
+              "score_exact": "72",
+              "energy_exact": "20",
+              "acousticness_exact": "100",
+              "changed_thresholds": [
+                70
+              ]
+            },
+            {
+              "track_id": "1U7Y9C4YpHYp1EJP1p5rRs",
+              "score_float_before": 72.19999999999999,
+              "score_exact": "361/5",
+              "energy_exact": "20",
+              "acousticness_exact": "100",
+              "changed_thresholds": [
+                70
+              ]
+            },
+            {
+              "track_id": "59tBqJGkzbe0pz99EU6MIw",
+              "score_float_before": 84.0,
+              "score_exact": "84",
+              "energy_exact": "20",
+              "acousticness_exact": "100",
+              "changed_thresholds": [
+                70,
+                75,
+                80
+              ]
+            },
+            {
+              "track_id": "7mQQV4hDnXn3TrVr1QDu65",
+              "score_float_before": 73.29999999999998,
+              "score_exact": "733/10",
+              "energy_exact": "20",
+              "acousticness_exact": "100",
+              "changed_thresholds": [
+                70
+              ]
+            },
+            {
+              "track_id": "27LGUeJrvtpwU1Bu6LDDJ4",
+              "score_float_before": 84.0,
+              "score_exact": "84",
+              "energy_exact": "20",
+              "acousticness_exact": "100",
+              "changed_thresholds": [
+                70,
+                75,
+                80
+              ]
+            },
+            {
+              "track_id": "1ziOQdxREUrqIaGgX9Ln9A",
+              "score_float_before": 70.95,
+              "score_exact": "1419/20",
+              "energy_exact": "20",
+              "acousticness_exact": "71",
+              "changed_thresholds": [
+                70
+              ]
+            },
+            {
+              "track_id": "3BSjclxC2Idsc5d8LsCJwj",
+              "score_float_before": 78.99999999999999,
+              "score_exact": "79",
+              "energy_exact": "20",
+              "acousticness_exact": "100",
+              "changed_thresholds": [
+                70,
+                75
+              ]
+            },
+            {
+              "track_id": "01u6AEzGbGbQyYVdxajxqk",
+              "score_float_before": 79.6,
+              "score_exact": "398/5",
+              "energy_exact": "20",
+              "acousticness_exact": "100",
+              "changed_thresholds": [
+                70,
+                75
+              ]
+            },
+            {
+              "track_id": "0mBbP5wpRAU17PJwTBMrVg",
+              "score_float_before": 77.2,
+              "score_exact": "386/5",
+              "energy_exact": "20",
+              "acousticness_exact": "100",
+              "changed_thresholds": [
+                70,
+                75
+              ]
+            },
+            {
+              "track_id": "1Y3LN4zO1Edc2EluIoSPJN",
+              "score_float_before": 73.19999999999999,
+              "score_exact": "366/5",
+              "energy_exact": "20",
+              "acousticness_exact": "100",
+              "changed_thresholds": [
+                70
+              ]
+            },
+            {
+              "track_id": "158ETs8mtorXxJyGcjV3oH",
+              "score_float_before": 73.19999999999999,
+              "score_exact": "366/5",
+              "energy_exact": "20",
+              "acousticness_exact": "100",
+              "changed_thresholds": [
+                70
+              ]
+            },
+            {
+              "track_id": "5z4zUjStTssx0f6ZHnNUCm",
+              "score_float_before": 74.39999999999999,
+              "score_exact": "372/5",
+              "energy_exact": "20",
+              "acousticness_exact": "100",
+              "changed_thresholds": [
+                70
+              ]
+            },
+            {
+              "track_id": "1y5nMCTcIwrpFveTchcSP4",
+              "score_float_before": 76.9,
+              "score_exact": "769/10",
+              "energy_exact": "20",
+              "acousticness_exact": "286/3",
+              "changed_thresholds": [
+                70,
+                75
+              ]
+            }
+          ]
+        },
+        "SNOW_SUPPORT": {
+          "near_boundary_count": 3534,
+          "classification_changes": {
+            "70": 0,
+            "75": 0,
+            "80": 0
+          },
+          "changed_records": []
+        }
+      }
+    }
+  },
+  "examples": {
+    "CLEAR": {
+      "status": "ANALYSIS_FEASIBLE_NOT_PRODUCTION_ACCEPTANCE",
+      "readiness_status": "ANALYSIS_ONLY_NOT_READY",
+      "candidate_pool": {
+        "track_count": 36395,
+        "duration_ms": 8318465626,
+        "duration_minutes": 138641.09376666666
+      },
+      "searched_prefix_sizes": [
+        200
+      ],
+      "search": {
+        "processed_count": 53,
+        "checkpoint_count": 2,
+        "reconstruction_block_size": 32
+      },
+      "exact_target_achieved": true,
+      "quality_time_weighted_mean": 100.0,
+      "quality_exact": "100",
+      "quality_upper_bound": 100,
+      "all_selected_scores_exactly_100": true,
+      "quality_optimality": "PROVEN_ALL_SELECTED_SCORES_AT_GLOBAL_UPPER_BOUND",
+      "tie_optimality": "NOT_PROVEN",
+      "play_order": "weather_score_desc_then_track_id_asc; transition quality not optimized",
+      "instrumental_only": false,
+      "selected": {
+        "track_count": 49,
+        "duration_ms": 10800000,
+        "duration_minutes": 180.0
+      },
+      "unique_track_ids": true,
+      "exact_fraction_score_gate_checks_passed": true
+    },
+    "CLOUDY": {
+      "status": "ANALYSIS_FEASIBLE_NOT_PRODUCTION_ACCEPTANCE",
+      "readiness_status": "ANALYSIS_ONLY_NOT_READY",
+      "candidate_pool": {
+        "track_count": 36597,
+        "duration_ms": 8804989304,
+        "duration_minutes": 146749.82173333335
+      },
+      "searched_prefix_sizes": [
+        200
+      ],
+      "search": {
+        "processed_count": 50,
+        "checkpoint_count": 2,
+        "reconstruction_block_size": 32
+      },
+      "exact_target_achieved": true,
+      "quality_time_weighted_mean": 100.0,
+      "quality_exact": "100",
+      "quality_upper_bound": 100,
+      "all_selected_scores_exactly_100": true,
+      "quality_optimality": "PROVEN_ALL_SELECTED_SCORES_AT_GLOBAL_UPPER_BOUND",
+      "tie_optimality": "NOT_PROVEN",
+      "play_order": "weather_score_desc_then_track_id_asc; transition quality not optimized",
+      "instrumental_only": false,
+      "selected": {
+        "track_count": 46,
+        "duration_ms": 10800000,
+        "duration_minutes": 180.0
+      },
+      "unique_track_ids": true,
+      "exact_fraction_score_gate_checks_passed": true
+    },
+    "OVERCAST": {
+      "status": "ANALYSIS_FEASIBLE_NOT_PRODUCTION_ACCEPTANCE",
+      "readiness_status": "ANALYSIS_ONLY_NOT_READY",
+      "candidate_pool": {
+        "track_count": 14006,
+        "duration_ms": 3315058666,
+        "duration_minutes": 55250.97776666666
+      },
+      "searched_prefix_sizes": [
+        200
+      ],
+      "search": {
+        "processed_count": 49,
+        "checkpoint_count": 2,
+        "reconstruction_block_size": 32
+      },
+      "exact_target_achieved": true,
+      "quality_time_weighted_mean": 100.0,
+      "quality_exact": "100",
+      "quality_upper_bound": 100,
+      "all_selected_scores_exactly_100": true,
+      "quality_optimality": "PROVEN_ALL_SELECTED_SCORES_AT_GLOBAL_UPPER_BOUND",
+      "tie_optimality": "NOT_PROVEN",
+      "play_order": "weather_score_desc_then_track_id_asc; transition quality not optimized",
+      "instrumental_only": false,
+      "selected": {
+        "track_count": 45,
+        "duration_ms": 10800000,
+        "duration_minutes": 180.0
+      },
+      "unique_track_ids": true,
+      "exact_fraction_score_gate_checks_passed": true
+    },
+    "RAIN": {
+      "status": "ANALYSIS_FEASIBLE_NOT_PRODUCTION_ACCEPTANCE",
+      "readiness_status": "ANALYSIS_ONLY_NOT_READY",
+      "candidate_pool": {
+        "track_count": 5117,
+        "duration_ms": 1165491324,
+        "duration_minutes": 19424.8554
+      },
+      "searched_prefix_sizes": [
+        200
+      ],
+      "search": {
+        "processed_count": 50,
+        "checkpoint_count": 2,
+        "reconstruction_block_size": 32
+      },
+      "exact_target_achieved": true,
+      "quality_time_weighted_mean": 100.0,
+      "quality_exact": "100",
+      "quality_upper_bound": 100,
+      "all_selected_scores_exactly_100": true,
+      "quality_optimality": "PROVEN_ALL_SELECTED_SCORES_AT_GLOBAL_UPPER_BOUND",
+      "tie_optimality": "NOT_PROVEN",
+      "play_order": "weather_score_desc_then_track_id_asc; transition quality not optimized",
+      "instrumental_only": false,
+      "selected": {
+        "track_count": 44,
+        "duration_ms": 10800000,
+        "duration_minutes": 180.0
+      },
+      "unique_track_ids": true,
+      "exact_fraction_score_gate_checks_passed": true
+    },
+    "SNOW": {
+      "status": "ANALYSIS_FEASIBLE_NOT_PRODUCTION_ACCEPTANCE",
+      "readiness_status": "ANALYSIS_ONLY_NOT_READY",
+      "candidate_pool": {
+        "track_count": 4542,
+        "duration_ms": 919527025,
+        "duration_minutes": 15325.450416666667
+      },
+      "searched_prefix_sizes": [
+        200
+      ],
+      "search": {
+        "processed_count": 73,
+        "checkpoint_count": 3,
+        "reconstruction_block_size": 32
+      },
+      "exact_target_achieved": true,
+      "quality_time_weighted_mean": 100.0,
+      "quality_exact": "100",
+      "quality_upper_bound": 100,
+      "all_selected_scores_exactly_100": true,
+      "quality_optimality": "PROVEN_ALL_SELECTED_SCORES_AT_GLOBAL_UPPER_BOUND",
+      "tie_optimality": "NOT_PROVEN",
+      "play_order": "weather_score_desc_then_track_id_asc; transition quality not optimized",
+      "instrumental_only": false,
+      "selected": {
+        "track_count": 67,
+        "duration_ms": 10800000,
+        "duration_minutes": 180.0
+      },
+      "unique_track_ids": true,
+      "exact_fraction_score_gate_checks_passed": true
+    }
+  },
+  "domain_coverage_proof": {
+    "proof_type": "ANALYTIC_CLOSED_BOX_COVER_AND_INSIDE_SCORE_LOWER_BOUND",
+    "domain": "energy/acousticness/valence in[0,1], mode0/1/null",
+    "exhaustive_partition_argument": [
+      "energy>=.5 and valence>=.5 -> CLEAR_SUPPORT; acousticness unrestricted",
+      "energy>=.5 and valence<=.5 -> CLOUDY_SUPPORT; acousticness unrestricted",
+      "energy<=.5 and valence>=.5 -> SNOW_SUPPORT; acousticness unrestricted",
+      "energy<=.5 and valence<=.5 and acousticness<=.5 -> OVERCAST_SUPPORT",
+      "energy<=.5 and valence<=.5 and acousticness>=.5 -> RAIN_SUPPORT"
+    ],
+    "closed_boundaries_allow_overlap": true,
+    "boxes": {
+      "CLEAR": {
+        "pattern_id": "CLEAR_SUPPORT",
+        "closed_box": {
+          "energy": [
+            0.5,
+            1
+          ],
+          "acousticness": [
+            0,
+            1
+          ],
+          "valence": [
+            0.5,
+            1
+          ]
+        },
+        "minimum_inside_score_mode_mismatch_or_null": "76",
+        "inside_core_components": 100
+      },
+      "CLOUDY": {
+        "pattern_id": "CLOUDY_SUPPORT",
+        "closed_box": {
+          "energy": [
+            0.5,
+            1
+          ],
+          "acousticness": [
+            0,
+            1
+          ],
+          "valence": [
+            0,
+            0.5
+          ]
+        },
+        "minimum_inside_score_mode_mismatch_or_null": "76",
+        "inside_core_components": 100
+      },
+      "OVERCAST": {
+        "pattern_id": "OVERCAST_SUPPORT",
+        "closed_box": {
+          "energy": [
+            0,
+            0.5
+          ],
+          "acousticness": [
+            0,
+            0.5
+          ],
+          "valence": [
+            0,
+            0.5
+          ]
+        },
+        "minimum_inside_score_mode_mismatch_or_null": "76",
+        "inside_core_components": 100
+      },
+      "RAIN": {
+        "pattern_id": "RAIN_SUPPORT",
+        "closed_box": {
+          "energy": [
+            0,
+            0.5
+          ],
+          "acousticness": [
+            0.5,
+            1
+          ],
+          "valence": [
+            0,
+            0.5
+          ]
+        },
+        "minimum_inside_score_mode_mismatch_or_null": "76",
+        "inside_core_components": 100
+      },
+      "SNOW": {
+        "pattern_id": "SNOW_SUPPORT",
+        "closed_box": {
+          "energy": [
+            0,
+            0.5
+          ],
+          "acousticness": [
+            0,
+            1
+          ],
+          "valence": [
+            0.5,
+            1
+          ]
+        },
+        "minimum_inside_score_mode_mismatch_or_null": "76",
+        "inside_core_components": 100
+      }
+    },
+    "boundary_sample_check_not_the_proof": {
+      "tested_count": 81,
+      "all_have_a_passing_weather": true,
+      "records": [
+        {
+          "energy": 0,
+          "acousticness": 0,
+          "valence": 0,
+          "mode": 0,
+          "passing_weathers": [
+            "OVERCAST"
+          ]
+        },
+        {
+          "energy": 0,
+          "acousticness": 0,
+          "valence": 0,
+          "mode": 1,
+          "passing_weathers": [
+            "OVERCAST"
+          ]
+        },
+        {
+          "energy": 0,
+          "acousticness": 0,
+          "valence": 0,
+          "mode": null,
+          "passing_weathers": [
+            "OVERCAST"
+          ]
+        },
+        {
+          "energy": 0,
+          "acousticness": 0,
+          "valence": 0.5,
+          "mode": 0,
+          "passing_weathers": [
+            "OVERCAST",
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0,
+          "acousticness": 0,
+          "valence": 0.5,
+          "mode": 1,
+          "passing_weathers": [
+            "OVERCAST",
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0,
+          "acousticness": 0,
+          "valence": 0.5,
+          "mode": null,
+          "passing_weathers": [
+            "OVERCAST",
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0,
+          "acousticness": 0,
+          "valence": 1,
+          "mode": 0,
+          "passing_weathers": [
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0,
+          "acousticness": 0,
+          "valence": 1,
+          "mode": 1,
+          "passing_weathers": [
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0,
+          "acousticness": 0,
+          "valence": 1,
+          "mode": null,
+          "passing_weathers": [
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0,
+          "acousticness": 0.5,
+          "valence": 0,
+          "mode": 0,
+          "passing_weathers": [
+            "OVERCAST",
+            "RAIN"
+          ]
+        },
+        {
+          "energy": 0,
+          "acousticness": 0.5,
+          "valence": 0,
+          "mode": 1,
+          "passing_weathers": [
+            "OVERCAST",
+            "RAIN"
+          ]
+        },
+        {
+          "energy": 0,
+          "acousticness": 0.5,
+          "valence": 0,
+          "mode": null,
+          "passing_weathers": [
+            "OVERCAST",
+            "RAIN"
+          ]
+        },
+        {
+          "energy": 0,
+          "acousticness": 0.5,
+          "valence": 0.5,
+          "mode": 0,
+          "passing_weathers": [
+            "OVERCAST",
+            "RAIN",
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0,
+          "acousticness": 0.5,
+          "valence": 0.5,
+          "mode": 1,
+          "passing_weathers": [
+            "OVERCAST",
+            "RAIN",
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0,
+          "acousticness": 0.5,
+          "valence": 0.5,
+          "mode": null,
+          "passing_weathers": [
+            "OVERCAST",
+            "RAIN",
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0,
+          "acousticness": 0.5,
+          "valence": 1,
+          "mode": 0,
+          "passing_weathers": [
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0,
+          "acousticness": 0.5,
+          "valence": 1,
+          "mode": 1,
+          "passing_weathers": [
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0,
+          "acousticness": 0.5,
+          "valence": 1,
+          "mode": null,
+          "passing_weathers": [
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0,
+          "acousticness": 1,
+          "valence": 0,
+          "mode": 0,
+          "passing_weathers": [
+            "RAIN"
+          ]
+        },
+        {
+          "energy": 0,
+          "acousticness": 1,
+          "valence": 0,
+          "mode": 1,
+          "passing_weathers": [
+            "RAIN"
+          ]
+        },
+        {
+          "energy": 0,
+          "acousticness": 1,
+          "valence": 0,
+          "mode": null,
+          "passing_weathers": [
+            "RAIN"
+          ]
+        },
+        {
+          "energy": 0,
+          "acousticness": 1,
+          "valence": 0.5,
+          "mode": 0,
+          "passing_weathers": [
+            "OVERCAST",
+            "RAIN",
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0,
+          "acousticness": 1,
+          "valence": 0.5,
+          "mode": 1,
+          "passing_weathers": [
+            "OVERCAST",
+            "RAIN",
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0,
+          "acousticness": 1,
+          "valence": 0.5,
+          "mode": null,
+          "passing_weathers": [
+            "OVERCAST",
+            "RAIN",
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0,
+          "acousticness": 1,
+          "valence": 1,
+          "mode": 0,
+          "passing_weathers": [
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0,
+          "acousticness": 1,
+          "valence": 1,
+          "mode": 1,
+          "passing_weathers": [
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0,
+          "acousticness": 1,
+          "valence": 1,
+          "mode": null,
+          "passing_weathers": [
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0.5,
+          "acousticness": 0,
+          "valence": 0,
+          "mode": 0,
+          "passing_weathers": [
+            "CLOUDY",
+            "OVERCAST"
+          ]
+        },
+        {
+          "energy": 0.5,
+          "acousticness": 0,
+          "valence": 0,
+          "mode": 1,
+          "passing_weathers": [
+            "CLOUDY",
+            "OVERCAST"
+          ]
+        },
+        {
+          "energy": 0.5,
+          "acousticness": 0,
+          "valence": 0,
+          "mode": null,
+          "passing_weathers": [
+            "CLOUDY",
+            "OVERCAST"
+          ]
+        },
+        {
+          "energy": 0.5,
+          "acousticness": 0,
+          "valence": 0.5,
+          "mode": 0,
+          "passing_weathers": [
+            "CLEAR",
+            "CLOUDY",
+            "OVERCAST",
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0.5,
+          "acousticness": 0,
+          "valence": 0.5,
+          "mode": 1,
+          "passing_weathers": [
+            "CLEAR",
+            "CLOUDY",
+            "OVERCAST",
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0.5,
+          "acousticness": 0,
+          "valence": 0.5,
+          "mode": null,
+          "passing_weathers": [
+            "CLEAR",
+            "CLOUDY",
+            "OVERCAST",
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0.5,
+          "acousticness": 0,
+          "valence": 1,
+          "mode": 0,
+          "passing_weathers": [
+            "CLEAR",
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0.5,
+          "acousticness": 0,
+          "valence": 1,
+          "mode": 1,
+          "passing_weathers": [
+            "CLEAR",
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0.5,
+          "acousticness": 0,
+          "valence": 1,
+          "mode": null,
+          "passing_weathers": [
+            "CLEAR",
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0.5,
+          "acousticness": 0.5,
+          "valence": 0,
+          "mode": 0,
+          "passing_weathers": [
+            "CLOUDY",
+            "OVERCAST",
+            "RAIN"
+          ]
+        },
+        {
+          "energy": 0.5,
+          "acousticness": 0.5,
+          "valence": 0,
+          "mode": 1,
+          "passing_weathers": [
+            "CLOUDY",
+            "OVERCAST",
+            "RAIN"
+          ]
+        },
+        {
+          "energy": 0.5,
+          "acousticness": 0.5,
+          "valence": 0,
+          "mode": null,
+          "passing_weathers": [
+            "CLOUDY",
+            "OVERCAST",
+            "RAIN"
+          ]
+        },
+        {
+          "energy": 0.5,
+          "acousticness": 0.5,
+          "valence": 0.5,
+          "mode": 0,
+          "passing_weathers": [
+            "CLEAR",
+            "CLOUDY",
+            "OVERCAST",
+            "RAIN",
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0.5,
+          "acousticness": 0.5,
+          "valence": 0.5,
+          "mode": 1,
+          "passing_weathers": [
+            "CLEAR",
+            "CLOUDY",
+            "OVERCAST",
+            "RAIN",
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0.5,
+          "acousticness": 0.5,
+          "valence": 0.5,
+          "mode": null,
+          "passing_weathers": [
+            "CLEAR",
+            "CLOUDY",
+            "OVERCAST",
+            "RAIN",
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0.5,
+          "acousticness": 0.5,
+          "valence": 1,
+          "mode": 0,
+          "passing_weathers": [
+            "CLEAR",
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0.5,
+          "acousticness": 0.5,
+          "valence": 1,
+          "mode": 1,
+          "passing_weathers": [
+            "CLEAR",
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0.5,
+          "acousticness": 0.5,
+          "valence": 1,
+          "mode": null,
+          "passing_weathers": [
+            "CLEAR",
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0.5,
+          "acousticness": 1,
+          "valence": 0,
+          "mode": 0,
+          "passing_weathers": [
+            "CLOUDY",
+            "OVERCAST",
+            "RAIN"
+          ]
+        },
+        {
+          "energy": 0.5,
+          "acousticness": 1,
+          "valence": 0,
+          "mode": 1,
+          "passing_weathers": [
+            "CLOUDY",
+            "OVERCAST",
+            "RAIN"
+          ]
+        },
+        {
+          "energy": 0.5,
+          "acousticness": 1,
+          "valence": 0,
+          "mode": null,
+          "passing_weathers": [
+            "CLOUDY",
+            "OVERCAST",
+            "RAIN"
+          ]
+        },
+        {
+          "energy": 0.5,
+          "acousticness": 1,
+          "valence": 0.5,
+          "mode": 0,
+          "passing_weathers": [
+            "CLEAR",
+            "CLOUDY",
+            "OVERCAST",
+            "RAIN",
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0.5,
+          "acousticness": 1,
+          "valence": 0.5,
+          "mode": 1,
+          "passing_weathers": [
+            "CLEAR",
+            "CLOUDY",
+            "OVERCAST",
+            "RAIN",
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0.5,
+          "acousticness": 1,
+          "valence": 0.5,
+          "mode": null,
+          "passing_weathers": [
+            "CLEAR",
+            "CLOUDY",
+            "OVERCAST",
+            "RAIN",
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0.5,
+          "acousticness": 1,
+          "valence": 1,
+          "mode": 0,
+          "passing_weathers": [
+            "CLEAR",
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0.5,
+          "acousticness": 1,
+          "valence": 1,
+          "mode": 1,
+          "passing_weathers": [
+            "CLEAR",
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 0.5,
+          "acousticness": 1,
+          "valence": 1,
+          "mode": null,
+          "passing_weathers": [
+            "CLEAR",
+            "SNOW"
+          ]
+        },
+        {
+          "energy": 1,
+          "acousticness": 0,
+          "valence": 0,
+          "mode": 0,
+          "passing_weathers": [
+            "CLOUDY"
+          ]
+        },
+        {
+          "energy": 1,
+          "acousticness": 0,
+          "valence": 0,
+          "mode": 1,
+          "passing_weathers": [
+            "CLOUDY"
+          ]
+        },
+        {
+          "energy": 1,
+          "acousticness": 0,
+          "valence": 0,
+          "mode": null,
+          "passing_weathers": [
+            "CLOUDY"
+          ]
+        },
+        {
+          "energy": 1,
+          "acousticness": 0,
+          "valence": 0.5,
+          "mode": 0,
+          "passing_weathers": [
+            "CLEAR",
+            "CLOUDY"
+          ]
+        },
+        {
+          "energy": 1,
+          "acousticness": 0,
+          "valence": 0.5,
+          "mode": 1,
+          "passing_weathers": [
+            "CLEAR",
+            "CLOUDY"
+          ]
+        },
+        {
+          "energy": 1,
+          "acousticness": 0,
+          "valence": 0.5,
+          "mode": null,
+          "passing_weathers": [
+            "CLEAR",
+            "CLOUDY"
+          ]
+        },
+        {
+          "energy": 1,
+          "acousticness": 0,
+          "valence": 1,
+          "mode": 0,
+          "passing_weathers": [
+            "CLEAR"
+          ]
+        },
+        {
+          "energy": 1,
+          "acousticness": 0,
+          "valence": 1,
+          "mode": 1,
+          "passing_weathers": [
+            "CLEAR"
+          ]
+        },
+        {
+          "energy": 1,
+          "acousticness": 0,
+          "valence": 1,
+          "mode": null,
+          "passing_weathers": [
+            "CLEAR"
+          ]
+        },
+        {
+          "energy": 1,
+          "acousticness": 0.5,
+          "valence": 0,
+          "mode": 0,
+          "passing_weathers": [
+            "CLOUDY"
+          ]
+        },
+        {
+          "energy": 1,
+          "acousticness": 0.5,
+          "valence": 0,
+          "mode": 1,
+          "passing_weathers": [
+            "CLOUDY"
+          ]
+        },
+        {
+          "energy": 1,
+          "acousticness": 0.5,
+          "valence": 0,
+          "mode": null,
+          "passing_weathers": [
+            "CLOUDY"
+          ]
+        },
+        {
+          "energy": 1,
+          "acousticness": 0.5,
+          "valence": 0.5,
+          "mode": 0,
+          "passing_weathers": [
+            "CLEAR",
+            "CLOUDY"
+          ]
+        },
+        {
+          "energy": 1,
+          "acousticness": 0.5,
+          "valence": 0.5,
+          "mode": 1,
+          "passing_weathers": [
+            "CLEAR",
+            "CLOUDY"
+          ]
+        },
+        {
+          "energy": 1,
+          "acousticness": 0.5,
+          "valence": 0.5,
+          "mode": null,
+          "passing_weathers": [
+            "CLEAR",
+            "CLOUDY"
+          ]
+        },
+        {
+          "energy": 1,
+          "acousticness": 0.5,
+          "valence": 1,
+          "mode": 0,
+          "passing_weathers": [
+            "CLEAR"
+          ]
+        },
+        {
+          "energy": 1,
+          "acousticness": 0.5,
+          "valence": 1,
+          "mode": 1,
+          "passing_weathers": [
+            "CLEAR"
+          ]
+        },
+        {
+          "energy": 1,
+          "acousticness": 0.5,
+          "valence": 1,
+          "mode": null,
+          "passing_weathers": [
+            "CLEAR"
+          ]
+        },
+        {
+          "energy": 1,
+          "acousticness": 1,
+          "valence": 0,
+          "mode": 0,
+          "passing_weathers": [
+            "CLOUDY"
+          ]
+        },
+        {
+          "energy": 1,
+          "acousticness": 1,
+          "valence": 0,
+          "mode": 1,
+          "passing_weathers": [
+            "CLOUDY"
+          ]
+        },
+        {
+          "energy": 1,
+          "acousticness": 1,
+          "valence": 0,
+          "mode": null,
+          "passing_weathers": [
+            "CLOUDY"
+          ]
+        },
+        {
+          "energy": 1,
+          "acousticness": 1,
+          "valence": 0.5,
+          "mode": 0,
+          "passing_weathers": [
+            "CLEAR",
+            "CLOUDY"
+          ]
+        },
+        {
+          "energy": 1,
+          "acousticness": 1,
+          "valence": 0.5,
+          "mode": 1,
+          "passing_weathers": [
+            "CLEAR",
+            "CLOUDY"
+          ]
+        },
+        {
+          "energy": 1,
+          "acousticness": 1,
+          "valence": 0.5,
+          "mode": null,
+          "passing_weathers": [
+            "CLEAR",
+            "CLOUDY"
+          ]
+        },
+        {
+          "energy": 1,
+          "acousticness": 1,
+          "valence": 1,
+          "mode": 0,
+          "passing_weathers": [
+            "CLEAR"
+          ]
+        },
+        {
+          "energy": 1,
+          "acousticness": 1,
+          "valence": 1,
+          "mode": 1,
+          "passing_weathers": [
+            "CLEAR"
+          ]
+        },
+        {
+          "energy": 1,
+          "acousticness": 1,
+          "valence": 1,
+          "mode": null,
+          "passing_weathers": [
+            "CLEAR"
+          ]
+        }
+      ]
+    }
+  },
+  "hypothetical_patterns": [
+    {
+      "label": "CLEAR_ONLY_REQUIRE_RAIN_SNOW_FAIL",
+      "assumed_not_observed": true,
+      "raw_features": {
+        "energy": 0.8,
+        "acousticness": 0.1,
+        "valence": 0.8,
+        "mode": 1
+      },
+      "expectations": {
+        "must_pass": [
+          "CLEAR"
+        ],
+        "must_fail": [
+          "RAIN",
+          "SNOW"
+        ]
+      },
+      "weather": {
+        "CLEAR": {
+          "passes": true,
+          "score": 100.0,
+          "score_exact": "100",
+          "selected_pattern_id": "CLEAR_PRIMARY",
+          "pass_pattern_ids": [
+            "CLEAR_PRIMARY",
+            "CLEAR_SUPPORT"
+          ]
+        },
+        "CLOUDY": {
+          "passes": false,
+          "score": 52.0,
+          "score_exact": "52",
+          "selected_pattern_id": "CLOUDY_SUPPORT",
+          "pass_pattern_ids": []
+        },
+        "OVERCAST": {
+          "passes": false,
+          "score": 32.0,
+          "score_exact": "32",
+          "selected_pattern_id": "OVERCAST_SUPPORT",
+          "pass_pattern_ids": []
+        },
+        "RAIN": {
+          "passes": false,
+          "score": 0.0,
+          "score_exact": "0",
+          "selected_pattern_id": "RAIN_PRIMARY",
+          "pass_pattern_ids": []
+        },
+        "SNOW": {
+          "passes": false,
+          "score": 64.0,
+          "score_exact": "64",
+          "selected_pattern_id": "SNOW_SUPPORT",
+          "pass_pattern_ids": []
+        }
+      }
+    },
+    {
+      "label": "CLOUDY_ONLY",
+      "assumed_not_observed": true,
+      "raw_features": {
+        "energy": 0.9,
+        "acousticness": 0.05,
+        "valence": 0.1,
+        "mode": 0
+      },
+      "expectations": {
+        "must_pass": [
+          "CLOUDY"
+        ],
+        "must_fail": [
+          "CLEAR",
+          "OVERCAST",
+          "RAIN",
+          "SNOW"
+        ]
+      },
+      "weather": {
+        "CLEAR": {
+          "passes": false,
+          "score": 53.57142857142857,
+          "score_exact": "375/7",
+          "selected_pattern_id": "CLEAR_PRIMARY",
+          "pass_pattern_ids": []
+        },
+        "CLOUDY": {
+          "passes": true,
+          "score": 80.0,
+          "score_exact": "80",
+          "selected_pattern_id": "CLOUDY_SUPPORT",
+          "pass_pattern_ids": [
+            "CLOUDY_SUPPORT"
+          ]
+        },
+        "OVERCAST": {
+          "passes": false,
+          "score": 60.0,
+          "score_exact": "60",
+          "selected_pattern_id": "OVERCAST_SUPPORT",
+          "pass_pattern_ids": []
+        },
+        "RAIN": {
+          "passes": false,
+          "score": 30.0,
+          "score_exact": "30",
+          "selected_pattern_id": "RAIN_PRIMARY",
+          "pass_pattern_ids": []
+        },
+        "SNOW": {
+          "passes": false,
+          "score": 36.0,
+          "score_exact": "36",
+          "selected_pattern_id": "SNOW_SUPPORT",
+          "pass_pattern_ids": []
+        }
+      }
+    },
+    {
+      "label": "OVERCAST_ONLY",
+      "assumed_not_observed": true,
+      "raw_features": {
+        "energy": 0.2,
+        "acousticness": 0.1,
+        "valence": 0.2,
+        "mode": 0
+      },
+      "expectations": {
+        "must_pass": [
+          "OVERCAST"
+        ],
+        "must_fail": [
+          "CLEAR",
+          "CLOUDY",
+          "RAIN",
+          "SNOW"
+        ]
+      },
+      "weather": {
+        "CLEAR": {
+          "passes": false,
+          "score": 30.714285714285715,
+          "score_exact": "215/7",
+          "selected_pattern_id": "CLEAR_PRIMARY",
+          "pass_pattern_ids": []
+        },
+        "CLOUDY": {
+          "passes": false,
+          "score": 61.875,
+          "score_exact": "495/8",
+          "selected_pattern_id": "CLOUDY_PRIMARY",
+          "pass_pattern_ids": []
+        },
+        "OVERCAST": {
+          "passes": true,
+          "score": 80.0,
+          "score_exact": "80",
+          "selected_pattern_id": "OVERCAST_SUPPORT",
+          "pass_pattern_ids": [
+            "OVERCAST_SUPPORT"
+          ]
+        },
+        "RAIN": {
+          "passes": false,
+          "score": 60.0,
+          "score_exact": "60",
+          "selected_pattern_id": "RAIN_PRIMARY",
+          "pass_pattern_ids": []
+        },
+        "SNOW": {
+          "passes": false,
+          "score": 52.0,
+          "score_exact": "52",
+          "selected_pattern_id": "SNOW_SUPPORT",
+          "pass_pattern_ids": []
+        }
+      }
+    },
+    {
+      "label": "RAIN_ONLY",
+      "assumed_not_observed": true,
+      "raw_features": {
+        "energy": 0,
+        "acousticness": 0.95,
+        "valence": 0,
+        "mode": 0
+      },
+      "expectations": {
+        "must_pass": [
+          "RAIN"
+        ],
+        "must_fail": [
+          "CLEAR",
+          "CLOUDY",
+          "OVERCAST",
+          "SNOW"
+        ]
+      },
+      "weather": {
+        "CLEAR": {
+          "passes": false,
+          "score": 20.0,
+          "score_exact": "20",
+          "selected_pattern_id": "CLEAR_SUPPORT",
+          "pass_pattern_ids": []
+        },
+        "CLOUDY": {
+          "passes": false,
+          "score": 56.0,
+          "score_exact": "56",
+          "selected_pattern_id": "CLOUDY_SUPPORT",
+          "pass_pattern_ids": []
+        },
+        "OVERCAST": {
+          "passes": false,
+          "score": 72.5,
+          "score_exact": "145/2",
+          "selected_pattern_id": "OVERCAST_PRIMARY",
+          "pass_pattern_ids": []
+        },
+        "RAIN": {
+          "passes": true,
+          "score": 80.0,
+          "score_exact": "80",
+          "selected_pattern_id": "RAIN_SUPPORT",
+          "pass_pattern_ids": [
+            "RAIN_PRIMARY",
+            "RAIN_SUPPORT"
+          ]
+        },
+        "SNOW": {
+          "passes": false,
+          "score": 61.0,
+          "score_exact": "61",
+          "selected_pattern_id": "SNOW_PRIMARY",
+          "pass_pattern_ids": []
+        }
+      }
+    },
+    {
+      "label": "SNOW_ONLY",
+      "assumed_not_observed": true,
+      "raw_features": {
+        "energy": 0.1,
+        "acousticness": 0.9,
+        "valence": 0.9,
+        "mode": 1
+      },
+      "expectations": {
+        "must_pass": [
+          "SNOW"
+        ],
+        "must_fail": [
+          "CLEAR",
+          "CLOUDY",
+          "OVERCAST",
+          "RAIN"
+        ]
+      },
+      "weather": {
+        "CLEAR": {
+          "passes": false,
+          "score": 48.0,
+          "score_exact": "48",
+          "selected_pattern_id": "CLEAR_SUPPORT",
+          "pass_pattern_ids": []
+        },
+        "CLOUDY": {
+          "passes": false,
+          "score": 36.875,
+          "score_exact": "295/8",
+          "selected_pattern_id": "CLOUDY_PRIMARY",
+          "pass_pattern_ids": []
+        },
+        "OVERCAST": {
+          "passes": false,
+          "score": 60.833333333333336,
+          "score_exact": "365/6",
+          "selected_pattern_id": "OVERCAST_PRIMARY",
+          "pass_pattern_ids": []
+        },
+        "RAIN": {
+          "passes": false,
+          "score": 70.0,
+          "score_exact": "70",
+          "selected_pattern_id": "RAIN_PRIMARY",
+          "pass_pattern_ids": []
+        },
+        "SNOW": {
+          "passes": true,
+          "score": 90.0,
+          "score_exact": "90",
+          "selected_pattern_id": "SNOW_PRIMARY",
+          "pass_pattern_ids": [
+            "SNOW_PRIMARY",
+            "SNOW_SUPPORT"
+          ]
+        }
+      }
+    },
+    {
+      "label": "PREVIOUS_QUIET_DARK_ACOUSTIC",
+      "assumed_not_observed": true,
+      "raw_features": {
+        "energy": 0.2,
+        "acousticness": 0.9,
+        "valence": 0.2,
+        "mode": 0
+      },
+      "expectations": {
+        "must_pass": [],
+        "must_fail": []
+      },
+      "weather": {
+        "CLEAR": {
+          "passes": false,
+          "score": 20.0,
+          "score_exact": "20",
+          "selected_pattern_id": "CLEAR_SUPPORT",
+          "pass_pattern_ids": []
+        },
+        "CLOUDY": {
+          "passes": false,
+          "score": 61.875,
+          "score_exact": "495/8",
+          "selected_pattern_id": "CLOUDY_PRIMARY",
+          "pass_pattern_ids": []
+        },
+        "OVERCAST": {
+          "passes": true,
+          "score": 100.0,
+          "score_exact": "100",
+          "selected_pattern_id": "OVERCAST_PRIMARY",
+          "pass_pattern_ids": [
+            "OVERCAST_PRIMARY"
+          ]
+        },
+        "RAIN": {
+          "passes": true,
+          "score": 100.0,
+          "score_exact": "100",
+          "selected_pattern_id": "RAIN_PRIMARY",
+          "pass_pattern_ids": [
+            "RAIN_PRIMARY",
+            "RAIN_SUPPORT"
+          ]
+        },
+        "SNOW": {
+          "passes": false,
+          "score": 70.0,
+          "score_exact": "70",
+          "selected_pattern_id": "SNOW_PRIMARY",
+          "pass_pattern_ids": []
+        }
+      }
+    },
+    {
+      "label": "PREVIOUS_SOFT_BRIGHT_ACOUSTIC",
+      "assumed_not_observed": true,
+      "raw_features": {
+        "energy": 0.15,
+        "acousticness": 0.9,
+        "valence": 0.65,
+        "mode": 1
+      },
+      "expectations": {
+        "must_pass": [],
+        "must_fail": []
+      },
+      "weather": {
+        "CLEAR": {
+          "passes": false,
+          "score": 48.0,
+          "score_exact": "48",
+          "selected_pattern_id": "CLEAR_SUPPORT",
+          "pass_pattern_ids": []
+        },
+        "CLOUDY": {
+          "passes": false,
+          "score": 66.875,
+          "score_exact": "535/8",
+          "selected_pattern_id": "CLOUDY_PRIMARY",
+          "pass_pattern_ids": []
+        },
+        "OVERCAST": {
+          "passes": true,
+          "score": 75.0,
+          "score_exact": "75",
+          "selected_pattern_id": "OVERCAST_PRIMARY",
+          "pass_pattern_ids": [
+            "OVERCAST_PRIMARY"
+          ]
+        },
+        "RAIN": {
+          "passes": false,
+          "score": 74.16666666666667,
+          "score_exact": "445/6",
+          "selected_pattern_id": "RAIN_PRIMARY",
+          "pass_pattern_ids": []
+        },
+        "SNOW": {
+          "passes": true,
+          "score": 100.0,
+          "score_exact": "100",
+          "selected_pattern_id": "SNOW_PRIMARY",
+          "pass_pattern_ids": [
+            "SNOW_PRIMARY",
+            "SNOW_SUPPORT"
+          ]
+        }
+      }
+    },
+    {
+      "label": "PREVIOUS_MODERATE",
+      "assumed_not_observed": true,
+      "raw_features": {
+        "energy": 0.5,
+        "acousticness": 0.5,
+        "valence": 0.5,
+        "mode": 0
+      },
+      "expectations": {
+        "must_pass": [],
+        "must_fail": []
+      },
+      "weather": {
+        "CLEAR": {
+          "passes": true,
+          "score": 90.71428571428571,
+          "score_exact": "635/7",
+          "selected_pattern_id": "CLEAR_PRIMARY",
+          "pass_pattern_ids": [
+            "CLEAR_PRIMARY",
+            "CLEAR_SUPPORT"
+          ]
+        },
+        "CLOUDY": {
+          "passes": true,
+          "score": 100.0,
+          "score_exact": "100",
+          "selected_pattern_id": "CLOUDY_PRIMARY",
+          "pass_pattern_ids": [
+            "CLOUDY_PRIMARY",
+            "CLOUDY_SUPPORT"
+          ]
+        },
+        "OVERCAST": {
+          "passes": true,
+          "score": 90.83333333333333,
+          "score_exact": "545/6",
+          "selected_pattern_id": "OVERCAST_PRIMARY",
+          "pass_pattern_ids": [
+            "OVERCAST_PRIMARY",
+            "OVERCAST_SUPPORT"
+          ]
+        },
+        "RAIN": {
+          "passes": true,
+          "score": 80.0,
+          "score_exact": "80",
+          "selected_pattern_id": "RAIN_SUPPORT",
+          "pass_pattern_ids": [
+            "RAIN_SUPPORT"
+          ]
+        },
+        "SNOW": {
+          "passes": true,
+          "score": 76.0,
+          "score_exact": "76",
+          "selected_pattern_id": "SNOW_SUPPORT",
+          "pass_pattern_ids": [
+            "SNOW_SUPPORT"
+          ]
+        }
+      }
+    }
+  ],
+  "negative_selection_test": {
+    "raw_features": {
+      "energy": 0.843,
+      "acousticness": 0.5,
+      "valence": 0.53,
+      "mode": 0
+    },
+    "rejected_raw_max_primary_score": "757/10",
+    "rejected_primary_energy_component": "19",
+    "selected_pattern_id": "CLOUDY_SUPPORT",
+    "selected_score_exact": "376/5",
+    "test_passed": true,
+    "core_pass_below_score_threshold_case": {
+      "raw_features": {
+        "energy": 0.843,
+        "acousticness": 0.5,
+        "valence": 0.65,
+        "mode": 0
+      },
+      "selected_pattern_id": "CLOUDY_SUPPORT",
+      "selected_score_exact": "56",
+      "passes": false,
+      "status": "CORE_PASS_SCORE_BELOW_THRESHOLD",
+      "test_passed": true
+    },
+    "missing_continuous_holds_null_score_test_passed": true
+  },
+  "passing_weather_count_distribution": {
+    "0": 0,
+    "1": 33197,
+    "2": 18239,
+    "3": 6512,
+    "4": 3609,
+    "5": 374
+  },
+  "coverage": {
+    "denominator": 61931,
+    "raw_unique_track_ids_separate": 89741,
+    "passing_weather_union_count": 61931,
+    "union_equals_base_ids": true,
+    "unmatched_ids": [],
+    "every_base_track_matches_at_least_one_weather": true,
+    "fallback_assignment_used": false
+  },
+  "v1_vs_v2": {
+    "v1_policy_version": "WEATHER_SCORE_PROPOSAL_20261016_V1",
+    "v1_summary_sha256": "91276436c76ce6cec3dbaf9345efefa359d40f6b06807f1ab20abaf8ec90b219",
+    "v1_base": {
+      "track_count": 61931,
+      "duration_ms": 14595021161,
+      "duration_minutes": 243250.35268333333
+    },
+    "v2_base": {
+      "track_count": 61931,
+      "duration_ms": 14595021161,
+      "duration_minutes": 243250.35268333333
+    },
+    "v1_unmatched_count": 14413,
+    "v2_unmatched_count": 0,
+    "v1_unmatched_rescued_count": 14413,
+    "v1_qualified_tracks_lost_count": 0,
+    "v1_qualified_retained_per_weather": {
+      "CLEAR": true,
+      "CLOUDY": true,
+      "OVERCAST": true,
+      "RAIN": true,
+      "SNOW": true
+    },
+    "weather_counts": {
+      "CLEAR": {
+        "v1": 35636,
+        "v2": 36395,
+        "added": 759
+      },
+      "CLOUDY": {
+        "v1": 18371,
+        "v2": 36597,
+        "added": 18226
+      },
+      "OVERCAST": {
+        "v1": 11748,
+        "v2": 14006,
+        "added": 2258
+      },
+      "RAIN": {
+        "v1": 8842,
+        "v2": 9113,
+        "added": 271
+      },
+      "SNOW": {
+        "v1": 6713,
+        "v2": 9406,
+        "added": 2693
+      }
+    }
+  },
+  "pairwise": {
+    "CLEAR__CLOUDY": {
+      "intersection": 16941,
+      "union": 56051,
+      "jaccard": 0.3022426004888405,
+      "score_pearson_all_base": 0.030048636040738163
+    },
+    "CLEAR__OVERCAST": {
+      "intersection": 2804,
+      "union": 47597,
+      "jaccard": 0.05891127592075131,
+      "score_pearson_all_base": -0.6939155058379562
+    },
+    "CLEAR__RAIN": {
+      "intersection": 616,
+      "union": 44892,
+      "jaccard": 0.013721821259912679,
+      "score_pearson_all_base": -0.6991787948745609
+    },
+    "CLEAR__SNOW": {
+      "intersection": 3900,
+      "union": 41901,
+      "jaccard": 0.09307653755280304,
+      "score_pearson_all_base": 0.03381916219668645
+    },
+    "CLOUDY__OVERCAST": {
+      "intersection": 8809,
+      "union": 41794,
+      "jaccard": 0.21077188113126286,
+      "score_pearson_all_base": 0.470219861954009
+    },
+    "CLOUDY__RAIN": {
+      "intersection": 4783,
+      "union": 40927,
+      "jaccard": 0.11686661617025436,
+      "score_pearson_all_base": 0.2915200274944244
+    },
+    "CLOUDY__SNOW": {
+      "intersection": 6171,
+      "union": 39832,
+      "jaccard": 0.15492568788913436,
+      "score_pearson_all_base": -0.08159360385902922
+    },
+    "OVERCAST__RAIN": {
+      "intersection": 8937,
+      "union": 14182,
+      "jaccard": 0.6301649978846425,
+      "score_pearson_all_base": 0.9359805139887942
+    },
+    "OVERCAST__SNOW": {
+      "intersection": 5440,
+      "union": 17972,
+      "jaccard": 0.30269307812152235,
+      "score_pearson_all_base": 0.22937735451712762
+    },
+    "RAIN__SNOW": {
+      "intersection": 4768,
+      "union": 13751,
+      "jaccard": 0.346738419024071,
+      "score_pearson_all_base": 0.4277802382009171
+    }
+  },
+  "mixed_adapter": {
+    "adapter_code": "RAIN_SNOW_INTERSECTION",
+    "source_pty": [
+      2,
+      6
+    ],
+    "separate_weather_model": false,
+    "definition": "Intersection of RAIN and SNOW qualified pools; preserves both independently selected pattern records; not a sixth independent weather model",
+    "ranking": "MIN_RAIN_SNOW_INITIAL_PROPOSAL_THEN_TRACK_ID_ASC",
+    "score_formula_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+    "model_version": null,
+    "readiness_status": "ANALYSIS_ONLY_NOT_READY",
+    "all_speed_pool": {
+      "track_count": 4768,
+      "duration_ms": 974980496,
+      "duration_minutes": 16249.674933333334
+    },
+    "speed_counts": {
+      "fast": 1894,
+      "medium": 1536,
+      "slow": 1021,
+      "fastest": 317
+    },
+    "auto_instrumental_true_pool": {
+      "track_count": 540,
+      "duration_ms": 101735687,
+      "duration_minutes": 1695.5947833333332
+    },
+    "slow_medium_pool": {
+      "track_count": 2557,
+      "duration_ms": 518711489,
+      "duration_minutes": 8645.191483333334
+    },
+    "slow_medium_auto_instrumental_true_pool": {
+      "track_count": 301,
+      "duration_ms": 54401503,
+      "duration_minutes": 906.6917166666667
+    },
+    "csv": "pools/RAIN_SNOW_INTERSECTION.csv",
+    "unique_track_ids": true
+  },
+  "checks": {
+    "all_pools_unique": true,
+    "all_examples_exact_180min": true,
+    "all_saved_csvs_reloaded_and_verified": true,
+    "all_representative_components_from_same_selected_pattern": true,
+    "thresholds_select_patterns_independently": [
+      70,
+      75,
+      80
+    ],
+    "coverage_zero_unmatched": true,
+    "v1_qualified_all_retained": true,
+    "v1_unmatched_all_rescued": true,
+    "support_box_domain_proof_verified": true,
+    "fixed_anchors_passed": true,
+    "negative_raw_max_gate_failure_test_passed": true,
+    "weather_models_independent_calculation": true,
+    "weather_scores_statistically_independent": false,
+    "coefficients_fitted_to_weather_labels": false
+  }
+}
