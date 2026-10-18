@@ -1,0 +1,54 @@
+{
+  "schema_version": "INDEPENDENT_URL_COLLECTION_INTEGRITY_V1",
+  "passed": true,
+  "scope": "COLLECTION_PROVENANCE_AND_EXPORT_INTEGRITY_ONLY_NOT_MUSIC_OR_PLAYBACK_REVIEW",
+  "input_target_count": 31708,
+  "prior_track_count": 54777,
+  "prior_unique_video_count": 61933,
+  "new_tracks": 2637,
+  "new_unique_video_urls": 2632,
+  "new_candidate_pairs": 2715,
+  "remaining_tracks": 29071,
+  "catalog_count": 86485,
+  "target_partition_verified": true,
+  "baseline_track_overlap": 0,
+  "baseline_video_overlap": 0,
+  "duplicate_export_pairs": 0,
+  "duplicate_txt_urls": 0,
+  "raw_candidate_records_connected": 2715,
+  "web_evidence_tuples_connected": 1155,
+  "auto_discovery_batch_records_connected": 150,
+  "laion_original_parquet_records_checked": 1564,
+  "youniverse_saved_prefix_records_checked": 11,
+  "source_candidate_pairs_before_deduplication": 2730,
+  "duplicate_source_pairs_removed": 15,
+  "individual_search_attempted_tracks": 1917,
+  "individual_search_completed_tracks": 1910,
+  "remaining_retry_required_tracks": 7,
+  "source_full_checksum_caveat": "YouNiverse is a saved partial compressed prefix; full official file checksum has not been verified.",
+  "metadata_identity_review_performed": false,
+  "playback_review_performed": false,
+  "url_liveness_checked": false,
+  "dashboard_registration_performed": false,
+  "application_or_database_access_performed": false,
+  "files": {
+    "youtube-tail-new-candidates.csv": {
+      "sha256": "79075903616cceb8e42d526bf6e74118a7083cbc85872f629f1cd44b7d5dd860",
+      "bytes": 6068493
+    },
+    "youtube-tail-new-urls.txt": {
+      "sha256": "b64443c64f5b42a485a3554bbb54c9bb9fafdcce833354057025682fb0bff7a5",
+      "bytes": 118440
+    },
+    "remaining-uncollected.csv": {
+      "sha256": "4436a6611bcb01384f201487944e7fda969852845f0ca82ed5570f0eb6151f58",
+      "bytes": 5809151
+    },
+    "collection-summary.json": {
+      "sha256": "d41771c31c91b27dc48bf177cd06c3b9f97a6b3ca800f9fde016cb349cf137ac",
+      "bytes": 7539
+    }
+  },
+  "validated_at": "2026-10-18T05:35:48.302364+00:00",
+  "issues": []
+}

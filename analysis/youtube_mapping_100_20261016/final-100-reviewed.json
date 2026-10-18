@@ -1,0 +1,5250 @@
+{
+  "schema_version": "YOUTUBE_100_REVIEWED_SHARE_V2",
+  "count": 100,
+  "publication_date": "2026-10-19",
+  "observation_scope": "HISTORICAL_20261016_METADATA_AND_SHORT_NATIVE_PROGRESS_ONLY",
+  "source_snapshot_sha256": "1d20b1431ce2a492f025cf4170ba13a4b76b6085aa7c24facd4b8d232e6f8e19",
+  "excluded_fields": [
+    "full_source_track_features",
+    "description_excerpt",
+    "raw_native_dom",
+    "browser_and_tab_ids",
+    "duplicate_registration_notes"
+  ],
+  "limitations": [
+    "Checklist score is not a probability or recommendation score.",
+    "Not proof of full listening, physical audio, Chrome/Premium or current availability.",
+    "Native observations do not grant iframe approval. Missing KR metadata remains null.",
+    "This export does not register or approve records in another environment."
+  ],
+  "root_corrections": [
+    {
+      "track_id": "1Fid2jjqsHViMX6xNH70hE",
+      "field": "album_match/score",
+      "before_score": 100,
+      "after_score": 85,
+      "reason": "Base album is supported; Expanded/Super Deluxe source edition remains unconfirmed."
+    },
+    {
+      "track_id": "4RvWPyQ5RL0ao9LPZeSouE",
+      "field": "album_match/score",
+      "before_score": 100,
+      "after_score": 85,
+      "reason": "Base album is supported; Expanded/Super Deluxe source edition remains unconfirmed."
+    }
+  ],
+  "records": [
+    {
+      "track_id": "2tTmW7RDtMQtBk7m2rYeSw",
+      "video_id": "A_g3lMcWVy0",
+      "video_url": "https://www.youtube.com/watch?v=A_g3lMcWVy0",
+      "youtube_title": "QUEVEDO || BZRP Music Sessions #52/66",
+      "channel": "Bizarrap",
+      "album_match": "UNKNOWN",
+      "observed_album": null,
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 204,
+      "source_duration_seconds": 198.937,
+      "duration_difference_seconds": 5.063,
+      "duration_tolerance_seconds": 23.872,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=A_g3lMcWVy0",
+        "https://open.spotify.com/track/2tTmW7RDtMQtBk7m2rYeSw"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:10.262852+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 85,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 203,
+      "source_track": {
+        "track_id": "2tTmW7RDtMQtBk7m2rYeSw",
+        "track_name": "Quevedo: Bzrp Music Sessions, Vol. 52",
+        "artists_name": "Bizarrap;Quevedo",
+        "album_name": "Quevedo: Bzrp Music Sessions, Vol. 52",
+        "duration_ms": 198937,
+        "selection_weather": "CLEAR"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 22,
+        "duration_seconds": 203,
+        "checked_at": null,
+        "source": "ROOT_CROSSCHECK_REPORTED"
+      }
+    },
+    {
+      "track_id": "1IHWl5LamUGEuP4ozKQSXZ",
+      "video_id": "juRFjpB5Ppg",
+      "video_url": "https://www.youtube.com/watch?v=juRFjpB5Ppg",
+      "youtube_title": "Tití Me Preguntó",
+      "channel": "Bad Bunny - Topic",
+      "album_match": "MATCH",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 244,
+      "source_duration_seconds": 243.716,
+      "duration_tolerance_seconds": 29.245919999999998,
+      "duration_difference_seconds": 0.284,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=juRFjpB5Ppg"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:29.025877+00:00",
+      "match_score": 100,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 243,
+      "source_track": {
+        "track_id": "1IHWl5LamUGEuP4ozKQSXZ",
+        "track_name": "Tití Me Preguntó",
+        "artists_name": "Bad Bunny",
+        "album_name": "Un Verano Sin Ti",
+        "duration_ms": 243716,
+        "selection_weather": "CLOUDY"
+      },
+      "native_progress_observation": {
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:44:44.301Z",
+        "elapsed_seconds": 2,
+        "pause_control_observed": false,
+        "time_progress_observed": true,
+        "playback_observed": true,
+        "duration_seconds": 243
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "3nqQXoyQOWXiESFLlDF1hG",
+      "video_id": "7QXDnWRy6MI",
+      "video_url": "https://www.youtube.com/watch?v=7QXDnWRy6MI",
+      "youtube_title": "Sam Smith - Unholy (ft. Kim Petras) (Lyric Video)",
+      "channel": "SAM SMITH",
+      "album_match": "unknown",
+      "version_match": true,
+      "duration_seconds": 157,
+      "source_duration_seconds": 156.943,
+      "duration_difference_seconds": 0.057,
+      "duration_tolerance_seconds": 18.833,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=7QXDnWRy6MI",
+        "https://open.spotify.com/track/3nqQXoyQOWXiESFLlDF1hG"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:32.661660+00:00",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "match_score": 85,
+      "score_is_probability": false,
+      "notes": "원곡 전체 청취·음원 지문 대조가 아닌 공식 메타데이터 식별입니다. 실제 재생 관측 없는 곡은 미관측 상태를 유지합니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 157,
+      "source_track": {
+        "track_id": "3nqQXoyQOWXiESFLlDF1hG",
+        "track_name": "Unholy (feat. Kim Petras)",
+        "artists_name": "Sam Smith;Kim Petras",
+        "album_name": "Unholy (feat. Kim Petras)",
+        "duration_ms": 156943,
+        "selection_weather": "OVERCAST"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 10,
+        "duration_seconds": 157,
+        "checked_at": "2026-10-16T08:34:37.094Z",
+        "source": "BROWSER_DOM"
+      }
+    },
+    {
+      "track_id": "6xGruZOHLs39ZbVccQTuPZ",
+      "video_id": "NgsWGfUlwJI",
+      "video_url": "https://www.youtube.com/watch?v=NgsWGfUlwJI",
+      "youtube_title": "Joji - Glimpse of Us (Official Video)",
+      "channel": "Joji",
+      "album_match": "UNKNOWN",
+      "observed_album": null,
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 234,
+      "source_duration_seconds": 233.456,
+      "duration_difference_seconds": 0.544,
+      "duration_tolerance_seconds": 28.015,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=NgsWGfUlwJI",
+        "https://open.spotify.com/track/6xGruZOHLs39ZbVccQTuPZ"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:10.264312+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 85,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 234,
+      "source_track": {
+        "track_id": "6xGruZOHLs39ZbVccQTuPZ",
+        "track_name": "Glimpse of Us",
+        "artists_name": "Joji",
+        "album_name": "Glimpse of Us",
+        "duration_ms": 233456,
+        "selection_weather": "RAIN"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 14,
+        "duration_seconds": 234,
+        "checked_at": "2026-10-16T08:34:48.054Z",
+        "source": null
+      }
+    },
+    {
+      "track_id": "7dSZ6zGTQx66c2GF91xCrb",
+      "video_id": "ca48oMV59LU",
+      "video_url": "https://www.youtube.com/watch?v=ca48oMV59LU",
+      "youtube_title": "KAROL G - Provenza (Official Video)",
+      "channel": "KarolGVEVO",
+      "album_match": "UNKNOWN",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 226,
+      "source_duration_seconds": 210.2,
+      "duration_tolerance_seconds": 25.223999999999997,
+      "duration_difference_seconds": 15.8,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=ca48oMV59LU"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:25.725544+00:00",
+      "match_score": 85,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 226,
+      "source_track": {
+        "track_id": "7dSZ6zGTQx66c2GF91xCrb",
+        "track_name": "PROVENZA",
+        "artists_name": "KAROL G",
+        "album_name": "PROVENZA",
+        "duration_ms": 210200,
+        "selection_weather": "SNOW"
+      },
+      "native_progress_observation": {
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:44:51.805Z",
+        "elapsed_seconds": 2,
+        "pause_control_observed": true,
+        "time_progress_observed": true,
+        "playback_observed": true,
+        "duration_seconds": 226
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "5ww2BF9slyYgNOk37BlC4u",
+      "video_id": "mY1IQ04tLUQ",
+      "video_url": "https://www.youtube.com/watch?v=mY1IQ04tLUQ",
+      "youtube_title": "La Bachata",
+      "channel": "Manuel Turizo - Topic",
+      "album_match": true,
+      "version_match": true,
+      "duration_seconds": 163,
+      "source_duration_seconds": 162.637,
+      "duration_difference_seconds": 0.363,
+      "duration_tolerance_seconds": 19.516,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=mY1IQ04tLUQ",
+        "https://open.spotify.com/track/5ww2BF9slyYgNOk37BlC4u"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:32.661660+00:00",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "match_score": 100,
+      "score_is_probability": false,
+      "notes": "원곡 전체 청취·음원 지문 대조가 아닌 공식 메타데이터 식별입니다. 실제 재생 관측 없는 곡은 미관측 상태를 유지합니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 162,
+      "source_track": {
+        "track_id": "5ww2BF9slyYgNOk37BlC4u",
+        "track_name": "La Bachata",
+        "artists_name": "Manuel Turizo",
+        "album_name": "La Bachata",
+        "duration_ms": 162637,
+        "selection_weather": "CLEAR"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 162,
+        "checked_at": "2026-10-16T08:36:16.123Z",
+        "source": "BROWSER_DOM"
+      }
+    },
+    {
+      "track_id": "5Eax0qFko2dh7Rl2lYs3bx",
+      "video_id": "yO-XR4qXm1k",
+      "video_url": "https://www.youtube.com/watch?v=yO-XR4qXm1k",
+      "youtube_title": "Efecto",
+      "channel": "Bad Bunny - Topic",
+      "album_match": "MATCH",
+      "observed_album": "Un Verano Sin Ti",
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 213,
+      "source_duration_seconds": 213.061,
+      "duration_difference_seconds": 0.061,
+      "duration_tolerance_seconds": 25.567,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=yO-XR4qXm1k",
+        "https://open.spotify.com/track/5Eax0qFko2dh7Rl2lYs3bx"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:10.265577+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 100,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 213,
+      "source_track": {
+        "track_id": "5Eax0qFko2dh7Rl2lYs3bx",
+        "track_name": "Efecto",
+        "artists_name": "Bad Bunny",
+        "album_name": "Un Verano Sin Ti",
+        "duration_ms": 213061,
+        "selection_weather": "CLOUDY"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 213,
+        "checked_at": "2026-10-16T08:34:58.575Z",
+        "source": null
+      }
+    },
+    {
+      "track_id": "31i56LZnwE6uSu3exoHjtB",
+      "video_id": "j97HJYmDdQg",
+      "video_url": "https://www.youtube.com/watch?v=j97HJYmDdQg",
+      "youtube_title": "Neverita",
+      "channel": "Bad Bunny - Topic",
+      "album_match": "MATCH",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 173,
+      "source_duration_seconds": 173.119,
+      "duration_tolerance_seconds": 20.77428,
+      "duration_difference_seconds": -0.119,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=j97HJYmDdQg"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:29.313742+00:00",
+      "match_score": 100,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 173,
+      "source_track": {
+        "track_id": "31i56LZnwE6uSu3exoHjtB",
+        "track_name": "Neverita",
+        "artists_name": "Bad Bunny",
+        "album_name": "Un Verano Sin Ti",
+        "duration_ms": 173119,
+        "selection_weather": "OVERCAST"
+      },
+      "native_progress_observation": {
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:44:57.678Z",
+        "elapsed_seconds": 1,
+        "pause_control_observed": true,
+        "time_progress_observed": true,
+        "playback_observed": true,
+        "duration_seconds": 173
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "0T5iIrXA4p5GsubkhuBIKV",
+      "video_id": "MlThQTo6D8A",
+      "video_url": "https://www.youtube.com/watch?v=MlThQTo6D8A",
+      "youtube_title": "Stephen Sanchez - \"Until I Found You\" (Official Audio)",
+      "channel": "Stephen Sanchez",
+      "album_match": "unknown",
+      "version_match": true,
+      "duration_seconds": 178,
+      "source_duration_seconds": 177.72,
+      "duration_difference_seconds": 0.28,
+      "duration_tolerance_seconds": 21.326,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=MlThQTo6D8A",
+        "https://open.spotify.com/track/0T5iIrXA4p5GsubkhuBIKV"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:32.662946+00:00",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "match_score": 85,
+      "score_is_probability": false,
+      "notes": "원곡 전체 청취·음원 지문 대조가 아닌 공식 메타데이터 식별입니다. 실제 재생 관측 없는 곡은 미관측 상태를 유지합니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 178,
+      "source_track": {
+        "track_id": "0T5iIrXA4p5GsubkhuBIKV",
+        "track_name": "Until I Found You",
+        "artists_name": "Stephen Sanchez",
+        "album_name": "Until I Found You",
+        "duration_ms": 177720,
+        "selection_weather": "RAIN"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 1,
+        "duration_seconds": 178,
+        "checked_at": "2026-10-16T08:50:10.822Z",
+        "source": "ROOT_CUA_NATIVE_TIME_PROGRESS"
+      }
+    },
+    {
+      "track_id": "02MWAaffLxlfxAUY7c5dvx",
+      "video_id": "XDjB9E3YtUE",
+      "video_url": "https://www.youtube.com/watch?v=XDjB9E3YtUE",
+      "youtube_title": "Heat Waves",
+      "channel": "Glass Animals - Topic",
+      "album_match": "UNKNOWN",
+      "observed_album": null,
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 239,
+      "source_duration_seconds": 238.805,
+      "duration_difference_seconds": 0.195,
+      "duration_tolerance_seconds": 28.657,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=XDjB9E3YtUE",
+        "https://open.spotify.com/track/02MWAaffLxlfxAUY7c5dvx"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:10.265577+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 85,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 238,
+      "source_track": {
+        "track_id": "02MWAaffLxlfxAUY7c5dvx",
+        "track_name": "Heat Waves",
+        "artists_name": "Glass Animals",
+        "album_name": "Dreamland (+ Bonus Levels)",
+        "duration_ms": 238805,
+        "selection_weather": "SNOW"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 1,
+        "duration_seconds": 238,
+        "checked_at": "2026-10-16T08:35:04.115Z",
+        "source": null
+      }
+    },
+    {
+      "track_id": "4h9wh7iOZ0GGn8QVp4RAOB",
+      "video_id": "mNEUkkoUoIA",
+      "video_url": "https://www.youtube.com/watch?v=mNEUkkoUoIA",
+      "youtube_title": "OneRepublic - I Ain’t Worried (From “Top Gun: Maverick”) [Official Music Video]",
+      "channel": "OneRepublicVEVO",
+      "album_match": "MATCH",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 154,
+      "source_duration_seconds": 148.485,
+      "duration_tolerance_seconds": 17.8182,
+      "duration_difference_seconds": 5.515,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=mNEUkkoUoIA"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:25.726089+00:00",
+      "match_score": 100,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 154,
+      "source_track": {
+        "track_id": "4h9wh7iOZ0GGn8QVp4RAOB",
+        "track_name": "I Ain't Worried",
+        "artists_name": "OneRepublic",
+        "album_name": "I Ain’t Worried (Music From The Motion Picture \"Top Gun: Maverick\")",
+        "duration_ms": 148485,
+        "selection_weather": "CLEAR"
+      },
+      "native_progress_observation": {
+        "playback_observed": true,
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:38:58.334Z",
+        "elapsed_seconds": 1,
+        "pause_control_observed": true,
+        "time_progress_observed": true,
+        "duration_seconds": 154
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "3k3NWokhRRkEPhCzPmV8TW",
+      "video_id": "10EX-_h4pYc",
+      "video_url": "https://www.youtube.com/watch?v=10EX-_h4pYc",
+      "youtube_title": "Bad Bunny (ft. Bomba Estéreo) - Ojitos Lindos (360° Visualizer) | Un Verano Sin Ti",
+      "channel": "Bad Bunny",
+      "album_match": true,
+      "version_match": true,
+      "duration_seconds": 259,
+      "source_duration_seconds": 258.298,
+      "duration_difference_seconds": 0.702,
+      "duration_tolerance_seconds": 30.996,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=10EX-_h4pYc",
+        "https://open.spotify.com/track/3k3NWokhRRkEPhCzPmV8TW"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:32.663450+00:00",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "match_score": 100,
+      "score_is_probability": false,
+      "notes": "원곡 전체 청취·음원 지문 대조가 아닌 공식 메타데이터 식별입니다. 실제 재생 관측 없는 곡은 미관측 상태를 유지합니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 258,
+      "source_track": {
+        "track_id": "3k3NWokhRRkEPhCzPmV8TW",
+        "track_name": "Ojitos Lindos",
+        "artists_name": "Bad Bunny;Bomba Estéreo",
+        "album_name": "Un Verano Sin Ti",
+        "duration_ms": 258298,
+        "selection_weather": "CLOUDY"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 31,
+        "duration_seconds": 258,
+        "checked_at": "2026-10-16T08:52:04.099Z",
+        "source": "ROOT_CUA_NATIVE_TIME_PROGRESS"
+      }
+    },
+    {
+      "track_id": "5XeFesFbtLpXzIVDNQP22n",
+      "video_id": "nyuo9-OjNNg",
+      "video_url": "https://www.youtube.com/watch?v=nyuo9-OjNNg",
+      "youtube_title": "I Wanna Be Yours",
+      "channel": "Arctic Monkeys - Topic",
+      "album_match": "MATCH",
+      "observed_album": "AM",
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 184,
+      "source_duration_seconds": 183.956,
+      "duration_difference_seconds": 0.044,
+      "duration_tolerance_seconds": 22.075,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=nyuo9-OjNNg",
+        "https://open.spotify.com/track/5XeFesFbtLpXzIVDNQP22n"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:11.205409+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 100,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 183,
+      "source_track": {
+        "track_id": "5XeFesFbtLpXzIVDNQP22n",
+        "track_name": "I Wanna Be Yours",
+        "artists_name": "Arctic Monkeys",
+        "album_name": "AM",
+        "duration_ms": 183956,
+        "selection_weather": "OVERCAST"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 183,
+        "checked_at": "2026-10-16T08:35:11.681Z",
+        "source": null
+      }
+    },
+    {
+      "track_id": "75FEaRjZTKLhTrFGsfMUXR",
+      "video_id": "wp43OdtAAkM",
+      "video_url": "https://www.youtube.com/watch?v=wp43OdtAAkM",
+      "youtube_title": "Kate Bush - Running Up That Hill - Official Music Video",
+      "channel": "KateBushMusic",
+      "album_match": "MATCH",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 296,
+      "source_duration_seconds": 298.933,
+      "duration_tolerance_seconds": 35.871959999999994,
+      "duration_difference_seconds": -2.933,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=wp43OdtAAkM"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:25.727314+00:00",
+      "match_score": 100,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 295,
+      "source_track": {
+        "track_id": "75FEaRjZTKLhTrFGsfMUXR",
+        "track_name": "Running Up That Hill (A Deal With God)",
+        "artists_name": "Kate Bush",
+        "album_name": "Hounds Of Love",
+        "duration_ms": 298933,
+        "selection_weather": "RAIN"
+      },
+      "native_progress_observation": {
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:45:17.023Z",
+        "elapsed_seconds": 2,
+        "pause_control_observed": true,
+        "time_progress_observed": true,
+        "playback_observed": true,
+        "duration_seconds": 295
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "5O2P9iiztwhomNh8xkR9lJ",
+      "video_id": "ff4T7tZIPkY",
+      "video_url": "https://www.youtube.com/watch?v=ff4T7tZIPkY",
+      "youtube_title": "One Direction - Night Changes (Audio)",
+      "channel": "OneDirectionVEVO",
+      "album_match": "unknown",
+      "version_match": true,
+      "duration_seconds": 228,
+      "source_duration_seconds": 226.6,
+      "duration_difference_seconds": 1.4,
+      "duration_tolerance_seconds": 27.192,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=ff4T7tZIPkY",
+        "https://open.spotify.com/track/5O2P9iiztwhomNh8xkR9lJ"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:33.739408+00:00",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "match_score": 85,
+      "score_is_probability": false,
+      "notes": "원곡 전체 청취·음원 지문 대조가 아닌 공식 메타데이터 식별입니다. 실제 재생 관측 없는 곡은 미관측 상태를 유지합니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 228,
+      "source_track": {
+        "track_id": "5O2P9iiztwhomNh8xkR9lJ",
+        "track_name": "Night Changes",
+        "artists_name": "One Direction",
+        "album_name": "FOUR (Deluxe)",
+        "duration_ms": 226600,
+        "selection_weather": "SNOW"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 24,
+        "duration_seconds": 228,
+        "checked_at": "2026-10-16T08:41:42.714Z",
+        "source": "ROOT_CUA_NATIVE_TIME_PROGRESS"
+      }
+    },
+    {
+      "track_id": "4LRPiXqCikLlN15c3yImP7",
+      "video_id": "H5v3kku4y6Q",
+      "video_url": "https://www.youtube.com/watch?v=H5v3kku4y6Q",
+      "youtube_title": "Harry Styles - As It Was (Official Video)",
+      "channel": "HarryStylesVEVO",
+      "album_match": "UNKNOWN",
+      "observed_album": null,
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 166,
+      "source_duration_seconds": 167.303,
+      "duration_difference_seconds": 1.303,
+      "duration_tolerance_seconds": 20.076,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=H5v3kku4y6Q",
+        "https://open.spotify.com/track/4LRPiXqCikLlN15c3yImP7"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:11.257660+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 85,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 165,
+      "source_track": {
+        "track_id": "4LRPiXqCikLlN15c3yImP7",
+        "track_name": "As It Was",
+        "artists_name": "Harry Styles",
+        "album_name": "As It Was",
+        "duration_ms": 167303,
+        "selection_weather": "CLEAR"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 165,
+        "checked_at": "2026-10-16T08:35:18.228Z",
+        "source": null
+      }
+    },
+    {
+      "track_id": "2QjOHCTQ1Jl3zawyYOpxh6",
+      "video_id": "GCdwKhTtNNw",
+      "video_url": "https://www.youtube.com/watch?v=GCdwKhTtNNw",
+      "youtube_title": "The Neighbourhood - Sweater Weather (Official Video)",
+      "channel": "TheNeighbourhoodVEVO",
+      "album_match": "UNKNOWN",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 252,
+      "source_duration_seconds": 240.4,
+      "duration_tolerance_seconds": 28.848,
+      "duration_difference_seconds": 11.6,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=GCdwKhTtNNw"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:25.728314+00:00",
+      "match_score": 85,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 252,
+      "source_track": {
+        "track_id": "2QjOHCTQ1Jl3zawyYOpxh6",
+        "track_name": "Sweater Weather",
+        "artists_name": "The Neighbourhood",
+        "album_name": "I Love You.",
+        "duration_ms": 240400,
+        "selection_weather": "CLOUDY"
+      },
+      "native_progress_observation": {
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:45:23.763Z",
+        "elapsed_seconds": 1,
+        "pause_control_observed": true,
+        "time_progress_observed": true,
+        "playback_observed": true,
+        "duration_seconds": 252
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "1Fid2jjqsHViMX6xNH70hE",
+      "video_id": "33ou_Z3IqrE",
+      "video_url": "https://www.youtube.com/watch?v=33ou_Z3IqrE",
+      "youtube_title": "Atlantis",
+      "channel": "Seafret - Topic",
+      "album_match": "BASE_ALBUM_MATCH_EDITION_UNCONFIRMED",
+      "version_match": true,
+      "duration_seconds": 229,
+      "source_duration_seconds": 229.173,
+      "duration_difference_seconds": 0.173,
+      "duration_tolerance_seconds": 27.501,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=33ou_Z3IqrE",
+        "https://open.spotify.com/track/1Fid2jjqsHViMX6xNH70hE"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:33.908859+00:00",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "match_score": 85,
+      "score_is_probability": false,
+      "notes": "원곡 전체 청취·음원 지문 대조가 아닌 공식 메타데이터 식별입니다. 실제 재생 관측 없는 곡은 미관측 상태를 유지합니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 229,
+      "source_track": {
+        "track_id": "1Fid2jjqsHViMX6xNH70hE",
+        "track_name": "Atlantis",
+        "artists_name": "Seafret",
+        "album_name": "Tell Me It's Real (Expanded Edition)",
+        "duration_ms": 229173,
+        "selection_weather": "OVERCAST"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 1,
+        "duration_seconds": 229,
+        "checked_at": "2026-10-16T08:42:02.728Z",
+        "source": "ROOT_CUA_NATIVE_TIME_PROGRESS"
+      }
+    },
+    {
+      "track_id": "0u2P5u6lvoDfwTYjAADbn4",
+      "video_id": "wjj2upnfBI0",
+      "video_url": "https://www.youtube.com/watch?v=wjj2upnfBI0",
+      "youtube_title": "Billie Eilish - lovely (with Khalid) Audio",
+      "channel": "Billie Eilish",
+      "album_match": "UNKNOWN",
+      "observed_album": null,
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 201,
+      "source_duration_seconds": 200.185,
+      "duration_difference_seconds": 0.815,
+      "duration_tolerance_seconds": 24.022,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=wjj2upnfBI0",
+        "https://open.spotify.com/track/0u2P5u6lvoDfwTYjAADbn4"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:11.340588+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 85,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 200,
+      "source_track": {
+        "track_id": "0u2P5u6lvoDfwTYjAADbn4",
+        "track_name": "lovely (with Khalid)",
+        "artists_name": "Billie Eilish;Khalid",
+        "album_name": "lovely (with Khalid)",
+        "duration_ms": 200185,
+        "selection_weather": "RAIN"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 200,
+        "checked_at": "2026-10-16T08:35:31.850Z",
+        "source": null
+      }
+    },
+    {
+      "track_id": "7795WJLVKJoAyVoOtCWqXN",
+      "video_id": "jyF0ZVs6J5Y",
+      "video_url": "https://www.youtube.com/watch?v=jyF0ZVs6J5Y",
+      "youtube_title": "I'm Not The Only One",
+      "channel": "Sam Smith - Topic",
+      "album_match": "MATCH",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 239,
+      "source_duration_seconds": 239.316,
+      "duration_tolerance_seconds": 28.71792,
+      "duration_difference_seconds": -0.316,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=jyF0ZVs6J5Y"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:30.076135+00:00",
+      "match_score": 100,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 239,
+      "source_track": {
+        "track_id": "7795WJLVKJoAyVoOtCWqXN",
+        "track_name": "I'm Not The Only One",
+        "artists_name": "Sam Smith",
+        "album_name": "In The Lonely Hour",
+        "duration_ms": 239316,
+        "selection_weather": "SNOW"
+      },
+      "native_progress_observation": {
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:45:33.272Z",
+        "elapsed_seconds": 1,
+        "pause_control_observed": true,
+        "time_progress_observed": true,
+        "playback_observed": true,
+        "duration_seconds": 239
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "0WtM2NBVQNNJLh6scP13H8",
+      "video_id": "LPgN4EfzUrU",
+      "video_url": "https://www.youtube.com/watch?v=LPgN4EfzUrU",
+      "youtube_title": "Rema & Selena Gomez - Calm Down (Official Lyric Video)",
+      "channel": "Rema",
+      "album_match": "unknown",
+      "version_match": true,
+      "duration_seconds": 239,
+      "source_duration_seconds": 239.317,
+      "duration_difference_seconds": 0.317,
+      "duration_tolerance_seconds": 28.718,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=LPgN4EfzUrU",
+        "https://open.spotify.com/track/0WtM2NBVQNNJLh6scP13H8"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:33.992058+00:00",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "match_score": 85,
+      "score_is_probability": false,
+      "notes": "원곡 전체 청취·음원 지문 대조가 아닌 공식 메타데이터 식별입니다. 실제 재생 관측 없는 곡은 미관측 상태를 유지합니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 239,
+      "source_track": {
+        "track_id": "0WtM2NBVQNNJLh6scP13H8",
+        "track_name": "Calm Down (with Selena Gomez)",
+        "artists_name": "Rema;Selena Gomez",
+        "album_name": "Calm Down (with Selena Gomez)",
+        "duration_ms": 239317,
+        "selection_weather": "CLEAR"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 1,
+        "duration_seconds": 239,
+        "checked_at": "2026-10-16T08:42:08.313Z",
+        "source": "ROOT_CUA_NATIVE_TIME_PROGRESS"
+      }
+    },
+    {
+      "track_id": "0mBP9X2gPCuapvpZ7TGDk3",
+      "video_id": "dCh71IWG4qU",
+      "video_url": "https://www.youtube.com/watch?v=dCh71IWG4qU",
+      "youtube_title": "Left and Right (Feat. Jung Kook of BTS)",
+      "channel": "Charlie Puth - Topic",
+      "album_match": "MATCH",
+      "observed_album": "Left and Right (Feat. Jung Kook of BTS)",
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 154,
+      "source_duration_seconds": 154.486,
+      "duration_difference_seconds": 0.486,
+      "duration_tolerance_seconds": 18.538,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=dCh71IWG4qU",
+        "https://open.spotify.com/track/0mBP9X2gPCuapvpZ7TGDk3"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:11.672044+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 100,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 154,
+      "source_track": {
+        "track_id": "0mBP9X2gPCuapvpZ7TGDk3",
+        "track_name": "Left and Right (Feat. Jung Kook of BTS)",
+        "artists_name": "Charlie Puth;Jung Kook;BTS",
+        "album_name": "Left and Right (Feat. Jung Kook of BTS)",
+        "duration_ms": 154486,
+        "selection_weather": "CLOUDY"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 154,
+        "checked_at": "2026-10-16T08:41:12.402Z",
+        "source": null
+      }
+    },
+    {
+      "track_id": "3WMj8moIAXJhHsyLaqIIHI",
+      "video_id": "bnO0RwkNvWQ",
+      "video_url": "https://www.youtube.com/watch?v=bnO0RwkNvWQ",
+      "youtube_title": "Something in the Orange",
+      "channel": "Zach Bryan - Topic",
+      "album_match": "MATCH",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 228,
+      "source_duration_seconds": 228.013,
+      "duration_tolerance_seconds": 27.36156,
+      "duration_difference_seconds": -0.013,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=bnO0RwkNvWQ"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:36.527278+00:00",
+      "match_score": 100,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 228,
+      "source_track": {
+        "track_id": "3WMj8moIAXJhHsyLaqIIHI",
+        "track_name": "Something in the Orange",
+        "artists_name": "Zach Bryan",
+        "album_name": "Something in the Orange",
+        "duration_ms": 228013,
+        "selection_weather": "OVERCAST"
+      },
+      "native_progress_observation": {
+        "playback_observed": true,
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:39:26.243Z",
+        "elapsed_seconds": 1,
+        "pause_control_observed": true,
+        "time_progress_observed": true,
+        "duration_seconds": 228
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "2TktkzfozZifbQhXjT6I33",
+      "video_id": "ixTkLjTBQyk",
+      "video_url": "https://www.youtube.com/watch?v=ixTkLjTBQyk",
+      "youtube_title": "Omar Apollo - Evergreen (You Didn’t Deserve Me At All) [Official Music Video]",
+      "channel": "Omar Apollo",
+      "album_match": "unknown",
+      "version_match": true,
+      "duration_seconds": 224,
+      "source_duration_seconds": 216.68,
+      "duration_difference_seconds": 7.32,
+      "duration_tolerance_seconds": 26.002,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=ixTkLjTBQyk",
+        "https://open.spotify.com/track/2TktkzfozZifbQhXjT6I33"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:34.025849+00:00",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "match_score": 85,
+      "score_is_probability": false,
+      "notes": "원곡 전체 청취·음원 지문 대조가 아닌 공식 메타데이터 식별입니다. 실제 재생 관측 없는 곡은 미관측 상태를 유지합니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 223,
+      "source_track": {
+        "track_id": "2TktkzfozZifbQhXjT6I33",
+        "track_name": "Evergreen (You Didn’t Deserve Me At All)",
+        "artists_name": "Omar Apollo",
+        "album_name": "Ivory",
+        "duration_ms": 216680,
+        "selection_weather": "RAIN"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 223,
+        "checked_at": "2026-10-16T08:42:13.607Z",
+        "source": "ROOT_CUA_NATIVE_TIME_PROGRESS"
+      }
+    },
+    {
+      "track_id": "7qEHsqek33rTcFNT9PFqLf",
+      "video_id": "xrcMgO2fgpA",
+      "video_url": "https://www.youtube.com/watch?v=xrcMgO2fgpA",
+      "youtube_title": "Lewis Capaldi - Someone You Loved (Official Audio)",
+      "channel": "LewisCapaldiVEVO",
+      "album_match": "UNKNOWN",
+      "observed_album": null,
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 183,
+      "source_duration_seconds": 182.16,
+      "duration_difference_seconds": 0.84,
+      "duration_tolerance_seconds": 21.859,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=xrcMgO2fgpA",
+        "https://open.spotify.com/track/7qEHsqek33rTcFNT9PFqLf"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:12.226081+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 85,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 182,
+      "source_track": {
+        "track_id": "7qEHsqek33rTcFNT9PFqLf",
+        "track_name": "Someone You Loved",
+        "artists_name": "Lewis Capaldi",
+        "album_name": "Divinely Uninspired To A Hellish Extent",
+        "duration_ms": 182160,
+        "selection_weather": "SNOW"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 182,
+        "checked_at": "2026-10-16T08:35:45.740Z",
+        "source": null
+      }
+    },
+    {
+      "track_id": "0VjIjW4GlUZAMYd2vXMi3b",
+      "video_id": "fHI8X4OXluQ",
+      "video_url": "https://www.youtube.com/watch?v=fHI8X4OXluQ",
+      "youtube_title": "The Weeknd - Blinding Lights (Official Audio)",
+      "channel": "TheWeekndVEVO",
+      "album_match": "UNKNOWN",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 203,
+      "source_duration_seconds": 200.04,
+      "duration_tolerance_seconds": 24.0048,
+      "duration_difference_seconds": 2.96,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=fHI8X4OXluQ"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:26.805578+00:00",
+      "match_score": 85,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 203,
+      "source_track": {
+        "track_id": "0VjIjW4GlUZAMYd2vXMi3b",
+        "track_name": "Blinding Lights",
+        "artists_name": "The Weeknd",
+        "album_name": "After Hours",
+        "duration_ms": 200040,
+        "selection_weather": "CLEAR"
+      },
+      "native_progress_observation": {
+        "playback_observed": true,
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:35:52.294Z",
+        "elapsed_seconds": 1,
+        "pause_control_observed": true,
+        "time_progress_observed": true,
+        "duration_seconds": 203
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "1cKHdTo9u0ZymJdPGSh6nq",
+      "video_id": "OlStmta0Vh4",
+      "video_url": "https://www.youtube.com/watch?v=OlStmta0Vh4",
+      "youtube_title": "The Weeknd - I Was Never There feat. Gesaffelstein (Official Audio)",
+      "channel": "The Weeknd",
+      "album_match": true,
+      "version_match": true,
+      "duration_seconds": 241,
+      "source_duration_seconds": 241.066,
+      "duration_difference_seconds": 0.066,
+      "duration_tolerance_seconds": 28.928,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=OlStmta0Vh4",
+        "https://open.spotify.com/track/1cKHdTo9u0ZymJdPGSh6nq"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:34.950790+00:00",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "match_score": 100,
+      "score_is_probability": false,
+      "notes": "원곡 전체 청취·음원 지문 대조가 아닌 공식 메타데이터 식별입니다. 실제 재생 관측 없는 곡은 미관측 상태를 유지합니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 241,
+      "source_track": {
+        "track_id": "1cKHdTo9u0ZymJdPGSh6nq",
+        "track_name": "I Was Never There",
+        "artists_name": "The Weeknd;Gesaffelstein",
+        "album_name": "My Dear Melancholy,",
+        "duration_ms": 241066,
+        "selection_weather": "CLOUDY"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 1,
+        "duration_seconds": 241,
+        "checked_at": "2026-10-16T08:42:39.665Z",
+        "source": "ROOT_CUA_NATIVE_TIME_PROGRESS"
+      }
+    },
+    {
+      "track_id": "1R0a2iXumgCiFb7HEZ7gUE",
+      "video_id": "blVed8CyzoQ",
+      "video_url": "https://www.youtube.com/watch?v=blVed8CyzoQ",
+      "youtube_title": "Don’t Blame Me",
+      "channel": "Taylor Swift - Topic",
+      "album_match": "MATCH",
+      "observed_album": "reputation",
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 236,
+      "source_duration_seconds": 236.413,
+      "duration_difference_seconds": 0.413,
+      "duration_tolerance_seconds": 28.37,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=blVed8CyzoQ",
+        "https://open.spotify.com/track/1R0a2iXumgCiFb7HEZ7gUE"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:12.335548+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 100,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 236,
+      "source_track": {
+        "track_id": "1R0a2iXumgCiFb7HEZ7gUE",
+        "track_name": "Don’t Blame Me",
+        "artists_name": "Taylor Swift",
+        "album_name": "reputation",
+        "duration_ms": 236413,
+        "selection_weather": "OVERCAST"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 236,
+        "checked_at": "2026-10-16T08:35:52.980Z",
+        "source": null
+      }
+    },
+    {
+      "track_id": "5CZ40GBx1sQ9agT82CLQCT",
+      "video_id": "CRrf3h9vhp8",
+      "video_url": "https://www.youtube.com/watch?v=CRrf3h9vhp8",
+      "youtube_title": "Olivia Rodrigo - traitor (Official Video)",
+      "channel": "OliviaRodrigoVEVO",
+      "album_match": "MATCH",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 237,
+      "source_duration_seconds": 229.226,
+      "duration_tolerance_seconds": 27.50712,
+      "duration_difference_seconds": 7.774,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=CRrf3h9vhp8"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:26.898143+00:00",
+      "match_score": 100,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 237,
+      "source_track": {
+        "track_id": "5CZ40GBx1sQ9agT82CLQCT",
+        "track_name": "traitor",
+        "artists_name": "Olivia Rodrigo",
+        "album_name": "SOUR",
+        "duration_ms": 229226,
+        "selection_weather": "RAIN"
+      },
+      "native_progress_observation": {
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:45:39.989Z",
+        "elapsed_seconds": 2,
+        "pause_control_observed": true,
+        "time_progress_observed": true,
+        "playback_observed": true,
+        "duration_seconds": 237
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "1JSTJqkT5qHq8MDJnJbRE1",
+      "video_id": "G9Pag6dbsjc",
+      "video_url": "https://www.youtube.com/watch?v=G9Pag6dbsjc",
+      "youtube_title": "Every Breath You Take (Remastered 2003)",
+      "channel": "The Police - Topic",
+      "album_match": "unknown",
+      "version_match": true,
+      "duration_seconds": 254,
+      "source_duration_seconds": 253.92,
+      "duration_difference_seconds": 0.08,
+      "duration_tolerance_seconds": 30.47,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=G9Pag6dbsjc",
+        "https://open.spotify.com/track/1JSTJqkT5qHq8MDJnJbRE1"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:35.062097+00:00",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "match_score": 85,
+      "score_is_probability": false,
+      "notes": "원곡 전체 청취·음원 지문 대조가 아닌 공식 메타데이터 식별입니다. 실제 재생 관측 없는 곡은 미관측 상태를 유지합니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 254,
+      "source_track": {
+        "track_id": "1JSTJqkT5qHq8MDJnJbRE1",
+        "track_name": "Every Breath You Take",
+        "artists_name": "The Police",
+        "album_name": "Synchronicity (Remastered 2003)",
+        "duration_ms": 253920,
+        "selection_weather": "SNOW"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 1,
+        "duration_seconds": 254,
+        "checked_at": "2026-10-16T08:42:45.030Z",
+        "source": "ROOT_CUA_NATIVE_TIME_PROGRESS"
+      }
+    },
+    {
+      "track_id": "79HZAZNnOE97rb2hnI0XQr",
+      "video_id": "caK1mxn4bRI",
+      "video_url": "https://www.youtube.com/watch?v=caK1mxn4bRI",
+      "youtube_title": "LOKERA",
+      "channel": "Rauw Alejandro - Topic",
+      "album_match": "MATCH",
+      "observed_album": "LOKERA",
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 197,
+      "source_duration_seconds": 195.294,
+      "duration_difference_seconds": 1.706,
+      "duration_tolerance_seconds": 23.435,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=caK1mxn4bRI",
+        "https://open.spotify.com/track/79HZAZNnOE97rb2hnI0XQr"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:12.495869+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 100,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 197,
+      "source_track": {
+        "track_id": "79HZAZNnOE97rb2hnI0XQr",
+        "track_name": "LOKERA",
+        "artists_name": "Rauw Alejandro;Lyanno;Brray",
+        "album_name": "LOKERA",
+        "duration_ms": 195294,
+        "selection_weather": "CLEAR"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 197,
+        "checked_at": "2026-10-16T08:36:20.543Z",
+        "source": null
+      }
+    },
+    {
+      "track_id": "1ga4PztXOIw1yBbdUt2X8v",
+      "video_id": "SK37InR9j38",
+      "video_url": "https://www.youtube.com/watch?v=SK37InR9j38",
+      "youtube_title": "KAROL G, Maldy - Gatúbela (Official Video)",
+      "channel": "KarolGVEVO",
+      "album_match": "UNKNOWN",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 222,
+      "source_duration_seconds": 209.16,
+      "duration_tolerance_seconds": 25.0992,
+      "duration_difference_seconds": 12.84,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=SK37InR9j38"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:27.025692+00:00",
+      "match_score": 85,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 222,
+      "source_track": {
+        "track_id": "1ga4PztXOIw1yBbdUt2X8v",
+        "track_name": "GATÚBELA",
+        "artists_name": "KAROL G;Maldy",
+        "album_name": "GATÚBELA",
+        "duration_ms": 209160,
+        "selection_weather": "CLOUDY"
+      },
+      "native_progress_observation": {
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:45:52.704Z",
+        "elapsed_seconds": 2,
+        "pause_control_observed": true,
+        "time_progress_observed": true,
+        "playback_observed": true,
+        "duration_seconds": 222
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "2Ch7LmS7r2Gy2kc64wv3Bz",
+      "video_id": "2AH5l-vrY9Q",
+      "video_url": "https://www.youtube.com/watch?v=2AH5l-vrY9Q",
+      "youtube_title": "The Weeknd - Die For You (Audio)",
+      "channel": "TheWeekndVEVO",
+      "album_match": "unknown",
+      "version_match": true,
+      "duration_seconds": 260,
+      "source_duration_seconds": 260.253,
+      "duration_difference_seconds": 0.253,
+      "duration_tolerance_seconds": 31.23,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=2AH5l-vrY9Q",
+        "https://open.spotify.com/track/2Ch7LmS7r2Gy2kc64wv3Bz"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:35.101160+00:00",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "match_score": 85,
+      "score_is_probability": false,
+      "notes": "원곡 전체 청취·음원 지문 대조가 아닌 공식 메타데이터 식별입니다. 실제 재생 관측 없는 곡은 미관측 상태를 유지합니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 260,
+      "source_track": {
+        "track_id": "2Ch7LmS7r2Gy2kc64wv3Bz",
+        "track_name": "Die For You",
+        "artists_name": "The Weeknd",
+        "album_name": "Starboy",
+        "duration_ms": 260253,
+        "selection_weather": "OVERCAST"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 260,
+        "checked_at": "2026-10-16T08:42:51.386Z",
+        "source": "ROOT_CUA_NATIVE_TIME_PROGRESS"
+      }
+    },
+    {
+      "track_id": "4xqrdfXkTW4T0RauPLv3WA",
+      "video_id": "CWqdowLFRKw",
+      "video_url": "https://www.youtube.com/watch?v=CWqdowLFRKw",
+      "youtube_title": "Heather",
+      "channel": "Conan Gray - Topic",
+      "album_match": "MATCH",
+      "observed_album": "Kid Krow",
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 198,
+      "source_duration_seconds": 198.04,
+      "duration_difference_seconds": 0.04,
+      "duration_tolerance_seconds": 23.765,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=CWqdowLFRKw",
+        "https://open.spotify.com/track/4xqrdfXkTW4T0RauPLv3WA"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:12.913945+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 100,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 198,
+      "source_track": {
+        "track_id": "4xqrdfXkTW4T0RauPLv3WA",
+        "track_name": "Heather",
+        "artists_name": "Conan Gray",
+        "album_name": "Kid Krow",
+        "duration_ms": 198040,
+        "selection_weather": "RAIN"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 198,
+        "checked_at": "2026-10-16T08:42:05.413Z",
+        "source": null
+      }
+    },
+    {
+      "track_id": "3U4isOIWM3VvDubwSI3y7a",
+      "video_id": "sQtnhwU2R9Y",
+      "video_url": "https://www.youtube.com/watch?v=sQtnhwU2R9Y",
+      "youtube_title": "All of Me",
+      "channel": "John Legend - Topic",
+      "album_match": "MATCH",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 270,
+      "source_duration_seconds": 269.56,
+      "duration_tolerance_seconds": 32.3472,
+      "duration_difference_seconds": 0.44,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=sQtnhwU2R9Y"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:30.115564+00:00",
+      "match_score": 100,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted.",
+        "Expanded edition confirmed in native expanded description after first metadata pass."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 269,
+      "source_track": {
+        "track_id": "3U4isOIWM3VvDubwSI3y7a",
+        "track_name": "All of Me",
+        "artists_name": "John Legend",
+        "album_name": "Love In The Future (Expanded Edition)",
+        "duration_ms": 269560,
+        "selection_weather": "SNOW"
+      },
+      "native_progress_observation": {
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:49:02.662Z",
+        "elapsed_seconds": 1,
+        "pause_control_observed": true,
+        "time_progress_observed": true,
+        "playback_observed": true,
+        "duration_seconds": 269
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "2eAvDnpXP5W0cVtiI0PUxV",
+      "video_id": "W8a4sUabCUo",
+      "video_url": "https://www.youtube.com/watch?v=W8a4sUabCUo",
+      "youtube_title": "Ruth B. - Dandelions (Audio)",
+      "channel": "RuthBVEVO",
+      "album_match": "unknown",
+      "version_match": true,
+      "duration_seconds": 235,
+      "source_duration_seconds": 233.72,
+      "duration_difference_seconds": 1.28,
+      "duration_tolerance_seconds": 28.046,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=W8a4sUabCUo",
+        "https://open.spotify.com/track/2eAvDnpXP5W0cVtiI0PUxV"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:35.140101+00:00",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "match_score": 85,
+      "score_is_probability": false,
+      "notes": "원곡 전체 청취·음원 지문 대조가 아닌 공식 메타데이터 식별입니다. 실제 재생 관측 없는 곡은 미관측 상태를 유지합니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 235,
+      "source_track": {
+        "track_id": "2eAvDnpXP5W0cVtiI0PUxV",
+        "track_name": "Dandelions",
+        "artists_name": "Ruth B.",
+        "album_name": "Safe Haven",
+        "duration_ms": 233720,
+        "selection_weather": "CLEAR"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 235,
+        "checked_at": "2026-10-16T08:42:58.004Z",
+        "source": "ROOT_CUA_NATIVE_TIME_PROGRESS"
+      }
+    },
+    {
+      "track_id": "2rurDawMfoKP4uHyb2kJBt",
+      "video_id": "yLUkKuB1fog",
+      "video_url": "https://www.youtube.com/watch?v=yLUkKuB1fog",
+      "youtube_title": "Te Felicito",
+      "channel": "Shakira - Topic",
+      "album_match": "UNKNOWN",
+      "observed_album": null,
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 172,
+      "source_duration_seconds": 172.235,
+      "duration_difference_seconds": 0.235,
+      "duration_tolerance_seconds": 20.668,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=yLUkKuB1fog",
+        "https://open.spotify.com/track/2rurDawMfoKP4uHyb2kJBt"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:13.255359+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 85,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 172,
+      "source_track": {
+        "track_id": "2rurDawMfoKP4uHyb2kJBt",
+        "track_name": "Te Felicito",
+        "artists_name": "Shakira;Rauw Alejandro",
+        "album_name": "Te Felicito",
+        "duration_ms": 172235,
+        "selection_weather": "CLOUDY"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 1,
+        "duration_seconds": 172,
+        "checked_at": "2026-10-16T08:42:47.923Z",
+        "source": null
+      }
+    },
+    {
+      "track_id": "3uUuGVFu1V7jTQL60S1r8z",
+      "video_id": "-23UKjwu_10",
+      "video_url": "https://www.youtube.com/watch?v=-23UKjwu_10",
+      "youtube_title": "Where Are You Now",
+      "channel": "Lost Frequencies - Topic",
+      "album_match": "MATCH",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 148,
+      "source_duration_seconds": 148.197,
+      "duration_tolerance_seconds": 17.78364,
+      "duration_difference_seconds": -0.197,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=-23UKjwu_10"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:31.068914+00:00",
+      "match_score": 100,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 148,
+      "source_track": {
+        "track_id": "3uUuGVFu1V7jTQL60S1r8z",
+        "track_name": "Where Are You Now",
+        "artists_name": "Lost Frequencies;Calum Scott",
+        "album_name": "Where Are You Now",
+        "duration_ms": 148197,
+        "selection_weather": "OVERCAST"
+      },
+      "native_progress_observation": {
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:44:31.810Z",
+        "elapsed_seconds": 2,
+        "pause_control_observed": true,
+        "time_progress_observed": true,
+        "playback_observed": true,
+        "duration_seconds": 148
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "3ZCTVFBt2Brf31RLEnCkWJ",
+      "video_id": "qCTMq7xvdXU",
+      "video_url": "https://www.youtube.com/watch?v=qCTMq7xvdXU",
+      "youtube_title": "Billie Eilish - everything i wanted (Audio)",
+      "channel": "BillieEilishVEVO",
+      "album_match": "unknown",
+      "version_match": true,
+      "duration_seconds": 246,
+      "source_duration_seconds": 245.425,
+      "duration_difference_seconds": 0.575,
+      "duration_tolerance_seconds": 29.451,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=qCTMq7xvdXU",
+        "https://open.spotify.com/track/3ZCTVFBt2Brf31RLEnCkWJ"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:35.830444+00:00",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "match_score": 85,
+      "score_is_probability": false,
+      "notes": "원곡 전체 청취·음원 지문 대조가 아닌 공식 메타데이터 식별입니다. 실제 재생 관측 없는 곡은 미관측 상태를 유지합니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 246,
+      "source_track": {
+        "track_id": "3ZCTVFBt2Brf31RLEnCkWJ",
+        "track_name": "everything i wanted",
+        "artists_name": "Billie Eilish",
+        "album_name": "everything i wanted",
+        "duration_ms": 245425,
+        "selection_weather": "RAIN"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 1,
+        "duration_seconds": 246,
+        "checked_at": "2026-10-16T08:43:33.378Z",
+        "source": "ROOT_CUA_NATIVE_TIME_PROGRESS"
+      }
+    },
+    {
+      "track_id": "3xKsf9qdS1CyvXSMEid6g8",
+      "video_id": "9cHbvRUALrc",
+      "video_url": "https://www.youtube.com/watch?v=9cHbvRUALrc",
+      "youtube_title": "Pink + White",
+      "channel": "Frank Ocean - Topic",
+      "album_match": "MATCH",
+      "observed_album": "Blonde",
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 185,
+      "source_duration_seconds": 184.516,
+      "duration_difference_seconds": 0.484,
+      "duration_tolerance_seconds": 22.142,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=9cHbvRUALrc",
+        "https://open.spotify.com/track/3xKsf9qdS1CyvXSMEid6g8"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:13.348203+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 100,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 184,
+      "source_track": {
+        "track_id": "3xKsf9qdS1CyvXSMEid6g8",
+        "track_name": "Pink + White",
+        "artists_name": "Frank Ocean",
+        "album_name": "Blonde",
+        "duration_ms": 184516,
+        "selection_weather": "SNOW"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 184,
+        "checked_at": "2026-10-16T08:42:14.814Z",
+        "source": null
+      }
+    },
+    {
+      "track_id": "4tYFy8ALRjIZvnvSLw5lxN",
+      "video_id": "ZuJbaB27LzY",
+      "video_url": "https://www.youtube.com/watch?v=ZuJbaB27LzY",
+      "youtube_title": "Party",
+      "channel": "Bad Bunny - Topic",
+      "album_match": "MATCH",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 228,
+      "source_duration_seconds": 227.628,
+      "duration_tolerance_seconds": 27.31536,
+      "duration_difference_seconds": 0.372,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=ZuJbaB27LzY"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:31.182022+00:00",
+      "match_score": 100,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 227,
+      "source_track": {
+        "track_id": "4tYFy8ALRjIZvnvSLw5lxN",
+        "track_name": "Party",
+        "artists_name": "Bad Bunny;Rauw Alejandro",
+        "album_name": "Un Verano Sin Ti",
+        "duration_ms": 227628,
+        "selection_weather": "CLEAR"
+      },
+      "native_progress_observation": {
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:46:04.023Z",
+        "elapsed_seconds": 1,
+        "pause_control_observed": true,
+        "time_progress_observed": true,
+        "playback_observed": true,
+        "duration_seconds": 227
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "58HvfVOeJY7lUuCqF0m3ly",
+      "video_id": "Ky1dduzoEe0",
+      "video_url": "https://www.youtube.com/watch?v=Ky1dduzoEe0",
+      "youtube_title": "Elley Duhé - MIDDLE OF THE NIGHT (Audio)",
+      "channel": "ElleyDuheVEVO",
+      "album_match": "unknown",
+      "version_match": true,
+      "duration_seconds": 186,
+      "source_duration_seconds": 184.447,
+      "duration_difference_seconds": 1.553,
+      "duration_tolerance_seconds": 22.134,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=Ky1dduzoEe0",
+        "https://open.spotify.com/track/58HvfVOeJY7lUuCqF0m3ly"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:35.985180+00:00",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "match_score": 85,
+      "score_is_probability": false,
+      "notes": "원곡 전체 청취·음원 지문 대조가 아닌 공식 메타데이터 식별입니다. 실제 재생 관측 없는 곡은 미관측 상태를 유지합니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 186,
+      "source_track": {
+        "track_id": "58HvfVOeJY7lUuCqF0m3ly",
+        "track_name": "MIDDLE OF THE NIGHT",
+        "artists_name": "Elley Duhé",
+        "album_name": "MIDDLE OF THE NIGHT",
+        "duration_ms": 184447,
+        "selection_weather": "CLOUDY"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 1,
+        "duration_seconds": 186,
+        "checked_at": "2026-10-16T08:43:37.735Z",
+        "source": "ROOT_CUA_NATIVE_TIME_PROGRESS"
+      }
+    },
+    {
+      "track_id": "0tgVpDi06FyKpA1z0VMD4v",
+      "video_id": "iKzRIweSBLA",
+      "video_url": "https://www.youtube.com/watch?v=iKzRIweSBLA",
+      "youtube_title": "Ed Sheeran - Perfect [Official Lyric Video]",
+      "channel": "Ed Sheeran",
+      "album_match": "UNKNOWN",
+      "observed_album": null,
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 263,
+      "source_duration_seconds": 263.4,
+      "duration_difference_seconds": 0.4,
+      "duration_tolerance_seconds": 31.608,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=iKzRIweSBLA",
+        "https://open.spotify.com/track/0tgVpDi06FyKpA1z0VMD4v"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:13.728881+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 85,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 263,
+      "source_track": {
+        "track_id": "0tgVpDi06FyKpA1z0VMD4v",
+        "track_name": "Perfect",
+        "artists_name": "Ed Sheeran",
+        "album_name": "÷ (Deluxe)",
+        "duration_ms": 263400,
+        "selection_weather": "OVERCAST"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 263,
+        "checked_at": "2026-10-16T08:37:36.722Z",
+        "source": null
+      }
+    },
+    {
+      "track_id": "04sN26COy28wTXYj3dMoiZ",
+      "video_id": "WkXpvoyVz5E",
+      "video_url": "https://www.youtube.com/watch?v=WkXpvoyVz5E",
+      "youtube_title": "Bored",
+      "channel": "Billie Eilish - Topic",
+      "album_match": "MATCH",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 181,
+      "source_duration_seconds": 180.933,
+      "duration_tolerance_seconds": 21.711959999999998,
+      "duration_difference_seconds": 0.067,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=WkXpvoyVz5E"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:30.181072+00:00",
+      "match_score": 100,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 180,
+      "source_track": {
+        "track_id": "04sN26COy28wTXYj3dMoiZ",
+        "track_name": "Bored",
+        "artists_name": "Billie Eilish",
+        "album_name": "Bored",
+        "duration_ms": 180933,
+        "selection_weather": "RAIN"
+      },
+      "native_progress_observation": {
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:46:22.549Z",
+        "elapsed_seconds": 3,
+        "pause_control_observed": true,
+        "time_progress_observed": true,
+        "playback_observed": true,
+        "duration_seconds": 180
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "4cktbXiXOapiLBMprHFErI",
+      "video_id": "qZjYggYSzc8",
+      "video_url": "https://www.youtube.com/watch?v=qZjYggYSzc8",
+      "youtube_title": "Maroon 5 - Memories (Audio)",
+      "channel": "Maroon5VEVO",
+      "album_match": "unknown",
+      "version_match": true,
+      "duration_seconds": 191,
+      "source_duration_seconds": 189.486,
+      "duration_difference_seconds": 1.514,
+      "duration_tolerance_seconds": 22.738,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=qZjYggYSzc8",
+        "https://open.spotify.com/track/4cktbXiXOapiLBMprHFErI"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:36.144583+00:00",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "match_score": 85,
+      "score_is_probability": false,
+      "notes": "원곡 전체 청취·음원 지문 대조가 아닌 공식 메타데이터 식별입니다. 실제 재생 관측 없는 곡은 미관측 상태를 유지합니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 190,
+      "source_track": {
+        "track_id": "4cktbXiXOapiLBMprHFErI",
+        "track_name": "Memories",
+        "artists_name": "Maroon 5",
+        "album_name": "JORDI (Deluxe)",
+        "duration_ms": 189486,
+        "selection_weather": "SNOW"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 190,
+        "checked_at": "2026-10-16T08:43:43.294Z",
+        "source": "ROOT_CUA_NATIVE_TIME_PROGRESS"
+      }
+    },
+    {
+      "track_id": "4zN21mbAuaD0WqtmaTZZeP",
+      "video_id": "f0dYb6nrVY4",
+      "video_url": "https://www.youtube.com/watch?v=f0dYb6nrVY4",
+      "youtube_title": "Ferrari",
+      "channel": "James Hype - Topic",
+      "album_match": "UNKNOWN",
+      "observed_album": null,
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 187,
+      "source_duration_seconds": 186.661,
+      "duration_difference_seconds": 0.339,
+      "duration_tolerance_seconds": 22.399,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=f0dYb6nrVY4",
+        "https://open.spotify.com/track/4zN21mbAuaD0WqtmaTZZeP"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:13.854225+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 85,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 186,
+      "source_track": {
+        "track_id": "4zN21mbAuaD0WqtmaTZZeP",
+        "track_name": "Ferrari",
+        "artists_name": "James Hype;Miggy Dela Rosa",
+        "album_name": "Ferrari",
+        "duration_ms": 186661,
+        "selection_weather": "CLEAR"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 1,
+        "duration_seconds": 186,
+        "checked_at": "2026-10-16T08:37:41.596Z",
+        "source": null
+      }
+    },
+    {
+      "track_id": "7DbdUf8aHSYoliSjO6LZv6",
+      "video_id": "FgS1b2nU8AQ",
+      "video_url": "https://www.youtube.com/watch?v=FgS1b2nU8AQ",
+      "youtube_title": "Beach Weather - Sex, Drugs, Etc. (Official Video)",
+      "channel": "BeachWeatherVEVO",
+      "album_match": "UNKNOWN",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 208,
+      "source_duration_seconds": 196.784,
+      "duration_tolerance_seconds": 23.614079999999998,
+      "duration_difference_seconds": 11.216,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=FgS1b2nU8AQ"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:27.781894+00:00",
+      "match_score": 85,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 208,
+      "source_track": {
+        "track_id": "7DbdUf8aHSYoliSjO6LZv6",
+        "track_name": "Sex, Drugs, Etc.",
+        "artists_name": "Beach Weather",
+        "album_name": "Chit Chat",
+        "duration_ms": 196784,
+        "selection_weather": "CLOUDY"
+      },
+      "native_progress_observation": {
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:46:35.481Z",
+        "elapsed_seconds": 2,
+        "pause_control_observed": true,
+        "time_progress_observed": true,
+        "playback_observed": true,
+        "duration_seconds": 208
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "3hUxzQpSfdDqwM3ZTFQY0K",
+      "video_id": "nn_0zPAfyo8",
+      "video_url": "https://www.youtube.com/watch?v=nn_0zPAfyo8",
+      "youtube_title": "Taylor Swift – august (Official Lyric Video)",
+      "channel": "Taylor Swift",
+      "album_match": true,
+      "version_match": true,
+      "duration_seconds": 264,
+      "source_duration_seconds": 261.922,
+      "duration_difference_seconds": 2.078,
+      "duration_tolerance_seconds": 31.431,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=nn_0zPAfyo8",
+        "https://open.spotify.com/track/3hUxzQpSfdDqwM3ZTFQY0K"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:36.229707+00:00",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "match_score": 100,
+      "score_is_probability": false,
+      "notes": "원곡 전체 청취·음원 지문 대조가 아닌 공식 메타데이터 식별입니다. 실제 재생 관측 없는 곡은 미관측 상태를 유지합니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 263,
+      "source_track": {
+        "track_id": "3hUxzQpSfdDqwM3ZTFQY0K",
+        "track_name": "august",
+        "artists_name": "Taylor Swift",
+        "album_name": "folklore",
+        "duration_ms": 261922,
+        "selection_weather": "OVERCAST"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 1,
+        "duration_seconds": 263,
+        "checked_at": "2026-10-16T08:43:48.017Z",
+        "source": "ROOT_CUA_NATIVE_TIME_PROGRESS"
+      }
+    },
+    {
+      "track_id": "0gplL1WMoJ6iYaPgMCL0gX",
+      "video_id": "X-yIEMduRXk",
+      "video_url": "https://www.youtube.com/watch?v=X-yIEMduRXk",
+      "youtube_title": "Adele - Easy On Me (Official Lyric Video)",
+      "channel": "AdeleVEVO",
+      "album_match": "UNKNOWN",
+      "observed_album": null,
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 226,
+      "source_duration_seconds": 224.694,
+      "duration_difference_seconds": 1.306,
+      "duration_tolerance_seconds": 26.963,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=X-yIEMduRXk",
+        "https://open.spotify.com/track/0gplL1WMoJ6iYaPgMCL0gX"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:14.125109+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 85,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 225,
+      "source_track": {
+        "track_id": "0gplL1WMoJ6iYaPgMCL0gX",
+        "track_name": "Easy On Me",
+        "artists_name": "Adele",
+        "album_name": "Easy On Me",
+        "duration_ms": 224694,
+        "selection_weather": "RAIN"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 225,
+        "checked_at": "2026-10-16T08:37:48.401Z",
+        "source": null
+      }
+    },
+    {
+      "track_id": "2Fxmhks0bxGSBdJ92vM42m",
+      "video_id": "ZD6rXLXZOEI",
+      "video_url": "https://www.youtube.com/watch?v=ZD6rXLXZOEI",
+      "youtube_title": "bad guy",
+      "channel": "Billie Eilish - Topic",
+      "album_match": "MATCH",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 194,
+      "source_duration_seconds": 194.087,
+      "duration_tolerance_seconds": 23.290439999999997,
+      "duration_difference_seconds": -0.087,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=ZD6rXLXZOEI"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:31.250510+00:00",
+      "match_score": 100,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 194,
+      "source_track": {
+        "track_id": "2Fxmhks0bxGSBdJ92vM42m",
+        "track_name": "bad guy",
+        "artists_name": "Billie Eilish",
+        "album_name": "WHEN WE ALL FALL ASLEEP, WHERE DO WE GO?",
+        "duration_ms": 194087,
+        "selection_weather": "SNOW"
+      },
+      "native_progress_observation": {
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:46:48.689Z",
+        "elapsed_seconds": 2,
+        "pause_control_observed": true,
+        "time_progress_observed": true,
+        "playback_observed": true,
+        "duration_seconds": 194
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "0HqZX76SFLDz2aW8aiqi7G",
+      "video_id": "DYed5whEf4g",
+      "video_url": "https://www.youtube.com/watch?v=DYed5whEf4g",
+      "youtube_title": "Imagine Dragons - Bones (Official Lyric Video)",
+      "channel": "ImagineDragonsVEVO",
+      "album_match": "unknown",
+      "version_match": true,
+      "duration_seconds": 165,
+      "source_duration_seconds": 165.264,
+      "duration_difference_seconds": 0.264,
+      "duration_tolerance_seconds": 19.832,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=DYed5whEf4g",
+        "https://open.spotify.com/track/0HqZX76SFLDz2aW8aiqi7G"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:37.040948+00:00",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "match_score": 85,
+      "score_is_probability": false,
+      "notes": "원곡 전체 청취·음원 지문 대조가 아닌 공식 메타데이터 식별입니다. 실제 재생 관측 없는 곡은 미관측 상태를 유지합니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 165,
+      "source_track": {
+        "track_id": "0HqZX76SFLDz2aW8aiqi7G",
+        "track_name": "Bones",
+        "artists_name": "Imagine Dragons",
+        "album_name": "Bones",
+        "duration_ms": 165264,
+        "selection_weather": "CLEAR"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 1,
+        "duration_seconds": 165,
+        "checked_at": "2026-10-16T08:44:12.257Z",
+        "source": "ROOT_CUA_NATIVE_TIME_PROGRESS"
+      }
+    },
+    {
+      "track_id": "09mEdoA6zrmBPgTEN5qXmN",
+      "video_id": "rsEne1ZiQrk",
+      "video_url": "https://www.youtube.com/watch?v=rsEne1ZiQrk",
+      "youtube_title": "The Weeknd - Call Out My Name (Official Audio)",
+      "channel": "The Weeknd",
+      "album_match": "UNKNOWN",
+      "observed_album": null,
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 229,
+      "source_duration_seconds": 228.373,
+      "duration_difference_seconds": 0.627,
+      "duration_tolerance_seconds": 27.405,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=rsEne1ZiQrk",
+        "https://open.spotify.com/track/09mEdoA6zrmBPgTEN5qXmN"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:14.620831+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 85,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 228,
+      "source_track": {
+        "track_id": "09mEdoA6zrmBPgTEN5qXmN",
+        "track_name": "Call Out My Name",
+        "artists_name": "The Weeknd",
+        "album_name": "My Dear Melancholy,",
+        "duration_ms": 228373,
+        "selection_weather": "CLOUDY"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 1,
+        "duration_seconds": 228,
+        "checked_at": "2026-10-16T08:37:52.669Z",
+        "source": null
+      }
+    },
+    {
+      "track_id": "1HNkqx9Ahdgi1Ixy2xkKkL",
+      "video_id": "nSDgHBxUbVQ",
+      "video_url": "https://www.youtube.com/watch?v=nSDgHBxUbVQ",
+      "youtube_title": "Ed Sheeran - Photograph (Official Music Video)",
+      "channel": "Ed Sheeran",
+      "album_match": "BASE_ALBUM_MATCH_EDITION_UNCONFIRMED",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 274,
+      "source_duration_seconds": 258.986,
+      "duration_tolerance_seconds": 31.078319999999998,
+      "duration_difference_seconds": 15.014,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=nSDgHBxUbVQ"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:27.892114+00:00",
+      "match_score": 85,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Base album matches but deluxe/expanded/special edition not independently confirmed; album points withheld.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 274,
+      "source_track": {
+        "track_id": "1HNkqx9Ahdgi1Ixy2xkKkL",
+        "track_name": "Photograph",
+        "artists_name": "Ed Sheeran",
+        "album_name": "x (Deluxe Edition)",
+        "duration_ms": 258986,
+        "selection_weather": "OVERCAST"
+      },
+      "native_progress_observation": {
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:46:57.270Z",
+        "elapsed_seconds": 3,
+        "pause_control_observed": true,
+        "time_progress_observed": true,
+        "playback_observed": true,
+        "duration_seconds": 274
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "29d0nY7TzCoi22XBqDQkiP",
+      "video_id": "HYwNM1t9ltI",
+      "video_url": "https://www.youtube.com/watch?v=HYwNM1t9ltI",
+      "youtube_title": "Running Up That Hill (A Deal With God) (2018 Remaster)",
+      "channel": "Kate Bush - Topic",
+      "album_match": true,
+      "version_match": true,
+      "duration_seconds": 301,
+      "source_duration_seconds": 300.84,
+      "duration_difference_seconds": 0.16,
+      "duration_tolerance_seconds": 36.101,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=HYwNM1t9ltI",
+        "https://open.spotify.com/track/29d0nY7TzCoi22XBqDQkiP"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:37.097878+00:00",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "match_score": 100,
+      "score_is_probability": false,
+      "notes": "원곡 전체 청취·음원 지문 대조가 아닌 공식 메타데이터 식별입니다. 실제 재생 관측 없는 곡은 미관측 상태를 유지합니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 300,
+      "source_track": {
+        "track_id": "29d0nY7TzCoi22XBqDQkiP",
+        "track_name": "Running Up That Hill (A Deal With God) - 2018 Remaster",
+        "artists_name": "Kate Bush",
+        "album_name": "Hounds of Love (2018 Remaster)",
+        "duration_ms": 300840,
+        "selection_weather": "RAIN"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 1,
+        "duration_seconds": 300,
+        "checked_at": "2026-10-16T08:44:17.080Z",
+        "source": "ROOT_CUA_NATIVE_TIME_PROGRESS"
+      }
+    },
+    {
+      "track_id": "3FAJ6O0NOHQV8Mc5Ri6ENp",
+      "video_id": "nja_0BaQcNg",
+      "video_url": "https://www.youtube.com/watch?v=nja_0BaQcNg",
+      "youtube_title": "GIVĒON - Heartbreak Anniversary (Official Audio)",
+      "channel": "GiveonVEVO",
+      "album_match": "UNKNOWN",
+      "observed_album": null,
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 198,
+      "source_duration_seconds": 198.37,
+      "duration_difference_seconds": 0.37,
+      "duration_tolerance_seconds": 23.804,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=nja_0BaQcNg",
+        "https://open.spotify.com/track/3FAJ6O0NOHQV8Mc5Ri6ENp"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:14.689814+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 85,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 198,
+      "source_track": {
+        "track_id": "3FAJ6O0NOHQV8Mc5Ri6ENp",
+        "track_name": "Heartbreak Anniversary",
+        "artists_name": "Giveon",
+        "album_name": "TAKE TIME",
+        "duration_ms": 198370,
+        "selection_weather": "SNOW"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 198,
+        "checked_at": "2026-10-16T08:38:39.750Z",
+        "source": null
+      }
+    },
+    {
+      "track_id": "1DIXPcTDzTj8ZMHt3PDt8p",
+      "video_id": "SQCSxqScSVQ",
+      "video_url": "https://www.youtube.com/watch?v=SQCSxqScSVQ",
+      "youtube_title": "Coolio - Gangsta's Paradise (feat. L.V.) [Official 4K Music Video]",
+      "channel": "CoolioVEVO",
+      "album_match": "UNKNOWN",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 255,
+      "source_duration_seconds": 240.693,
+      "duration_tolerance_seconds": 28.88316,
+      "duration_difference_seconds": 14.307,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=SQCSxqScSVQ"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:28.118296+00:00",
+      "match_score": 85,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 255,
+      "source_track": {
+        "track_id": "1DIXPcTDzTj8ZMHt3PDt8p",
+        "track_name": "Gangsta's Paradise",
+        "artists_name": "Coolio;L.V.",
+        "album_name": "Gangsta's Paradise",
+        "duration_ms": 240693,
+        "selection_weather": "CLEAR"
+      },
+      "native_progress_observation": {
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:47:06.787Z",
+        "elapsed_seconds": 1,
+        "pause_control_observed": true,
+        "time_progress_observed": true,
+        "playback_observed": true,
+        "duration_seconds": 255
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "72yP0DUlWPyH8P7IoxskwN",
+      "video_id": "qExVlz3zb0k",
+      "video_url": "https://www.youtube.com/watch?v=qExVlz3zb0k",
+      "youtube_title": "Elton John, Britney Spears - Hold Me Closer (Official Video)",
+      "channel": "EltonJohnVEVO",
+      "album_match": "unknown",
+      "version_match": true,
+      "duration_seconds": 205,
+      "source_duration_seconds": 202.245,
+      "duration_difference_seconds": 2.755,
+      "duration_tolerance_seconds": 24.269,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=qExVlz3zb0k",
+        "https://open.spotify.com/track/72yP0DUlWPyH8P7IoxskwN"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:37.358433+00:00",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "match_score": 85,
+      "score_is_probability": false,
+      "notes": "원곡 전체 청취·음원 지문 대조가 아닌 공식 메타데이터 식별입니다. 실제 재생 관측 없는 곡은 미관측 상태를 유지합니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 204,
+      "source_track": {
+        "track_id": "72yP0DUlWPyH8P7IoxskwN",
+        "track_name": "Hold Me Closer",
+        "artists_name": "Elton John;Britney Spears",
+        "album_name": "Hold Me Closer",
+        "duration_ms": 202245,
+        "selection_weather": "CLOUDY"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 1,
+        "duration_seconds": 204,
+        "checked_at": "2026-10-16T08:44:22.009Z",
+        "source": "ROOT_CUA_NATIVE_TIME_PROGRESS"
+      }
+    },
+    {
+      "track_id": "1dGr1c8CrMLDpV6mPbImSI",
+      "video_id": "cvUAzpn48xA",
+      "video_url": "https://www.youtube.com/watch?v=cvUAzpn48xA",
+      "youtube_title": "Taylor Swift - Lover (Official Lyric Video)",
+      "channel": "Taylor Swift",
+      "album_match": "UNKNOWN",
+      "observed_album": null,
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 229,
+      "source_duration_seconds": 221.306,
+      "duration_difference_seconds": 7.694,
+      "duration_tolerance_seconds": 26.557,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=cvUAzpn48xA",
+        "https://open.spotify.com/track/1dGr1c8CrMLDpV6mPbImSI"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:14.918869+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 85,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 229,
+      "source_track": {
+        "track_id": "1dGr1c8CrMLDpV6mPbImSI",
+        "track_name": "Lover",
+        "artists_name": "Taylor Swift",
+        "album_name": "Lover",
+        "duration_ms": 221306,
+        "selection_weather": "OVERCAST"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 229,
+        "checked_at": "2026-10-16T08:38:46.669Z",
+        "source": null
+      }
+    },
+    {
+      "track_id": "2vWBUC9djv6BtiGlmKiQaH",
+      "video_id": "DtsUOWVB9Dg",
+      "video_url": "https://www.youtube.com/watch?v=DtsUOWVB9Dg",
+      "youtube_title": "Yot Club - YKWIM? (Official Visualizer)",
+      "channel": "Yot Club",
+      "album_match": "UNKNOWN",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 213,
+      "source_duration_seconds": 212.75,
+      "duration_tolerance_seconds": 25.529999999999998,
+      "duration_difference_seconds": 0.25,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=DtsUOWVB9Dg"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:31.854372+00:00",
+      "match_score": 85,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 212,
+      "source_track": {
+        "track_id": "2vWBUC9djv6BtiGlmKiQaH",
+        "track_name": "YKWIM?",
+        "artists_name": "Yot Club",
+        "album_name": "Bipolar",
+        "duration_ms": 212750,
+        "selection_weather": "RAIN"
+      },
+      "native_progress_observation": {
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:47:24.006Z",
+        "elapsed_seconds": 1,
+        "pause_control_observed": true,
+        "time_progress_observed": true,
+        "playback_observed": true,
+        "duration_seconds": 212
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "40riOy7x9W7GXjyGp4pjAv",
+      "video_id": "5tP4uqz4nJY",
+      "video_url": "https://www.youtube.com/watch?v=5tP4uqz4nJY",
+      "youtube_title": "Hotel California (2013 Remaster)",
+      "channel": "Eagles",
+      "album_match": "different_release_same_recording",
+      "version_match": true,
+      "duration_seconds": 391,
+      "source_duration_seconds": 391.376,
+      "duration_difference_seconds": 0.376,
+      "duration_tolerance_seconds": 46.965,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=5tP4uqz4nJY",
+        "https://open.spotify.com/track/40riOy7x9W7GXjyGp4pjAv"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "BROWSER_PLAYING",
+      "korea_in_available_countries": null,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:35:39.692Z",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "match_score": 85,
+      "score_is_probability": false,
+      "notes": "최초 811QZGDysx0는 공개 UNPLAYABLE. 검색으로 발견한 5tP4uqz4nJY의 공식 Eagles 채널·2013 Remaster·Bernie Grundman·391초 및 실제 0:08 진행을 DOM으로 확인. 앨범은 원본과 다른 컴필레이션 To the Limit: The Essential Collection이며 동일 2013 리마스터 표기가 일치합니다. HTTP 429 뒤 추가 HTTP 재시도 없이 브라우저에서 검수했습니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 391,
+      "source_track": {
+        "track_id": "40riOy7x9W7GXjyGp4pjAv",
+        "track_name": "Hotel California - 2013 Remaster",
+        "artists_name": "Eagles",
+        "album_name": "Hotel California (2013 Remaster)",
+        "duration_ms": 391376,
+        "selection_weather": "SNOW"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 8,
+        "duration_seconds": 391,
+        "checked_at": "2026-10-16T08:35:39.692Z",
+        "source": "BROWSER_DOM"
+      }
+    },
+    {
+      "track_id": "6UelLqGlWMcVH1E5c4H7lY",
+      "video_id": "7-x3uD5z1bQ",
+      "video_url": "https://www.youtube.com/watch?v=7-x3uD5z1bQ",
+      "youtube_title": "Harry Styles - Watermelon Sugar (Official Audio)",
+      "channel": "HarryStylesVEVO",
+      "album_match": "UNKNOWN",
+      "observed_album": null,
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 174,
+      "source_duration_seconds": 174.0,
+      "duration_difference_seconds": 0.0,
+      "duration_tolerance_seconds": 20.88,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=7-x3uD5z1bQ",
+        "https://open.spotify.com/track/6UelLqGlWMcVH1E5c4H7lY"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:15.276443+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 85,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 173,
+      "source_track": {
+        "track_id": "6UelLqGlWMcVH1E5c4H7lY",
+        "track_name": "Watermelon Sugar",
+        "artists_name": "Harry Styles",
+        "album_name": "Fine Line",
+        "duration_ms": 174000,
+        "selection_weather": "CLEAR"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 173,
+        "checked_at": "2026-10-16T08:41:24.351Z",
+        "source": null
+      }
+    },
+    {
+      "track_id": "0BxE4FqsDD1Ot4YuBXwAPp",
+      "video_id": "qU9mHegkTc4",
+      "video_url": "https://www.youtube.com/watch?v=qU9mHegkTc4",
+      "youtube_title": "505",
+      "channel": "Arctic Monkeys",
+      "album_match": "MATCH",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 253,
+      "source_duration_seconds": 253.586,
+      "duration_tolerance_seconds": 30.430320000000002,
+      "duration_difference_seconds": -0.586,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=qU9mHegkTc4"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "NATIVE_PLAYBACK_OBSERVED",
+      "korea_in_available_countries": null,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:36:01.049Z",
+      "match_score": 100,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Public HTTP rate limit encountered; native DOM expanded description and playback UI used without retry or bypass.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 253,
+      "source_track": {
+        "track_id": "0BxE4FqsDD1Ot4YuBXwAPp",
+        "track_name": "505",
+        "artists_name": "Arctic Monkeys",
+        "album_name": "Favourite Worst Nightmare",
+        "duration_ms": 253586,
+        "selection_weather": "CLOUDY"
+      },
+      "native_progress_observation": {
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:49:57.127Z",
+        "elapsed_seconds": 1,
+        "pause_control_observed": true,
+        "time_progress_observed": true,
+        "playback_observed": true,
+        "duration_seconds": 253
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "2qxmye6gAegTMjLKEBoR3d",
+      "video_id": "Kcj5-jWxgKs",
+      "video_url": "https://www.youtube.com/watch?v=Kcj5-jWxgKs",
+      "youtube_title": "Let Me Down Slowly",
+      "channel": "Alec Benjamin - Topic",
+      "album_match": "unknown",
+      "version_match": true,
+      "duration_seconds": 169,
+      "source_duration_seconds": 169.353,
+      "duration_difference_seconds": 0.353,
+      "duration_tolerance_seconds": 20.322,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=Kcj5-jWxgKs",
+        "https://open.spotify.com/track/2qxmye6gAegTMjLKEBoR3d"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:38.159637+00:00",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "match_score": 85,
+      "score_is_probability": false,
+      "notes": "원곡 전체 청취·음원 지문 대조가 아닌 공식 메타데이터 식별입니다. 실제 재생 관측 없는 곡은 미관측 상태를 유지합니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 169,
+      "source_track": {
+        "track_id": "2qxmye6gAegTMjLKEBoR3d",
+        "track_name": "Let Me Down Slowly",
+        "artists_name": "Alec Benjamin",
+        "album_name": "Narrated For You",
+        "duration_ms": 169353,
+        "selection_weather": "OVERCAST"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 1,
+        "duration_seconds": 169,
+        "checked_at": "2026-10-16T08:44:26.861Z",
+        "source": "ROOT_CUA_NATIVE_TIME_PROGRESS"
+      }
+    },
+    {
+      "track_id": "50kpGaPAhYJ3sGmk6vplg0",
+      "video_id": "Z5uR4frdqd8",
+      "video_url": "https://www.youtube.com/watch?v=Z5uR4frdqd8",
+      "youtube_title": "Love Yourself",
+      "channel": "Justin Bieber - Topic",
+      "album_match": "UNKNOWN",
+      "observed_album": null,
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 234,
+      "source_duration_seconds": 233.72,
+      "duration_difference_seconds": 0.28,
+      "duration_tolerance_seconds": 28.046,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=Z5uR4frdqd8",
+        "https://open.spotify.com/track/50kpGaPAhYJ3sGmk6vplg0"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:15.567185+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 85,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 233,
+      "source_track": {
+        "track_id": "50kpGaPAhYJ3sGmk6vplg0",
+        "track_name": "Love Yourself",
+        "artists_name": "Justin Bieber",
+        "album_name": "Purpose (Deluxe)",
+        "duration_ms": 233720,
+        "selection_weather": "RAIN"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 233,
+        "checked_at": "2026-10-16T08:41:31.434Z",
+        "source": null
+      }
+    },
+    {
+      "track_id": "7BKLCZ1jbUBVqRi2FVlTVw",
+      "video_id": "0zGcUoRlhmw",
+      "video_url": "https://www.youtube.com/watch?v=0zGcUoRlhmw",
+      "youtube_title": "The Chainsmokers - Closer (Official Video) ft. Halsey",
+      "channel": "ChainsmokersVEVO",
+      "album_match": "UNKNOWN",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 247,
+      "source_duration_seconds": 244.96,
+      "duration_tolerance_seconds": 29.3952,
+      "duration_difference_seconds": 2.04,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=0zGcUoRlhmw"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:28.121157+00:00",
+      "match_score": 85,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 246,
+      "source_track": {
+        "track_id": "7BKLCZ1jbUBVqRi2FVlTVw",
+        "track_name": "Closer",
+        "artists_name": "The Chainsmokers;Halsey",
+        "album_name": "Closer",
+        "duration_ms": 244960,
+        "selection_weather": "SNOW"
+      },
+      "native_progress_observation": {
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:47:29.769Z",
+        "elapsed_seconds": 1,
+        "pause_control_observed": true,
+        "time_progress_observed": true,
+        "playback_observed": true,
+        "duration_seconds": 246
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "7ef4DlsgrMEH11cDZd32M6",
+      "video_id": "Bm8rz-llMhE",
+      "video_url": "https://www.youtube.com/watch?v=Bm8rz-llMhE",
+      "youtube_title": "Calvin Harris, Dua Lipa - One Kiss (Lyric Video)",
+      "channel": "CalvinHarrisVEVO",
+      "album_match": "unknown",
+      "version_match": true,
+      "duration_seconds": 212,
+      "source_duration_seconds": 214.846,
+      "duration_difference_seconds": 2.846,
+      "duration_tolerance_seconds": 25.782,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=Bm8rz-llMhE",
+        "https://open.spotify.com/track/7ef4DlsgrMEH11cDZd32M6"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:38.232684+00:00",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "match_score": 85,
+      "score_is_probability": false,
+      "notes": "원곡 전체 청취·음원 지문 대조가 아닌 공식 메타데이터 식별입니다. 실제 재생 관측 없는 곡은 미관측 상태를 유지합니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 212,
+      "source_track": {
+        "track_id": "7ef4DlsgrMEH11cDZd32M6",
+        "track_name": "One Kiss (with Dua Lipa)",
+        "artists_name": "Calvin Harris;Dua Lipa",
+        "album_name": "One Kiss (with Dua Lipa)",
+        "duration_ms": 214846,
+        "selection_weather": "CLEAR"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 3,
+        "duration_seconds": 212,
+        "checked_at": "2026-10-16T08:44:53.663Z",
+        "source": "ROOT_CUA_NATIVE_TIME_PROGRESS"
+      }
+    },
+    {
+      "track_id": "0fea68AdmYNygeTGI4RC18",
+      "video_id": "WsGnCt-gT44",
+      "video_url": "https://www.youtube.com/watch?v=WsGnCt-gT44",
+      "youtube_title": "LA CANCIÓN",
+      "channel": "J Balvin - Topic",
+      "album_match": "UNKNOWN",
+      "observed_album": null,
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 243,
+      "source_duration_seconds": 242.573,
+      "duration_difference_seconds": 0.427,
+      "duration_tolerance_seconds": 29.109,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=WsGnCt-gT44",
+        "https://open.spotify.com/track/0fea68AdmYNygeTGI4RC18"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:15.651956+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 85,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 242,
+      "source_track": {
+        "track_id": "0fea68AdmYNygeTGI4RC18",
+        "track_name": "LA CANCIÓN",
+        "artists_name": "J Balvin;Bad Bunny",
+        "album_name": "OASIS",
+        "duration_ms": 242573,
+        "selection_weather": "CLOUDY"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 242,
+        "checked_at": "2026-10-16T08:39:18.040Z",
+        "source": null
+      }
+    },
+    {
+      "track_id": "5uCax9HTNlzGybIStD3vDh",
+      "video_id": "Mi7rXoRmuz4",
+      "video_url": "https://www.youtube.com/watch?v=Mi7rXoRmuz4",
+      "youtube_title": "Say You Won't Let Go",
+      "channel": "James Arthur - Topic",
+      "album_match": "MATCH",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 211,
+      "source_duration_seconds": 211.466,
+      "duration_tolerance_seconds": 25.37592,
+      "duration_difference_seconds": -0.466,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=Mi7rXoRmuz4"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:32.225127+00:00",
+      "match_score": 100,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 211,
+      "source_track": {
+        "track_id": "5uCax9HTNlzGybIStD3vDh",
+        "track_name": "Say You Won't Let Go",
+        "artists_name": "James Arthur",
+        "album_name": "Back from the Edge",
+        "duration_ms": 211466,
+        "selection_weather": "OVERCAST"
+      },
+      "native_progress_observation": {
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:49:49.507Z",
+        "elapsed_seconds": 2,
+        "pause_control_observed": true,
+        "time_progress_observed": true,
+        "playback_observed": true,
+        "duration_seconds": 211
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "0QzuaeCEEOV40Pn7IvKEny",
+      "video_id": "uQiF1yOnzDg",
+      "video_url": "https://www.youtube.com/watch?v=uQiF1yOnzDg",
+      "youtube_title": "Dhruv - double take (Official Audio)",
+      "channel": "Dhruv",
+      "album_match": "unknown",
+      "version_match": true,
+      "duration_seconds": 173,
+      "source_duration_seconds": 171.743,
+      "duration_difference_seconds": 1.257,
+      "duration_tolerance_seconds": 20.609,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=uQiF1yOnzDg",
+        "https://open.spotify.com/track/0QzuaeCEEOV40Pn7IvKEny"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:38.264498+00:00",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "match_score": 85,
+      "score_is_probability": false,
+      "notes": "원곡 전체 청취·음원 지문 대조가 아닌 공식 메타데이터 식별입니다. 실제 재생 관측 없는 곡은 미관측 상태를 유지합니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 172,
+      "source_track": {
+        "track_id": "0QzuaeCEEOV40Pn7IvKEny",
+        "track_name": "double take",
+        "artists_name": "dhruv",
+        "album_name": "rapunzel",
+        "duration_ms": 171743,
+        "selection_weather": "RAIN"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 172,
+        "checked_at": "2026-10-16T08:45:00.875Z",
+        "source": "ROOT_CUA_NATIVE_TIME_PROGRESS"
+      }
+    },
+    {
+      "track_id": "08Isz2ETWSBhvIl8UpKYsp",
+      "video_id": "jNkylY5HycI",
+      "video_url": "https://www.youtube.com/watch?v=jNkylY5HycI",
+      "youtube_title": "No Love",
+      "channel": "Shubh - Topic",
+      "album_match": "UNKNOWN",
+      "observed_album": null,
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 170,
+      "source_duration_seconds": 170.387,
+      "duration_difference_seconds": 0.387,
+      "duration_tolerance_seconds": 20.446,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=jNkylY5HycI",
+        "https://open.spotify.com/track/08Isz2ETWSBhvIl8UpKYsp"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:15.975409+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 85,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 170,
+      "source_track": {
+        "track_id": "08Isz2ETWSBhvIl8UpKYsp",
+        "track_name": "No Love",
+        "artists_name": "Shubh",
+        "album_name": "No Love",
+        "duration_ms": 170387,
+        "selection_weather": "SNOW"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 170,
+        "checked_at": "2026-10-16T08:41:42.562Z",
+        "source": null
+      }
+    },
+    {
+      "track_id": "086myS9r57YsLbJpU0TgK9",
+      "video_id": "VsxlqmSDmBU",
+      "video_url": "https://www.youtube.com/watch?v=VsxlqmSDmBU",
+      "youtube_title": "Why'd You Only Call Me When You're High?",
+      "channel": "Arctic Monkeys - Topic",
+      "album_match": "MATCH",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 161,
+      "source_duration_seconds": 161.123,
+      "duration_tolerance_seconds": 19.33476,
+      "duration_difference_seconds": -0.123,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=VsxlqmSDmBU"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:32.731262+00:00",
+      "match_score": 100,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 161,
+      "source_track": {
+        "track_id": "086myS9r57YsLbJpU0TgK9",
+        "track_name": "Why'd You Only Call Me When You're High?",
+        "artists_name": "Arctic Monkeys",
+        "album_name": "AM",
+        "duration_ms": 161123,
+        "selection_weather": "CLEAR"
+      },
+      "native_progress_observation": {
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:47:45.683Z",
+        "elapsed_seconds": 1,
+        "pause_control_observed": false,
+        "time_progress_observed": true,
+        "playback_observed": true,
+        "duration_seconds": 161
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "5FVd6KXrgO9B3JPmC8OPst",
+      "video_id": "bpOSxM0rNPM",
+      "video_url": "https://www.youtube.com/watch?v=bpOSxM0rNPM",
+      "youtube_title": "Arctic Monkeys - Do I Wanna Know? (Official Video)",
+      "channel": "Official Arctic Monkeys",
+      "album_match": true,
+      "version_match": true,
+      "duration_seconds": 266,
+      "source_duration_seconds": 272.394,
+      "duration_difference_seconds": 6.394,
+      "duration_tolerance_seconds": 32.687,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=bpOSxM0rNPM",
+        "https://open.spotify.com/track/5FVd6KXrgO9B3JPmC8OPst"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:38.660849+00:00",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "match_score": 100,
+      "score_is_probability": false,
+      "notes": "원곡 전체 청취·음원 지문 대조가 아닌 공식 메타데이터 식별입니다. 실제 재생 관측 없는 곡은 미관측 상태를 유지합니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 265,
+      "source_track": {
+        "track_id": "5FVd6KXrgO9B3JPmC8OPst",
+        "track_name": "Do I Wanna Know?",
+        "artists_name": "Arctic Monkeys",
+        "album_name": "AM",
+        "duration_ms": 272394,
+        "selection_weather": "CLOUDY"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 265,
+        "checked_at": "2026-10-16T08:45:06.719Z",
+        "source": "ROOT_CUA_NATIVE_TIME_PROGRESS"
+      }
+    },
+    {
+      "track_id": "0yc6Gst2xkRu0eMLeRMGCX",
+      "video_id": "DdI598gKkKw",
+      "video_url": "https://www.youtube.com/watch?v=DdI598gKkKw",
+      "youtube_title": "Apocalypse",
+      "channel": "Cigarettes After Sex - Topic",
+      "album_match": "UNKNOWN",
+      "observed_album": null,
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 290,
+      "source_duration_seconds": 290.616,
+      "duration_difference_seconds": 0.616,
+      "duration_tolerance_seconds": 34.874,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=DdI598gKkKw",
+        "https://open.spotify.com/track/0yc6Gst2xkRu0eMLeRMGCX"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:16.493325+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 85,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 290,
+      "source_track": {
+        "track_id": "0yc6Gst2xkRu0eMLeRMGCX",
+        "track_name": "Apocalypse",
+        "artists_name": "Cigarettes After Sex",
+        "album_name": "Cigarettes After Sex",
+        "duration_ms": 290616,
+        "selection_weather": "OVERCAST"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 1,
+        "duration_seconds": 290,
+        "checked_at": "2026-10-16T08:39:28.964Z",
+        "source": null
+      }
+    },
+    {
+      "track_id": "1mXVgsBdtIVeCLJnSnmtdV",
+      "video_id": "pmc93sA80HI",
+      "video_url": "https://www.youtube.com/watch?v=pmc93sA80HI",
+      "youtube_title": "Too Good At Goodbyes",
+      "channel": "Sam Smith - Topic",
+      "album_match": "BASE_ALBUM_MATCH_EDITION_UNCONFIRMED",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 201,
+      "source_duration_seconds": 201.0,
+      "duration_tolerance_seconds": 24.119999999999997,
+      "duration_difference_seconds": 0.0,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=pmc93sA80HI"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "NATIVE_PLAYBACK_OBSERVED",
+      "korea_in_available_countries": null,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:36:37.300Z",
+      "match_score": 85,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Base album matches but deluxe/expanded/special edition not independently confirmed; album points withheld.",
+        "Public HTTP rate limit encountered; native DOM expanded description and playback UI used without retry or bypass.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 201,
+      "source_track": {
+        "track_id": "1mXVgsBdtIVeCLJnSnmtdV",
+        "track_name": "Too Good At Goodbyes",
+        "artists_name": "Sam Smith",
+        "album_name": "The Thrill Of It All (Special Edition)",
+        "duration_ms": 201000,
+        "selection_weather": "RAIN"
+      },
+      "native_progress_observation": {
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:50:01.965Z",
+        "elapsed_seconds": 1,
+        "pause_control_observed": true,
+        "time_progress_observed": true,
+        "playback_observed": true,
+        "duration_seconds": 201
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "0HaRLPnr887lcQM2YQzkff",
+      "video_id": "NNjYhPt8y44",
+      "video_url": "https://www.youtube.com/watch?v=NNjYhPt8y44",
+      "youtube_title": "For My Hand (feat. Ed Sheeran)",
+      "channel": "Burna Boy - Topic",
+      "album_match": "unknown",
+      "version_match": true,
+      "duration_seconds": 159,
+      "source_duration_seconds": 159.123,
+      "duration_difference_seconds": 0.123,
+      "duration_tolerance_seconds": 19.095,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=NNjYhPt8y44",
+        "https://open.spotify.com/track/0HaRLPnr887lcQM2YQzkff"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:39.129236+00:00",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "match_score": 85,
+      "score_is_probability": false,
+      "notes": "원곡 전체 청취·음원 지문 대조가 아닌 공식 메타데이터 식별입니다. 실제 재생 관측 없는 곡은 미관측 상태를 유지합니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 159,
+      "source_track": {
+        "track_id": "0HaRLPnr887lcQM2YQzkff",
+        "track_name": "For My Hand (feat. Ed Sheeran)",
+        "artists_name": "Burna Boy;Ed Sheeran",
+        "album_name": "Love, Damini",
+        "duration_ms": 159123,
+        "selection_weather": "SNOW"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 3,
+        "duration_seconds": 159,
+        "checked_at": "2026-10-16T08:45:21.092Z",
+        "source": "ROOT_CUA_NATIVE_TIME_PROGRESS"
+      }
+    },
+    {
+      "track_id": "0pqnGHJpmpxLKifKRmU6WP",
+      "video_id": "IhP3J0j9JmY",
+      "video_url": "https://www.youtube.com/watch?v=IhP3J0j9JmY",
+      "youtube_title": "Imagine Dragons - Believer (Audio)",
+      "channel": "ImagineDragonsVEVO",
+      "album_match": "UNKNOWN",
+      "observed_album": null,
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 203,
+      "source_duration_seconds": 204.346,
+      "duration_difference_seconds": 1.346,
+      "duration_tolerance_seconds": 24.522,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=IhP3J0j9JmY",
+        "https://open.spotify.com/track/0pqnGHJpmpxLKifKRmU6WP"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:16.803784+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 85,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 202,
+      "source_track": {
+        "track_id": "0pqnGHJpmpxLKifKRmU6WP",
+        "track_name": "Believer",
+        "artists_name": "Imagine Dragons",
+        "album_name": "Evolve",
+        "duration_ms": 204346,
+        "selection_weather": "CLEAR"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 202,
+        "checked_at": "2026-10-16T08:39:35.088Z",
+        "source": null
+      }
+    },
+    {
+      "track_id": "6I3mqTwhRpn34SLVafSH7G",
+      "video_id": "KRUWn3dLoRg",
+      "video_url": "https://www.youtube.com/watch?v=KRUWn3dLoRg",
+      "youtube_title": "Justin Bieber - Ghost (Visualizer)",
+      "channel": "JustinBieberVEVO",
+      "album_match": "UNKNOWN",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 153,
+      "source_duration_seconds": 153.19,
+      "duration_tolerance_seconds": 18.3828,
+      "duration_difference_seconds": -0.19,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=KRUWn3dLoRg"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:33.684954+00:00",
+      "match_score": 85,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 153,
+      "source_track": {
+        "track_id": "6I3mqTwhRpn34SLVafSH7G",
+        "track_name": "Ghost",
+        "artists_name": "Justin Bieber",
+        "album_name": "Justice",
+        "duration_ms": 153190,
+        "selection_weather": "CLOUDY"
+      },
+      "native_progress_observation": {
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:48:10.821Z",
+        "elapsed_seconds": 2,
+        "pause_control_observed": true,
+        "time_progress_observed": true,
+        "playback_observed": true,
+        "duration_seconds": 153
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "2VxeLyX666F8uXCJ0dZF8B",
+      "video_id": "MUX4ZWkDS-s",
+      "video_url": "https://www.youtube.com/watch?v=MUX4ZWkDS-s",
+      "youtube_title": "Shallow",
+      "channel": "Lady Gaga - Topic",
+      "album_match": true,
+      "version_match": true,
+      "duration_seconds": 216,
+      "source_duration_seconds": 215.733,
+      "duration_difference_seconds": 0.267,
+      "duration_tolerance_seconds": 25.888,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=MUX4ZWkDS-s",
+        "https://open.spotify.com/track/2VxeLyX666F8uXCJ0dZF8B"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:39.308256+00:00",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "match_score": 100,
+      "score_is_probability": false,
+      "notes": "원곡 전체 청취·음원 지문 대조가 아닌 공식 메타데이터 식별입니다. 실제 재생 관측 없는 곡은 미관측 상태를 유지합니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 215,
+      "source_track": {
+        "track_id": "2VxeLyX666F8uXCJ0dZF8B",
+        "track_name": "Shallow",
+        "artists_name": "Lady Gaga;Bradley Cooper",
+        "album_name": "A Star Is Born Soundtrack",
+        "duration_ms": 215733,
+        "selection_weather": "OVERCAST"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 1,
+        "duration_seconds": 215,
+        "checked_at": "2026-10-16T08:46:21.675Z",
+        "source": "ROOT_CUA_NATIVE_TIME_PROGRESS"
+      }
+    },
+    {
+      "track_id": "2P91MQbaiQOfbiz9VqhqKQ",
+      "video_id": "a7fzkqLozwA",
+      "video_url": "https://www.youtube.com/watch?v=a7fzkqLozwA",
+      "youtube_title": "Lauv - I Like Me Better [Official Audio]",
+      "channel": "Lauv",
+      "album_match": "UNKNOWN",
+      "observed_album": null,
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 197,
+      "source_duration_seconds": 197.436,
+      "duration_difference_seconds": 0.436,
+      "duration_tolerance_seconds": 23.692,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=a7fzkqLozwA",
+        "https://open.spotify.com/track/2P91MQbaiQOfbiz9VqhqKQ"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:16.864038+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 85,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 197,
+      "source_track": {
+        "track_id": "2P91MQbaiQOfbiz9VqhqKQ",
+        "track_name": "I Like Me Better",
+        "artists_name": "Lauv",
+        "album_name": "I met you when I was 18. (the playlist)",
+        "duration_ms": 197436,
+        "selection_weather": "RAIN"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 197,
+        "checked_at": "2026-10-16T08:39:45.841Z",
+        "source": null
+      }
+    },
+    {
+      "track_id": "2374M0fQpWi3dLnB54qaLX",
+      "video_id": "QAo_Ycocl1E",
+      "video_url": "https://www.youtube.com/watch?v=QAo_Ycocl1E",
+      "youtube_title": "Africa",
+      "channel": "Toto - Topic",
+      "album_match": "MATCH",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 295,
+      "source_duration_seconds": 295.893,
+      "duration_tolerance_seconds": 35.50715999999999,
+      "duration_difference_seconds": -0.893,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=QAo_Ycocl1E"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "NATIVE_PLAYBACK_OBSERVED",
+      "korea_in_available_countries": null,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:37:18.530Z",
+      "match_score": 100,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Public HTTP rate limit encountered; native DOM expanded description and playback UI used without retry or bypass.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 295,
+      "source_track": {
+        "track_id": "2374M0fQpWi3dLnB54qaLX",
+        "track_name": "Africa",
+        "artists_name": "TOTO",
+        "album_name": "Toto IV",
+        "duration_ms": 295893,
+        "selection_weather": "SNOW"
+      },
+      "native_progress_observation": {
+        "playback_observed": true,
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:37:18.530Z",
+        "elapsed_seconds": 1,
+        "pause_control_observed": true,
+        "time_progress_observed": true,
+        "duration_seconds": 295
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "2HZLXBOnaSRhXStMLrq9fD",
+      "video_id": "k5mX3NkA7jM",
+      "video_url": "https://www.youtube.com/watch?v=k5mX3NkA7jM",
+      "youtube_title": "Ghost - Mary On A Cross (Official Audio)",
+      "channel": "Ghost",
+      "album_match": true,
+      "version_match": true,
+      "duration_seconds": 245,
+      "source_duration_seconds": 244.804,
+      "duration_difference_seconds": 0.196,
+      "duration_tolerance_seconds": 29.376,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=k5mX3NkA7jM",
+        "https://open.spotify.com/track/2HZLXBOnaSRhXStMLrq9fD"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:39.469590+00:00",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "match_score": 100,
+      "score_is_probability": false,
+      "notes": "원곡 전체 청취·음원 지문 대조가 아닌 공식 메타데이터 식별입니다. 실제 재생 관측 없는 곡은 미관측 상태를 유지합니다. 공식 일반 버전 제목과 245초 길이를 대조했습니다. 설명의 홍보 해시태그만으로 slowed 버전으로 판정하지 않았고, 별도 slowed+reverb 영상(us9plufTqks)은 선택하지 않았습니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 244,
+      "source_track": {
+        "track_id": "2HZLXBOnaSRhXStMLrq9fD",
+        "track_name": "Mary On A Cross",
+        "artists_name": "Ghost",
+        "album_name": "Seven Inches Of Satanic Panic",
+        "duration_ms": 244804,
+        "selection_weather": "CLEAR"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 1,
+        "duration_seconds": 244,
+        "checked_at": "2026-10-16T08:48:54.885Z",
+        "source": "ROOT_CUA_NATIVE_TIME_PROGRESS"
+      }
+    },
+    {
+      "track_id": "3dPQuX8Gs42Y7b454ybpMR",
+      "video_id": "0J2QdDbelmY",
+      "video_url": "https://www.youtube.com/watch?v=0J2QdDbelmY",
+      "youtube_title": "The White Stripes - Seven Nation Army (Official Music Video)",
+      "channel": "The White Stripes",
+      "album_match": "UNKNOWN",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 238,
+      "source_duration_seconds": 232.106,
+      "duration_tolerance_seconds": 27.852719999999998,
+      "duration_difference_seconds": 5.894,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=0J2QdDbelmY"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:34.234651+00:00",
+      "match_score": 85,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 238,
+      "source_track": {
+        "track_id": "3dPQuX8Gs42Y7b454ybpMR",
+        "track_name": "Seven Nation Army",
+        "artists_name": "The White Stripes",
+        "album_name": "Elephant",
+        "duration_ms": 232106,
+        "selection_weather": "OVERCAST"
+      },
+      "native_progress_observation": {
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:48:17.934Z",
+        "elapsed_seconds": 1,
+        "pause_control_observed": true,
+        "time_progress_observed": true,
+        "playback_observed": true,
+        "duration_seconds": 238
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "3hRV0jL3vUpRrcy398teAU",
+      "video_id": "KtlgYxa6BMU",
+      "video_url": "https://www.youtube.com/watch?v=KtlgYxa6BMU",
+      "youtube_title": "Lord Huron - The Night We Met (Official Audio)",
+      "channel": "Lord Huron",
+      "album_match": true,
+      "version_match": true,
+      "duration_seconds": 208,
+      "source_duration_seconds": 208.211,
+      "duration_difference_seconds": 0.211,
+      "duration_tolerance_seconds": 24.985,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=KtlgYxa6BMU",
+        "https://open.spotify.com/track/3hRV0jL3vUpRrcy398teAU"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:39.959396+00:00",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "match_score": 100,
+      "score_is_probability": false,
+      "notes": "원곡 전체 청취·음원 지문 대조가 아닌 공식 메타데이터 식별입니다. 실제 재생 관측 없는 곡은 미관측 상태를 유지합니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 208,
+      "source_track": {
+        "track_id": "3hRV0jL3vUpRrcy398teAU",
+        "track_name": "The Night We Met",
+        "artists_name": "Lord Huron",
+        "album_name": "Strange Trails",
+        "duration_ms": 208211,
+        "selection_weather": "RAIN"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 1,
+        "duration_seconds": 208,
+        "checked_at": "2026-10-16T08:46:34.486Z",
+        "source": "ROOT_CUA_NATIVE_TIME_PROGRESS"
+      }
+    },
+    {
+      "track_id": "4HBZA5flZLE435QTztThqH",
+      "video_id": "h2jvHynuMjI",
+      "video_url": "https://www.youtube.com/watch?v=h2jvHynuMjI",
+      "youtube_title": "Ariana Grande, Justin Bieber - Stuck with U (Lyric Video)",
+      "channel": "JustinBieberVEVO",
+      "album_match": "UNKNOWN",
+      "observed_album": null,
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 230,
+      "source_duration_seconds": 228.482,
+      "duration_difference_seconds": 1.518,
+      "duration_tolerance_seconds": 27.418,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=h2jvHynuMjI",
+        "https://open.spotify.com/track/4HBZA5flZLE435QTztThqH"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:17.485347+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 85,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 229,
+      "source_track": {
+        "track_id": "4HBZA5flZLE435QTztThqH",
+        "track_name": "Stuck with U (with Justin Bieber)",
+        "artists_name": "Ariana Grande;Justin Bieber",
+        "album_name": "Stuck with U",
+        "duration_ms": 228482,
+        "selection_weather": "SNOW"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 229,
+        "checked_at": "2026-10-16T08:39:52.877Z",
+        "source": null
+      }
+    },
+    {
+      "track_id": "2gYj9lubBorOPIVWsTXugG",
+      "video_id": "xqnWLDkjjwc",
+      "video_url": "https://www.youtube.com/watch?v=xqnWLDkjjwc",
+      "youtube_title": "After LIKE (After LIKE)",
+      "channel": "IVE - Topic",
+      "album_match": "MATCH",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 177,
+      "source_duration_seconds": 176.973,
+      "duration_tolerance_seconds": 21.23676,
+      "duration_difference_seconds": 0.027,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=xqnWLDkjjwc"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:35.127853+00:00",
+      "match_score": 100,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 176,
+      "source_track": {
+        "track_id": "2gYj9lubBorOPIVWsTXugG",
+        "track_name": "After LIKE",
+        "artists_name": "IVE",
+        "album_name": "After LIKE",
+        "duration_ms": 176973,
+        "selection_weather": "CLEAR"
+      },
+      "native_progress_observation": {
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:49:34.567Z",
+        "elapsed_seconds": 1,
+        "pause_control_observed": true,
+        "time_progress_observed": true,
+        "playback_observed": true,
+        "duration_seconds": 176
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "4RvWPyQ5RL0ao9LPZeSouE",
+      "video_id": "U4zA0xnBEJU",
+      "video_url": "https://www.youtube.com/watch?v=U4zA0xnBEJU",
+      "youtube_title": "Everybody Wants To Rule The World",
+      "channel": "Tears For Fears - Topic",
+      "album_match": "BASE_ALBUM_MATCH_EDITION_UNCONFIRMED",
+      "version_match": true,
+      "duration_seconds": 251,
+      "source_duration_seconds": 251.488,
+      "duration_difference_seconds": 0.488,
+      "duration_tolerance_seconds": 30.179,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=U4zA0xnBEJU",
+        "https://open.spotify.com/track/4RvWPyQ5RL0ao9LPZeSouE"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:40.002927+00:00",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "match_score": 85,
+      "score_is_probability": false,
+      "notes": "원곡 전체 청취·음원 지문 대조가 아닌 공식 메타데이터 식별입니다. 실제 재생 관측 없는 곡은 미관측 상태를 유지합니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 251,
+      "source_track": {
+        "track_id": "4RvWPyQ5RL0ao9LPZeSouE",
+        "track_name": "Everybody Wants To Rule The World",
+        "artists_name": "Tears For Fears",
+        "album_name": "Songs From The Big Chair (Super Deluxe Edition)",
+        "duration_ms": 251488,
+        "selection_weather": "CLOUDY"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 1,
+        "duration_seconds": 251,
+        "checked_at": "2026-10-16T08:46:50.893Z",
+        "source": "ROOT_CUA_NATIVE_TIME_PROGRESS"
+      }
+    },
+    {
+      "track_id": "4686eQ81DEswHa90bcdlC9",
+      "video_id": "ECByNvnTUto",
+      "video_url": "https://www.youtube.com/watch?v=ECByNvnTUto",
+      "youtube_title": "Rock and A Hard Place",
+      "channel": "Bailey Zimmerman - Topic",
+      "album_match": "UNKNOWN",
+      "observed_album": null,
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 208,
+      "source_duration_seconds": 207.54,
+      "duration_difference_seconds": 0.46,
+      "duration_tolerance_seconds": 24.905,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=ECByNvnTUto",
+        "https://open.spotify.com/track/4686eQ81DEswHa90bcdlC9"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:17.774360+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 85,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 207,
+      "source_track": {
+        "track_id": "4686eQ81DEswHa90bcdlC9",
+        "track_name": "Rock and A Hard Place",
+        "artists_name": "Bailey Zimmerman",
+        "album_name": "Rock and A Hard Place",
+        "duration_ms": 207540,
+        "selection_weather": "OVERCAST"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 207,
+        "checked_at": "2026-10-16T08:40:00.039Z",
+        "source": null
+      }
+    },
+    {
+      "track_id": "06KyNuuMOX1ROXRhj787tj",
+      "video_id": "3AtDnEC4zak",
+      "video_url": "https://www.youtube.com/watch?v=3AtDnEC4zak",
+      "youtube_title": "Charlie Puth - We Don't Talk Anymore (feat. Selena Gomez) [Official Video]",
+      "channel": "Charlie Puth",
+      "album_match": "MATCH",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 231,
+      "source_duration_seconds": 217.706,
+      "duration_tolerance_seconds": 26.124719999999996,
+      "duration_difference_seconds": 13.294,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=3AtDnEC4zak",
+        "https://www.youtube.com/watch?v=3AtDnEC4zak"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:35.277294+00:00",
+      "match_score": 100,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Native visible description: From Charlie's debut album Nine Track Mind.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 230,
+      "source_track": {
+        "track_id": "06KyNuuMOX1ROXRhj787tj",
+        "track_name": "We Don't Talk Anymore (feat. Selena Gomez)",
+        "artists_name": "Charlie Puth;Selena Gomez",
+        "album_name": "Nine Track Mind",
+        "duration_ms": 217706,
+        "selection_weather": "RAIN"
+      },
+      "native_progress_observation": {
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:48:56.399Z",
+        "elapsed_seconds": 2,
+        "pause_control_observed": true,
+        "time_progress_observed": true,
+        "playback_observed": true,
+        "duration_seconds": 230
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "6jjYDGxVJsWS0a5wlVF5vS",
+      "video_id": "LaaXdTqUnp8",
+      "video_url": "https://www.youtube.com/watch?v=LaaXdTqUnp8",
+      "youtube_title": "Butter",
+      "channel": "BTS - Topic",
+      "album_match": true,
+      "version_match": true,
+      "duration_seconds": 165,
+      "source_duration_seconds": 164.952,
+      "duration_difference_seconds": 0.048,
+      "duration_tolerance_seconds": 19.794,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=LaaXdTqUnp8",
+        "https://open.spotify.com/track/6jjYDGxVJsWS0a5wlVF5vS"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:40.223365+00:00",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "match_score": 100,
+      "score_is_probability": false,
+      "notes": "원곡 전체 청취·음원 지문 대조가 아닌 공식 메타데이터 식별입니다. 실제 재생 관측 없는 곡은 미관측 상태를 유지합니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 164,
+      "source_track": {
+        "track_id": "6jjYDGxVJsWS0a5wlVF5vS",
+        "track_name": "Butter",
+        "artists_name": "BTS",
+        "album_name": "Proof",
+        "duration_ms": 164952,
+        "selection_weather": "SNOW"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 164,
+        "checked_at": "2026-10-16T08:51:02.120Z",
+        "source": "ROOT_CUA_NATIVE_TIME_PROGRESS"
+      }
+    },
+    {
+      "track_id": "3rmo8F54jFF8OgYsqTxm5d",
+      "video_id": "HeOpRzcqKrE",
+      "video_url": "https://www.youtube.com/watch?v=HeOpRzcqKrE",
+      "youtube_title": "Ed Sheeran - Bad Habits [Official Lyric Video]",
+      "channel": "Ed Sheeran",
+      "album_match": "UNKNOWN",
+      "observed_album": null,
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 232,
+      "source_duration_seconds": 230.746,
+      "duration_difference_seconds": 1.254,
+      "duration_tolerance_seconds": 27.69,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=HeOpRzcqKrE",
+        "https://open.spotify.com/track/3rmo8F54jFF8OgYsqTxm5d"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:18.019922+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 85,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 231,
+      "source_track": {
+        "track_id": "3rmo8F54jFF8OgYsqTxm5d",
+        "track_name": "Bad Habits",
+        "artists_name": "Ed Sheeran",
+        "album_name": "=",
+        "duration_ms": 230746,
+        "selection_weather": "CLEAR"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 231,
+        "checked_at": "2026-10-16T08:42:21.898Z",
+        "source": null
+      }
+    },
+    {
+      "track_id": "4d4ZXH4dr5bYfgErHiZCX2",
+      "video_id": "9Vbv9ulhwXw",
+      "video_url": "https://www.youtube.com/watch?v=9Vbv9ulhwXw",
+      "youtube_title": "Dos Mil 16",
+      "channel": "Bad Bunny - Topic",
+      "album_match": "MATCH",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 209,
+      "source_duration_seconds": 208.615,
+      "duration_tolerance_seconds": 25.0338,
+      "duration_difference_seconds": 0.385,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=9Vbv9ulhwXw"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:35.557554+00:00",
+      "match_score": 100,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 15,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 208,
+      "source_track": {
+        "track_id": "4d4ZXH4dr5bYfgErHiZCX2",
+        "track_name": "Dos Mil 16",
+        "artists_name": "Bad Bunny",
+        "album_name": "Un Verano Sin Ti",
+        "duration_ms": 208615,
+        "selection_weather": "CLOUDY"
+      },
+      "native_progress_observation": {
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:48:28.690Z",
+        "elapsed_seconds": 1,
+        "pause_control_observed": true,
+        "time_progress_observed": true,
+        "playback_observed": true,
+        "duration_seconds": 208
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "3dYD57lRAUcMHufyqn9GcI",
+      "video_id": "MYSVMgRr6pw",
+      "video_url": "https://www.youtube.com/watch?v=MYSVMgRr6pw",
+      "youtube_title": "Hozier - Take Me To Church",
+      "channel": "HozierVEVO",
+      "album_match": "unknown",
+      "version_match": true,
+      "duration_seconds": 240,
+      "source_duration_seconds": 241.688,
+      "duration_difference_seconds": 1.688,
+      "duration_tolerance_seconds": 29.003,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=MYSVMgRr6pw",
+        "https://open.spotify.com/track/3dYD57lRAUcMHufyqn9GcI"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:40.435653+00:00",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "match_score": 85,
+      "score_is_probability": false,
+      "notes": "원곡 전체 청취·음원 지문 대조가 아닌 공식 메타데이터 식별입니다. 실제 재생 관측 없는 곡은 미관측 상태를 유지합니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 240,
+      "source_track": {
+        "track_id": "3dYD57lRAUcMHufyqn9GcI",
+        "track_name": "Take Me To Church",
+        "artists_name": "Hozier",
+        "album_name": "Hozier",
+        "duration_ms": 241688,
+        "selection_weather": "OVERCAST"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 240,
+        "checked_at": "2026-10-16T08:47:04.173Z",
+        "source": "ROOT_CUA_NATIVE_TIME_PROGRESS"
+      }
+    },
+    {
+      "track_id": "5WtfUKzXircvW8l5aaVZWT",
+      "video_id": "G39G7eoUClE",
+      "video_url": "https://www.youtube.com/watch?v=G39G7eoUClE",
+      "youtube_title": "Julia Michaels - What A Time (Audio) ft. Niall Horan",
+      "channel": "JuliaMichaelsVEVO",
+      "album_match": "UNKNOWN",
+      "observed_album": null,
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 174,
+      "source_duration_seconds": 173.306,
+      "duration_difference_seconds": 0.694,
+      "duration_tolerance_seconds": 20.797,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=G39G7eoUClE",
+        "https://open.spotify.com/track/5WtfUKzXircvW8l5aaVZWT"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:18.099546+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 85,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 174,
+      "source_track": {
+        "track_id": "5WtfUKzXircvW8l5aaVZWT",
+        "track_name": "What A Time (feat. Niall Horan)",
+        "artists_name": "Julia Michaels;Niall Horan",
+        "album_name": "Inner Monologue Part 1",
+        "duration_ms": 173306,
+        "selection_weather": "RAIN"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 174,
+        "checked_at": "2026-10-16T08:40:21.502Z",
+        "source": null
+      }
+    },
+    {
+      "track_id": "3bNv3VuUOKgrf5hu3YcuRo",
+      "video_id": "hLQl3WQQoQ0",
+      "video_url": "https://www.youtube.com/watch?v=hLQl3WQQoQ0",
+      "youtube_title": "Adele - Someone Like You (Official Music Video)",
+      "channel": "Adele",
+      "album_match": "UNKNOWN",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 285,
+      "source_duration_seconds": 285.24,
+      "duration_tolerance_seconds": 34.2288,
+      "duration_difference_seconds": -0.24,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=hLQl3WQQoQ0"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:35.604678+00:00",
+      "match_score": 85,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 284,
+      "source_track": {
+        "track_id": "3bNv3VuUOKgrf5hu3YcuRo",
+        "track_name": "Someone Like You",
+        "artists_name": "Adele",
+        "album_name": "21",
+        "duration_ms": 285240,
+        "selection_weather": "SNOW"
+      },
+      "native_progress_observation": {
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:48:49.443Z",
+        "elapsed_seconds": 3,
+        "pause_control_observed": true,
+        "time_progress_observed": true,
+        "playback_observed": true,
+        "duration_seconds": 284
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "0QBzMgT7NIeoCYy3sJCof1",
+      "video_id": "nWr4r-3bHBc",
+      "video_url": "https://www.youtube.com/watch?v=nWr4r-3bHBc",
+      "youtube_title": "Camila Cabello - Bam Bam (Official Audio) ft. Ed Sheeran",
+      "channel": "CamilaCabelloVEVO",
+      "album_match": "unknown",
+      "version_match": true,
+      "duration_seconds": 208,
+      "source_duration_seconds": 206.07,
+      "duration_difference_seconds": 1.93,
+      "duration_tolerance_seconds": 24.728,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=nWr4r-3bHBc",
+        "https://open.spotify.com/track/0QBzMgT7NIeoCYy3sJCof1"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:40.949936+00:00",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "match_score": 85,
+      "score_is_probability": false,
+      "notes": "원곡 전체 청취·음원 지문 대조가 아닌 공식 메타데이터 식별입니다. 실제 재생 관측 없는 곡은 미관측 상태를 유지합니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 207,
+      "source_track": {
+        "track_id": "0QBzMgT7NIeoCYy3sJCof1",
+        "track_name": "Bam Bam (feat. Ed Sheeran)",
+        "artists_name": "Camila Cabello;Ed Sheeran",
+        "album_name": "Bam Bam (feat. Ed Sheeran)",
+        "duration_ms": 206070,
+        "selection_weather": "CLEAR"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 1,
+        "duration_seconds": 207,
+        "checked_at": "2026-10-16T08:47:12.870Z",
+        "source": "ROOT_CUA_NATIVE_TIME_PROGRESS"
+      }
+    },
+    {
+      "track_id": "4gzsuuZypVbxs0Af1LSZyB",
+      "video_id": "sfQOiDJX-x4",
+      "video_url": "https://www.youtube.com/watch?v=sfQOiDJX-x4",
+      "youtube_title": "Lo Siento BB:/",
+      "channel": "Tainy - Topic",
+      "album_match": "UNKNOWN",
+      "observed_album": null,
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 207,
+      "source_duration_seconds": 207.301,
+      "duration_difference_seconds": 0.301,
+      "duration_tolerance_seconds": 24.876,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=sfQOiDJX-x4",
+        "https://open.spotify.com/track/4gzsuuZypVbxs0Af1LSZyB"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:18.444768+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 85,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 207,
+      "source_track": {
+        "track_id": "4gzsuuZypVbxs0Af1LSZyB",
+        "track_name": "Lo Siento BB:/ (with Bad Bunny & Julieta Venegas)",
+        "artists_name": "Tainy;Bad Bunny;Julieta Venegas",
+        "album_name": "Lo Siento BB:/ (with Bad Bunny & Julieta Venegas)",
+        "duration_ms": 207301,
+        "selection_weather": "CLOUDY"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 207,
+        "checked_at": "2026-10-16T08:41:56.615Z",
+        "source": null
+      }
+    },
+    {
+      "track_id": "0NlGoUyOJSuSHmngoibVAs",
+      "video_id": "3AUtk1wJJBc",
+      "video_url": "https://www.youtube.com/watch?v=3AUtk1wJJBc",
+      "youtube_title": "All I Want",
+      "channel": "Kodaline - Topic",
+      "album_match": "BASE_ALBUM_MATCH_EDITION_UNCONFIRMED",
+      "version_match": "ORIGINAL_STUDIO_NO_CONFLICT_FOUND",
+      "duration_seconds": 306,
+      "source_duration_seconds": 305.746,
+      "duration_tolerance_seconds": 36.689519999999995,
+      "duration_difference_seconds": 0.254,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=3AUtk1wJJBc"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:36.066243+00:00",
+      "match_score": 85,
+      "notes": [
+        "Manual metadata identity assessment; score is a checklist score, not a probability.",
+        "No complete-track listening or iframe permission assertion.",
+        "Base album matches but deluxe/expanded/special edition not independently confirmed; album points withheld.",
+        "Final acceptance requires native displayed elapsed>=1 second; 0:00 plus Pause alone was not accepted."
+      ],
+      "review_part": 2,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 305,
+      "source_track": {
+        "track_id": "0NlGoUyOJSuSHmngoibVAs",
+        "track_name": "All I Want",
+        "artists_name": "Kodaline",
+        "album_name": "In A Perfect World (Expanded Edition)",
+        "duration_ms": 305746,
+        "selection_weather": "OVERCAST"
+      },
+      "native_progress_observation": {
+        "playback_observed": true,
+        "source": "CUA_NATIVE_AX_UI",
+        "checked_at": "2026-10-16T08:41:36.391Z",
+        "elapsed_seconds": 1,
+        "pause_control_observed": true,
+        "time_progress_observed": true,
+        "duration_seconds": 305
+      },
+      "local_evidence_artifact": {
+        "path": "analysis/youtube_mapping_100_20261016/part2-native-progress-evidence.json",
+        "sha256": "26d2d73ef558c9f789fca4ea3dc1a1447eac65ba40af4074d6a763efc2697558"
+      }
+    },
+    {
+      "track_id": "3yMC1KsTwh0ceXdIe4QQAQ",
+      "video_id": "zPIBh_H1zAA",
+      "video_url": "https://www.youtube.com/watch?v=zPIBh_H1zAA",
+      "youtube_title": "Lauren Spencer-Smith - Fingers Crossed (Lyric Video)",
+      "channel": "Lauren Spencer Smith",
+      "album_match": "unknown",
+      "version_match": true,
+      "duration_seconds": 173,
+      "source_duration_seconds": 175.344,
+      "duration_difference_seconds": 2.344,
+      "duration_tolerance_seconds": 21.041,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=zPIBh_H1zAA",
+        "https://open.spotify.com/track/3yMC1KsTwh0ceXdIe4QQAQ"
+      ],
+      "metadata_identity_pass": true,
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:33:41.056005+00:00",
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "match_score": 85,
+      "score_is_probability": false,
+      "notes": "원곡 전체 청취·음원 지문 대조가 아닌 공식 메타데이터 식별입니다. 실제 재생 관측 없는 곡은 미관측 상태를 유지합니다.",
+      "review_part": 3,
+      "native_approved_duration_seconds": 173,
+      "source_track": {
+        "track_id": "3yMC1KsTwh0ceXdIe4QQAQ",
+        "track_name": "Fingers Crossed",
+        "artists_name": "Lauren Spencer Smith",
+        "album_name": "Fingers Crossed",
+        "duration_ms": 175344,
+        "selection_weather": "RAIN"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 1,
+        "duration_seconds": 173,
+        "checked_at": "2026-10-16T08:50:03.965Z",
+        "source": "ROOT_CUA_NATIVE_TIME_PROGRESS"
+      }
+    },
+    {
+      "track_id": "3fqwjXwUGN6vbzIwvyFMhx",
+      "video_id": "4zAThXFOy2c",
+      "video_url": "https://www.youtube.com/watch?v=4zAThXFOy2c",
+      "youtube_title": "Chris Stapleton - Tennessee Whiskey (Official Audio)",
+      "channel": "ChrisStapletonVEVO",
+      "album_match": "UNKNOWN",
+      "observed_album": null,
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 293,
+      "source_duration_seconds": 293.293,
+      "duration_difference_seconds": 0.293,
+      "duration_tolerance_seconds": 35.195,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=4zAThXFOy2c",
+        "https://open.spotify.com/track/3fqwjXwUGN6vbzIwvyFMhx",
+        "https://chrisstapleton.com/videos/tennessee-whiskey-audio/"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:18.854515+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다."
+      ],
+      "review_part": 1,
+      "match_score": 85,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 293,
+      "source_track": {
+        "track_id": "3fqwjXwUGN6vbzIwvyFMhx",
+        "track_name": "Tennessee Whiskey",
+        "artists_name": "Chris Stapleton",
+        "album_name": "Traveller",
+        "duration_ms": 293293,
+        "selection_weather": "SNOW"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 293,
+        "checked_at": "2026-10-16T08:40:35.519Z",
+        "source": null
+      }
+    },
+    {
+      "track_id": "62ke5zFUJN6RvtXZgVH0F8",
+      "video_id": "PaKr9gWqwl4",
+      "video_url": "https://www.youtube.com/watch?v=PaKr9gWqwl4",
+      "youtube_title": "Paloma Faith - Only Love Can Hurt Like This (Official Video)",
+      "channel": "PalomaFaithVEVO",
+      "album_match": "UNKNOWN",
+      "observed_album": null,
+      "version_match": "MATCH_STANDARD_STUDIO_METADATA_NO_LIVE_REMIX_SPEED_MARKER",
+      "duration_seconds": 251,
+      "source_duration_seconds": 232.893,
+      "duration_difference_seconds": 18.107,
+      "duration_tolerance_seconds": 27.947,
+      "identity_evidence_urls": [
+        "https://www.youtube.com/watch?v=PaKr9gWqwl4",
+        "https://open.spotify.com/track/62ke5zFUJN6RvtXZgVH0F8"
+      ],
+      "metadata_identity_pass": true,
+      "score_components": {
+        "title": 35,
+        "artist": 35,
+        "album": 0,
+        "duration": 15
+      },
+      "public_availability_status": "OK",
+      "korea_in_available_countries": true,
+      "playback_observed": true,
+      "checked_at": "2026-10-16T08:34:19.185570+00:00",
+      "notes": [
+        "공식 아티스트/VEVO 또는 배급사 자동 생성 Topic의 원곡 제목·아티스트·길이를 대조했습니다.",
+        "점수는 메타데이터 항목 충족 점수이며 동일 녹음 확률·전곡 청취 검증이 아닙니다.",
+        "앨범이 UNKNOWN인 항목에는 앨범 점수를 주지 않았습니다.",
+        "생일 행사곡 의심 보류를 같은 CLOUDY 날씨 BACKUP 곡으로 대체했습니다."
+      ],
+      "replaces_track_id": "3kUq4sBcmxhnOtNysZ9yrp",
+      "review_part": 1,
+      "match_score": 85,
+      "score_is_probability": false,
+      "native_approved_duration_seconds": 250,
+      "source_track": {
+        "track_id": "62ke5zFUJN6RvtXZgVH0F8",
+        "track_name": "Only Love Can Hurt Like This",
+        "artists_name": "Paloma Faith",
+        "album_name": "A Perfect Contradiction (Outsiders' Expanded Edition)",
+        "duration_ms": 232893,
+        "selection_weather": "CLOUDY"
+      },
+      "native_progress_observation": {
+        "elapsed_seconds": 2,
+        "duration_seconds": 250,
+        "checked_at": "2026-10-16T08:41:01.481Z",
+        "source": null
+      }
+    }
+  ]
+}

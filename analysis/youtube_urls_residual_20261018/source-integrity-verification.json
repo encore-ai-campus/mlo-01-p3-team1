@@ -1,0 +1,208 @@
+{
+  "schema_version": "RESIDUAL_SOURCE_INTEGRITY_VERIFICATION_V1",
+  "scope": "SOURCE_METADATA_INTEGRITY_ONLY",
+  "verified_at": "2026-10-18T04:07:44.552327+00:00",
+  "target_tracks_at_start": 42118,
+  "excluded_prior_tracks": 44367,
+  "excluded_prior_unique_videos": 49893,
+  "datasets": {
+    "timj": {
+      "status": "PASS",
+      "candidate_rows_checked": 3112,
+      "source_sha256": "e37e679b7e088658c7ef7300d4157eb514132d9dc7511d9c5a1ffe3d0a95c585",
+      "source_record_index_basis": "ONE_BASED_WITHIN_JAMS_TSV_EXCLUDING_HEADER",
+      "candidate_unique_tracks": 927,
+      "candidate_unique_videos": 2757
+    },
+    "wavegen": {
+      "status": "PASS",
+      "candidate_rows_checked": 3,
+      "files": [
+        {
+          "source_file": "data/train-00000-of-00002.parquet",
+          "source_sha256": "13e01d6209c9c05a72eb6922400481fb0bb0cf7de7b8b0649ded767f28df5241",
+          "source_rows": 157762,
+          "candidate_source_rows_checked": 2,
+          "distinct_source_record_indexes_checked": 2
+        },
+        {
+          "source_file": "data/train-00001-of-00002.parquet",
+          "source_sha256": "78b73ee9da9fb56d673acfe6cc2ef271da346c5354217a99147bae5be7742b79",
+          "source_rows": 157761,
+          "candidate_source_rows_checked": 1,
+          "distinct_source_record_indexes_checked": 1
+        }
+      ]
+    },
+    "laion": {
+      "status": "PASS",
+      "candidate_rows_checked": 9861,
+      "files": [
+        {
+          "source_file": "data/train-00000-of-00005.parquet",
+          "source_sha256": "f8b1f0034f8f1e94c2a2b687156bbaaaf628a1e70c851029ba5622f5c67091d0",
+          "source_rows": 2464184,
+          "candidate_source_rows_checked": 2183,
+          "distinct_source_record_indexes_checked": 1970
+        },
+        {
+          "source_file": "data/train-00001-of-00005.parquet",
+          "source_sha256": "71d78ad14ee3f85d7614447423c9dfa5fa01d3a5b39a6ab33207520f9df8d4f3",
+          "source_rows": 2464183,
+          "candidate_source_rows_checked": 2979,
+          "distinct_source_record_indexes_checked": 2713
+        },
+        {
+          "source_file": "data/train-00002-of-00005.parquet",
+          "source_sha256": "0feba570a0e8e73c8a18506d28e391f2bb49d05b85ab977d30f648542f900f76",
+          "source_rows": 2464183,
+          "candidate_source_rows_checked": 2401,
+          "distinct_source_record_indexes_checked": 2197
+        },
+        {
+          "source_file": "data/train-00003-of-00005.parquet",
+          "source_sha256": "21a77d99fd85ad2fe39a2bcb97249c670cc6ef5b5895ca5c1d5978f27819a837",
+          "source_rows": 2464183,
+          "candidate_source_rows_checked": 1704,
+          "distinct_source_record_indexes_checked": 1566
+        },
+        {
+          "source_file": "data/train-00004-of-00005.parquet",
+          "source_sha256": "6ac5f59958b6b8131d85c5bab792cbe0356860888f1e309fb8ea5027fd9d82e2",
+          "source_rows": 2464183,
+          "candidate_source_rows_checked": 594,
+          "distinct_source_record_indexes_checked": 551
+        }
+      ],
+      "match_stage_counts": {
+        "A_PUNCTUATION_WORD_ORDER_ARTISTS_DURATION": 4523,
+        "B_SOURCE_EXPLICIT_CREDIT_RECONSTRUCTION": 4251,
+        "C_FULL_TITLE_ARTISTS_DURATION_DIFFERENCE": 1087
+      }
+    },
+    "laion_compact": {
+      "status": "PASS",
+      "candidate_rows_checked": 177,
+      "files": [
+        {
+          "source_file": "data/train-00000-of-00005.parquet",
+          "source_sha256": "f8b1f0034f8f1e94c2a2b687156bbaaaf628a1e70c851029ba5622f5c67091d0",
+          "source_rows": 2464184,
+          "candidate_source_rows_checked": 39,
+          "distinct_source_record_indexes_checked": 39
+        },
+        {
+          "source_file": "data/train-00001-of-00005.parquet",
+          "source_sha256": "71d78ad14ee3f85d7614447423c9dfa5fa01d3a5b39a6ab33207520f9df8d4f3",
+          "source_rows": 2464183,
+          "candidate_source_rows_checked": 54,
+          "distinct_source_record_indexes_checked": 53
+        },
+        {
+          "source_file": "data/train-00002-of-00005.parquet",
+          "source_sha256": "0feba570a0e8e73c8a18506d28e391f2bb49d05b85ab977d30f648542f900f76",
+          "source_rows": 2464183,
+          "candidate_source_rows_checked": 38,
+          "distinct_source_record_indexes_checked": 38
+        },
+        {
+          "source_file": "data/train-00003-of-00005.parquet",
+          "source_sha256": "21a77d99fd85ad2fe39a2bcb97249c670cc6ef5b5895ca5c1d5978f27819a837",
+          "source_rows": 2464183,
+          "candidate_source_rows_checked": 43,
+          "distinct_source_record_indexes_checked": 43
+        },
+        {
+          "source_file": "data/train-00004-of-00005.parquet",
+          "source_sha256": "6ac5f59958b6b8131d85c5bab792cbe0356860888f1e309fb8ea5027fd9d82e2",
+          "source_rows": 2464183,
+          "candidate_source_rows_checked": 3,
+          "distinct_source_record_indexes_checked": 3
+        }
+      ]
+    },
+    "kaggle": {
+      "status": "PASS",
+      "candidate_rows_checked": 18,
+      "source_sha256": "c354e6b22b0cd9561c0e82edcf300fd3511e18b206fc5f6e07e83f81005fe149",
+      "source_record_index_basis": "ONE_BASED_CSV_DATA_RECORD_EXCLUDING_HEADER",
+      "source_duration_origin": "SPOTIFY_TRACK_METADATA_NOT_VIDEO",
+      "source_match_stage_counts": {
+        "A_PUNCTUATION_WORD_ORDER_ARTISTS_DURATION": 4,
+        "B_SOURCE_EXPLICIT_CREDIT_RECONSTRUCTION": 14
+      }
+    },
+    "web_search": {
+      "status": "PASS",
+      "candidate_rows_checked": 100,
+      "exact_discovery_evidence_tuple_match": true,
+      "evidence_rows": 100
+    }
+  },
+  "merged_export_validation": {
+    "status": "PASS",
+    "scope": "FINAL_EXPORT_SOURCE_INTEGRITY_AND_COUNTS_ONLY",
+    "new_candidate_track_count": 10410,
+    "new_unique_video_urls": 12040,
+    "new_unique_track_video_pairs": 13266,
+    "source_row_count_before_pair_deduplication": 13271,
+    "inter_source_duplicate_pairs_removed": 5,
+    "unresolved_track_count": 31708,
+    "cumulative_candidate_covered_tracks": 54777,
+    "catalog_count": 86485,
+    "prior_track_overlap": 0,
+    "prior_video_overlap": 0,
+    "csv_source_fields_exact_readback_passed": true,
+    "csv_row_order_passed": true,
+    "txt_unique_url_count_set_and_first_seen_csv_order_passed": true,
+    "pending_target_set_and_original_metadata_preservation_passed": true,
+    "web_100_exact_discovery_evidence_tuples_passed": true,
+    "source_candidate_row_counts": {
+      "laion-residual-candidates.jsonl": 9861,
+      "laion-compact-candidates.jsonl": 177,
+      "timj-residual-candidates.jsonl": 3112,
+      "wavegen-residual-candidates.jsonl": 3,
+      "kaggle-residual-candidates.jsonl": 18,
+      "web-part1-candidates.jsonl": 100
+    },
+    "final_export_sha256": {
+      "youtube-residual-new-candidates.csv": "766ba4eb6e1acc6d06b28280d19adfae6dc41f5a3c036e30586d380505a83146",
+      "youtube-residual-new-urls.txt": "fdb06a27e0f94e64ddadea21c37134129b3b5f4f592c06903fe3e9e7ae7cbd52",
+      "remaining-uncollected.csv": "65628fd3e55893eead5013c40479e96d09b023951ddf06f11577afb671456ac7",
+      "residual-queue.csv": "62827a1e83fc776642e19883653fa8f78e24caade01c4834909295c8f13061b9",
+      "selection.json": "8133d6239adc7eb13d0b43a63f6691893d783ab7d91d8fe9cf40a690ee2031a7",
+      "collection-summary.json": "d7b18d3f276281f2d7b9c64123d640383df6942d1238ddd60fd3ba149923c179"
+    },
+    "prior_output_sha256_unchanged": {
+      "youtube-remaining-url-candidates.csv": "d1fd47857554913b8cb8e2520ee935e6bd80abcdb7dab396cee9cd6f4ff2f483",
+      "youtube-remaining-unique-urls.txt": "2dd26ce84368b906f6472bc77a3374e3b0f1c10efd16c901ef9fc037736582ca",
+      "remaining-uncollected.csv": "9ab4384732a20d460f06b6e0a0c2a363a7c36a940f7cc9b710235482ec5579b7"
+    },
+    "input_42118_queue_sha256": "62827a1e83fc776642e19883653fa8f78e24caade01c4834909295c8f13061b9",
+    "all_rows_unreviewed": true,
+    "url_liveness_checked": false,
+    "identical_recording_review_performed": false,
+    "playback_review_performed": false,
+    "dashboard_registration_performed": false
+  },
+  "candidate_file_sha256": {
+    "timj-residual-candidates.jsonl": "933b3590a4e4937a764e6b77be99f4663de1cd2e44c51a1e13f8254bf5a4c519",
+    "wavegen-residual-candidates.jsonl": "bf3f6d23ee3fc32a0f5d785e7bb8ec1aa216cb62c6424c00be479697c0b218b4",
+    "laion-residual-candidates.jsonl": "acc0d1cd160fafc3ba8d1ed313363638a28bda453e034c1be2cd5fb7372c8be7",
+    "laion-compact-candidates.jsonl": "40b094fd1a3228136683365642bb727b4250d7ea15ff2decac7d0f99ad85d023",
+    "kaggle-residual-candidates.jsonl": "c9f3a850f663407926a706b05d6eae2d1211f7ec3f46d6e9071e029ce33243a4",
+    "web-part1-candidates.jsonl": "6f1c79b7d8f9a5f6c83725674c811c009406a7e9b78e29f47fbb41be1487ae60",
+    "web-part1-evidence.jsonl": "7242373e932d5eeea4514fe748f368e24b5bad1f2882eba7eddf76f1d2cbe991"
+  },
+  "candidate_files_unchanged_during_verification": true,
+  "status": "PASS",
+  "prior_track_overlap": 0,
+  "prior_video_overlap": 0,
+  "required_source_fields_present": true,
+  "all_rows_unreviewed": true,
+  "personal_user_fields_exported": false,
+  "url_liveness_checked": false,
+  "identical_recording_review_performed": false,
+  "playback_review_performed": false,
+  "dashboard_registration_performed": false
+}

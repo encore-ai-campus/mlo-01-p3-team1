@@ -1,0 +1,77 @@
+{
+  "schema_version": "INDEPENDENT_URL_COLLECTION_INTEGRITY_V1",
+  "passed": true,
+  "scope": "COLLECTION_PROVENANCE_AND_EXPORT_INTEGRITY_ONLY_NOT_MUSIC_OR_PLAYBACK_REVIEW",
+  "input_target_count": 26633,
+  "prior_track_count": 59852,
+  "prior_unique_video_count": 66969,
+  "new_tracks": 1315,
+  "new_unique_video_urls": 1315,
+  "new_candidate_pairs": 1315,
+  "remaining_tracks": 25318,
+  "cumulative_collected_tracks": 61167,
+  "catalog_count": 86485,
+  "target_partition_verified": true,
+  "baseline_track_overlap": 0,
+  "baseline_video_overlap": 0,
+  "duplicate_export_pairs": 0,
+  "duplicate_txt_urls": 0,
+  "raw_candidate_records_connected": 1315,
+  "web_evidence_tuples_connected": 1140,
+  "auto_discovery_batch_records_connected": 226,
+  "laion_original_parquet_records_checked": 43,
+  "youniverse_saved_prefix_records_checked": 132,
+  "youniverse_channel_tsv_rows_checked": 9,
+  "verified_prefix_byte_lengths_sha256": {
+    "6442450944": "0109bc89466df4421082960d1cee073b218e42c0b30d57f04563b5768eb2d91f"
+  },
+  "missing_artist_credit_candidates_preserved": 7,
+  "source_candidate_pairs_before_deduplication": 1315,
+  "duplicate_source_pairs_removed": 0,
+  "word_boundary_review_candidates_preserved": 0,
+  "individual_search_attempted_tracks": 2188,
+  "individual_search_completed_tracks": 2188,
+  "remaining_retry_required_tracks": 0,
+  "prior_retry_tracks": 7,
+  "prior_retry_resolved_by_current_completed_search": 7,
+  "skipped_before_search_tracks": 5,
+  "laion_pure_source_rule_records_recomputed": 43,
+  "verified_laion_source_file_sha256": {
+    "data/train-00000-of-00005.parquet": "f8b1f0034f8f1e94c2a2b687156bbaaaf628a1e70c851029ba5622f5c67091d0",
+    "data/train-00001-of-00005.parquet": "71d78ad14ee3f85d7614447423c9dfa5fa01d3a5b39a6ab33207520f9df8d4f3",
+    "data/train-00002-of-00005.parquet": "0feba570a0e8e73c8a18506d28e391f2bb49d05b85ab977d30f648542f900f76",
+    "data/train-00003-of-00005.parquet": "21a77d99fd85ad2fe39a2bcb97249c670cc6ef5b5895ca5c1d5978f27819a837",
+    "data/train-00004-of-00005.parquet": "6ac5f59958b6b8131d85c5bab792cbe0356860888f1e309fb8ea5027fd9d82e2"
+  },
+  "preserved_prior_public_collection_and_received_readme_files_checked": 227,
+  "extended_duration_review_candidates_preserved": 7,
+  "unconfirmed_terminal_remaster_label_candidates_preserved": 36,
+  "public_search_unique_tracks": 1140,
+  "public_search_unique_video_ids": 1140,
+  "source_full_checksum_caveat": "YouNiverse is a saved partial compressed prefix; full official file checksum has not been verified.",
+  "metadata_identity_review_performed": false,
+  "playback_review_performed": false,
+  "url_liveness_checked": false,
+  "dashboard_registration_performed": false,
+  "application_or_database_access_performed": false,
+  "files": {
+    "youtube-continue-new-candidates.csv": {
+      "sha256": "2e92e89c045b63b85d5d4c64a93632246af4e2ccb17c28403a901c795673ddb6",
+      "bytes": 2256839
+    },
+    "youtube-continue-new-urls.txt": {
+      "sha256": "a34a3e2f478cbda884a58bb01ba24e715442705bf8654c11e55fec550e61555f",
+      "bytes": 59175
+    },
+    "remaining-uncollected.csv": {
+      "sha256": "d37e1fbabd883b1f1dc5832cf366de9619614134e782e2441b58942992fa14fa",
+      "bytes": 6105598
+    },
+    "collection-summary.json": {
+      "sha256": "b12217dd4243b48d5b5ec30ac5a242f7fd86efaf982d7536d7f3ffff831d2c57",
+      "bytes": 6186
+    }
+  },
+  "validated_at": "2026-10-18T11:49:25.940317+00:00",
+  "issues": []
+}
