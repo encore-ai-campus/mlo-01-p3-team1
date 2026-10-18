@@ -1,0 +1,362 @@
+{
+  "policy_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+  "status": "PLANNING_INITIAL_PARAMETERS_NOT_FITTED",
+  "model_version": null,
+  "score_features": [
+    "energy",
+    "acousticness",
+    "valence",
+    "mode"
+  ],
+  "core_features": [
+    "energy",
+    "acousticness"
+  ],
+  "parameter_order": [
+    "lower",
+    "upper",
+    "decay_width"
+  ],
+  "missing_continuous_feature": "HOLD_WITH_NULL_SCORE",
+  "missing_mode": "COMPONENT_ZERO_PRESERVE_NULL_NO_WEIGHT_REDISTRIBUTION",
+  "boundary_comparison": "INCLUSIVE_EXACT_UNROUNDED",
+  "sorted_by": [
+    "weather_score_desc",
+    "track_id_asc"
+  ],
+  "weather_updates": {
+    "reference": "VALID_OBSERVED_PTY_PLUS_VALID_FORECAST_SKY_AT_ONE_LOCATION",
+    "trigger": "WEATHER_CLASS_CHANGED",
+    "action": "BUILD_NEW_PLAYLIST_VERSION",
+    "forecast_score_average": false,
+    "poll_interval_seconds": null
+  },
+  "mixed_precipitation": {
+    "source_pty": [
+      2,
+      6
+    ],
+    "pool_rule": "INTERSECTION_RAIN_SNOW",
+    "ranking_proposal": "MIN_RAIN_SNOW",
+    "separate_trained_weather_model": false
+  },
+  "score_threshold": 75,
+  "core_component_min": 20,
+  "input_scale": "raw_spotify_0_to_1",
+  "target_duration_ms": 10800000,
+  "min_duration_ms": 10560000,
+  "max_duration_ms": 11040000,
+  "weather": {
+    "CLEAR": {
+      "label": "맑음",
+      "weights": {
+        "energy": 40,
+        "acousticness": 25,
+        "valence": 30,
+        "mode": 5
+      },
+      "example_allowed_speeds": [
+        "slow",
+        "medium",
+        "fast",
+        "fastest"
+      ],
+      "patterns": [
+        {
+          "pattern_id": "CLEAR_PRIMARY",
+          "label": "기존 선호 패턴",
+          "kind": "PRIMARY",
+          "ceiling": 100,
+          "preferred_mode": 1,
+          "energy": [
+            0.5,
+            0.8,
+            0.35
+          ],
+          "acousticness": [
+            0.0,
+            0.55,
+            0.4
+          ],
+          "valence": [
+            0.55,
+            0.9,
+            0.35
+          ]
+        },
+        {
+          "pattern_id": "CLEAR_SUPPORT",
+          "label": "밝고 활동적인 다양한 음향",
+          "kind": "SUPPORT",
+          "ceiling": 80,
+          "preferred_mode": 1,
+          "energy": [
+            0.5,
+            1,
+            0.15
+          ],
+          "acousticness": [
+            0,
+            1,
+            0.15
+          ],
+          "valence": [
+            0.5,
+            1,
+            0.15
+          ]
+        }
+      ]
+    },
+    "CLOUDY": {
+      "label": "구름낌",
+      "weights": {
+        "energy": 30,
+        "acousticness": 35,
+        "valence": 30,
+        "mode": 5
+      },
+      "example_allowed_speeds": [
+        "slow",
+        "medium",
+        "fast",
+        "fastest"
+      ],
+      "patterns": [
+        {
+          "pattern_id": "CLOUDY_PRIMARY",
+          "label": "기존 선호 패턴",
+          "kind": "PRIMARY",
+          "ceiling": 100,
+          "preferred_mode": 0,
+          "energy": [
+            0.3,
+            0.6,
+            0.3
+          ],
+          "acousticness": [
+            0.25,
+            0.75,
+            0.4
+          ],
+          "valence": [
+            0.35,
+            0.65,
+            0.3
+          ]
+        },
+        {
+          "pattern_id": "CLOUDY_SUPPORT",
+          "label": "긴장감 있고 활동적인 다양한 음향",
+          "kind": "SUPPORT",
+          "ceiling": 80,
+          "preferred_mode": 0,
+          "energy": [
+            0.5,
+            1,
+            0.15
+          ],
+          "acousticness": [
+            0,
+            1,
+            0.15
+          ],
+          "valence": [
+            0,
+            0.5,
+            0.15
+          ]
+        }
+      ]
+    },
+    "OVERCAST": {
+      "label": "흐림",
+      "weights": {
+        "energy": 25,
+        "acousticness": 40,
+        "valence": 30,
+        "mode": 5
+      },
+      "example_allowed_speeds": [
+        "slow",
+        "medium",
+        "fast",
+        "fastest"
+      ],
+      "patterns": [
+        {
+          "pattern_id": "OVERCAST_PRIMARY",
+          "label": "기존 선호 패턴",
+          "kind": "PRIMARY",
+          "ceiling": 100,
+          "preferred_mode": 0,
+          "energy": [
+            0.15,
+            0.45,
+            0.3
+          ],
+          "acousticness": [
+            0.5,
+            1.0,
+            0.35
+          ],
+          "valence": [
+            0.15,
+            0.45,
+            0.3
+          ]
+        },
+        {
+          "pattern_id": "OVERCAST_SUPPORT",
+          "label": "차분하고 낮은 밝기의 전자음향",
+          "kind": "SUPPORT",
+          "ceiling": 80,
+          "preferred_mode": 0,
+          "energy": [
+            0,
+            0.5,
+            0.15
+          ],
+          "acousticness": [
+            0,
+            0.5,
+            0.15
+          ],
+          "valence": [
+            0,
+            0.5,
+            0.15
+          ]
+        }
+      ]
+    },
+    "RAIN": {
+      "label": "비",
+      "weights": {
+        "energy": 30,
+        "acousticness": 40,
+        "valence": 25,
+        "mode": 5
+      },
+      "example_allowed_speeds": [
+        "slow",
+        "medium"
+      ],
+      "patterns": [
+        {
+          "pattern_id": "RAIN_PRIMARY",
+          "label": "기존 선호 패턴",
+          "kind": "PRIMARY",
+          "ceiling": 100,
+          "preferred_mode": 0,
+          "energy": [
+            0.1,
+            0.4,
+            0.25
+          ],
+          "acousticness": [
+            0.65,
+            1.0,
+            0.3
+          ],
+          "valence": [
+            0.1,
+            0.4,
+            0.3
+          ]
+        },
+        {
+          "pattern_id": "RAIN_SUPPORT",
+          "label": "매우 조용한 곡까지 포함하는 어쿠스틱",
+          "kind": "SUPPORT",
+          "ceiling": 80,
+          "preferred_mode": 0,
+          "energy": [
+            0,
+            0.5,
+            0.15
+          ],
+          "acousticness": [
+            0.5,
+            1,
+            0.15
+          ],
+          "valence": [
+            0,
+            0.5,
+            0.15
+          ]
+        }
+      ]
+    },
+    "SNOW": {
+      "label": "눈",
+      "weights": {
+        "energy": 20,
+        "acousticness": 45,
+        "valence": 30,
+        "mode": 5
+      },
+      "example_allowed_speeds": [
+        "slow",
+        "medium"
+      ],
+      "patterns": [
+        {
+          "pattern_id": "SNOW_PRIMARY",
+          "label": "기존 선호 패턴",
+          "kind": "PRIMARY",
+          "ceiling": 100,
+          "preferred_mode": 1,
+          "energy": [
+            0.05,
+            0.35,
+            0.25
+          ],
+          "acousticness": [
+            0.7,
+            1.0,
+            0.3
+          ],
+          "valence": [
+            0.45,
+            0.8,
+            0.3
+          ]
+        },
+        {
+          "pattern_id": "SNOW_SUPPORT",
+          "label": "밝고 차분한 다양한 음향",
+          "kind": "SUPPORT",
+          "ceiling": 80,
+          "preferred_mode": 1,
+          "energy": [
+            0,
+            0.5,
+            0.15
+          ],
+          "acousticness": [
+            0,
+            1,
+            0.15
+          ],
+          "valence": [
+            0.5,
+            1,
+            0.15
+          ]
+        }
+      ]
+    }
+  },
+  "previous_policy_version": "WEATHER_SCORE_PROPOSAL_20261016_V1",
+  "pattern_selection": "MAX_SCORE_AMONG_CORE_PASSING_PATTERNS_THEN_PATTERN_ID_ASC; IF_NONE_DIAGNOSTIC_RAW_MAX_ONLY",
+  "coverage_requirement": {
+    "scope": "BASE_ELIGIBLE_UNIQUE_TRACKS",
+    "minimum_passing_weathers": 1,
+    "domain": "energy/acousticness/valence in [0,1]; valid mode or missing mode scored zero",
+    "proof": "FIVE_CLOSED_SUPPORT_BOXES_COVER_UNIT_CUBE; INSIDE_SUPPORT_ALL_CONTINUOUS_COMPONENTS_100; WORST_MODE_SCORE_76_GE75",
+    "fallback_assignment": false,
+    "per_track_score_flooring": false
+  }
+}

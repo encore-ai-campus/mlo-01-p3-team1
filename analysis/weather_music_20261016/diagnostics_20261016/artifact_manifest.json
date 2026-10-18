@@ -1,0 +1,159 @@
+{
+  "analysis_version": "WEATHER_DIAGNOSTICS_20261016_V1",
+  "created_date": "2026-10-16",
+  "files": {
+    "baseline_manifest.json": {
+      "sha256": "a35e667451c63c70496589a0ed1932883c943679e2eb3b931741bd377eff7b4d",
+      "bytes": 2686
+    },
+    "baseline_proposal.source.txt": {
+      "sha256": "eff50d53415a7978c18d0a2e20b8f9d902b554258105106a5025f3e7430d7be6",
+      "bytes": 49650
+    },
+    "build_diagnostics_notebook.py": {
+      "sha256": "3fa7790b359e4ea149b8a4168d9ceed2d13650fa5d3711645d9d02c8c07446a3",
+      "bytes": 12791
+    },
+    "build_review_sample.py": {
+      "sha256": "cd06a1e2373bd9b2ad60ba22a971a47ea16e71e6a52b7acc615b9c6b94f8d21a",
+      "bytes": 21591
+    },
+    "feature_correlations.png": {
+      "sha256": "fb53a53eed3bf8605b66e3d700502cf44bcb89ec92858bfd87c618bb95412fea",
+      "bytes": 59185
+    },
+    "feature_distributions.png": {
+      "sha256": "adfc5ff53d8f72a751d3f27c8d24188f4b56b138a7cafee67f5ae556cbbbcdcd",
+      "bytes": 91186
+    },
+    "llm_review_sample.csv": {
+      "sha256": "9961f25daa5bb2baaaeb5903c98f5a2411ceeeae7a1e33b8936e139929ec49d0",
+      "bytes": 528733
+    },
+    "pertrack_sensitivity_flags.csv": {
+      "sha256": "7de20fdadb5ebf40abb83f1cd80249104aa29c92f2353ae74551cd657dae6107",
+      "bytes": 2133818
+    },
+    "profile_analysis.py": {
+      "sha256": "d3f4208a32c547b8e84dca8c1da4a80c27f21b79a06471d6d98d7cc7a6685916",
+      "bytes": 19305
+    },
+    "profile_category_counts.csv": {
+      "sha256": "815bf5313be42d057930f6e600af34e04d3f862ef3e3a03353d92dddea6e4fb6",
+      "bytes": 1978
+    },
+    "profile_feature_distribution.csv": {
+      "sha256": "e9988b24a0e49a9f509824ea426befa5979599835a33f986f7feb2a93e964b41",
+      "bytes": 4159
+    },
+    "profile_pattern_selection.csv": {
+      "sha256": "4b840cb2a980a2a3f30259c4480dbb1dda94f3c8dfcfc6f7c9f246e109e4b50b",
+      "bytes": 468
+    },
+    "profile_pearson.csv": {
+      "sha256": "bcd64e5c4fa082bc474c593f090efd3ee0773e6f753590c03cceccb391d0d959",
+      "bytes": 12307
+    },
+    "profile_pool_features.csv": {
+      "sha256": "d6f38219487f2379cfbcde6421917041c6028564a41b33dcf6a1b38df60dca1b",
+      "bytes": 2714
+    },
+    "profile_pool_genres.csv": {
+      "sha256": "44c74e38f23586d9fe31986937faa6e7e74969aead4bbaaf290b1ea457400963",
+      "bytes": 3768
+    },
+    "profile_pool_score_ties.csv": {
+      "sha256": "a24552c8bc2d74188c9d17abaf3e943e04736445f50a17ee5e24186e3ae32557",
+      "bytes": 1908
+    },
+    "profile_pool_speeds.csv": {
+      "sha256": "b7df7c7399c39273be60f4e332d87f96ab3f9fb01d1557522f18a465cdbec886",
+      "bytes": 851
+    },
+    "profile_review_criteria.csv": {
+      "sha256": "6e74aec8ff79e3b305d1ae773ed2f602994c9423ada6f71861385f8d550ae1a7",
+      "bytes": 1728
+    },
+    "profile_review_flags.csv": {
+      "sha256": "75bdc4daf8a44f99cb52d44c899b97c104f63762fd43e34c0d88c09c93258cf8",
+      "bytes": 2604860
+    },
+    "profile_review_flags_by_genre.csv": {
+      "sha256": "fc3f3ed81532aa7ce037b57bfd2f3eed6fc4db9dac988529b004639bb98913b1",
+      "bytes": 6838
+    },
+    "profile_spearman.csv": {
+      "sha256": "c180611ac70b7397c71a22d5d388ea0501d47e83668d185cdecc82e13ccec881",
+      "bytes": 12301
+    },
+    "profile_summary.json": {
+      "sha256": "ae015d5ba6a50601d4bbf83439fcfbfb856e309a71589750a30a302c7c7f523f",
+      "bytes": 159904
+    },
+    "profile_vif.csv": {
+      "sha256": "9558646f24f611208ab9b0af95b350d850d38b8f93b8f0a80b1d6f27ab36837e",
+      "bytes": 663
+    },
+    "profile_weather_score_correlations.csv": {
+      "sha256": "1350b9c779082d7b265a1a046557a723092d2377d4c0fbc0358f5f611b2026d6",
+      "bytes": 629
+    },
+    "README.md": {
+      "sha256": "7c94f4bce6acacccb0b24f429a77aa765d05edf568c5d90f997f449a78947d5a",
+      "bytes": 9278
+    },
+    "review_sample_summary.json": {
+      "sha256": "d1276e535a39f30414ce3ffd8a03b9f2c3076626b4efbcb47c8f14d562ce49b3",
+      "bytes": 12114
+    },
+    "score_tie_concentration.png": {
+      "sha256": "1245aaa7f77a25335346fdbf5fab62a56f8ccb3f6f6e12fdd90ee893362edce0",
+      "bytes": 47241
+    },
+    "sensitivity_analysis.py": {
+      "sha256": "0dc120060546e77d1c6a32e99c144cae293464ee85659fe31f6dfcb89f3c7b2f",
+      "bytes": 23752
+    },
+    "sensitivity_overview.png": {
+      "sha256": "8acaa541783f329fa8dbd3f4daca737fed17e25c4ff8ba6118f67dbc6953c6f3",
+      "bytes": 75058
+    },
+    "sensitivity_scenario_overview.csv": {
+      "sha256": "7ac3b9f0da916b55a3db11189aa0b7d0c6efd0a6d1be0095725c20331312f1ef",
+      "bytes": 14399
+    },
+    "sensitivity_scenarios.csv": {
+      "sha256": "8fb97763bde1db332d9ca89808ac1aa89ef7c1f3082b1a038d8bd9d62d9a0c49",
+      "bytes": 46838
+    },
+    "sensitivity_summary.json": {
+      "sha256": "8688d74f0a337ced51b2bc2401465970f27d94550d47fd7ced3c42bc7fcc17a5",
+      "bytes": 500398
+    },
+    "threshold_sensitivity.png": {
+      "sha256": "510270deda487b40798d1b4efdcef6e0b6eb08d8eb5b9781c7a6526fed37cb84",
+      "bytes": 91881
+    },
+    "validate_diagnostics.py": {
+      "sha256": "df69e749929d427bbc7e5095e0ff17e91437e0140281c3144adfb60cf42ac917",
+      "bytes": 7255
+    },
+    "verification.json": {
+      "sha256": "8b155dc8094683f61d2b7a1c5d0039b308db0ea16fec6bcf635cc7d44ea0006b",
+      "bytes": 1186
+    },
+    "weather_diagnostics.ipynb": {
+      "sha256": "c32ed1bb1b7d503494797c0095edf0ed62c092044adcb882b4c229279db04bbf",
+      "bytes": 274291
+    }
+  },
+  "documents": {
+    "docs/product/proposals/날씨별_음악_점수_산출식_기획안_20261016.md": "55c87bf8f9ba20348e9cb93d533f7e210161f86c7b5ee3c0b50838d4398dea22",
+    "docs/product/proposals/날씨별_음악_통계진단과_LLM_데이터_보완_추가기획_20261016.md": "5529700de8d4e73c5cb8eceeb5db150e78102273cdf02aa401fee58a23f05384",
+    "analysis/weather_music_20261016/diagnostics_20261016/README.md": "7c94f4bce6acacccb0b24f429a77aa765d05edf568c5d90f997f449a78947d5a",
+    "analysis/weather_music_20261016/README.md": "08bef547ad76b247ccae530a9d97478f57bae2a53ebeb92bcb506d2356408bf1"
+  },
+  "local_links_checked": 75,
+  "baseline_score_policy_unchanged": true,
+  "actual_llm_calls": 0
+}

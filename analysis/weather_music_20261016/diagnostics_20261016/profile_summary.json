@@ -1,0 +1,5692 @@
+{
+  "status": "DESCRIPTIVE_DIAGNOSTICS_NOT_LISTENING_VALIDATION",
+  "policy_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+  "model_version": null,
+  "hashes": {
+    "source_sha256": "b202fa49909b2d5cef71a04b1d21243cfeb36414535f2ca9272aa646721177bd",
+    "policy_sha256": "def75d6885d04464b58bcb60b8148482ecb394de23151e4b4830f25f15626622",
+    "existing_summary_sha256": "61532e41b6c3a26ac4d7783cf4c5a65de4ea46950f0de090a9f0b908b8b39e47",
+    "mapping_sha256": "f8539ca499f97a9d92a9d240071bc0e48818dec5224732b418797fad7961cf36",
+    "analysis_code_sha256": "c6f1e22901d6faffc09f1fba54656c599340229a6358fad14ef4c1046a409211"
+  },
+  "pool_hashes": {
+    "CLEAR": "5e5bd65aba4805cb7bf88372b1fdf84840ef91b3b6b7be6d8cde1a5e18a9d189",
+    "CLOUDY": "e60ccd8b8658cbb8721578d5be13b2314f429dc9fe4bebc0a52a2998d3ec0147",
+    "OVERCAST": "dbd5cf3906dc0870ad3c6443de8f8a07bfddf8a54012c6e603a0489548de00c9",
+    "RAIN": "4368d420e083319ebda844fad177836e2e04ab199437d1f0fd74ffe0a09733ad",
+    "SNOW": "6aa19a4137a094dac62b88e7655d7549341ce1f9fdc4312d3452d83018f04a91"
+  },
+  "denominators": {
+    "source_rows_not_independent_tracks": 114000,
+    "source_unique_track_ids": 89741,
+    "base_eligible_unique_track_ids": 61931,
+    "base_source_id_union_reproduced": true
+  },
+  "methods": {
+    "quantiles": [
+      0,
+      0.01,
+      0.05,
+      0.25,
+      0.5,
+      0.75,
+      0.95,
+      0.99,
+      1
+    ],
+    "std": "population ddof=0",
+    "skew": "pandas adjusted Fisher-Pearson sample skewness; descriptive only",
+    "spearman": "average-tie ranks then Pearson; no SciPy dependency",
+    "mode": "binary categorical indicator; Pearson with continuous features is point-biserial interpretation",
+    "excluded_from_continuous_regression": {
+      "key": "pitch class/circular category; numeric labels are not a linear scale",
+      "time_signature": "categorical meter, not continuous weather evidence"
+    },
+    "zero_one_unit_interval_tail_ratios": "<=.01 and>=.99 ratios apply only to declared0..1 continuous features",
+    "source_tempo_zero_values": "157 unique source records have tempo0; retained in source descriptive cohort and excluded from eligible base; do not interpret0 as a measured slow BPM"
+  },
+  "distribution": [
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature": "energy",
+      "n": 89741,
+      "mean": 0.6344578983586098,
+      "std_population_ddof0": 0.2566035766263567,
+      "skew_fisher_pearson_unbiased": -0.5599886681322215,
+      "zero_ratio": 1.1143178703156863e-05,
+      "one_ratio": 0.00028972264628207843,
+      "ratio_le_0_01": 0.005170434918264784,
+      "ratio_ge_0_99": 0.01625789772790586,
+      "unit_interval_thresholds_applicable": true,
+      "categorical_indicator": false,
+      "p00": 0.0,
+      "p01": 0.02694,
+      "p05": 0.142,
+      "p25": 0.457,
+      "p50": 0.676,
+      "p75": 0.853,
+      "p95": 0.97,
+      "p99": 0.993,
+      "p100": 1.0
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature": "acousticness",
+      "n": 89741,
+      "mean": 0.3282890004835025,
+      "std_population_ddof0": 0.338318948055772,
+      "skew_fisher_pearson_unbiased": 0.6557407054259143,
+      "zero_ratio": 0.0004345839694231176,
+      "one_ratio": 0.0,
+      "ratio_le_0_01": 0.21403817653023702,
+      "ratio_ge_0_99": 0.015711881971451177,
+      "unit_interval_thresholds_applicable": true,
+      "categorical_indicator": false,
+      "p00": 0.0,
+      "p01": 5.79e-06,
+      "p05": 0.000124,
+      "p25": 0.0171,
+      "p50": 0.188,
+      "p75": 0.625,
+      "p95": 0.956,
+      "p99": 0.992,
+      "p100": 0.996
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature": "valence",
+      "n": 89741,
+      "mean": 0.46947738526426047,
+      "std_population_ddof0": 0.26286209366260066,
+      "skew_fisher_pearson_unbiased": 0.12761356021905118,
+      "zero_ratio": 0.0019611994517556076,
+      "one_ratio": 0.0,
+      "ratio_le_0_01": 0.004278980622012235,
+      "ratio_ge_0_99": 0.00011143178703156863,
+      "unit_interval_thresholds_applicable": true,
+      "categorical_indicator": false,
+      "p00": 0.0,
+      "p01": 0.0331,
+      "p05": 0.0641,
+      "p25": 0.249,
+      "p50": 0.457,
+      "p75": 0.682,
+      "p95": 0.912,
+      "p99": 0.965,
+      "p100": 0.995
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature": "danceability",
+      "n": 89741,
+      "mean": 0.5621656734380049,
+      "std_population_ddof0": 0.17669017378143875,
+      "skew_fisher_pearson_unbiased": -0.3982821169509598,
+      "zero_ratio": 0.0017494790563956275,
+      "one_ratio": 0.0,
+      "ratio_le_0_01": 0.0017494790563956275,
+      "ratio_ge_0_99": 0.0,
+      "unit_interval_thresholds_applicable": true,
+      "categorical_indicator": false,
+      "p00": 0.0,
+      "p01": 0.123,
+      "p05": 0.237,
+      "p25": 0.45,
+      "p50": 0.576,
+      "p75": 0.692,
+      "p95": 0.825,
+      "p99": 0.9036000000000058,
+      "p100": 0.985
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature": "tempo",
+      "n": 89741,
+      "mean": 122.05831623226842,
+      "std_population_ddof0": 30.11736425694673,
+      "skew_fisher_pearson_unbiased": 0.18272821156021424,
+      "zero_ratio": 0.0017494790563956275,
+      "one_ratio": 0.0,
+      "ratio_le_0_01": null,
+      "ratio_ge_0_99": null,
+      "unit_interval_thresholds_applicable": false,
+      "categorical_indicator": false,
+      "p00": 0.0,
+      "p01": 65.1654,
+      "p05": 76.997,
+      "p25": 99.264,
+      "p50": 122.013,
+      "p75": 140.077,
+      "p95": 174.994,
+      "p99": 193.65140000000017,
+      "p100": 243.372
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature": "loudness",
+      "n": 89741,
+      "mean": -8.49900446841466,
+      "std_population_ddof0": 5.221460434185953,
+      "skew_fisher_pearson_unbiased": -1.9598831122838194,
+      "zero_ratio": 0.0,
+      "one_ratio": 0.0,
+      "ratio_le_0_01": null,
+      "ratio_ge_0_99": null,
+      "unit_interval_thresholds_applicable": false,
+      "categorical_indicator": false,
+      "p00": -49.531,
+      "p01": -28.542,
+      "p05": -18.862,
+      "p25": -10.322,
+      "p50": -7.185,
+      "p75": -5.108,
+      "p95": -3.0,
+      "p99": -1.628,
+      "p100": 4.532
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature": "instrumentalness",
+      "n": 89741,
+      "mean": 0.1734134829215186,
+      "std_population_ddof0": 0.32384617074164257,
+      "skew_fisher_pearson_unbiased": 1.564014106467771,
+      "zero_ratio": 0.33344847951326595,
+      "one_ratio": 0.00014486132314103922,
+      "ratio_le_0_01": 0.6823971206026231,
+      "ratio_ge_0_99": 0.0012591791934567255,
+      "unit_interval_thresholds_applicable": true,
+      "categorical_indicator": false,
+      "p00": 0.0,
+      "p01": 0.0,
+      "p05": 0.0,
+      "p25": 0.0,
+      "p50": 5.8e-05,
+      "p75": 0.0976,
+      "p95": 0.911,
+      "p99": 0.958,
+      "p100": 1.0
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature": "speechiness",
+      "n": 89741,
+      "mean": 0.08744203318438618,
+      "std_population_ddof0": 0.11327645366142168,
+      "skew_fisher_pearson_unbiased": 4.545863336631755,
+      "zero_ratio": 0.0017494790563956275,
+      "one_ratio": 0.0,
+      "ratio_le_0_01": 0.0017494790563956275,
+      "ratio_ge_0_99": 0.0,
+      "unit_interval_thresholds_applicable": true,
+      "categorical_indicator": false,
+      "p00": 0.0,
+      "p01": 0.0255,
+      "p05": 0.0283,
+      "p25": 0.036,
+      "p50": 0.0489,
+      "p75": 0.0859,
+      "p95": 0.284,
+      "p99": 0.6186000000000349,
+      "p100": 0.965
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature": "liveness",
+      "n": 89741,
+      "mean": 0.21696951906040718,
+      "std_population_ddof0": 0.1948832927964821,
+      "skew_fisher_pearson_unbiased": 2.0621055947194162,
+      "zero_ratio": 2.2286357406313725e-05,
+      "one_ratio": 2.2286357406313725e-05,
+      "ratio_le_0_01": 4.457271481262745e-05,
+      "ratio_ge_0_99": 0.000323152182391549,
+      "unit_interval_thresholds_applicable": true,
+      "categorical_indicator": false,
+      "p00": 0.0,
+      "p01": 0.0407,
+      "p05": 0.0608,
+      "p25": 0.0982,
+      "p50": 0.132,
+      "p75": 0.279,
+      "p95": 0.694,
+      "p99": 0.95,
+      "p100": 1.0
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature": "duration_ms",
+      "n": 89741,
+      "mean": 229141.81218172295,
+      "std_population_ddof0": 112947.11188990583,
+      "skew_fisher_pearson_unbiased": 11.072075414379707,
+      "zero_ratio": 1.1143178703156863e-05,
+      "one_ratio": 0.0,
+      "ratio_le_0_01": null,
+      "ratio_ge_0_99": null,
+      "unit_interval_thresholds_applicable": false,
+      "categorical_indicator": false,
+      "p00": 0.0,
+      "p01": 61859.4,
+      "p05": 112040.0,
+      "p25": 173040.0,
+      "p50": 213293.0,
+      "p75": 264293.0,
+      "p95": 394000.0,
+      "p99": 546010.8,
+      "p100": 5237295.0
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature": "mode",
+      "n": 89741,
+      "mean": 0.6369663810298526,
+      "std_population_ddof0": 0.48087442276293424,
+      "skew_fisher_pearson_unbiased": null,
+      "zero_ratio": 0.3630336189701474,
+      "one_ratio": 0.6369663810298526,
+      "ratio_le_0_01": null,
+      "ratio_ge_0_99": null,
+      "unit_interval_thresholds_applicable": false,
+      "categorical_indicator": true,
+      "p00": 0.0,
+      "p01": 0.0,
+      "p05": 0.0,
+      "p25": 0.0,
+      "p50": 1.0,
+      "p75": 1.0,
+      "p95": 1.0,
+      "p99": 1.0,
+      "p100": 1.0
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature": "energy",
+      "n": 61931,
+      "mean": 0.6698539611325508,
+      "std_population_ddof0": 0.23735341011349656,
+      "skew_fisher_pearson_unbiased": -0.6689492811865501,
+      "zero_ratio": 0.0,
+      "one_ratio": 8.073501154510665e-05,
+      "ratio_le_0_01": 0.0013563481939577917,
+      "ratio_ge_0_99": 0.01614700230902133,
+      "unit_interval_thresholds_applicable": true,
+      "categorical_indicator": false,
+      "p00": 2.03e-05,
+      "p01": 0.0584,
+      "p05": 0.21,
+      "p25": 0.512,
+      "p50": 0.712,
+      "p75": 0.869,
+      "p95": 0.972,
+      "p99": 0.993,
+      "p100": 1.0
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature": "acousticness",
+      "n": 61931,
+      "mean": 0.28283485206261805,
+      "std_population_ddof0": 0.3174525996285665,
+      "skew_fisher_pearson_unbiased": 0.8658451299779647,
+      "zero_ratio": 0.0003067930438714053,
+      "one_ratio": 0.0,
+      "ratio_le_0_01": 0.24879301157740066,
+      "ratio_ge_0_99": 0.009187644313833137,
+      "unit_interval_thresholds_applicable": true,
+      "categorical_indicator": false,
+      "p00": 0.0,
+      "p01": 4.333000000000001e-06,
+      "p05": 8.045e-05,
+      "p25": 0.0102,
+      "p50": 0.131,
+      "p75": 0.526,
+      "p95": 0.92,
+      "p99": 0.989,
+      "p100": 0.996
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature": "valence",
+      "n": 61931,
+      "mean": 0.4875474318192828,
+      "std_population_ddof0": 0.26083149855281385,
+      "skew_fisher_pearson_unbiased": 0.07760731400328925,
+      "zero_ratio": 3.229400461804266e-05,
+      "one_ratio": 0.0,
+      "ratio_le_0_01": 3.229400461804266e-05,
+      "ratio_ge_0_99": 9.688201385412798e-05,
+      "unit_interval_thresholds_applicable": true,
+      "categorical_indicator": false,
+      "p00": 0.0,
+      "p01": 0.0374,
+      "p05": 0.0777,
+      "p25": 0.27,
+      "p50": 0.481,
+      "p75": 0.699,
+      "p95": 0.919,
+      "p99": 0.965,
+      "p100": 0.995
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature": "danceability",
+      "n": 61931,
+      "mean": 0.5686488075438795,
+      "std_population_ddof0": 0.16733125998221343,
+      "skew_fisher_pearson_unbiased": -0.3480496222760093,
+      "zero_ratio": 0.0,
+      "one_ratio": 0.0,
+      "ratio_le_0_01": 0.0,
+      "ratio_ge_0_99": 0.0,
+      "unit_interval_thresholds_applicable": true,
+      "categorical_indicator": false,
+      "p00": 0.0513,
+      "p01": 0.158,
+      "p05": 0.263,
+      "p25": 0.46,
+      "p50": 0.58,
+      "p75": 0.693,
+      "p95": 0.818,
+      "p99": 0.892,
+      "p100": 0.985
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature": "tempo",
+      "n": 61931,
+      "mean": 124.03692410908916,
+      "std_population_ddof0": 29.008829439489773,
+      "skew_fisher_pearson_unbiased": 0.29867089365964733,
+      "zero_ratio": 0.0,
+      "one_ratio": 0.0,
+      "ratio_le_0_01": null,
+      "ratio_ge_0_99": null,
+      "unit_interval_thresholds_applicable": false,
+      "categorical_indicator": false,
+      "p00": 34.821,
+      "p01": 69.0242,
+      "p05": 79.31,
+      "p25": 101.571,
+      "p50": 123.912,
+      "p75": 141.923,
+      "p95": 175.0455,
+      "p99": 194.169,
+      "p100": 243.372
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature": "loudness",
+      "n": 61931,
+      "mean": -7.746180765690849,
+      "std_population_ddof0": 4.337907026476357,
+      "skew_fisher_pearson_unbiased": -1.8059216497115516,
+      "zero_ratio": 0.0,
+      "one_ratio": 0.0,
+      "ratio_le_0_01": null,
+      "ratio_ge_0_99": null,
+      "unit_interval_thresholds_applicable": false,
+      "categorical_indicator": false,
+      "p00": -41.531,
+      "p01": -23.714,
+      "p05": -15.8315,
+      "p25": -9.518,
+      "p50": -6.772,
+      "p75": -4.863,
+      "p95": -2.853,
+      "p99": -1.5323000000000029,
+      "p100": 4.532
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature": "instrumentalness",
+      "n": 61931,
+      "mean": 0.1608140462963621,
+      "std_population_ddof0": 0.3094470245381859,
+      "skew_fisher_pearson_unbiased": 1.6692363977438336,
+      "zero_ratio": 0.32256866512731913,
+      "one_ratio": 0.0,
+      "ratio_le_0_01": 0.6868934782257674,
+      "ratio_ge_0_99": 9.688201385412798e-05,
+      "unit_interval_thresholds_applicable": true,
+      "categorical_indicator": false,
+      "p00": 0.0,
+      "p01": 0.0,
+      "p05": 0.0,
+      "p25": 0.0,
+      "p50": 7.05e-05,
+      "p75": 0.0747,
+      "p95": 0.897,
+      "p99": 0.946,
+      "p100": 0.999
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature": "speechiness",
+      "n": 61931,
+      "mean": 0.07526920282249601,
+      "std_population_ddof0": 0.07381856215539043,
+      "skew_fisher_pearson_unbiased": 3.348806842309961,
+      "zero_ratio": 0.0,
+      "one_ratio": 0.0,
+      "ratio_le_0_01": 0.0,
+      "ratio_ge_0_99": 0.0,
+      "unit_interval_thresholds_applicable": true,
+      "categorical_indicator": false,
+      "p00": 0.0221,
+      "p01": 0.0255,
+      "p05": 0.0282,
+      "p25": 0.0355,
+      "p50": 0.0481,
+      "p75": 0.0803,
+      "p95": 0.231,
+      "p99": 0.39,
+      "p100": 0.939
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature": "liveness",
+      "n": 61931,
+      "mean": 0.21637876604608355,
+      "std_population_ddof0": 0.19179097493418282,
+      "skew_fisher_pearson_unbiased": 2.0518526560243218,
+      "zero_ratio": 0.0,
+      "one_ratio": 3.229400461804266e-05,
+      "ratio_le_0_01": 1.614700230902133e-05,
+      "ratio_ge_0_99": 0.00033908704848944793,
+      "unit_interval_thresholds_applicable": true,
+      "categorical_indicator": false,
+      "p00": 0.00986,
+      "p01": 0.0391,
+      "p05": 0.059,
+      "p25": 0.0972,
+      "p50": 0.135,
+      "p75": 0.282,
+      "p95": 0.681,
+      "p99": 0.949,
+      "p100": 1.0
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature": "duration_ms",
+      "n": 61931,
+      "mean": 235665.84038688216,
+      "std_population_ddof0": 113763.68345547606,
+      "skew_fisher_pearson_unbiased": 11.718585185516368,
+      "zero_ratio": 0.0,
+      "one_ratio": 0.0,
+      "ratio_le_0_01": null,
+      "ratio_ge_0_99": null,
+      "unit_interval_thresholds_applicable": false,
+      "categorical_indicator": false,
+      "p00": 17453.0,
+      "p01": 68760.0,
+      "p05": 125513.0,
+      "p25": 179125.0,
+      "p50": 218024.0,
+      "p75": 268047.0,
+      "p95": 403809.0,
+      "p99": 551360.0,
+      "p100": 5237295.0
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature": "mode",
+      "n": 61931,
+      "mean": 0.6360950089615863,
+      "std_population_ddof0": 0.4811217606134083,
+      "skew_fisher_pearson_unbiased": null,
+      "zero_ratio": 0.3639049910384137,
+      "one_ratio": 0.6360950089615863,
+      "ratio_le_0_01": null,
+      "ratio_ge_0_99": null,
+      "unit_interval_thresholds_applicable": false,
+      "categorical_indicator": true,
+      "p00": 0.0,
+      "p01": 0.0,
+      "p05": 0.0,
+      "p25": 0.0,
+      "p50": 1.0,
+      "p75": 1.0,
+      "p95": 1.0,
+      "p99": 1.0,
+      "p100": 1.0
+    }
+  ],
+  "collinearity": [
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "n": 89741,
+      "features": [
+        "energy",
+        "acousticness",
+        "valence",
+        "mode"
+      ],
+      "mode_coding": "0/1 categorical indicator, standardized as a single design column; not an ordinal music scale",
+      "standardization": "(x-mean)/population_std(ddof=0)",
+      "means": {
+        "energy": 0.6344578983586098,
+        "acousticness": 0.3282890004835025,
+        "valence": 0.46947738526426047,
+        "mode": 0.6369663810298526
+      },
+      "std_population": {
+        "energy": 0.2566035766263567,
+        "acousticness": 0.338318948055772,
+        "valence": 0.26286209366260066,
+        "mode": 0.48087442276293424
+      },
+      "condition_number_standardized_predictors": 2.697822065415202,
+      "condition_number_standardized_with_intercept": 2.697822065415212,
+      "rank_standardized_with_intercept": 5,
+      "lstsq_auxiliary_regressions_not_weather_models": [
+        {
+          "target_feature_for_redundancy_only": "energy",
+          "predictor_features": [
+            "acousticness",
+            "valence",
+            "mode"
+          ],
+          "intercept_standardized": 6.300335820931264e-18,
+          "standardized_predictor_coefficients": {
+            "acousticness": -0.7122468808760074,
+            "valence": 0.18278527038276693,
+            "mode": -0.014858904717309662
+          },
+          "sse": 38612.57831781782,
+          "sst": 89740.99999999996,
+          "r_squared": 0.5697331396149159,
+          "rank": 4,
+          "singular_values": [
+            317.8790961445697,
+            303.3389652551131,
+            299.5680223254812,
+            275.9734632030208
+          ]
+        },
+        {
+          "target_feature_for_redundancy_only": "acousticness",
+          "predictor_features": [
+            "energy",
+            "valence",
+            "mode"
+          ],
+          "intercept_standardized": -2.96486391573236e-17,
+          "standardized_predictor_coefficients": {
+            "energy": -0.752791407660607,
+            "valence": 0.08835747193018323,
+            "mode": 0.03229100871434154
+          },
+          "sse": 40810.59245850945,
+          "sst": 89741.00000000001,
+          "r_squared": 0.5452402752531236,
+          "rank": 4,
+          "singular_values": [
+            336.42115111351524,
+            301.6124367754809,
+            299.5680223254812,
+            255.09556457495094
+          ]
+        },
+        {
+          "target_feature_for_redundancy_only": "valence",
+          "predictor_features": [
+            "energy",
+            "acousticness",
+            "mode"
+          ],
+          "intercept_standardized": 5.151451053584975e-17,
+          "standardized_predictor_coefficients": {
+            "energy": 0.3898130787937517,
+            "acousticness": 0.17828483143188711,
+            "mode": 0.038582247677222015
+          },
+          "sse": 82346.28535829954,
+          "sst": 89741.00000000001,
+          "r_squared": 0.08240062671131887,
+          "rank": 4,
+          "singular_values": [
+            396.3958869164183,
+            299.56802232548125,
+            296.83234813518277,
+            154.86722679863414
+          ]
+        },
+        {
+          "target_feature_for_redundancy_only": "mode",
+          "predictor_features": [
+            "energy",
+            "acousticness",
+            "valence"
+          ],
+          "intercept_standardized": 7.434396268698892e-16,
+          "standardized_predictor_coefficients": {
+            "energy": -0.034187882232998415,
+            "acousticness": 0.07029475407543442,
+            "valence": 0.04162533247568011
+          },
+          "sse": 88841.15655605303,
+          "sst": 89741.00000000022,
+          "r_squared": 0.01002711630076758,
+          "rank": 4,
+          "singular_values": [
+            403.3667071968172,
+            299.5680223254812,
+            289.8257494254576,
+            150.06443447788848
+          ]
+        }
+      ]
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "n": 61931,
+      "features": [
+        "energy",
+        "acousticness",
+        "valence",
+        "mode"
+      ],
+      "mode_coding": "0/1 categorical indicator, standardized as a single design column; not an ordinal music scale",
+      "standardization": "(x-mean)/population_std(ddof=0)",
+      "means": {
+        "energy": 0.6698539611325508,
+        "acousticness": 0.28283485206261805,
+        "valence": 0.4875474318192828,
+        "mode": 0.6360950089615863
+      },
+      "std_population": {
+        "energy": 0.23735341011349656,
+        "acousticness": 0.3174525996285665,
+        "valence": 0.26083149855281385,
+        "mode": 0.4811217606134083
+      },
+      "condition_number_standardized_predictors": 2.635143098611476,
+      "condition_number_standardized_with_intercept": 2.6351430986114512,
+      "rank_standardized_with_intercept": 5,
+      "lstsq_auxiliary_regressions_not_weather_models": [
+        {
+          "target_feature_for_redundancy_only": "energy",
+          "predictor_features": [
+            "acousticness",
+            "valence",
+            "mode"
+          ],
+          "intercept_standardized": -2.7035151502526925e-16,
+          "standardized_predictor_coefficients": {
+            "acousticness": -0.7229776354958306,
+            "valence": 0.1756385782974598,
+            "mode": -0.013645739093795628
+          },
+          "sse": 27588.469183378427,
+          "sst": 61930.99999999999,
+          "r_squared": 0.5545289243936247,
+          "rank": 4,
+          "singular_values": [
+            264.18743967483164,
+            248.85939805440339,
+            248.51910671289323,
+            232.8867757445305
+          ]
+        },
+        {
+          "target_feature_for_redundancy_only": "acousticness",
+          "predictor_features": [
+            "energy",
+            "valence",
+            "mode"
+          ],
+          "intercept_standardized": 1.0573153310394191e-16,
+          "standardized_predictor_coefficients": {
+            "energy": -0.7416231047339353,
+            "valence": 0.13116850108733633,
+            "mode": 0.04626605224468583
+          },
+          "sse": 28299.971072551707,
+          "sst": 61931.000000000015,
+          "r_squared": 0.5430403017462708,
+          "rank": 4,
+          "singular_values": [
+            270.815039173368,
+            252.10526709180425,
+            248.85939805440339,
+            221.12247480095252
+          ]
+        },
+        {
+          "target_feature_for_redundancy_only": "valence",
+          "predictor_features": [
+            "energy",
+            "acousticness",
+            "mode"
+          ],
+          "intercept_standardized": -1.119772776754828e-16,
+          "standardized_predictor_coefficients": {
+            "energy": 0.3684089765879057,
+            "acousticness": 0.2682140091635268,
+            "mode": 0.033749827667307955
+          },
+          "sse": 57867.92284473056,
+          "sst": 61930.99999999999,
+          "r_squared": 0.0656065162078674,
+          "rank": 4,
+          "singular_values": [
+            329.6843351772946,
+            248.85939805440339,
+            244.97730640292488,
+            130.71862333375893
+          ]
+        },
+        {
+          "target_feature_for_redundancy_only": "mode",
+          "predictor_features": [
+            "energy",
+            "acousticness",
+            "valence"
+          ],
+          "intercept_standardized": 8.387142710354886e-17,
+          "standardized_predictor_coefficients": {
+            "energy": -0.030138555109822884,
+            "acousticness": 0.09961607361050825,
+            "valence": 0.035537480421765404
+          },
+          "sse": 60933.0570637217,
+          "sst": 61931.000000000015,
+          "r_squared": 0.01611378689635745,
+          "rank": 4,
+          "singular_values": [
+            328.4864426290421,
+            249.17826174083294,
+            248.85939805440336,
+            125.69745774968766
+          ]
+        }
+      ]
+    }
+  ],
+  "vif": [
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature": "energy",
+      "n": 89741,
+      "vif": 2.3241390217806015,
+      "auxiliary_r_squared": 0.5697331396149159,
+      "rank_with_intercept": 4,
+      "constant_feature": false
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature": "acousticness",
+      "n": 89741,
+      "vif": 2.1989634208627633,
+      "auxiliary_r_squared": 0.5452402752531236,
+      "rank_with_intercept": 4,
+      "constant_feature": false
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature": "valence",
+      "n": 89741,
+      "vif": 1.0898002212185418,
+      "auxiliary_r_squared": 0.08240062671131887,
+      "rank_with_intercept": 4,
+      "constant_feature": false
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature": "mode",
+      "n": 89741,
+      "vif": 1.0101286777303427,
+      "auxiliary_r_squared": 0.01002711630076758,
+      "rank_with_intercept": 4,
+      "constant_feature": false
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature": "energy",
+      "n": 61931,
+      "vif": 2.2448146574697354,
+      "auxiliary_r_squared": 0.5545289243936247,
+      "rank_with_intercept": 4,
+      "constant_feature": false
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature": "acousticness",
+      "n": 61931,
+      "vif": 2.18837679519988,
+      "auxiliary_r_squared": 0.5430403017462708,
+      "rank_with_intercept": 4,
+      "constant_feature": false
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature": "valence",
+      "n": 61931,
+      "vif": 1.0702129427761102,
+      "auxiliary_r_squared": 0.0656065162078674,
+      "rank_with_intercept": 4,
+      "constant_feature": false
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature": "mode",
+      "n": 61931,
+      "vif": 1.016377693560241,
+      "auxiliary_r_squared": 0.01611378689635745,
+      "rank_with_intercept": 4,
+      "constant_feature": false
+    }
+  ],
+  "correlation_pearson": [
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "energy",
+      "feature_y": "energy",
+      "n": 89741,
+      "r": 1.0
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "energy",
+      "feature_y": "acousticness",
+      "n": 89741,
+      "r": -0.7325664954270806
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "energy",
+      "feature_y": "valence",
+      "n": 89741,
+      "r": 0.2563133629946417
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "energy",
+      "feature_y": "mode",
+      "n": 89741,
+      "r": -0.07501433492033471
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "energy",
+      "feature_y": "danceability",
+      "n": 89741,
+      "r": 0.14391379633478493
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "energy",
+      "feature_y": "tempo",
+      "n": 89741,
+      "r": 0.25862769380670086
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "energy",
+      "feature_y": "loudness",
+      "n": 89741,
+      "r": 0.7587737351048869
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "energy",
+      "feature_y": "instrumentalness",
+      "n": 89741,
+      "r": -0.18103678471830723
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "energy",
+      "feature_y": "speechiness",
+      "n": 89741,
+      "r": 0.1413322907324708
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "energy",
+      "feature_y": "liveness",
+      "n": 89741,
+      "r": 0.18894088147596372
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "acousticness",
+      "feature_y": "energy",
+      "n": 89741,
+      "r": -0.7325664954270806
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "acousticness",
+      "feature_y": "acousticness",
+      "n": 89741,
+      "r": 1.0
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "acousticness",
+      "feature_y": "valence",
+      "n": 89741,
+      "r": -0.10376740186953679
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "acousticness",
+      "feature_y": "mode",
+      "n": 89741,
+      "r": 0.09102029854597916
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "acousticness",
+      "feature_y": "danceability",
+      "n": 89741,
+      "r": -0.17704311447936028
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "acousticness",
+      "feature_y": "tempo",
+      "n": 89741,
+      "r": -0.2202436130904983
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "acousticness",
+      "feature_y": "loudness",
+      "n": 89741,
+      "r": -0.5826627889933842
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "acousticness",
+      "feature_y": "instrumentalness",
+      "n": 89741,
+      "r": 0.09606533961789002
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "acousticness",
+      "feature_y": "speechiness",
+      "n": 89741,
+      "r": 0.005121490923470696
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "acousticness",
+      "feature_y": "liveness",
+      "n": 89741,
+      "r": -0.01908109328606622
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "valence",
+      "feature_y": "energy",
+      "n": 89741,
+      "r": 0.2563133629946417
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "valence",
+      "feature_y": "acousticness",
+      "n": 89741,
+      "r": -0.10376740186953679
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "valence",
+      "feature_y": "valence",
+      "n": 89741,
+      "r": 1.0
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "valence",
+      "feature_y": "mode",
+      "n": 89741,
+      "r": 0.02556821741140949
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "valence",
+      "feature_y": "danceability",
+      "n": 89741,
+      "r": 0.49257069171531953
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "valence",
+      "feature_y": "tempo",
+      "n": 89741,
+      "r": 0.09062236039239839
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "valence",
+      "feature_y": "loudness",
+      "n": 89741,
+      "r": 0.28909110336104693
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "valence",
+      "feature_y": "instrumentalness",
+      "n": 89741,
+      "r": -0.3307590978629813
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "valence",
+      "feature_y": "speechiness",
+      "n": 89741,
+      "r": 0.03293190271057626
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "valence",
+      "feature_y": "liveness",
+      "n": 89741,
+      "r": 0.012313816254462085
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "mode",
+      "feature_y": "energy",
+      "n": 89741,
+      "r": -0.07501433492033471
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "mode",
+      "feature_y": "acousticness",
+      "n": 89741,
+      "r": 0.09102029854597916
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "mode",
+      "feature_y": "valence",
+      "n": 89741,
+      "r": 0.02556821741140949
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "mode",
+      "feature_y": "mode",
+      "n": 89741,
+      "r": 1.0
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "mode",
+      "feature_y": "danceability",
+      "n": 89741,
+      "r": -0.06263329542966657
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "mode",
+      "feature_y": "tempo",
+      "n": 89741,
+      "r": -0.0019025796895278827
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "mode",
+      "feature_y": "loudness",
+      "n": 89741,
+      "r": -0.03710754053603531
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "mode",
+      "feature_y": "instrumentalness",
+      "n": 89741,
+      "r": -0.05257956784315938
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "mode",
+      "feature_y": "speechiness",
+      "n": 89741,
+      "r": -0.04079778073264017
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "mode",
+      "feature_y": "liveness",
+      "n": 89741,
+      "r": 0.016776976572453133
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "danceability",
+      "feature_y": "energy",
+      "n": 89741,
+      "r": 0.14391379633478493
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "danceability",
+      "feature_y": "acousticness",
+      "n": 89741,
+      "r": -0.17704311447936028
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "danceability",
+      "feature_y": "valence",
+      "n": 89741,
+      "r": 0.49257069171531953
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "danceability",
+      "feature_y": "mode",
+      "n": 89741,
+      "r": -0.06263329542966657
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "danceability",
+      "feature_y": "danceability",
+      "n": 89741,
+      "r": 1.0
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "danceability",
+      "feature_y": "tempo",
+      "n": 89741,
+      "r": -0.02133120078276
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "danceability",
+      "feature_y": "loudness",
+      "n": 89741,
+      "r": 0.27183879642399117
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "danceability",
+      "feature_y": "instrumentalness",
+      "n": 89741,
+      "r": -0.1947474625754594
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "danceability",
+      "feature_y": "speechiness",
+      "n": 89741,
+      "r": 0.10952015190943715
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "danceability",
+      "feature_y": "liveness",
+      "n": 89741,
+      "r": -0.1322340976871195
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "tempo",
+      "feature_y": "energy",
+      "n": 89741,
+      "r": 0.25862769380670086
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "tempo",
+      "feature_y": "acousticness",
+      "n": 89741,
+      "r": -0.2202436130904983
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "tempo",
+      "feature_y": "valence",
+      "n": 89741,
+      "r": 0.09062236039239839
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "tempo",
+      "feature_y": "mode",
+      "n": 89741,
+      "r": -0.0019025796895278827
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "tempo",
+      "feature_y": "danceability",
+      "n": 89741,
+      "r": -0.02133120078276
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "tempo",
+      "feature_y": "tempo",
+      "n": 89741,
+      "r": 1.0
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "tempo",
+      "feature_y": "loudness",
+      "n": 89741,
+      "r": 0.2286588229061398
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "tempo",
+      "feature_y": "instrumentalness",
+      "n": 89741,
+      "r": -0.05688784632079373
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "tempo",
+      "feature_y": "speechiness",
+      "n": 89741,
+      "r": 0.004031766269473385
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "tempo",
+      "feature_y": "liveness",
+      "n": 89741,
+      "r": -0.006117417896068802
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "loudness",
+      "feature_y": "energy",
+      "n": 89741,
+      "r": 0.7587737351048869
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "loudness",
+      "feature_y": "acousticness",
+      "n": 89741,
+      "r": -0.5826627889933842
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "loudness",
+      "feature_y": "valence",
+      "n": 89741,
+      "r": 0.28909110336104693
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "loudness",
+      "feature_y": "mode",
+      "n": 89741,
+      "r": -0.03710754053603531
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "loudness",
+      "feature_y": "danceability",
+      "n": 89741,
+      "r": 0.27183879642399117
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "loudness",
+      "feature_y": "tempo",
+      "n": 89741,
+      "r": 0.2286588229061398
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "loudness",
+      "feature_y": "loudness",
+      "n": 89741,
+      "r": 1.0
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "loudness",
+      "feature_y": "instrumentalness",
+      "n": 89741,
+      "r": -0.4347169203700059
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "loudness",
+      "feature_y": "speechiness",
+      "n": 89741,
+      "r": 0.0552952894274662
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "loudness",
+      "feature_y": "liveness",
+      "n": 89741,
+      "r": 0.07723927594220278
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "instrumentalness",
+      "feature_y": "energy",
+      "n": 89741,
+      "r": -0.18103678471830723
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "instrumentalness",
+      "feature_y": "acousticness",
+      "n": 89741,
+      "r": 0.09606533961789002
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "instrumentalness",
+      "feature_y": "valence",
+      "n": 89741,
+      "r": -0.3307590978629813
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "instrumentalness",
+      "feature_y": "mode",
+      "n": 89741,
+      "r": -0.05257956784315938
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "instrumentalness",
+      "feature_y": "danceability",
+      "n": 89741,
+      "r": -0.1947474625754594
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "instrumentalness",
+      "feature_y": "tempo",
+      "n": 89741,
+      "r": -0.05688784632079373
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "instrumentalness",
+      "feature_y": "loudness",
+      "n": 89741,
+      "r": -0.4347169203700059
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "instrumentalness",
+      "feature_y": "instrumentalness",
+      "n": 89741,
+      "r": 1.0
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "instrumentalness",
+      "feature_y": "speechiness",
+      "n": 89741,
+      "r": -0.09965760158033257
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "instrumentalness",
+      "feature_y": "liveness",
+      "n": 89741,
+      "r": -0.08715241150397765
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "speechiness",
+      "feature_y": "energy",
+      "n": 89741,
+      "r": 0.1413322907324708
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "speechiness",
+      "feature_y": "acousticness",
+      "n": 89741,
+      "r": 0.005121490923470696
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "speechiness",
+      "feature_y": "valence",
+      "n": 89741,
+      "r": 0.03293190271057626
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "speechiness",
+      "feature_y": "mode",
+      "n": 89741,
+      "r": -0.04079778073264017
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "speechiness",
+      "feature_y": "danceability",
+      "n": 89741,
+      "r": 0.10952015190943715
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "speechiness",
+      "feature_y": "tempo",
+      "n": 89741,
+      "r": 0.004031766269473385
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "speechiness",
+      "feature_y": "loudness",
+      "n": 89741,
+      "r": 0.0552952894274662
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "speechiness",
+      "feature_y": "instrumentalness",
+      "n": 89741,
+      "r": -0.09965760158033257
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "speechiness",
+      "feature_y": "speechiness",
+      "n": 89741,
+      "r": 1.0
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "speechiness",
+      "feature_y": "liveness",
+      "n": 89741,
+      "r": 0.22510155007932617
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "liveness",
+      "feature_y": "energy",
+      "n": 89741,
+      "r": 0.18894088147596372
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "liveness",
+      "feature_y": "acousticness",
+      "n": 89741,
+      "r": -0.01908109328606622
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "liveness",
+      "feature_y": "valence",
+      "n": 89741,
+      "r": 0.012313816254462085
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "liveness",
+      "feature_y": "mode",
+      "n": 89741,
+      "r": 0.016776976572453133
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "liveness",
+      "feature_y": "danceability",
+      "n": 89741,
+      "r": -0.1322340976871195
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "liveness",
+      "feature_y": "tempo",
+      "n": 89741,
+      "r": -0.006117417896068802
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "liveness",
+      "feature_y": "loudness",
+      "n": 89741,
+      "r": 0.07723927594220278
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "liveness",
+      "feature_y": "instrumentalness",
+      "n": 89741,
+      "r": -0.08715241150397765
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "liveness",
+      "feature_y": "speechiness",
+      "n": 89741,
+      "r": 0.22510155007932617
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "liveness",
+      "feature_y": "liveness",
+      "n": 89741,
+      "r": 1.0
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "energy",
+      "feature_y": "energy",
+      "n": 61931,
+      "r": 1.0
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "energy",
+      "feature_y": "acousticness",
+      "n": 61931,
+      "r": -0.723631537348891
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "energy",
+      "feature_y": "valence",
+      "n": 61931,
+      "r": 0.17107600800778586
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "energy",
+      "feature_y": "mode",
+      "n": 61931,
+      "r": -0.0961442773160453
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "energy",
+      "feature_y": "danceability",
+      "n": 61931,
+      "r": 0.0668839676946475
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "energy",
+      "feature_y": "tempo",
+      "n": 61931,
+      "r": 0.24006677650846664
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "energy",
+      "feature_y": "loudness",
+      "n": 61931,
+      "r": 0.759120343477349
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "energy",
+      "feature_y": "instrumentalness",
+      "n": 61931,
+      "r": -0.05508219896213122
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "energy",
+      "feature_y": "speechiness",
+      "n": 61931,
+      "r": 0.19910645834072493
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "energy",
+      "feature_y": "liveness",
+      "n": 61931,
+      "r": 0.15798959988049155
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "acousticness",
+      "feature_y": "energy",
+      "n": 61931,
+      "r": -0.723631537348891
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "acousticness",
+      "feature_y": "acousticness",
+      "n": 61931,
+      "r": 1.0
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "acousticness",
+      "feature_y": "valence",
+      "n": 61931,
+      "r": 0.0057266058220319304
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "acousticness",
+      "feature_y": "mode",
+      "n": 61931,
+      "r": 0.12162879172038751
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "acousticness",
+      "feature_y": "danceability",
+      "n": 61931,
+      "r": -0.12859425373913033
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "acousticness",
+      "feature_y": "tempo",
+      "n": 61931,
+      "r": -0.18846751480516488
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "acousticness",
+      "feature_y": "loudness",
+      "n": 61931,
+      "r": -0.546585267375778
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "acousticness",
+      "feature_y": "instrumentalness",
+      "n": 61931,
+      "r": -0.033418238938891696
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "acousticness",
+      "feature_y": "speechiness",
+      "n": 61931,
+      "r": -0.14223929985564557
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "acousticness",
+      "feature_y": "liveness",
+      "n": 61931,
+      "r": -0.005698487833003589
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "valence",
+      "feature_y": "energy",
+      "n": 61931,
+      "r": 0.17107600800778586
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "valence",
+      "feature_y": "acousticness",
+      "n": 61931,
+      "r": 0.0057266058220319304
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "valence",
+      "feature_y": "valence",
+      "n": 61931,
+      "r": 1.0
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "valence",
+      "feature_y": "mode",
+      "n": 61931,
+      "r": 0.03095195871355967
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "valence",
+      "feature_y": "danceability",
+      "n": 61931,
+      "r": 0.44235058630405705
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "valence",
+      "feature_y": "tempo",
+      "n": 61931,
+      "r": 0.04800395560667134
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "valence",
+      "feature_y": "loudness",
+      "n": 61931,
+      "r": 0.1769486811100562
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "valence",
+      "feature_y": "instrumentalness",
+      "n": 61931,
+      "r": -0.2920113727068096
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "valence",
+      "feature_y": "speechiness",
+      "n": 61931,
+      "r": 0.0168102763466556
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "valence",
+      "feature_y": "liveness",
+      "n": 61931,
+      "r": 0.02403691054371682
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "mode",
+      "feature_y": "energy",
+      "n": 61931,
+      "r": -0.0961442773160453
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "mode",
+      "feature_y": "acousticness",
+      "n": 61931,
+      "r": 0.12162879172038751
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "mode",
+      "feature_y": "valence",
+      "n": 61931,
+      "r": 0.03095195871355967
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "mode",
+      "feature_y": "mode",
+      "n": 61931,
+      "r": 1.0
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "mode",
+      "feature_y": "danceability",
+      "n": 61931,
+      "r": -0.07619244060618813
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "mode",
+      "feature_y": "tempo",
+      "n": 61931,
+      "r": -0.0017632284451104684
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "mode",
+      "feature_y": "loudness",
+      "n": 61931,
+      "r": -0.05457857113111456
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "mode",
+      "feature_y": "instrumentalness",
+      "n": 61931,
+      "r": -0.06471633777882647
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "mode",
+      "feature_y": "speechiness",
+      "n": 61931,
+      "r": -0.0742659718939874
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "mode",
+      "feature_y": "liveness",
+      "n": 61931,
+      "r": 0.02002110765706865
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "danceability",
+      "feature_y": "energy",
+      "n": 61931,
+      "r": 0.0668839676946475
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "danceability",
+      "feature_y": "acousticness",
+      "n": 61931,
+      "r": -0.12859425373913033
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "danceability",
+      "feature_y": "valence",
+      "n": 61931,
+      "r": 0.44235058630405705
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "danceability",
+      "feature_y": "mode",
+      "n": 61931,
+      "r": -0.07619244060618813
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "danceability",
+      "feature_y": "danceability",
+      "n": 61931,
+      "r": 1.0
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "danceability",
+      "feature_y": "tempo",
+      "n": 61931,
+      "r": -0.09258466993394907
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "danceability",
+      "feature_y": "loudness",
+      "n": 61931,
+      "r": 0.1516220209833582
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "danceability",
+      "feature_y": "instrumentalness",
+      "n": 61931,
+      "r": -0.09804106091753582
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "danceability",
+      "feature_y": "speechiness",
+      "n": 61931,
+      "r": 0.09045919017288609
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "danceability",
+      "feature_y": "liveness",
+      "n": 61931,
+      "r": -0.14708430226559382
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "tempo",
+      "feature_y": "energy",
+      "n": 61931,
+      "r": 0.24006677650846664
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "tempo",
+      "feature_y": "acousticness",
+      "n": 61931,
+      "r": -0.18846751480516488
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "tempo",
+      "feature_y": "valence",
+      "n": 61931,
+      "r": 0.04800395560667134
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "tempo",
+      "feature_y": "mode",
+      "n": 61931,
+      "r": -0.0017632284451104684
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "tempo",
+      "feature_y": "danceability",
+      "n": 61931,
+      "r": -0.09258466993394907
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "tempo",
+      "feature_y": "tempo",
+      "n": 61931,
+      "r": 1.0
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "tempo",
+      "feature_y": "loudness",
+      "n": 61931,
+      "r": 0.1909084257633034
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "tempo",
+      "feature_y": "instrumentalness",
+      "n": 61931,
+      "r": -0.009658232369290571
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "tempo",
+      "feature_y": "speechiness",
+      "n": 61931,
+      "r": 0.10128716724284939
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "tempo",
+      "feature_y": "liveness",
+      "n": 61931,
+      "r": 0.022362101787460193
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "loudness",
+      "feature_y": "energy",
+      "n": 61931,
+      "r": 0.759120343477349
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "loudness",
+      "feature_y": "acousticness",
+      "n": 61931,
+      "r": -0.546585267375778
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "loudness",
+      "feature_y": "valence",
+      "n": 61931,
+      "r": 0.1769486811100562
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "loudness",
+      "feature_y": "mode",
+      "n": 61931,
+      "r": -0.05457857113111456
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "loudness",
+      "feature_y": "danceability",
+      "n": 61931,
+      "r": 0.1516220209833582
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "loudness",
+      "feature_y": "tempo",
+      "n": 61931,
+      "r": 0.1909084257633034
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "loudness",
+      "feature_y": "loudness",
+      "n": 61931,
+      "r": 1.0
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "loudness",
+      "feature_y": "instrumentalness",
+      "n": 61931,
+      "r": -0.3366451052322984
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "loudness",
+      "feature_y": "speechiness",
+      "n": 61931,
+      "r": 0.15904179689717238
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "loudness",
+      "feature_y": "liveness",
+      "n": 61931,
+      "r": 0.09082975304897233
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "instrumentalness",
+      "feature_y": "energy",
+      "n": 61931,
+      "r": -0.05508219896213122
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "instrumentalness",
+      "feature_y": "acousticness",
+      "n": 61931,
+      "r": -0.033418238938891696
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "instrumentalness",
+      "feature_y": "valence",
+      "n": 61931,
+      "r": -0.2920113727068096
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "instrumentalness",
+      "feature_y": "mode",
+      "n": 61931,
+      "r": -0.06471633777882647
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "instrumentalness",
+      "feature_y": "danceability",
+      "n": 61931,
+      "r": -0.09804106091753582
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "instrumentalness",
+      "feature_y": "tempo",
+      "n": 61931,
+      "r": -0.009658232369290571
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "instrumentalness",
+      "feature_y": "loudness",
+      "n": 61931,
+      "r": -0.3366451052322984
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "instrumentalness",
+      "feature_y": "instrumentalness",
+      "n": 61931,
+      "r": 1.0
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "instrumentalness",
+      "feature_y": "speechiness",
+      "n": 61931,
+      "r": -0.05664180208809061
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "instrumentalness",
+      "feature_y": "liveness",
+      "n": 61931,
+      "r": -0.08673008227933571
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "speechiness",
+      "feature_y": "energy",
+      "n": 61931,
+      "r": 0.19910645834072493
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "speechiness",
+      "feature_y": "acousticness",
+      "n": 61931,
+      "r": -0.14223929985564557
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "speechiness",
+      "feature_y": "valence",
+      "n": 61931,
+      "r": 0.0168102763466556
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "speechiness",
+      "feature_y": "mode",
+      "n": 61931,
+      "r": -0.0742659718939874
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "speechiness",
+      "feature_y": "danceability",
+      "n": 61931,
+      "r": 0.09045919017288609
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "speechiness",
+      "feature_y": "tempo",
+      "n": 61931,
+      "r": 0.10128716724284939
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "speechiness",
+      "feature_y": "loudness",
+      "n": 61931,
+      "r": 0.15904179689717238
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "speechiness",
+      "feature_y": "instrumentalness",
+      "n": 61931,
+      "r": -0.05664180208809061
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "speechiness",
+      "feature_y": "speechiness",
+      "n": 61931,
+      "r": 1.0
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "speechiness",
+      "feature_y": "liveness",
+      "n": 61931,
+      "r": 0.06735379236257868
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "liveness",
+      "feature_y": "energy",
+      "n": 61931,
+      "r": 0.15798959988049155
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "liveness",
+      "feature_y": "acousticness",
+      "n": 61931,
+      "r": -0.005698487833003589
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "liveness",
+      "feature_y": "valence",
+      "n": 61931,
+      "r": 0.02403691054371682
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "liveness",
+      "feature_y": "mode",
+      "n": 61931,
+      "r": 0.02002110765706865
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "liveness",
+      "feature_y": "danceability",
+      "n": 61931,
+      "r": -0.14708430226559382
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "liveness",
+      "feature_y": "tempo",
+      "n": 61931,
+      "r": 0.022362101787460193
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "liveness",
+      "feature_y": "loudness",
+      "n": 61931,
+      "r": 0.09082975304897233
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "liveness",
+      "feature_y": "instrumentalness",
+      "n": 61931,
+      "r": -0.08673008227933571
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "liveness",
+      "feature_y": "speechiness",
+      "n": 61931,
+      "r": 0.06735379236257868
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "liveness",
+      "feature_y": "liveness",
+      "n": 61931,
+      "r": 1.0
+    }
+  ],
+  "correlation_spearman": [
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "energy",
+      "feature_y": "energy",
+      "n": 89741,
+      "rho": 1.0
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "energy",
+      "feature_y": "acousticness",
+      "n": 89741,
+      "rho": -0.712250603797316
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "energy",
+      "feature_y": "valence",
+      "n": 89741,
+      "rho": 0.20543377374567115
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "energy",
+      "feature_y": "mode",
+      "n": 89741,
+      "rho": -0.07047198378839475
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "energy",
+      "feature_y": "danceability",
+      "n": 89741,
+      "rho": 0.05021408239511431
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "energy",
+      "feature_y": "tempo",
+      "n": 89741,
+      "rho": 0.25006309948043853
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "energy",
+      "feature_y": "loudness",
+      "n": 89741,
+      "rho": 0.7531576290789098
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "energy",
+      "feature_y": "instrumentalness",
+      "n": 89741,
+      "rho": -0.042859573023104135
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "energy",
+      "feature_y": "speechiness",
+      "n": 89741,
+      "rho": 0.35079056761141775
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "energy",
+      "feature_y": "liveness",
+      "n": 89741,
+      "rho": 0.182095344680406
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "acousticness",
+      "feature_y": "energy",
+      "n": 89741,
+      "rho": -0.712250603797316
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "acousticness",
+      "feature_y": "acousticness",
+      "n": 89741,
+      "rho": 1.0
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "acousticness",
+      "feature_y": "valence",
+      "n": 89741,
+      "rho": -0.02255441978968984
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "acousticness",
+      "feature_y": "mode",
+      "n": 89741,
+      "rho": 0.0830878293082751
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "acousticness",
+      "feature_y": "danceability",
+      "n": 89741,
+      "rho": -0.053638059508460706
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "acousticness",
+      "feature_y": "tempo",
+      "n": 89741,
+      "rho": -0.226870447135826
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "acousticness",
+      "feature_y": "loudness",
+      "n": 89741,
+      "rho": -0.5372974792660151
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "acousticness",
+      "feature_y": "instrumentalness",
+      "n": 89741,
+      "rho": -0.09372840687515446
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "acousticness",
+      "feature_y": "speechiness",
+      "n": 89741,
+      "rho": -0.2157182050209038
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "acousticness",
+      "feature_y": "liveness",
+      "n": 89741,
+      "rho": -0.0454924623714495
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "valence",
+      "feature_y": "energy",
+      "n": 89741,
+      "rho": 0.20543377374567115
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "valence",
+      "feature_y": "acousticness",
+      "n": 89741,
+      "rho": -0.02255441978968984
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "valence",
+      "feature_y": "valence",
+      "n": 89741,
+      "rho": 1.0
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "valence",
+      "feature_y": "mode",
+      "n": 89741,
+      "rho": 0.024454358165288004
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "valence",
+      "feature_y": "danceability",
+      "n": 89741,
+      "rho": 0.47662663046110026
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "valence",
+      "feature_y": "tempo",
+      "n": 89741,
+      "rho": 0.07545800637339288
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "valence",
+      "feature_y": "loudness",
+      "n": 89741,
+      "rho": 0.22722242372845508
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "valence",
+      "feature_y": "instrumentalness",
+      "n": 89741,
+      "rho": -0.3341037125414583
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "valence",
+      "feature_y": "speechiness",
+      "n": 89741,
+      "rho": 0.08234742538889851
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "valence",
+      "feature_y": "liveness",
+      "n": 89741,
+      "rho": 0.007584272052084948
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "mode",
+      "feature_y": "energy",
+      "n": 89741,
+      "rho": -0.07047198378839475
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "mode",
+      "feature_y": "acousticness",
+      "n": 89741,
+      "rho": 0.0830878293082751
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "mode",
+      "feature_y": "valence",
+      "n": 89741,
+      "rho": 0.024454358165288004
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "mode",
+      "feature_y": "mode",
+      "n": 89741,
+      "rho": 1.0
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "mode",
+      "feature_y": "danceability",
+      "n": 89741,
+      "rho": -0.06933304236207512
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "mode",
+      "feature_y": "tempo",
+      "n": 89741,
+      "rho": -0.0012273978970191955
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "mode",
+      "feature_y": "loudness",
+      "n": 89741,
+      "rho": -0.03921231444500482
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "mode",
+      "feature_y": "instrumentalness",
+      "n": 89741,
+      "rho": -0.077411891795676
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "mode",
+      "feature_y": "speechiness",
+      "n": 89741,
+      "rho": -0.10918583960863351
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "mode",
+      "feature_y": "liveness",
+      "n": 89741,
+      "rho": 0.015736114818318554
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "danceability",
+      "feature_y": "energy",
+      "n": 89741,
+      "rho": 0.05021408239511431
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "danceability",
+      "feature_y": "acousticness",
+      "n": 89741,
+      "rho": -0.053638059508460706
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "danceability",
+      "feature_y": "valence",
+      "n": 89741,
+      "rho": 0.47662663046110026
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "danceability",
+      "feature_y": "mode",
+      "n": 89741,
+      "rho": -0.06933304236207512
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "danceability",
+      "feature_y": "danceability",
+      "n": 89741,
+      "rho": 1.0
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "danceability",
+      "feature_y": "tempo",
+      "n": 89741,
+      "rho": -0.048284377269583234
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "danceability",
+      "feature_y": "loudness",
+      "n": 89741,
+      "rho": 0.11551713916530938
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "danceability",
+      "feature_y": "instrumentalness",
+      "n": 89741,
+      "rho": -0.15765475329259132
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "danceability",
+      "feature_y": "speechiness",
+      "n": 89741,
+      "rho": 0.15223035626254564
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "danceability",
+      "feature_y": "liveness",
+      "n": 89741,
+      "rho": -0.14821499739246416
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "tempo",
+      "feature_y": "energy",
+      "n": 89741,
+      "rho": 0.25006309948043853
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "tempo",
+      "feature_y": "acousticness",
+      "n": 89741,
+      "rho": -0.226870447135826
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "tempo",
+      "feature_y": "valence",
+      "n": 89741,
+      "rho": 0.07545800637339288
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "tempo",
+      "feature_y": "mode",
+      "n": 89741,
+      "rho": -0.0012273978970191955
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "tempo",
+      "feature_y": "danceability",
+      "n": 89741,
+      "rho": -0.048284377269583234
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "tempo",
+      "feature_y": "tempo",
+      "n": 89741,
+      "rho": 1.0
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "tempo",
+      "feature_y": "loudness",
+      "n": 89741,
+      "rho": 0.2092203711657535
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "tempo",
+      "feature_y": "instrumentalness",
+      "n": 89741,
+      "rho": -0.012613978517264958
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "tempo",
+      "feature_y": "speechiness",
+      "n": 89741,
+      "rho": 0.10950010671957928
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "tempo",
+      "feature_y": "liveness",
+      "n": 89741,
+      "rho": 0.014760357286583444
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "loudness",
+      "feature_y": "energy",
+      "n": 89741,
+      "rho": 0.7531576290789098
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "loudness",
+      "feature_y": "acousticness",
+      "n": 89741,
+      "rho": -0.5372974792660151
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "loudness",
+      "feature_y": "valence",
+      "n": 89741,
+      "rho": 0.22722242372845508
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "loudness",
+      "feature_y": "mode",
+      "n": 89741,
+      "rho": -0.03921231444500482
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "loudness",
+      "feature_y": "danceability",
+      "n": 89741,
+      "rho": 0.11551713916530938
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "loudness",
+      "feature_y": "tempo",
+      "n": 89741,
+      "rho": 0.2092203711657535
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "loudness",
+      "feature_y": "loudness",
+      "n": 89741,
+      "rho": 1.0
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "loudness",
+      "feature_y": "instrumentalness",
+      "n": 89741,
+      "rho": -0.29937516743785225
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "loudness",
+      "feature_y": "speechiness",
+      "n": 89741,
+      "rho": 0.21786958825328792
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "loudness",
+      "feature_y": "liveness",
+      "n": 89741,
+      "rho": 0.11474921948469834
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "instrumentalness",
+      "feature_y": "energy",
+      "n": 89741,
+      "rho": -0.042859573023104135
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "instrumentalness",
+      "feature_y": "acousticness",
+      "n": 89741,
+      "rho": -0.09372840687515446
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "instrumentalness",
+      "feature_y": "valence",
+      "n": 89741,
+      "rho": -0.3341037125414583
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "instrumentalness",
+      "feature_y": "mode",
+      "n": 89741,
+      "rho": -0.077411891795676
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "instrumentalness",
+      "feature_y": "danceability",
+      "n": 89741,
+      "rho": -0.15765475329259132
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "instrumentalness",
+      "feature_y": "tempo",
+      "n": 89741,
+      "rho": -0.012613978517264958
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "instrumentalness",
+      "feature_y": "loudness",
+      "n": 89741,
+      "rho": -0.29937516743785225
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "instrumentalness",
+      "feature_y": "instrumentalness",
+      "n": 89741,
+      "rho": 1.0
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "instrumentalness",
+      "feature_y": "speechiness",
+      "n": 89741,
+      "rho": -0.05106589944797915
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "instrumentalness",
+      "feature_y": "liveness",
+      "n": 89741,
+      "rho": -0.10531631284509337
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "speechiness",
+      "feature_y": "energy",
+      "n": 89741,
+      "rho": 0.35079056761141775
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "speechiness",
+      "feature_y": "acousticness",
+      "n": 89741,
+      "rho": -0.2157182050209038
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "speechiness",
+      "feature_y": "valence",
+      "n": 89741,
+      "rho": 0.08234742538889851
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "speechiness",
+      "feature_y": "mode",
+      "n": 89741,
+      "rho": -0.10918583960863351
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "speechiness",
+      "feature_y": "danceability",
+      "n": 89741,
+      "rho": 0.15223035626254564
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "speechiness",
+      "feature_y": "tempo",
+      "n": 89741,
+      "rho": 0.10950010671957928
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "speechiness",
+      "feature_y": "loudness",
+      "n": 89741,
+      "rho": 0.21786958825328792
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "speechiness",
+      "feature_y": "instrumentalness",
+      "n": 89741,
+      "rho": -0.05106589944797915
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "speechiness",
+      "feature_y": "speechiness",
+      "n": 89741,
+      "rho": 1.0
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "speechiness",
+      "feature_y": "liveness",
+      "n": 89741,
+      "rho": 0.09467344469902496
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "liveness",
+      "feature_y": "energy",
+      "n": 89741,
+      "rho": 0.182095344680406
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "liveness",
+      "feature_y": "acousticness",
+      "n": 89741,
+      "rho": -0.0454924623714495
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "liveness",
+      "feature_y": "valence",
+      "n": 89741,
+      "rho": 0.007584272052084948
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "liveness",
+      "feature_y": "mode",
+      "n": 89741,
+      "rho": 0.015736114818318554
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "liveness",
+      "feature_y": "danceability",
+      "n": 89741,
+      "rho": -0.14821499739246416
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "liveness",
+      "feature_y": "tempo",
+      "n": 89741,
+      "rho": 0.014760357286583444
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "liveness",
+      "feature_y": "loudness",
+      "n": 89741,
+      "rho": 0.11474921948469834
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "liveness",
+      "feature_y": "instrumentalness",
+      "n": 89741,
+      "rho": -0.10531631284509337
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "liveness",
+      "feature_y": "speechiness",
+      "n": 89741,
+      "rho": 0.09467344469902496
+    },
+    {
+      "cohort": "SOURCE_UNIQUE_89741",
+      "feature_x": "liveness",
+      "feature_y": "liveness",
+      "n": 89741,
+      "rho": 1.0
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "energy",
+      "feature_y": "energy",
+      "n": 61931,
+      "rho": 1.0
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "energy",
+      "feature_y": "acousticness",
+      "n": 61931,
+      "rho": -0.6935724737539173
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "energy",
+      "feature_y": "valence",
+      "n": 61931,
+      "rho": 0.11160694526076738
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "energy",
+      "feature_y": "mode",
+      "n": 61931,
+      "rho": -0.08837833060695112
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "energy",
+      "feature_y": "danceability",
+      "n": 61931,
+      "rho": -0.02273359572084017
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "energy",
+      "feature_y": "tempo",
+      "n": 61931,
+      "rho": 0.23539955326166284
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "energy",
+      "feature_y": "loudness",
+      "n": 61931,
+      "rho": 0.7209757746410006
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "energy",
+      "feature_y": "instrumentalness",
+      "n": 61931,
+      "rho": 0.06384201212614403
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "energy",
+      "feature_y": "speechiness",
+      "n": 61931,
+      "rho": 0.4089739440047684
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "energy",
+      "feature_y": "liveness",
+      "n": 61931,
+      "rho": 0.15885709740483894
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "acousticness",
+      "feature_y": "energy",
+      "n": 61931,
+      "rho": -0.6935724737539173
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "acousticness",
+      "feature_y": "acousticness",
+      "n": 61931,
+      "rho": 1.0
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "acousticness",
+      "feature_y": "valence",
+      "n": 61931,
+      "rho": 0.1080166188086517
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "acousticness",
+      "feature_y": "mode",
+      "n": 61931,
+      "rho": 0.10796902239815696
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "acousticness",
+      "feature_y": "danceability",
+      "n": 61931,
+      "rho": 0.01632558952124863
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "acousticness",
+      "feature_y": "tempo",
+      "n": 61931,
+      "rho": -0.19114290117512556
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "acousticness",
+      "feature_y": "loudness",
+      "n": 61931,
+      "rho": -0.4631786001675186
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "acousticness",
+      "feature_y": "instrumentalness",
+      "n": 61931,
+      "rho": -0.2269234840879603
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "acousticness",
+      "feature_y": "speechiness",
+      "n": 61931,
+      "rho": -0.2876121915268947
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "acousticness",
+      "feature_y": "liveness",
+      "n": 61931,
+      "rho": -0.02416802344188361
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "valence",
+      "feature_y": "energy",
+      "n": 61931,
+      "rho": 0.11160694526076738
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "valence",
+      "feature_y": "acousticness",
+      "n": 61931,
+      "rho": 0.1080166188086517
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "valence",
+      "feature_y": "valence",
+      "n": 61931,
+      "rho": 1.0
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "valence",
+      "feature_y": "mode",
+      "n": 61931,
+      "rho": 0.03049410647994314
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "valence",
+      "feature_y": "danceability",
+      "n": 61931,
+      "rho": 0.4298665967024358
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "valence",
+      "feature_y": "tempo",
+      "n": 61931,
+      "rho": 0.035289429899662036
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "valence",
+      "feature_y": "loudness",
+      "n": 61931,
+      "rho": 0.12562603520768129
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "valence",
+      "feature_y": "instrumentalness",
+      "n": 61931,
+      "rho": -0.30086234567751063
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "valence",
+      "feature_y": "speechiness",
+      "n": 61931,
+      "rho": 0.03837065789167548
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "valence",
+      "feature_y": "liveness",
+      "n": 61931,
+      "rho": -0.00021185574964129107
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "mode",
+      "feature_y": "energy",
+      "n": 61931,
+      "rho": -0.08837833060695112
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "mode",
+      "feature_y": "acousticness",
+      "n": 61931,
+      "rho": 0.10796902239815696
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "mode",
+      "feature_y": "valence",
+      "n": 61931,
+      "rho": 0.03049410647994314
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "mode",
+      "feature_y": "mode",
+      "n": 61931,
+      "rho": 1.0
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "mode",
+      "feature_y": "danceability",
+      "n": 61931,
+      "rho": -0.08266156474534189
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "mode",
+      "feature_y": "tempo",
+      "n": 61931,
+      "rho": -0.002206777330857091
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "mode",
+      "feature_y": "loudness",
+      "n": 61931,
+      "rho": -0.057565261915010234
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "mode",
+      "feature_y": "instrumentalness",
+      "n": 61931,
+      "rho": -0.08679080729845827
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "mode",
+      "feature_y": "speechiness",
+      "n": 61931,
+      "rho": -0.12348397881844772
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "mode",
+      "feature_y": "liveness",
+      "n": 61931,
+      "rho": 0.019525273570992232
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "danceability",
+      "feature_y": "energy",
+      "n": 61931,
+      "rho": -0.02273359572084017
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "danceability",
+      "feature_y": "acousticness",
+      "n": 61931,
+      "rho": 0.01632558952124863
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "danceability",
+      "feature_y": "valence",
+      "n": 61931,
+      "rho": 0.4298665967024358
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "danceability",
+      "feature_y": "mode",
+      "n": 61931,
+      "rho": -0.08266156474534189
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "danceability",
+      "feature_y": "danceability",
+      "n": 61931,
+      "rho": 1.0
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "danceability",
+      "feature_y": "tempo",
+      "n": 61931,
+      "rho": -0.09565150823453838
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "danceability",
+      "feature_y": "loudness",
+      "n": 61931,
+      "rho": 0.03982825333631102
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "danceability",
+      "feature_y": "instrumentalness",
+      "n": 61931,
+      "rho": -0.0827323811830802
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "danceability",
+      "feature_y": "speechiness",
+      "n": 61931,
+      "rho": 0.10284440501666027
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "danceability",
+      "feature_y": "liveness",
+      "n": 61931,
+      "rho": -0.17692196592811826
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "tempo",
+      "feature_y": "energy",
+      "n": 61931,
+      "rho": 0.23539955326166284
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "tempo",
+      "feature_y": "acousticness",
+      "n": 61931,
+      "rho": -0.19114290117512556
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "tempo",
+      "feature_y": "valence",
+      "n": 61931,
+      "rho": 0.035289429899662036
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "tempo",
+      "feature_y": "mode",
+      "n": 61931,
+      "rho": -0.002206777330857091
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "tempo",
+      "feature_y": "danceability",
+      "n": 61931,
+      "rho": -0.09565150823453838
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "tempo",
+      "feature_y": "tempo",
+      "n": 61931,
+      "rho": 1.0
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "tempo",
+      "feature_y": "loudness",
+      "n": 61931,
+      "rho": 0.18135932356165962
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "tempo",
+      "feature_y": "instrumentalness",
+      "n": 61931,
+      "rho": 0.01343475476162598
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "tempo",
+      "feature_y": "speechiness",
+      "n": 61931,
+      "rho": 0.14318247013848334
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "tempo",
+      "feature_y": "liveness",
+      "n": 61931,
+      "rho": 0.02667696057880404
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "loudness",
+      "feature_y": "energy",
+      "n": 61931,
+      "rho": 0.7209757746410006
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "loudness",
+      "feature_y": "acousticness",
+      "n": 61931,
+      "rho": -0.4631786001675186
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "loudness",
+      "feature_y": "valence",
+      "n": 61931,
+      "rho": 0.12562603520768129
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "loudness",
+      "feature_y": "mode",
+      "n": 61931,
+      "rho": -0.057565261915010234
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "loudness",
+      "feature_y": "danceability",
+      "n": 61931,
+      "rho": 0.03982825333631102
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "loudness",
+      "feature_y": "tempo",
+      "n": 61931,
+      "rho": 0.18135932356165962
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "loudness",
+      "feature_y": "loudness",
+      "n": 61931,
+      "rho": 1.0
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "loudness",
+      "feature_y": "instrumentalness",
+      "n": 61931,
+      "rho": -0.25095528964110136
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "loudness",
+      "feature_y": "speechiness",
+      "n": 61931,
+      "rho": 0.27749648460097226
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "loudness",
+      "feature_y": "liveness",
+      "n": 61931,
+      "rho": 0.11580026129288966
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "instrumentalness",
+      "feature_y": "energy",
+      "n": 61931,
+      "rho": 0.06384201212614403
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "instrumentalness",
+      "feature_y": "acousticness",
+      "n": 61931,
+      "rho": -0.2269234840879603
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "instrumentalness",
+      "feature_y": "valence",
+      "n": 61931,
+      "rho": -0.30086234567751063
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "instrumentalness",
+      "feature_y": "mode",
+      "n": 61931,
+      "rho": -0.08679080729845827
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "instrumentalness",
+      "feature_y": "danceability",
+      "n": 61931,
+      "rho": -0.0827323811830802
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "instrumentalness",
+      "feature_y": "tempo",
+      "n": 61931,
+      "rho": 0.01343475476162598
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "instrumentalness",
+      "feature_y": "loudness",
+      "n": 61931,
+      "rho": -0.25095528964110136
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "instrumentalness",
+      "feature_y": "instrumentalness",
+      "n": 61931,
+      "rho": 1.0
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "instrumentalness",
+      "feature_y": "speechiness",
+      "n": 61931,
+      "rho": 0.015055375663401805
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "instrumentalness",
+      "feature_y": "liveness",
+      "n": 61931,
+      "rho": -0.09559090439013947
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "speechiness",
+      "feature_y": "energy",
+      "n": 61931,
+      "rho": 0.4089739440047684
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "speechiness",
+      "feature_y": "acousticness",
+      "n": 61931,
+      "rho": -0.2876121915268947
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "speechiness",
+      "feature_y": "valence",
+      "n": 61931,
+      "rho": 0.03837065789167548
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "speechiness",
+      "feature_y": "mode",
+      "n": 61931,
+      "rho": -0.12348397881844772
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "speechiness",
+      "feature_y": "danceability",
+      "n": 61931,
+      "rho": 0.10284440501666027
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "speechiness",
+      "feature_y": "tempo",
+      "n": 61931,
+      "rho": 0.14318247013848334
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "speechiness",
+      "feature_y": "loudness",
+      "n": 61931,
+      "rho": 0.27749648460097226
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "speechiness",
+      "feature_y": "instrumentalness",
+      "n": 61931,
+      "rho": 0.015055375663401805
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "speechiness",
+      "feature_y": "speechiness",
+      "n": 61931,
+      "rho": 1.0
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "speechiness",
+      "feature_y": "liveness",
+      "n": 61931,
+      "rho": 0.073158008431978
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "liveness",
+      "feature_y": "energy",
+      "n": 61931,
+      "rho": 0.15885709740483894
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "liveness",
+      "feature_y": "acousticness",
+      "n": 61931,
+      "rho": -0.02416802344188361
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "liveness",
+      "feature_y": "valence",
+      "n": 61931,
+      "rho": -0.00021185574964129107
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "liveness",
+      "feature_y": "mode",
+      "n": 61931,
+      "rho": 0.019525273570992232
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "liveness",
+      "feature_y": "danceability",
+      "n": 61931,
+      "rho": -0.17692196592811826
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "liveness",
+      "feature_y": "tempo",
+      "n": 61931,
+      "rho": 0.02667696057880404
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "liveness",
+      "feature_y": "loudness",
+      "n": 61931,
+      "rho": 0.11580026129288966
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "liveness",
+      "feature_y": "instrumentalness",
+      "n": 61931,
+      "rho": -0.09559090439013947
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "liveness",
+      "feature_y": "speechiness",
+      "n": 61931,
+      "rho": 0.073158008431978
+    },
+    {
+      "cohort": "BASE_ELIGIBLE_61931",
+      "feature_x": "liveness",
+      "feature_y": "liveness",
+      "n": 61931,
+      "rho": 1.0
+    }
+  ],
+  "review_flags": {
+    "interpretation": "Statistical rarity for human/domain review, not errors; no automatic deletion or imputation",
+    "automatic_deleted_count": 0,
+    "flagged_feature_track_pairs": 53691,
+    "unique_flagged_tracks": 37922,
+    "base_n": 61931,
+    "criteria": [
+      {
+        "feature": "energy",
+        "n": 61931,
+        "q1": 0.512,
+        "median": 0.712,
+        "q3": 0.869,
+        "iqr": 0.357,
+        "iqr_lower": -0.023499999999999965,
+        "iqr_upper": 1.4045,
+        "iqr_factor": 1.5,
+        "iqr_flag_count": 0,
+        "iqr_flag_ratio": 0.0,
+        "iqr_status": "REVIEW_ONLY",
+        "mad": 0.17299999999999993,
+        "mad_status": "REVIEW_ONLY",
+        "mad_abs_robust_z_threshold": 3.5,
+        "mad_flag_count": 0,
+        "mad_flag_ratio": 0.0,
+        "nonmedian_count_if_mad_zero": null,
+        "either_count": 0,
+        "either_ratio": 0.0,
+        "deleted_count": 0
+      },
+      {
+        "feature": "acousticness",
+        "n": 61931,
+        "q1": 0.0102,
+        "median": 0.131,
+        "q3": 0.526,
+        "iqr": 0.5158,
+        "iqr_lower": -0.7635000000000001,
+        "iqr_upper": 1.2997,
+        "iqr_factor": 1.5,
+        "iqr_flag_count": 0,
+        "iqr_flag_ratio": 0.0,
+        "iqr_status": "REVIEW_ONLY",
+        "mad": 0.130394,
+        "mad_status": "REVIEW_ONLY",
+        "mad_abs_robust_z_threshold": 3.5,
+        "mad_flag_count": 6424,
+        "mad_flag_ratio": 0.10372834283315302,
+        "nonmedian_count_if_mad_zero": null,
+        "either_count": 6424,
+        "either_ratio": 0.10372834283315302,
+        "deleted_count": 0
+      },
+      {
+        "feature": "valence",
+        "n": 61931,
+        "q1": 0.27,
+        "median": 0.481,
+        "q3": 0.699,
+        "iqr": 0.42899999999999994,
+        "iqr_lower": -0.37349999999999994,
+        "iqr_upper": 1.3424999999999998,
+        "iqr_factor": 1.5,
+        "iqr_flag_count": 0,
+        "iqr_flag_ratio": 0.0,
+        "iqr_status": "REVIEW_ONLY",
+        "mad": 0.21499999999999997,
+        "mad_status": "REVIEW_ONLY",
+        "mad_abs_robust_z_threshold": 3.5,
+        "mad_flag_count": 0,
+        "mad_flag_ratio": 0.0,
+        "nonmedian_count_if_mad_zero": null,
+        "either_count": 0,
+        "either_ratio": 0.0,
+        "deleted_count": 0
+      },
+      {
+        "feature": "danceability",
+        "n": 61931,
+        "q1": 0.46,
+        "median": 0.58,
+        "q3": 0.693,
+        "iqr": 0.23299999999999993,
+        "iqr_lower": 0.1105000000000001,
+        "iqr_upper": 1.0425,
+        "iqr_factor": 1.5,
+        "iqr_flag_count": 199,
+        "iqr_flag_ratio": 0.003213253459495245,
+        "iqr_status": "REVIEW_ONLY",
+        "mad": 0.11599999999999994,
+        "mad_status": "REVIEW_ONLY",
+        "mad_abs_robust_z_threshold": 3.5,
+        "mad_flag_count": 0,
+        "mad_flag_ratio": 0.0,
+        "nonmedian_count_if_mad_zero": null,
+        "either_count": 199,
+        "either_ratio": 0.003213253459495245,
+        "deleted_count": 0
+      },
+      {
+        "feature": "tempo",
+        "n": 61931,
+        "q1": 101.571,
+        "median": 123.912,
+        "q3": 141.923,
+        "iqr": 40.352000000000004,
+        "iqr_lower": 41.04299999999999,
+        "iqr_upper": 202.45100000000002,
+        "iqr_factor": 1.5,
+        "iqr_flag_count": 210,
+        "iqr_flag_ratio": 0.0033908704848944794,
+        "iqr_status": "REVIEW_ONLY",
+        "mad": 20.19399999999999,
+        "mad_status": "REVIEW_ONLY",
+        "mad_abs_robust_z_threshold": 3.5,
+        "mad_flag_count": 1,
+        "mad_flag_ratio": 1.614700230902133e-05,
+        "nonmedian_count_if_mad_zero": null,
+        "either_count": 210,
+        "either_ratio": 0.0033908704848944794,
+        "deleted_count": 0
+      },
+      {
+        "feature": "loudness",
+        "n": 61931,
+        "q1": -9.518,
+        "median": -6.772,
+        "q3": -4.863,
+        "iqr": 4.655,
+        "iqr_lower": -16.500500000000002,
+        "iqr_upper": 2.1194999999999995,
+        "iqr_factor": 1.5,
+        "iqr_flag_count": 2692,
+        "iqr_flag_ratio": 0.043467730215885424,
+        "iqr_status": "REVIEW_ONLY",
+        "mad": 2.2119999999999997,
+        "mad_status": "REVIEW_ONLY",
+        "mad_abs_robust_z_threshold": 3.5,
+        "mad_flag_count": 1909,
+        "mad_flag_ratio": 0.03082462740792172,
+        "nonmedian_count_if_mad_zero": null,
+        "either_count": 2692,
+        "either_ratio": 0.043467730215885424,
+        "deleted_count": 0
+      },
+      {
+        "feature": "instrumentalness",
+        "n": 61931,
+        "q1": 0.0,
+        "median": 7.05e-05,
+        "q3": 0.0747,
+        "iqr": 0.0747,
+        "iqr_lower": -0.11205000000000001,
+        "iqr_upper": 0.18675000000000003,
+        "iqr_factor": 1.5,
+        "iqr_flag_count": 13454,
+        "iqr_flag_ratio": 0.21724176906557296,
+        "iqr_status": "REVIEW_ONLY",
+        "mad": 7.05e-05,
+        "mad_status": "REVIEW_ONLY",
+        "mad_abs_robust_z_threshold": 3.5,
+        "mad_flag_count": 26402,
+        "mad_flag_ratio": 0.42631315496278116,
+        "nonmedian_count_if_mad_zero": null,
+        "either_count": 26402,
+        "either_ratio": 0.42631315496278116,
+        "deleted_count": 0
+      },
+      {
+        "feature": "speechiness",
+        "n": 61931,
+        "q1": 0.0355,
+        "median": 0.0481,
+        "q3": 0.0803,
+        "iqr": 0.0448,
+        "iqr_lower": -0.0317,
+        "iqr_upper": 0.1475,
+        "iqr_factor": 1.5,
+        "iqr_flag_count": 6577,
+        "iqr_flag_ratio": 0.10619883418643329,
+        "iqr_status": "REVIEW_ONLY",
+        "mad": 0.0157,
+        "mad_status": "REVIEW_ONLY",
+        "mad_abs_robust_z_threshold": 3.5,
+        "mad_flag_count": 7903,
+        "mad_flag_ratio": 0.12760975924819556,
+        "nonmedian_count_if_mad_zero": null,
+        "either_count": 7903,
+        "either_ratio": 0.12760975924819556,
+        "deleted_count": 0
+      },
+      {
+        "feature": "liveness",
+        "n": 61931,
+        "q1": 0.0972,
+        "median": 0.135,
+        "q3": 0.282,
+        "iqr": 0.18479999999999996,
+        "iqr_lower": -0.17999999999999994,
+        "iqr_upper": 0.5591999999999999,
+        "iqr_factor": 1.5,
+        "iqr_flag_count": 4516,
+        "iqr_flag_ratio": 0.07291986242754032,
+        "iqr_status": "REVIEW_ONLY",
+        "mad": 0.055300000000000016,
+        "mad_status": "REVIEW_ONLY",
+        "mad_abs_robust_z_threshold": 3.5,
+        "mad_flag_count": 6500,
+        "mad_flag_ratio": 0.10495551500863864,
+        "nonmedian_count_if_mad_zero": null,
+        "either_count": 6500,
+        "either_ratio": 0.10495551500863864,
+        "deleted_count": 0
+      },
+      {
+        "feature": "duration_ms",
+        "n": 61931,
+        "q1": 179125.0,
+        "median": 218024.0,
+        "q3": 268047.0,
+        "iqr": 88922.0,
+        "iqr_lower": 45742.0,
+        "iqr_upper": 401430.0,
+        "iqr_factor": 1.5,
+        "iqr_flag_count": 3361,
+        "iqr_flag_ratio": 0.05427007476062069,
+        "iqr_status": "REVIEW_ONLY",
+        "mad": 43316.0,
+        "mad_status": "REVIEW_ONLY",
+        "mad_abs_robust_z_threshold": 3.5,
+        "mad_flag_count": 1996,
+        "mad_flag_ratio": 0.03222941660880658,
+        "nonmedian_count_if_mad_zero": null,
+        "either_count": 3361,
+        "either_ratio": 0.05427007476062069,
+        "deleted_count": 0
+      }
+    ],
+    "mad_zero_handling": "Do not divide by0; no robust-z flags; report nonmedian count separately",
+    "iqr_zero_handling": "No IQR flags if IQR0; report zero-IQR status",
+    "genre_exception_note": "Global fences can flag normal genre-specific characteristics; inspect genre-level context before any change",
+    "many_flags_note": "Zero-inflated instrumentalness/speechiness and long-tailed liveness/duration can create many valid review flags; flags are not evidence of corruption",
+    "compact_flags_file": "profile_review_flags.csv",
+    "genre_context_file": "profile_review_flags_by_genre.csv",
+    "genre_context": [
+      {
+        "feature": "acousticness",
+        "genre_code": "CLASSICAL",
+        "flagged_track_count": 820,
+        "iqr_flag_count": 0,
+        "mad_flag_count": 820,
+        "genre_base_track_count": 933,
+        "flag_ratio_within_genre": 0.8788853161843515
+      },
+      {
+        "feature": "acousticness",
+        "genre_code": "NEWAGE",
+        "flagged_track_count": 754,
+        "iqr_flag_count": 0,
+        "mad_flag_count": 754,
+        "genre_base_track_count": 994,
+        "flag_ratio_within_genre": 0.7585513078470825
+      },
+      {
+        "feature": "acousticness",
+        "genre_code": "OPERA",
+        "flagged_track_count": 672,
+        "iqr_flag_count": 0,
+        "mad_flag_count": 672,
+        "genre_base_track_count": 990,
+        "flag_ratio_within_genre": 0.6787878787878788
+      },
+      {
+        "feature": "acousticness",
+        "genre_code": "JAZZ",
+        "flagged_track_count": 461,
+        "iqr_flag_count": 0,
+        "mad_flag_count": 461,
+        "genre_base_track_count": 998,
+        "flag_ratio_within_genre": 0.4619238476953908
+      },
+      {
+        "feature": "acousticness",
+        "genre_code": "FOLK_COUNTRY",
+        "flagged_track_count": 1100,
+        "iqr_flag_count": 0,
+        "mad_flag_count": 1100,
+        "genre_base_track_count": 4710,
+        "flag_ratio_within_genre": 0.23354564755838642
+      },
+      {
+        "feature": "acousticness",
+        "genre_code": "BLUES",
+        "flagged_track_count": 143,
+        "iqr_flag_count": 0,
+        "mad_flag_count": 143,
+        "genre_base_track_count": 998,
+        "flag_ratio_within_genre": 0.1432865731462926
+      },
+      {
+        "feature": "acousticness",
+        "genre_code": "LATIN",
+        "flagged_track_count": 1007,
+        "iqr_flag_count": 0,
+        "mad_flag_count": 1007,
+        "genre_base_track_count": 8022,
+        "flag_ratio_within_genre": 0.1255297930690601
+      },
+      {
+        "feature": "acousticness",
+        "genre_code": "POP",
+        "flagged_track_count": 499,
+        "iqr_flag_count": 0,
+        "mad_flag_count": 499,
+        "genre_base_track_count": 5833,
+        "flag_ratio_within_genre": 0.08554774558546202
+      },
+      {
+        "feature": "acousticness",
+        "genre_code": "GOSPEL",
+        "flagged_track_count": 78,
+        "iqr_flag_count": 0,
+        "mad_flag_count": 78,
+        "genre_base_track_count": 999,
+        "flag_ratio_within_genre": 0.07807807807807808
+      },
+      {
+        "feature": "acousticness",
+        "genre_code": "J-POP",
+        "flagged_track_count": 261,
+        "iqr_flag_count": 0,
+        "mad_flag_count": 261,
+        "genre_base_track_count": 3360,
+        "flag_ratio_within_genre": 0.07767857142857143
+      },
+      {
+        "feature": "acousticness",
+        "genre_code": "RNB_SOUL_FUNK",
+        "flagged_track_count": 190,
+        "iqr_flag_count": 0,
+        "mad_flag_count": 190,
+        "genre_base_track_count": 2733,
+        "flag_ratio_within_genre": 0.06952067325283572
+      },
+      {
+        "feature": "acousticness",
+        "genre_code": "K-POP",
+        "flagged_track_count": 64,
+        "iqr_flag_count": 0,
+        "mad_flag_count": 64,
+        "genre_base_track_count": 998,
+        "flag_ratio_within_genre": 0.06412825651302605
+      },
+      {
+        "feature": "acousticness",
+        "genre_code": "ROCK",
+        "flagged_track_count": 434,
+        "iqr_flag_count": 0,
+        "mad_flag_count": 434,
+        "genre_base_track_count": 8971,
+        "flag_ratio_within_genre": 0.04837810723442203
+      },
+      {
+        "feature": "acousticness",
+        "genre_code": "AFROBEAT",
+        "flagged_track_count": 43,
+        "iqr_flag_count": 0,
+        "mad_flag_count": 43,
+        "genre_base_track_count": 999,
+        "flag_ratio_within_genre": 0.043043043043043044
+      },
+      {
+        "feature": "acousticness",
+        "genre_code": "ELECTRONIC_DANCE",
+        "flagged_track_count": 373,
+        "iqr_flag_count": 0,
+        "mad_flag_count": 373,
+        "genre_base_track_count": 17107,
+        "flag_ratio_within_genre": 0.02180393990764015
+      },
+      {
+        "feature": "acousticness",
+        "genre_code": "HIPHOP",
+        "flagged_track_count": 8,
+        "iqr_flag_count": 0,
+        "mad_flag_count": 8,
+        "genre_base_track_count": 991,
+        "flag_ratio_within_genre": 0.008072653884964682
+      },
+      {
+        "feature": "acousticness",
+        "genre_code": "REGGAE_SKA",
+        "flagged_track_count": 18,
+        "iqr_flag_count": 0,
+        "mad_flag_count": 18,
+        "genre_base_track_count": 3954,
+        "flag_ratio_within_genre": 0.004552352048558422
+      },
+      {
+        "feature": "acousticness",
+        "genre_code": "METAL",
+        "flagged_track_count": 14,
+        "iqr_flag_count": 0,
+        "mad_flag_count": 14,
+        "genre_base_track_count": 5624,
+        "flag_ratio_within_genre": 0.0024893314366998577
+      },
+      {
+        "feature": "danceability",
+        "genre_code": "NEWAGE",
+        "flagged_track_count": 39,
+        "iqr_flag_count": 39,
+        "mad_flag_count": 0,
+        "genre_base_track_count": 994,
+        "flag_ratio_within_genre": 0.039235412474849095
+      },
+      {
+        "feature": "danceability",
+        "genre_code": "OPERA",
+        "flagged_track_count": 24,
+        "iqr_flag_count": 24,
+        "mad_flag_count": 0,
+        "genre_base_track_count": 990,
+        "flag_ratio_within_genre": 0.024242424242424242
+      },
+      {
+        "feature": "danceability",
+        "genre_code": "CLASSICAL",
+        "flagged_track_count": 22,
+        "iqr_flag_count": 22,
+        "mad_flag_count": 0,
+        "genre_base_track_count": 933,
+        "flag_ratio_within_genre": 0.023579849946409433
+      },
+      {
+        "feature": "danceability",
+        "genre_code": "METAL",
+        "flagged_track_count": 97,
+        "iqr_flag_count": 97,
+        "mad_flag_count": 0,
+        "genre_base_track_count": 5624,
+        "flag_ratio_within_genre": 0.0172475106685633
+      },
+      {
+        "feature": "danceability",
+        "genre_code": "J-POP",
+        "flagged_track_count": 5,
+        "iqr_flag_count": 5,
+        "mad_flag_count": 0,
+        "genre_base_track_count": 3360,
+        "flag_ratio_within_genre": 0.001488095238095238
+      },
+      {
+        "feature": "danceability",
+        "genre_code": "ELECTRONIC_DANCE",
+        "flagged_track_count": 14,
+        "iqr_flag_count": 14,
+        "mad_flag_count": 0,
+        "genre_base_track_count": 17107,
+        "flag_ratio_within_genre": 0.0008183784415736248
+      },
+      {
+        "feature": "danceability",
+        "genre_code": "REGGAE_SKA",
+        "flagged_track_count": 1,
+        "iqr_flag_count": 1,
+        "mad_flag_count": 0,
+        "genre_base_track_count": 3954,
+        "flag_ratio_within_genre": 0.00025290844714213456
+      },
+      {
+        "feature": "danceability",
+        "genre_code": "POP",
+        "flagged_track_count": 1,
+        "iqr_flag_count": 1,
+        "mad_flag_count": 0,
+        "genre_base_track_count": 5833,
+        "flag_ratio_within_genre": 0.00017143836790673754
+      },
+      {
+        "feature": "danceability",
+        "genre_code": "ROCK",
+        "flagged_track_count": 1,
+        "iqr_flag_count": 1,
+        "mad_flag_count": 0,
+        "genre_base_track_count": 8971,
+        "flag_ratio_within_genre": 0.00011147029316687103
+      },
+      {
+        "feature": "duration_ms",
+        "genre_code": "CLASSICAL",
+        "flagged_track_count": 152,
+        "iqr_flag_count": 152,
+        "mad_flag_count": 97,
+        "genre_base_track_count": 933,
+        "flag_ratio_within_genre": 0.16291532690246516
+      },
+      {
+        "feature": "duration_ms",
+        "genre_code": "NEWAGE",
+        "flagged_track_count": 160,
+        "iqr_flag_count": 160,
+        "mad_flag_count": 116,
+        "genre_base_track_count": 994,
+        "flag_ratio_within_genre": 0.16096579476861167
+      },
+      {
+        "feature": "duration_ms",
+        "genre_code": "GOSPEL",
+        "flagged_track_count": 134,
+        "iqr_flag_count": 134,
+        "mad_flag_count": 84,
+        "genre_base_track_count": 999,
+        "flag_ratio_within_genre": 0.13413413413413414
+      },
+      {
+        "feature": "duration_ms",
+        "genre_code": "ELECTRONIC_DANCE",
+        "flagged_track_count": 1884,
+        "iqr_flag_count": 1884,
+        "mad_flag_count": 1118,
+        "genre_base_track_count": 17107,
+        "flag_ratio_within_genre": 0.11013035599462208
+      },
+      {
+        "feature": "duration_ms",
+        "genre_code": "AFROBEAT",
+        "flagged_track_count": 72,
+        "iqr_flag_count": 72,
+        "mad_flag_count": 43,
+        "genre_base_track_count": 999,
+        "flag_ratio_within_genre": 0.07207207207207207
+      },
+      {
+        "feature": "duration_ms",
+        "genre_code": "METAL",
+        "flagged_track_count": 384,
+        "iqr_flag_count": 384,
+        "mad_flag_count": 205,
+        "genre_base_track_count": 5624,
+        "flag_ratio_within_genre": 0.06827880512091039
+      },
+      {
+        "feature": "duration_ms",
+        "genre_code": "OPERA",
+        "flagged_track_count": 45,
+        "iqr_flag_count": 45,
+        "mad_flag_count": 25,
+        "genre_base_track_count": 990,
+        "flag_ratio_within_genre": 0.045454545454545456
+      },
+      {
+        "feature": "duration_ms",
+        "genre_code": "K-POP",
+        "flagged_track_count": 35,
+        "iqr_flag_count": 35,
+        "mad_flag_count": 21,
+        "genre_base_track_count": 998,
+        "flag_ratio_within_genre": 0.03507014028056112
+      },
+      {
+        "feature": "duration_ms",
+        "genre_code": "BLUES",
+        "flagged_track_count": 25,
+        "iqr_flag_count": 25,
+        "mad_flag_count": 13,
+        "genre_base_track_count": 998,
+        "flag_ratio_within_genre": 0.025050100200400802
+      },
+      {
+        "feature": "duration_ms",
+        "genre_code": "FOLK_COUNTRY",
+        "flagged_track_count": 109,
+        "iqr_flag_count": 109,
+        "mad_flag_count": 76,
+        "genre_base_track_count": 4710,
+        "flag_ratio_within_genre": 0.02314225053078556
+      },
+      {
+        "feature": "duration_ms",
+        "genre_code": "JAZZ",
+        "flagged_track_count": 21,
+        "iqr_flag_count": 21,
+        "mad_flag_count": 10,
+        "genre_base_track_count": 998,
+        "flag_ratio_within_genre": 0.021042084168336674
+      },
+      {
+        "feature": "duration_ms",
+        "genre_code": "ROCK",
+        "flagged_track_count": 169,
+        "iqr_flag_count": 169,
+        "mad_flag_count": 100,
+        "genre_base_track_count": 8971,
+        "flag_ratio_within_genre": 0.018838479545201205
+      },
+      {
+        "feature": "duration_ms",
+        "genre_code": "RNB_SOUL_FUNK",
+        "flagged_track_count": 45,
+        "iqr_flag_count": 45,
+        "mad_flag_count": 28,
+        "genre_base_track_count": 2733,
+        "flag_ratio_within_genre": 0.01646542261251372
+      },
+      {
+        "feature": "duration_ms",
+        "genre_code": "LATIN",
+        "flagged_track_count": 120,
+        "iqr_flag_count": 120,
+        "mad_flag_count": 60,
+        "genre_base_track_count": 8022,
+        "flag_ratio_within_genre": 0.014958863126402393
+      },
+      {
+        "feature": "duration_ms",
+        "genre_code": "REGGAE_SKA",
+        "flagged_track_count": 36,
+        "iqr_flag_count": 36,
+        "mad_flag_count": 12,
+        "genre_base_track_count": 3954,
+        "flag_ratio_within_genre": 0.009104704097116844
+      },
+      {
+        "feature": "duration_ms",
+        "genre_code": "J-POP",
+        "flagged_track_count": 30,
+        "iqr_flag_count": 30,
+        "mad_flag_count": 14,
+        "genre_base_track_count": 3360,
+        "flag_ratio_within_genre": 0.008928571428571428
+      },
+      {
+        "feature": "duration_ms",
+        "genre_code": "HIPHOP",
+        "flagged_track_count": 8,
+        "iqr_flag_count": 8,
+        "mad_flag_count": 5,
+        "genre_base_track_count": 991,
+        "flag_ratio_within_genre": 0.008072653884964682
+      },
+      {
+        "feature": "duration_ms",
+        "genre_code": "POP",
+        "flagged_track_count": 46,
+        "iqr_flag_count": 46,
+        "mad_flag_count": 25,
+        "genre_base_track_count": 5833,
+        "flag_ratio_within_genre": 0.007886164923709926
+      },
+      {
+        "feature": "instrumentalness",
+        "genre_code": "NEWAGE",
+        "flagged_track_count": 940,
+        "iqr_flag_count": 846,
+        "mad_flag_count": 940,
+        "genre_base_track_count": 994,
+        "flag_ratio_within_genre": 0.9456740442655935
+      },
+      {
+        "feature": "instrumentalness",
+        "genre_code": "CLASSICAL",
+        "flagged_track_count": 797,
+        "iqr_flag_count": 674,
+        "mad_flag_count": 797,
+        "genre_base_track_count": 933,
+        "flag_ratio_within_genre": 0.8542336548767417
+      },
+      {
+        "feature": "instrumentalness",
+        "genre_code": "METAL",
+        "flagged_track_count": 3787,
+        "iqr_flag_count": 1954,
+        "mad_flag_count": 3787,
+        "genre_base_track_count": 5624,
+        "flag_ratio_within_genre": 0.6733641536273115
+      },
+      {
+        "feature": "instrumentalness",
+        "genre_code": "ELECTRONIC_DANCE",
+        "flagged_track_count": 11280,
+        "iqr_flag_count": 7484,
+        "mad_flag_count": 11280,
+        "genre_base_track_count": 17107,
+        "flag_ratio_within_genre": 0.6593792014964635
+      },
+      {
+        "feature": "instrumentalness",
+        "genre_code": "AFROBEAT",
+        "flagged_track_count": 646,
+        "iqr_flag_count": 345,
+        "mad_flag_count": 646,
+        "genre_base_track_count": 999,
+        "flag_ratio_within_genre": 0.6466466466466466
+      },
+      {
+        "feature": "instrumentalness",
+        "genre_code": "OPERA",
+        "flagged_track_count": 547,
+        "iqr_flag_count": 215,
+        "mad_flag_count": 547,
+        "genre_base_track_count": 990,
+        "flag_ratio_within_genre": 0.5525252525252525
+      },
+      {
+        "feature": "instrumentalness",
+        "genre_code": "BLUES",
+        "flagged_track_count": 308,
+        "iqr_flag_count": 57,
+        "mad_flag_count": 308,
+        "genre_base_track_count": 998,
+        "flag_ratio_within_genre": 0.30861723446893785
+      },
+      {
+        "feature": "instrumentalness",
+        "genre_code": "J-POP",
+        "flagged_track_count": 990,
+        "iqr_flag_count": 427,
+        "mad_flag_count": 990,
+        "genre_base_track_count": 3360,
+        "flag_ratio_within_genre": 0.29464285714285715
+      },
+      {
+        "feature": "instrumentalness",
+        "genre_code": "ROCK",
+        "flagged_track_count": 2623,
+        "iqr_flag_count": 537,
+        "mad_flag_count": 2623,
+        "genre_base_track_count": 8971,
+        "flag_ratio_within_genre": 0.2923865789767027
+      },
+      {
+        "feature": "instrumentalness",
+        "genre_code": "FOLK_COUNTRY",
+        "flagged_track_count": 1369,
+        "iqr_flag_count": 349,
+        "mad_flag_count": 1369,
+        "genre_base_track_count": 4710,
+        "flag_ratio_within_genre": 0.29065817409766453
+      },
+      {
+        "feature": "instrumentalness",
+        "genre_code": "POP",
+        "flagged_track_count": 1684,
+        "iqr_flag_count": 340,
+        "mad_flag_count": 1684,
+        "genre_base_track_count": 5833,
+        "flag_ratio_within_genre": 0.288702211554946
+      },
+      {
+        "feature": "instrumentalness",
+        "genre_code": "JAZZ",
+        "flagged_track_count": 266,
+        "iqr_flag_count": 105,
+        "mad_flag_count": 266,
+        "genre_base_track_count": 998,
+        "flag_ratio_within_genre": 0.2665330661322645
+      },
+      {
+        "feature": "instrumentalness",
+        "genre_code": "REGGAE_SKA",
+        "flagged_track_count": 994,
+        "iqr_flag_count": 198,
+        "mad_flag_count": 994,
+        "genre_base_track_count": 3954,
+        "flag_ratio_within_genre": 0.25139099645928176
+      },
+      {
+        "feature": "instrumentalness",
+        "genre_code": "RNB_SOUL_FUNK",
+        "flagged_track_count": 519,
+        "iqr_flag_count": 45,
+        "mad_flag_count": 519,
+        "genre_base_track_count": 2733,
+        "flag_ratio_within_genre": 0.18990120746432493
+      },
+      {
+        "feature": "instrumentalness",
+        "genre_code": "K-POP",
+        "flagged_track_count": 189,
+        "iqr_flag_count": 15,
+        "mad_flag_count": 189,
+        "genre_base_track_count": 998,
+        "flag_ratio_within_genre": 0.18937875751503006
+      },
+      {
+        "feature": "instrumentalness",
+        "genre_code": "LATIN",
+        "flagged_track_count": 1314,
+        "iqr_flag_count": 278,
+        "mad_flag_count": 1314,
+        "genre_base_track_count": 8022,
+        "flag_ratio_within_genre": 0.1637995512341062
+      },
+      {
+        "feature": "instrumentalness",
+        "genre_code": "HIPHOP",
+        "flagged_track_count": 146,
+        "iqr_flag_count": 14,
+        "mad_flag_count": 146,
+        "genre_base_track_count": 991,
+        "flag_ratio_within_genre": 0.14732593340060546
+      },
+      {
+        "feature": "instrumentalness",
+        "genre_code": "GOSPEL",
+        "flagged_track_count": 73,
+        "iqr_flag_count": 5,
+        "mad_flag_count": 73,
+        "genre_base_track_count": 999,
+        "flag_ratio_within_genre": 0.07307307307307308
+      },
+      {
+        "feature": "liveness",
+        "genre_code": "LATIN",
+        "flagged_track_count": 1971,
+        "iqr_flag_count": 1591,
+        "mad_flag_count": 1971,
+        "genre_base_track_count": 8022,
+        "flag_ratio_within_genre": 0.2456993268511593
+      },
+      {
+        "feature": "liveness",
+        "genre_code": "GOSPEL",
+        "flagged_track_count": 233,
+        "iqr_flag_count": 202,
+        "mad_flag_count": 233,
+        "genre_base_track_count": 999,
+        "flag_ratio_within_genre": 0.23323323323323322
+      },
+      {
+        "feature": "liveness",
+        "genre_code": "METAL",
+        "flagged_track_count": 718,
+        "iqr_flag_count": 421,
+        "mad_flag_count": 718,
+        "genre_base_track_count": 5624,
+        "flag_ratio_within_genre": 0.12766714082503555
+      },
+      {
+        "feature": "liveness",
+        "genre_code": "OPERA",
+        "flagged_track_count": 121,
+        "iqr_flag_count": 105,
+        "mad_flag_count": 121,
+        "genre_base_track_count": 990,
+        "flag_ratio_within_genre": 0.12222222222222222
+      },
+      {
+        "feature": "liveness",
+        "genre_code": "NEWAGE",
+        "flagged_track_count": 108,
+        "iqr_flag_count": 93,
+        "mad_flag_count": 108,
+        "genre_base_track_count": 994,
+        "flag_ratio_within_genre": 0.10865191146881288
+      },
+      {
+        "feature": "liveness",
+        "genre_code": "RNB_SOUL_FUNK",
+        "flagged_track_count": 282,
+        "iqr_flag_count": 215,
+        "mad_flag_count": 282,
+        "genre_base_track_count": 2733,
+        "flag_ratio_within_genre": 0.10318331503841932
+      },
+      {
+        "feature": "liveness",
+        "genre_code": "ROCK",
+        "flagged_track_count": 793,
+        "iqr_flag_count": 496,
+        "mad_flag_count": 793,
+        "genre_base_track_count": 8971,
+        "flag_ratio_within_genre": 0.08839594248132873
+      },
+      {
+        "feature": "liveness",
+        "genre_code": "REGGAE_SKA",
+        "flagged_track_count": 343,
+        "iqr_flag_count": 232,
+        "mad_flag_count": 343,
+        "genre_base_track_count": 3954,
+        "flag_ratio_within_genre": 0.08674759736975216
+      },
+      {
+        "feature": "liveness",
+        "genre_code": "ELECTRONIC_DANCE",
+        "flagged_track_count": 1374,
+        "iqr_flag_count": 808,
+        "mad_flag_count": 1374,
+        "genre_base_track_count": 17107,
+        "flag_ratio_within_genre": 0.08031799848015432
+      },
+      {
+        "feature": "liveness",
+        "genre_code": "AFROBEAT",
+        "flagged_track_count": 78,
+        "iqr_flag_count": 59,
+        "mad_flag_count": 78,
+        "genre_base_track_count": 999,
+        "flag_ratio_within_genre": 0.07807807807807808
+      },
+      {
+        "feature": "liveness",
+        "genre_code": "HIPHOP",
+        "flagged_track_count": 71,
+        "iqr_flag_count": 42,
+        "mad_flag_count": 71,
+        "genre_base_track_count": 991,
+        "flag_ratio_within_genre": 0.07164480322906155
+      },
+      {
+        "feature": "liveness",
+        "genre_code": "J-POP",
+        "flagged_track_count": 193,
+        "iqr_flag_count": 123,
+        "mad_flag_count": 193,
+        "genre_base_track_count": 3360,
+        "flag_ratio_within_genre": 0.05744047619047619
+      },
+      {
+        "feature": "liveness",
+        "genre_code": "FOLK_COUNTRY",
+        "flagged_track_count": 269,
+        "iqr_flag_count": 196,
+        "mad_flag_count": 269,
+        "genre_base_track_count": 4710,
+        "flag_ratio_within_genre": 0.05711252653927813
+      },
+      {
+        "feature": "liveness",
+        "genre_code": "POP",
+        "flagged_track_count": 306,
+        "iqr_flag_count": 185,
+        "mad_flag_count": 306,
+        "genre_base_track_count": 5833,
+        "flag_ratio_within_genre": 0.05246014057946168
+      },
+      {
+        "feature": "liveness",
+        "genre_code": "BLUES",
+        "flagged_track_count": 48,
+        "iqr_flag_count": 33,
+        "mad_flag_count": 48,
+        "genre_base_track_count": 998,
+        "flag_ratio_within_genre": 0.04809619238476954
+      },
+      {
+        "feature": "liveness",
+        "genre_code": "K-POP",
+        "flagged_track_count": 48,
+        "iqr_flag_count": 22,
+        "mad_flag_count": 48,
+        "genre_base_track_count": 998,
+        "flag_ratio_within_genre": 0.04809619238476954
+      },
+      {
+        "feature": "liveness",
+        "genre_code": "CLASSICAL",
+        "flagged_track_count": 43,
+        "iqr_flag_count": 24,
+        "mad_flag_count": 43,
+        "genre_base_track_count": 933,
+        "flag_ratio_within_genre": 0.04608788853161844
+      },
+      {
+        "feature": "liveness",
+        "genre_code": "JAZZ",
+        "flagged_track_count": 40,
+        "iqr_flag_count": 24,
+        "mad_flag_count": 40,
+        "genre_base_track_count": 998,
+        "flag_ratio_within_genre": 0.04008016032064128
+      },
+      {
+        "feature": "loudness",
+        "genre_code": "CLASSICAL",
+        "flagged_track_count": 654,
+        "iqr_flag_count": 654,
+        "mad_flag_count": 579,
+        "genre_base_track_count": 933,
+        "flag_ratio_within_genre": 0.7009646302250804
+      },
+      {
+        "feature": "loudness",
+        "genre_code": "NEWAGE",
+        "flagged_track_count": 643,
+        "iqr_flag_count": 643,
+        "mad_flag_count": 531,
+        "genre_base_track_count": 994,
+        "flag_ratio_within_genre": 0.6468812877263581
+      },
+      {
+        "feature": "loudness",
+        "genre_code": "OPERA",
+        "flagged_track_count": 291,
+        "iqr_flag_count": 291,
+        "mad_flag_count": 218,
+        "genre_base_track_count": 990,
+        "flag_ratio_within_genre": 0.29393939393939394
+      },
+      {
+        "feature": "loudness",
+        "genre_code": "JAZZ",
+        "flagged_track_count": 135,
+        "iqr_flag_count": 135,
+        "mad_flag_count": 75,
+        "genre_base_track_count": 998,
+        "flag_ratio_within_genre": 0.13527054108216433
+      },
+      {
+        "feature": "loudness",
+        "genre_code": "FOLK_COUNTRY",
+        "flagged_track_count": 182,
+        "iqr_flag_count": 182,
+        "mad_flag_count": 77,
+        "genre_base_track_count": 4710,
+        "flag_ratio_within_genre": 0.038641188959660296
+      },
+      {
+        "feature": "loudness",
+        "genre_code": "J-POP",
+        "flagged_track_count": 119,
+        "iqr_flag_count": 119,
+        "mad_flag_count": 98,
+        "genre_base_track_count": 3360,
+        "flag_ratio_within_genre": 0.035416666666666666
+      },
+      {
+        "feature": "loudness",
+        "genre_code": "BLUES",
+        "flagged_track_count": 24,
+        "iqr_flag_count": 24,
+        "mad_flag_count": 10,
+        "genre_base_track_count": 998,
+        "flag_ratio_within_genre": 0.02404809619238477
+      },
+      {
+        "feature": "loudness",
+        "genre_code": "ELECTRONIC_DANCE",
+        "flagged_track_count": 391,
+        "iqr_flag_count": 391,
+        "mad_flag_count": 229,
+        "genre_base_track_count": 17107,
+        "flag_ratio_within_genre": 0.02285614076109195
+      },
+      {
+        "feature": "loudness",
+        "genre_code": "AFROBEAT",
+        "flagged_track_count": 17,
+        "iqr_flag_count": 17,
+        "mad_flag_count": 4,
+        "genre_base_track_count": 999,
+        "flag_ratio_within_genre": 0.01701701701701702
+      },
+      {
+        "feature": "loudness",
+        "genre_code": "ROCK",
+        "flagged_track_count": 144,
+        "iqr_flag_count": 144,
+        "mad_flag_count": 73,
+        "genre_base_track_count": 8971,
+        "flag_ratio_within_genre": 0.016051722216029428
+      },
+      {
+        "feature": "loudness",
+        "genre_code": "LATIN",
+        "flagged_track_count": 84,
+        "iqr_flag_count": 84,
+        "mad_flag_count": 38,
+        "genre_base_track_count": 8022,
+        "flag_ratio_within_genre": 0.010471204188481676
+      },
+      {
+        "feature": "loudness",
+        "genre_code": "POP",
+        "flagged_track_count": 58,
+        "iqr_flag_count": 58,
+        "mad_flag_count": 22,
+        "genre_base_track_count": 5833,
+        "flag_ratio_within_genre": 0.009943425338590777
+      },
+      {
+        "feature": "loudness",
+        "genre_code": "RNB_SOUL_FUNK",
+        "flagged_track_count": 20,
+        "iqr_flag_count": 20,
+        "mad_flag_count": 5,
+        "genre_base_track_count": 2733,
+        "flag_ratio_within_genre": 0.007317965605561654
+      },
+      {
+        "feature": "loudness",
+        "genre_code": "GOSPEL",
+        "flagged_track_count": 5,
+        "iqr_flag_count": 5,
+        "mad_flag_count": 2,
+        "genre_base_track_count": 999,
+        "flag_ratio_within_genre": 0.005005005005005005
+      },
+      {
+        "feature": "loudness",
+        "genre_code": "K-POP",
+        "flagged_track_count": 3,
+        "iqr_flag_count": 3,
+        "mad_flag_count": 0,
+        "genre_base_track_count": 998,
+        "flag_ratio_within_genre": 0.003006012024048096
+      },
+      {
+        "feature": "loudness",
+        "genre_code": "METAL",
+        "flagged_track_count": 15,
+        "iqr_flag_count": 15,
+        "mad_flag_count": 9,
+        "genre_base_track_count": 5624,
+        "flag_ratio_within_genre": 0.0026671408250355617
+      },
+      {
+        "feature": "loudness",
+        "genre_code": "REGGAE_SKA",
+        "flagged_track_count": 8,
+        "iqr_flag_count": 8,
+        "mad_flag_count": 2,
+        "genre_base_track_count": 3954,
+        "flag_ratio_within_genre": 0.0020232675771370764
+      },
+      {
+        "feature": "speechiness",
+        "genre_code": "HIPHOP",
+        "flagged_track_count": 365,
+        "iqr_flag_count": 309,
+        "mad_flag_count": 365,
+        "genre_base_track_count": 991,
+        "flag_ratio_within_genre": 0.3683148335015136
+      },
+      {
+        "feature": "speechiness",
+        "genre_code": "REGGAE_SKA",
+        "flagged_track_count": 1143,
+        "iqr_flag_count": 1013,
+        "mad_flag_count": 1143,
+        "genre_base_track_count": 3954,
+        "flag_ratio_within_genre": 0.2890743550834598
+      },
+      {
+        "feature": "speechiness",
+        "genre_code": "RNB_SOUL_FUNK",
+        "flagged_track_count": 625,
+        "iqr_flag_count": 560,
+        "mad_flag_count": 625,
+        "genre_base_track_count": 2733,
+        "flag_ratio_within_genre": 0.2286864251738017
+      },
+      {
+        "feature": "speechiness",
+        "genre_code": "METAL",
+        "flagged_track_count": 1285,
+        "iqr_flag_count": 991,
+        "mad_flag_count": 1285,
+        "genre_base_track_count": 5624,
+        "flag_ratio_within_genre": 0.2284850640113798
+      },
+      {
+        "feature": "speechiness",
+        "genre_code": "AFROBEAT",
+        "flagged_track_count": 167,
+        "iqr_flag_count": 142,
+        "mad_flag_count": 167,
+        "genre_base_track_count": 999,
+        "flag_ratio_within_genre": 0.16716716716716717
+      },
+      {
+        "feature": "speechiness",
+        "genre_code": "K-POP",
+        "flagged_track_count": 162,
+        "iqr_flag_count": 140,
+        "mad_flag_count": 162,
+        "genre_base_track_count": 998,
+        "flag_ratio_within_genre": 0.1623246492985972
+      },
+      {
+        "feature": "speechiness",
+        "genre_code": "ELECTRONIC_DANCE",
+        "flagged_track_count": 2273,
+        "iqr_flag_count": 1909,
+        "mad_flag_count": 2273,
+        "genre_base_track_count": 17107,
+        "flag_ratio_within_genre": 0.13286958554977493
+      },
+      {
+        "feature": "speechiness",
+        "genre_code": "LATIN",
+        "flagged_track_count": 1006,
+        "iqr_flag_count": 812,
+        "mad_flag_count": 1006,
+        "genre_base_track_count": 8022,
+        "flag_ratio_within_genre": 0.12540513587634006
+      },
+      {
+        "feature": "speechiness",
+        "genre_code": "J-POP",
+        "flagged_track_count": 369,
+        "iqr_flag_count": 297,
+        "mad_flag_count": 369,
+        "genre_base_track_count": 3360,
+        "flag_ratio_within_genre": 0.10982142857142857
+      },
+      {
+        "feature": "speechiness",
+        "genre_code": "BLUES",
+        "flagged_track_count": 102,
+        "iqr_flag_count": 92,
+        "mad_flag_count": 102,
+        "genre_base_track_count": 998,
+        "flag_ratio_within_genre": 0.10220440881763528
+      },
+      {
+        "feature": "speechiness",
+        "genre_code": "ROCK",
+        "flagged_track_count": 735,
+        "iqr_flag_count": 594,
+        "mad_flag_count": 735,
+        "genre_base_track_count": 8971,
+        "flag_ratio_within_genre": 0.08193066547765021
+      },
+      {
+        "feature": "speechiness",
+        "genre_code": "POP",
+        "flagged_track_count": 360,
+        "iqr_flag_count": 296,
+        "mad_flag_count": 360,
+        "genre_base_track_count": 5833,
+        "flag_ratio_within_genre": 0.06171781244642551
+      },
+      {
+        "feature": "speechiness",
+        "genre_code": "JAZZ",
+        "flagged_track_count": 38,
+        "iqr_flag_count": 34,
+        "mad_flag_count": 38,
+        "genre_base_track_count": 998,
+        "flag_ratio_within_genre": 0.03807615230460922
+      },
+      {
+        "feature": "speechiness",
+        "genre_code": "FOLK_COUNTRY",
+        "flagged_track_count": 152,
+        "iqr_flag_count": 117,
+        "mad_flag_count": 152,
+        "genre_base_track_count": 4710,
+        "flag_ratio_within_genre": 0.03227176220806794
+      },
+      {
+        "feature": "speechiness",
+        "genre_code": "CLASSICAL",
+        "flagged_track_count": 22,
+        "iqr_flag_count": 18,
+        "mad_flag_count": 22,
+        "genre_base_track_count": 933,
+        "flag_ratio_within_genre": 0.023579849946409433
+      },
+      {
+        "feature": "speechiness",
+        "genre_code": "OPERA",
+        "flagged_track_count": 19,
+        "iqr_flag_count": 16,
+        "mad_flag_count": 19,
+        "genre_base_track_count": 990,
+        "flag_ratio_within_genre": 0.01919191919191919
+      },
+      {
+        "feature": "speechiness",
+        "genre_code": "NEWAGE",
+        "flagged_track_count": 17,
+        "iqr_flag_count": 15,
+        "mad_flag_count": 17,
+        "genre_base_track_count": 994,
+        "flag_ratio_within_genre": 0.01710261569416499
+      },
+      {
+        "feature": "speechiness",
+        "genre_code": "GOSPEL",
+        "flagged_track_count": 14,
+        "iqr_flag_count": 11,
+        "mad_flag_count": 14,
+        "genre_base_track_count": 999,
+        "flag_ratio_within_genre": 0.014014014014014014
+      },
+      {
+        "feature": "tempo",
+        "genre_code": "ROCK",
+        "flagged_track_count": 71,
+        "iqr_flag_count": 71,
+        "mad_flag_count": 0,
+        "genre_base_track_count": 8971,
+        "flag_ratio_within_genre": 0.007914390814847842
+      },
+      {
+        "feature": "tempo",
+        "genre_code": "FOLK_COUNTRY",
+        "flagged_track_count": 30,
+        "iqr_flag_count": 30,
+        "mad_flag_count": 0,
+        "genre_base_track_count": 4710,
+        "flag_ratio_within_genre": 0.006369426751592357
+      },
+      {
+        "feature": "tempo",
+        "genre_code": "JAZZ",
+        "flagged_track_count": 6,
+        "iqr_flag_count": 6,
+        "mad_flag_count": 0,
+        "genre_base_track_count": 998,
+        "flag_ratio_within_genre": 0.006012024048096192
+      },
+      {
+        "feature": "tempo",
+        "genre_code": "AFROBEAT",
+        "flagged_track_count": 5,
+        "iqr_flag_count": 5,
+        "mad_flag_count": 0,
+        "genre_base_track_count": 999,
+        "flag_ratio_within_genre": 0.005005005005005005
+      },
+      {
+        "feature": "tempo",
+        "genre_code": "POP",
+        "flagged_track_count": 25,
+        "iqr_flag_count": 25,
+        "mad_flag_count": 0,
+        "genre_base_track_count": 5833,
+        "flag_ratio_within_genre": 0.004285959197668438
+      },
+      {
+        "feature": "tempo",
+        "genre_code": "BLUES",
+        "flagged_track_count": 4,
+        "iqr_flag_count": 4,
+        "mad_flag_count": 1,
+        "genre_base_track_count": 998,
+        "flag_ratio_within_genre": 0.004008016032064128
+      },
+      {
+        "feature": "tempo",
+        "genre_code": "J-POP",
+        "flagged_track_count": 13,
+        "iqr_flag_count": 13,
+        "mad_flag_count": 0,
+        "genre_base_track_count": 3360,
+        "flag_ratio_within_genre": 0.003869047619047619
+      },
+      {
+        "feature": "tempo",
+        "genre_code": "NEWAGE",
+        "flagged_track_count": 3,
+        "iqr_flag_count": 3,
+        "mad_flag_count": 0,
+        "genre_base_track_count": 994,
+        "flag_ratio_within_genre": 0.0030181086519114686
+      },
+      {
+        "feature": "tempo",
+        "genre_code": "REGGAE_SKA",
+        "flagged_track_count": 10,
+        "iqr_flag_count": 10,
+        "mad_flag_count": 0,
+        "genre_base_track_count": 3954,
+        "flag_ratio_within_genre": 0.0025290844714213456
+      },
+      {
+        "feature": "tempo",
+        "genre_code": "LATIN",
+        "flagged_track_count": 20,
+        "iqr_flag_count": 20,
+        "mad_flag_count": 0,
+        "genre_base_track_count": 8022,
+        "flag_ratio_within_genre": 0.0024931438544003987
+      },
+      {
+        "feature": "tempo",
+        "genre_code": "CLASSICAL",
+        "flagged_track_count": 2,
+        "iqr_flag_count": 2,
+        "mad_flag_count": 0,
+        "genre_base_track_count": 933,
+        "flag_ratio_within_genre": 0.0021436227224008574
+      },
+      {
+        "feature": "tempo",
+        "genre_code": "GOSPEL",
+        "flagged_track_count": 2,
+        "iqr_flag_count": 2,
+        "mad_flag_count": 0,
+        "genre_base_track_count": 999,
+        "flag_ratio_within_genre": 0.002002002002002002
+      },
+      {
+        "feature": "tempo",
+        "genre_code": "RNB_SOUL_FUNK",
+        "flagged_track_count": 5,
+        "iqr_flag_count": 5,
+        "mad_flag_count": 0,
+        "genre_base_track_count": 2733,
+        "flag_ratio_within_genre": 0.0018294914013904135
+      },
+      {
+        "feature": "tempo",
+        "genre_code": "ELECTRONIC_DANCE",
+        "flagged_track_count": 27,
+        "iqr_flag_count": 27,
+        "mad_flag_count": 0,
+        "genre_base_track_count": 17107,
+        "flag_ratio_within_genre": 0.001578301280177705
+      },
+      {
+        "feature": "tempo",
+        "genre_code": "HIPHOP",
+        "flagged_track_count": 1,
+        "iqr_flag_count": 1,
+        "mad_flag_count": 0,
+        "genre_base_track_count": 991,
+        "flag_ratio_within_genre": 0.0010090817356205853
+      },
+      {
+        "feature": "tempo",
+        "genre_code": "METAL",
+        "flagged_track_count": 3,
+        "iqr_flag_count": 3,
+        "mad_flag_count": 0,
+        "genre_base_track_count": 5624,
+        "flag_ratio_within_genre": 0.0005334281650071124
+      }
+    ]
+  },
+  "pools": {
+    "CLEAR": {
+      "n": 36395,
+      "feature_distribution": [
+        {
+          "cohort": "CLEAR",
+          "feature": "energy",
+          "n": 36395,
+          "mean": 0.7257100975408709,
+          "std_population_ddof0": 0.15486163310649922,
+          "skew_fisher_pearson_unbiased": -0.31085847029407027,
+          "zero_ratio": 0.0,
+          "one_ratio": 2.7476301689792556e-05,
+          "ratio_le_0_01": 0.0,
+          "ratio_ge_0_99": 0.004780876494023904,
+          "unit_interval_thresholds_applicable": true,
+          "categorical_indicator": false,
+          "p00": 0.286,
+          "p01": 0.38,
+          "p05": 0.458,
+          "p25": 0.608,
+          "p50": 0.738,
+          "p75": 0.854,
+          "p95": 0.952,
+          "p99": 0.983,
+          "p100": 1.0
+        },
+        {
+          "cohort": "CLEAR",
+          "feature": "acousticness",
+          "n": 36395,
+          "mean": 0.22543633104629754,
+          "std_population_ddof0": 0.24184167644058713,
+          "skew_fisher_pearson_unbiased": 0.9573229627300492,
+          "zero_ratio": 2.7476301689792556e-05,
+          "one_ratio": 0.0,
+          "ratio_le_0_01": 0.19890094793240828,
+          "ratio_ge_0_99": 0.00013738150844896276,
+          "unit_interval_thresholds_applicable": true,
+          "categorical_indicator": false,
+          "p00": 0.0,
+          "p01": 2.1794000000000002e-05,
+          "p05": 0.000357,
+          "p25": 0.0184,
+          "p50": 0.127,
+          "p75": 0.39,
+          "p95": 0.715,
+          "p99": 0.8400599999999976,
+          "p100": 0.995
+        },
+        {
+          "cohort": "CLEAR",
+          "feature": "valence",
+          "n": 36395,
+          "mean": 0.6456806978980629,
+          "std_population_ddof0": 0.18475820450197794,
+          "skew_fisher_pearson_unbiased": -0.024860453177740025,
+          "zero_ratio": 0.0,
+          "one_ratio": 0.0,
+          "ratio_le_0_01": 0.0,
+          "ratio_ge_0_99": 0.0001648578101387553,
+          "unit_interval_thresholds_applicable": true,
+          "categorical_indicator": false,
+          "p00": 0.259,
+          "p01": 0.286,
+          "p05": 0.345,
+          "p25": 0.5,
+          "p50": 0.646,
+          "p75": 0.796,
+          "p95": 0.945,
+          "p99": 0.968,
+          "p100": 0.995
+        }
+      ],
+      "selected_pattern_kind_counts": {
+        "PRIMARY": 34746,
+        "SUPPORT": 1649
+      },
+      "exact_score_mass": {
+        "76": 634,
+        "80": 889,
+        "100": 4863
+      },
+      "exact_score_mass_ratio": {
+        "76": 0.017419975271328478,
+        "80": 0.02442643220222558,
+        "100": 0.1336172551174612
+      },
+      "genre_membership_count": 41425,
+      "genre_ratios_sum_nonexclusive": 1.1382057974996564,
+      "speed_partition_verified": true
+    },
+    "CLOUDY": {
+      "n": 36597,
+      "feature_distribution": [
+        {
+          "cohort": "CLOUDY",
+          "feature": "energy",
+          "n": 36597,
+          "mean": 0.6742421755881629,
+          "std_population_ddof0": 0.20849207115371726,
+          "skew_fisher_pearson_unbiased": -0.18231758283204086,
+          "zero_ratio": 0.0,
+          "one_ratio": 0.00010929857638604257,
+          "ratio_le_0_01": 0.0,
+          "ratio_ge_0_99": 0.023280596770227067,
+          "unit_interval_thresholds_applicable": true,
+          "categorical_indicator": false,
+          "p00": 0.0879,
+          "p01": 0.232,
+          "p05": 0.32,
+          "p25": 0.519,
+          "p50": 0.673,
+          "p75": 0.862,
+          "p95": 0.979,
+          "p99": 0.995,
+          "p100": 1.0
+        },
+        {
+          "cohort": "CLOUDY",
+          "feature": "acousticness",
+          "n": 36597,
+          "mean": 0.25971077690302485,
+          "std_population_ddof0": 0.28837549056805734,
+          "skew_fisher_pearson_unbiased": 0.8140794830728246,
+          "zero_ratio": 0.00046451894964068095,
+          "one_ratio": 0.0,
+          "ratio_le_0_01": 0.2846681421974479,
+          "ratio_ge_0_99": 0.000382545017351149,
+          "unit_interval_thresholds_applicable": true,
+          "categorical_indicator": false,
+          "p00": 0.0,
+          "p01": 2.66e-06,
+          "p05": 3.26e-05,
+          "p25": 0.00576,
+          "p50": 0.131,
+          "p75": 0.486,
+          "p95": 0.812,
+          "p99": 0.918,
+          "p100": 0.996
+        },
+        {
+          "cohort": "CLOUDY",
+          "feature": "valence",
+          "n": 36597,
+          "mean": 0.3782368636773506,
+          "std_population_ddof0": 0.1913186053572229,
+          "skew_fisher_pearson_unbiased": 0.269266337528637,
+          "zero_ratio": 0.0,
+          "one_ratio": 0.0,
+          "ratio_le_0_01": 0.0,
+          "ratio_ge_0_99": 0.0,
+          "unit_interval_thresholds_applicable": true,
+          "categorical_indicator": false,
+          "p00": 0.0174,
+          "p01": 0.0372,
+          "p05": 0.074,
+          "p25": 0.233,
+          "p50": 0.369,
+          "p75": 0.5,
+          "p95": 0.718,
+          "p99": 0.8210400000000009,
+          "p100": 0.9
+        }
+      ],
+      "selected_pattern_kind_counts": {
+        "SUPPORT": 18961,
+        "PRIMARY": 17636
+      },
+      "exact_score_mass": {
+        "76": 10566,
+        "80": 7758,
+        "100": 910
+      },
+      "exact_score_mass_ratio": {
+        "76": 0.28871218952373146,
+        "80": 0.21198458890072958,
+        "100": 0.024865426127824684
+      },
+      "genre_membership_count": 40810,
+      "genre_ratios_sum_nonexclusive": 1.1151187255785993,
+      "speed_partition_verified": true
+    },
+    "OVERCAST": {
+      "n": 14006,
+      "feature_distribution": [
+        {
+          "cohort": "OVERCAST",
+          "feature": "energy",
+          "n": 14006,
+          "mean": 0.35183965706839926,
+          "std_population_ddof0": 0.1530284174468715,
+          "skew_fisher_pearson_unbiased": -0.2974096389758484,
+          "zero_ratio": 0.0,
+          "one_ratio": 0.0,
+          "ratio_le_0_01": 0.004640868199343139,
+          "ratio_ge_0_99": 0.0,
+          "unit_interval_thresholds_applicable": true,
+          "categorical_indicator": false,
+          "p00": 2.03e-05,
+          "p01": 0.0196,
+          "p05": 0.072625,
+          "p25": 0.241,
+          "p50": 0.371,
+          "p75": 0.471,
+          "p95": 0.579,
+          "p99": 0.6519500000000008,
+          "p100": 0.69
+        },
+        {
+          "cohort": "OVERCAST",
+          "feature": "acousticness",
+          "n": 14006,
+          "mean": 0.6467113498914752,
+          "std_population_ddof0": 0.2843508435616718,
+          "skew_fisher_pearson_unbiased": -0.7710253186783013,
+          "zero_ratio": 7.139797229758674e-05,
+          "one_ratio": 0.0,
+          "ratio_le_0_01": 0.02241896330144224,
+          "ratio_ge_0_99": 0.033699842924460946,
+          "unit_interval_thresholds_applicable": true,
+          "categorical_indicator": false,
+          "p00": 0.0,
+          "p01": 0.001891,
+          "p05": 0.0481,
+          "p25": 0.479,
+          "p50": 0.714,
+          "p75": 0.882,
+          "p95": 0.986,
+          "p99": 0.994,
+          "p100": 0.996
+        },
+        {
+          "cohort": "OVERCAST",
+          "feature": "valence",
+          "n": 14006,
+          "mean": 0.30760336998429244,
+          "std_population_ddof0": 0.16145030271162675,
+          "skew_fisher_pearson_unbiased": 0.17916059278773333,
+          "zero_ratio": 0.0001427959445951735,
+          "one_ratio": 0.0,
+          "ratio_le_0_01": 0.0001427959445951735,
+          "ratio_ge_0_99": 0.0,
+          "unit_interval_thresholds_applicable": true,
+          "categorical_indicator": false,
+          "p00": 0.0,
+          "p01": 0.036205,
+          "p05": 0.057124999999999995,
+          "p25": 0.177,
+          "p50": 0.304,
+          "p75": 0.432,
+          "p95": 0.585,
+          "p99": 0.642,
+          "p100": 0.7
+        }
+      ],
+      "selected_pattern_kind_counts": {
+        "PRIMARY": 11625,
+        "SUPPORT": 2381
+      },
+      "exact_score_mass": {
+        "76": 1256,
+        "80": 781,
+        "100": 758
+      },
+      "exact_score_mass_ratio": {
+        "76": 0.08967585320576896,
+        "80": 0.055761816364415254,
+        "100": 0.054119663001570756
+      },
+      "genre_membership_count": 15345,
+      "genre_ratios_sum_nonexclusive": 1.0956018849064686,
+      "speed_partition_verified": true
+    },
+    "RAIN": {
+      "n": 9113,
+      "feature_distribution": [
+        {
+          "cohort": "RAIN",
+          "feature": "energy",
+          "n": 9113,
+          "mean": 0.2866974043673873,
+          "std_population_ddof0": 0.13925194891269435,
+          "skew_fisher_pearson_unbiased": -0.12882700411607492,
+          "zero_ratio": 0.0,
+          "one_ratio": 0.0,
+          "ratio_le_0_01": 0.008449467793262373,
+          "ratio_ge_0_99": 0.0,
+          "unit_interval_thresholds_applicable": true,
+          "categorical_indicator": false,
+          "p00": 0.000756,
+          "p01": 0.012424000000000001,
+          "p05": 0.04750000000000001,
+          "p25": 0.18,
+          "p50": 0.294,
+          "p75": 0.397,
+          "p95": 0.5,
+          "p99": 0.551,
+          "p100": 0.593
+        },
+        {
+          "cohort": "RAIN",
+          "feature": "acousticness",
+          "n": 9113,
+          "mean": 0.8129922089322946,
+          "std_population_ddof0": 0.13917636595811583,
+          "skew_fisher_pearson_unbiased": -0.4979078411511469,
+          "zero_ratio": 0.0,
+          "one_ratio": 0.0,
+          "ratio_le_0_01": 0.0,
+          "ratio_ge_0_99": 0.05398880719850763,
+          "unit_interval_thresholds_applicable": true,
+          "categorical_indicator": false,
+          "p00": 0.467,
+          "p01": 0.5,
+          "p05": 0.555,
+          "p25": 0.71,
+          "p50": 0.834,
+          "p75": 0.938,
+          "p95": 0.99,
+          "p99": 0.995,
+          "p100": 0.996
+        },
+        {
+          "cohort": "RAIN",
+          "feature": "valence",
+          "n": 9113,
+          "mean": 0.30174043673872486,
+          "std_population_ddof0": 0.17106250364245928,
+          "skew_fisher_pearson_unbiased": 0.41618188008795254,
+          "zero_ratio": 0.0001097333479644464,
+          "one_ratio": 0.0,
+          "ratio_le_0_01": 0.0001097333479644464,
+          "ratio_ge_0_99": 0.0,
+          "unit_interval_thresholds_applicable": true,
+          "categorical_indicator": false,
+          "p00": 0.0,
+          "p01": 0.0353,
+          "p05": 0.0485,
+          "p25": 0.163,
+          "p50": 0.292,
+          "p75": 0.425,
+          "p95": 0.596,
+          "p99": 0.7258799999999992,
+          "p100": 0.964
+        }
+      ],
+      "selected_pattern_kind_counts": {
+        "PRIMARY": 8763,
+        "SUPPORT": 350
+      },
+      "exact_score_mass": {
+        "76": 166,
+        "80": 74,
+        "100": 635
+      },
+      "exact_score_mass_ratio": {
+        "76": 0.0182157357620981,
+        "80": 0.008120267749369033,
+        "100": 0.06968067595742346
+      },
+      "genre_membership_count": 9945,
+      "genre_ratios_sum_nonexclusive": 1.0912981455064195,
+      "speed_partition_verified": true
+    },
+    "SNOW": {
+      "n": 9406,
+      "feature_distribution": [
+        {
+          "cohort": "SNOW",
+          "feature": "energy",
+          "n": 9406,
+          "mean": 0.3571062034871359,
+          "std_population_ddof0": 0.12875956329452415,
+          "skew_fisher_pearson_unbiased": -0.5781167022693342,
+          "zero_ratio": 0.0,
+          "one_ratio": 0.0,
+          "ratio_le_0_01": 0.002870508186264087,
+          "ratio_ge_0_99": 0.0,
+          "unit_interval_thresholds_applicable": true,
+          "categorical_indicator": false,
+          "p00": 0.00129,
+          "p01": 0.034315,
+          "p05": 0.115,
+          "p25": 0.269,
+          "p50": 0.378,
+          "p75": 0.466,
+          "p95": 0.527,
+          "p99": 0.543,
+          "p100": 0.55
+        },
+        {
+          "cohort": "SNOW",
+          "feature": "acousticness",
+          "n": 9406,
+          "mean": 0.6737557623463746,
+          "std_population_ddof0": 0.27850074143992826,
+          "skew_fisher_pearson_unbiased": -1.0259846457144406,
+          "zero_ratio": 0.0,
+          "one_ratio": 0.0,
+          "ratio_le_0_01": 0.02030618753986817,
+          "ratio_ge_0_99": 0.03263874122900277,
+          "unit_interval_thresholds_applicable": true,
+          "categorical_indicator": false,
+          "p00": 4.23e-06,
+          "p01": 0.0028325,
+          "p05": 0.061425,
+          "p25": 0.55325,
+          "p50": 0.758,
+          "p75": 0.884,
+          "p95": 0.984,
+          "p99": 0.994,
+          "p100": 0.996
+        },
+        {
+          "cohort": "SNOW",
+          "feature": "valence",
+          "n": 9406,
+          "mean": 0.5638862428237296,
+          "std_population_ddof0": 0.1968660471349648,
+          "skew_fisher_pearson_unbiased": 0.1350787248659089,
+          "zero_ratio": 0.0,
+          "one_ratio": 0.0,
+          "ratio_le_0_01": 0.0,
+          "ratio_ge_0_99": 0.0,
+          "unit_interval_thresholds_applicable": true,
+          "categorical_indicator": false,
+          "p00": 0.2,
+          "p01": 0.208,
+          "p05": 0.256,
+          "p25": 0.401,
+          "p50": 0.557,
+          "p75": 0.706,
+          "p95": 0.906,
+          "p99": 0.965,
+          "p100": 0.984
+        }
+      ],
+      "selected_pattern_kind_counts": {
+        "PRIMARY": 6528,
+        "SUPPORT": 2878
+      },
+      "exact_score_mass": {
+        "76": 647,
+        "80": 1388,
+        "100": 1036
+      },
+      "exact_score_mass_ratio": {
+        "76": 0.0687858813523283,
+        "80": 0.14756538379757603,
+        "100": 0.11014246225813311
+      },
+      "genre_membership_count": 10339,
+      "genre_ratios_sum_nonexclusive": 1.0991920051031256,
+      "speed_partition_verified": true
+    }
+  },
+  "weather_score_correlations": {
+    "source": "Imported without modification from V2 summary calculated over the same base61931; core-passing representative rules",
+    "mathematically_dependent_inputs": true,
+    "not_independent_weather_observations_or_preference_labels": true,
+    "pairs": [
+      {
+        "weather_x": "CLEAR",
+        "weather_y": "CLOUDY",
+        "intersection": 16941,
+        "union": 56051,
+        "jaccard": 0.3022426004888405,
+        "score_pearson_all_base": 0.030048636040738163
+      },
+      {
+        "weather_x": "CLEAR",
+        "weather_y": "OVERCAST",
+        "intersection": 2804,
+        "union": 47597,
+        "jaccard": 0.05891127592075131,
+        "score_pearson_all_base": -0.6939155058379562
+      },
+      {
+        "weather_x": "CLEAR",
+        "weather_y": "RAIN",
+        "intersection": 616,
+        "union": 44892,
+        "jaccard": 0.013721821259912679,
+        "score_pearson_all_base": -0.6991787948745609
+      },
+      {
+        "weather_x": "CLEAR",
+        "weather_y": "SNOW",
+        "intersection": 3900,
+        "union": 41901,
+        "jaccard": 0.09307653755280304,
+        "score_pearson_all_base": 0.03381916219668645
+      },
+      {
+        "weather_x": "CLOUDY",
+        "weather_y": "OVERCAST",
+        "intersection": 8809,
+        "union": 41794,
+        "jaccard": 0.21077188113126286,
+        "score_pearson_all_base": 0.470219861954009
+      },
+      {
+        "weather_x": "CLOUDY",
+        "weather_y": "RAIN",
+        "intersection": 4783,
+        "union": 40927,
+        "jaccard": 0.11686661617025436,
+        "score_pearson_all_base": 0.2915200274944244
+      },
+      {
+        "weather_x": "CLOUDY",
+        "weather_y": "SNOW",
+        "intersection": 6171,
+        "union": 39832,
+        "jaccard": 0.15492568788913436,
+        "score_pearson_all_base": -0.08159360385902922
+      },
+      {
+        "weather_x": "OVERCAST",
+        "weather_y": "RAIN",
+        "intersection": 8937,
+        "union": 14182,
+        "jaccard": 0.6301649978846425,
+        "score_pearson_all_base": 0.9359805139887942
+      },
+      {
+        "weather_x": "OVERCAST",
+        "weather_y": "SNOW",
+        "intersection": 5440,
+        "union": 17972,
+        "jaccard": 0.30269307812152235,
+        "score_pearson_all_base": 0.22937735451712762
+      },
+      {
+        "weather_x": "RAIN",
+        "weather_y": "SNOW",
+        "intersection": 4768,
+        "union": 13751,
+        "jaccard": 0.346738419024071,
+        "score_pearson_all_base": 0.4277802382009171
+      }
+    ]
+  },
+  "limitations": [
+    "No weather-suitability or listening-rating y exists",
+    "Feature-to-feature auxiliary least squares is redundancy diagnostics, not weather regression fitting",
+    "No weather suitability, causality or population preference is inferred",
+    "Genre labels are multiple memberships; ratios can sum above100percent",
+    "Original genre rows were balanced at1000per label and are not market prevalence",
+    "No production changes or external/LLM API calls"
+  ],
+  "files": [
+    "profile_analysis.py",
+    "profile_category_counts.csv",
+    "profile_feature_distribution.csv",
+    "profile_pattern_selection.csv",
+    "profile_pearson.csv",
+    "profile_pool_features.csv",
+    "profile_pool_genres.csv",
+    "profile_pool_score_ties.csv",
+    "profile_pool_speeds.csv",
+    "profile_review_criteria.csv",
+    "profile_review_flags.csv",
+    "profile_review_flags_by_genre.csv",
+    "profile_spearman.csv",
+    "profile_summary.json",
+    "profile_vif.csv",
+    "profile_weather_score_correlations.csv"
+  ],
+  "existing_sources_unchanged_after_analysis": true
+}

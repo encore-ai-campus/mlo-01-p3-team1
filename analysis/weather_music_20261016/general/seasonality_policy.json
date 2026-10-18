@@ -1,0 +1,70 @@
+{
+  "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+  "statuses": [
+    "GENERAL",
+    "REVIEW_REQUIRED",
+    "SEASONAL_EVENT",
+    "UNSCREENED"
+  ],
+  "general_eligible_status": "GENERAL",
+  "event_expressions": {
+    "CHRISTMAS": [
+      "\\bchristmas\\b",
+      "\\bx[ -]?mas\\b",
+      "크리스마스",
+      "성탄",
+      "聖誕|圣诞",
+      "\\bfeliz navidad\\b",
+      "\\bweihnacht\\w*\\b",
+      "\\bnatale\\b",
+      "\\bno[eë]l de\\b"
+    ],
+    "HALLOWEEN": [
+      "\\bhalloween\\b",
+      "할로윈|핼러윈"
+    ],
+    "NEW_YEAR": [
+      "\\bhappy new year\\b",
+      "\\bnew year(?:'s)? (?:eve|day)\\b",
+      "새해 복 많이",
+      "신년 축하"
+    ],
+    "BIRTHDAY": [
+      "\\bhappy birthday\\b",
+      "생일 축하|생일축하"
+    ]
+  },
+  "ambiguous_carol_titles": [
+    "sleigh ride",
+    "jingle bells",
+    "jingle bell rock",
+    "silent night",
+    "joy to the world",
+    "deck the halls",
+    "o holy night",
+    "the first noel",
+    "little drummer boy",
+    "rudolph the red nosed reindeer",
+    "auld lang syne",
+    "hark the herald angels sing",
+    "o come all ye faithful",
+    "o tannenbaum"
+  ],
+  "recording_rules": [
+    [
+      "sleigh ride",
+      "ella fitzgerald",
+      "CHRISTMAS"
+    ],
+    [
+      "joy to the world",
+      "nat king cole",
+      "CHRISTMAS"
+    ]
+  ],
+  "unknown_means_general": false,
+  "no_signal_means_listening_approval": false,
+  "snow_winter_artist_name_alone_is_event_signal": false,
+  "automatic_event_calendar_allowance": false,
+  "human_override_requires_source_sha256": true
+}

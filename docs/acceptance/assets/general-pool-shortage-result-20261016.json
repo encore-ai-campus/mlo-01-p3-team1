@@ -1,0 +1,56 @@
+{
+  "schema_version": "GENERAL_POOL_SHORTAGE_CHECK_V1",
+  "captured_at": "2026-10-16T06:45:50.381961+00:00",
+  "status": "FAILED",
+  "options": {
+    "vocal_option": "instrumental_only",
+    "tempo_preference": "auto",
+    "weather_influence_mode": "ON",
+    "selected_theme_codes": [],
+    "selected_genre_codes": [
+      "OPERA"
+    ],
+    "option_version": "options-music-v4",
+    "region_id": "demo-region"
+  },
+  "catalog_count": 86485,
+  "error": {
+    "code": "CANDIDATE_SHORTAGE",
+    "message": "조건에 맞는 후보는 4곡, 총 9분 37초로 최소 176분보다 짧아요. 선택 조건을 확인해 주세요.",
+    "details": {
+      "candidate_count": 4,
+      "total_ms": 577894,
+      "min_duration_ms": 10560000,
+      "target_duration_ms": 10800000,
+      "max_duration_ms": 11040000,
+      "selected_genre_codes": [
+        "OPERA"
+      ],
+      "genre_candidate_counts": {
+        "OPERA": 4
+      },
+      "missing_genres": [],
+      "missing_genre_labels": [],
+      "distinct_genre_representatives_possible": true,
+      "parent_track_count": 0,
+      "required_new_count": 0,
+      "available_new_count": 4,
+      "checked_full_candidate_pool": true,
+      "reason": "TOTAL_DURATION_BELOW_MINIMUM",
+      "catalog_count": 86485,
+      "common_eligible_count": 113,
+      "common_rejected_count": 86372,
+      "common_eligible_total_ms": 26920087,
+      "weather_rejected_count": 109,
+      "off_missing_preference_count": 0,
+      "candidate_total_ms": 577894
+    }
+  },
+  "browser_observed": {
+    "message": "조건에 맞는 후보는 4곡, 총 9분 37초로 최소 176분보다 짧아요. 선택 조건을 확인해 주세요.",
+    "action_button": "선택 조건 확인",
+    "connection_retry_button_present": false,
+    "focus_after_button_click_verified": false,
+    "note": "The separate temporary tab was no longer available before the follow-up focus and screenshot check. Message/button were observed in the DOM snapshot."
+  }
+}
