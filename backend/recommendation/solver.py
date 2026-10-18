@@ -6,24 +6,12 @@ from math import gcd, lcm
 from time import monotonic
 from ortools.sat.python import cp_model
 from .errors import DomainError, require
+from .matching import representatives
+from .exact_search import solve_window as _solve_exact_window
 from .policy import MINIMUM, TARGET, MAXIMUM, GENRES
 
 
-def representatives(tracks, genres):
-    """Return a deterministic distinct-track assignment or None."""
-    by_track={track['track_id']:set(track['genre_group_codes']) for track in tracks}
-    assigned={}
-    def augment(genre,seen):
-        for track_id in by_track:
-            if track_id in seen or genre not in by_track[track_id]: continue
-            seen.add(track_id)
-            if track_id not in assigned or augment(assigned[track_id],seen):
-                assigned[track_id]=genre
-                return True
-        return False
-    for genre in genres:
-        if not augment(genre,set()): return None
-    return {genre:track_id for track_id,genre in assigned.items()}
+
 
 
 def _equal_score_window(candidates, deadline, selected_genres):
@@ -69,15 +57,21 @@ def _equal_score_window(candidates, deadline, selected_genres):
     return True, sorted(result, key=lambda track: (-Fraction(track['scores']['S'] or 0), track['track_id']))
 
 
-def _solve_window(candidates, deadline, selected_genres=(), min_selected_share=0, seed=''):
+def _solve_window_fallback(candidates, deadline, selected_genres=(), min_selected_share=0, seed=''):
     def tie(track):
         key=sha256((seed+'\0'+track['track_id']).encode()).digest() if seed else b''
         return key,track['track_id']
     candidates = sorted(candidates, key=tie)
     if sum(t['duration_ms'] for t in candidates) < MINIMUM: return None
-    handled, exact = _equal_score_window(candidates, deadline, selected_genres)
-    if handled: return exact
-    def solve(model):
+    handled, exact = _equal_score_window(candidates, deadline, ())
+    if handled:
+        if exact is None: return None
+        selected = set(selected_genres)
+        selected_ms = sum(t['duration_ms'] for t in exact if selected.intersection(t['genre_group_codes'])) if selected else 0
+        if (not selected_genres or (representatives(exact, selected_genres) is not None and
+                100*selected_ms >= min_selected_share*sum(t['duration_ms'] for t in exact))):
+            return exact
+    def solve(model, phase='duration'):
         solver = cp_model.CpSolver()
         solver.parameters.max_time_in_seconds = max(0.001, deadline-monotonic())
         solver.parameters.num_search_workers = 1
@@ -94,13 +88,17 @@ def _solve_window(candidates, deadline, selected_genres=(), min_selected_share=0
             selected_duration = sum(x*t['duration_ms'] for x,t in zip(xs,candidates)
                                     if set(t['genre_group_codes']) & set(selected_genres))
             model.Add(100*selected_duration >= min_selected_share*total)
-            representative = { (i,g):model.NewBoolVar(f'rep{i}_{g}')
-                for i,t in enumerate(candidates) for g in selected_genres if g in t['genre_group_codes'] }
-            for (i,g),var in representative.items(): model.Add(var <= xs[i])
-            for g in selected_genres:
-                model.Add(sum(v for (i,genre),v in representative.items() if genre==g) >= 1)
-            for i in range(len(candidates)):
-                model.Add(sum(v for (j,g),v in representative.items() if i==j) <= 1)
+            by_genre = {g: [] for g in selected_genres}
+            by_track = [[] for _ in candidates]
+            for i,t in enumerate(candidates):
+                for g in selected_genres:
+                    if g not in t['genre_group_codes']: continue
+                    var = model.NewBoolVar(f'rep{i}_{g}')
+                    model.Add(var <= xs[i])
+                    by_genre[g].append(var)
+                    by_track[i].append(var)
+            for variables in by_genre.values(): model.Add(sum(variables) >= 1)
+            for variables in by_track: model.Add(sum(variables) <= 1)
         model.Minimize(total if low >= TARGET else -total)
         solver, status = solve(model)
         if status == cp_model.INFEASIBLE: continue
@@ -109,17 +107,37 @@ def _solve_window(candidates, deadline, selected_genres=(), min_selected_share=0
         denominator = lcm(*(w.denominator for w in weights))
         coefficients = [int(w*denominator) for w in weights]
         require(sum(abs(c) for c in coefficients) < 2**62, 'SEARCH_INCOMPLETE', '정확한 점수 연산 범위를 초과했어요.', 503)
-        quality = sum(x*c for x,c in zip(xs,coefficients))
-        model.Maximize(quality)
-        solver, _ = solve(model)
+        max_score = max(Fraction(t['scores']['S'] or 0) for t in candidates)
+        penalties = [(max_score-Fraction(t['scores']['S'] or 0))*t['duration_ms'] for t in candidates]
+        penalty_denominator = lcm(*(p.denominator for p in penalties))
+        penalty_coefficients = [int(p*penalty_denominator) for p in penalties]
+        common_factor = gcd(*penalty_coefficients) or 1
+        penalty_coefficients = [c//common_factor for c in penalty_coefficients]
+        if sum(abs(c) for c in penalty_coefficients) < 2**62:
+            quality = sum(x*c for x,c in zip(xs,penalty_coefficients))
+            model.Minimize(quality)
+        else:
+            quality = sum(x*c for x,c in zip(xs,coefficients))
+            model.Maximize(quality)
+        solver, _ = solve(model, 'quality')
         model.Add(quality == solver.Value(quality))
-        for x in xs:
-            model.Maximize(x)
-            solver, _ = solve(model)
-            model.Add(x == solver.Value(x))
+        for start in range(0, len(xs), 30):
+            chunk = xs[start:start+30]
+            objective = sum(x * (1 << (len(chunk)-1-i)) for i,x in enumerate(chunk))
+            model.Maximize(objective)
+            solver, _ = solve(model, 'tie')
+            for x in chunk: model.Add(x == solver.Value(x))
         return sorted([t for x,t in zip(xs,candidates) if solver.Value(x)],
                       key=lambda t:(-Fraction(t['scores']['S'] or 0),t['track_id']))
     return None
+
+
+def _solve_window(candidates, deadline, selected_genres=(), min_selected_share=0, seed=''):
+    """Run tagged exact search and CP-SAT under one window deadline."""
+    if not selected_genres:
+        return _solve_window_fallback(candidates, deadline, selected_genres, min_selected_share, seed)
+    return _solve_exact_window(candidates, deadline, selected_genres, min_selected_share, seed,
+                               fallback=_solve_window_fallback)
 
 
 def choose(candidates, max_candidates, seconds, mode='ON', selected_genres=(), seed='', diagnostics=None):

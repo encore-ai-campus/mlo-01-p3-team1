@@ -1,7 +1,7 @@
 # backend/recommendation/worker.py 라우팅
 
 - 작성일: 2026-10-16
-- 수정일: 2026-10-18
+- 수정일: 2026-10-19
 - 담당: C 공개 대시보드·추천/음악 통합
 - 범위: 일반 추천 후보와 고정 재생 시험 카탈로그 분리·오류 진단 후속
 - 기준 브랜치/커밋: feature/ad-logic / f22f974
@@ -12,6 +12,10 @@
 저장된 Job과 고정 catalog/input을 읽고 임대 토큰·세대로 작업을 점유합니다. `verified_catalog`는 카탈로그 SHA와 고유 track_id를 확인한 불변 배열을 프로세스 안에 재사용합니다. `run_one`은 공통 적격 → 모드별 점수 → 규칙/로컬 프리뷰/Gemini 선택 → 시간·날씨 재검증 → 당시 snapshot/Playlist와 Job 상태 저장으로 연결합니다. 실제 외부 모델 호출은 기존 명시 재설정 경로에서만 발생합니다.
 
 `warm_current_catalog`는 `service.current_catalog`와 같은 용도별 선택 기준을 사용합니다. 로컬 고정 재생 목록이 최신이어도 일반 추천용 카탈로그를 사전 로딩하며, 일반 카탈로그가 없을 때는 고정 목록을 대신 로딩하지 않습니다. 이미 점유한 Job은 그 Job의 고정 catalog_id를 계속 사용합니다.
+
+## 2026-10-19 버전별 후보 인덱스
+
+`_index_for`는 검증된 카탈로그의 id/hash와 정책·매핑·점수 버전으로 `CandidateIndex`를 재사용합니다. `_collect_candidates`는 기존 `eligible`/`score` 경로와 같은 context 필터·감사값을 유지하면서, ON 공통 후보가 선택 기준보다 작을 때만 비트 인덱스를 사용합니다. 넓은 ON 풀과 OFF는 기존 전체 순회를 씁니다. `warm_current_catalog`는 5,000곡 이상에서 인덱스를 미리 만들어 첫 추천 요청에 빌드 비용이 포함되지 않게 합니다.
 
 ## 이번 변경과 오류 전달
 
@@ -31,6 +35,8 @@
 
 ```python
 verified_catalog(catalog)
+_index_for(catalog, raw)
+_collect_candidates(catalog, raw, context)
 warm_current_catalog()
 claim()
 heartbeat(job, stopped)

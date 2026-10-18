@@ -117,3 +117,19 @@ python -m unittest discover -s prototype/youtube-player/tests -v
 `POST /api/playlists/{playlist_id}/youtube-playback`은 track_id와 시도에서 제외할 video_id 목록만 받습니다. 본인 결과와 제외 반영 상태를 확인한 후 당시 곡 snapshot을 resolver에 공급합니다. 음악 DB·카탈로그·원본 매핑·추천 점수·Job·승인/평가는 바꾸지 않으며 별도 검색 캐시/보호 카운터만 사용할 수 있습니다. 기존 VERIFIED와 자동 CANDIDATE·청취 검수·실제 플레이 상태는 구분합니다.
 
 이 단계의 백엔드 전체101건은 통과했습니다. 최종 AST 검사는 exit0/summary.ok=true, 변경 Python31개·심벌306개·누락0이며 `.local-preview-logs/music-playback-routing-audit.json` summary를 정본으로 확인합니다. Python 밖의 중앙 UI·IFrame 이벤트·실제 관찰과 미실행 항목은 [중앙 iframe 수용 기록](../acceptance/대시보드_중앙_YouTube_iframe_검증_20261016.md), 호출·응답·캐시 상세는 [자동 검색 변경 라우팅](../development/YouTube_자동검색_변경_라우팅.md)을 따릅니다. 실제 서버 API 키가 없어 공식 검색의 실호출은 검증 대기이며 물리적 소리·Chrome/Premium·전곡 재생 완료를 단위/AST 검사 통과로 확정하지 않습니다.
+
+## 추천 선곡 성능 개선 후속 — 2026-10-19
+
+R-02/R-04의 성능 부분을 검증된 카탈로그 작업자와 선택 장르 규칙 solver에 연결합니다. 점수식·후보 정책·176~184분 계약·API/저장 스키마는 유지합니다. 자세한 기준→코드→실제 CSV 대조는 [추천 선곡 성능 개선 변경 라우팅](../development/추천_선곡_성능개선_변경_라우팅.md)을 확인합니다. 넓은 후보/OFF 순회는 기존 경로를 유지하고, 좁은 ON 상속 장르·속도 조건에만 버전별 인덱스를 적용합니다.
+
+| 소스 | 목적 | 1:1 문서 |
+|---|---|---|
+| `backend/recommendation/candidate_index.py` | 버전별 bitset 후보 필터와 기존 정책 점수/감사값 보존 | [짝 문서](files/backend/recommendation/candidate_index.py.md) |
+| `backend/recommendation/worker.py` | 검증 카탈로그에서 상속 필터를 전달하고 선택적으로 인덱스 조회 | [짝 문서](files/backend/recommendation/worker.py.md) |
+| `backend/recommendation/matching.py` | solver와 exact search의 공통 결정적 장르 매칭 | [짝 문서](files/backend/recommendation/matching.py.md) |
+| `backend/recommendation/exact_search.py` | 증명 가능한 시간·점수·장르 exact path와 CP-SAT fallback | [짝 문서](files/backend/recommendation/exact_search.py.md) |
+| `backend/recommendation/solver.py` | 정확 검색 라우팅·장르 제약·목적/tie 분할 | [짝 문서](files/backend/recommendation/solver.py.md) |
+| `backend/recommendation/tests/test_candidate_index.py` | 상속 필터·캐시·vocal·감사 집계 동등성 | [짝 문서](files/backend/recommendation/tests/test_candidate_index.py.md) |
+| `backend/recommendation/tests/test_exact_search.py` | 장르 비율·대표·동점 및 CP-SAT 대체 경로 비교 | [짝 문서](files/backend/recommendation/tests/test_exact_search.py.md) |
+
+86,485개 실제 GENERAL CSV 후보의 네 조건에서 ID·정확 점수·감사 집계가 전체 순회와 같았습니다. 좁은 ON 후보 생성은 로컬 검사에서 인덱스 재사용 뒤 약 0.6ms였습니다. 넓은 조건은 인덱스가 더 느린 측정이 있어 기존 순회를 유지합니다. 해당 수치는 전체 선곡 API/AWS 응답 P95나 동시 작업 부하가 아닙니다.

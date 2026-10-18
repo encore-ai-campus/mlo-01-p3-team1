@@ -25,5 +25,14 @@
     "backend/common/test_youtube_admin.py",
     "backend/common/tests.py",
     "backend/common/youtube_review.py"
+  ],
+  "docs/music-playback-routing": [
+    "backend/recommendation/solver.py",
+    "backend/recommendation/worker.py",
+    "backend/recommendation/exact_search.py",
+    "backend/recommendation/candidate_index.py",
+    "backend/recommendation/matching.py",
+    "backend/recommendation/tests/test_exact_search.py",
+    "backend/recommendation/tests/test_candidate_index.py"
   ]
 }

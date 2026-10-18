@@ -11,6 +11,7 @@ from django.utils import timezone
 from .models import Job, Playlist, Family, Catalog, uid
 from .errors import DomainError, require
 from .policy import eligible, score, weather_fit, off_preference_details, DURATION_POLICY, TARGET, MINIMUM, MAXIMUM, POLICY, MAPPING, WEATHER_SCORE_VERSION, OFF_SCORE_VERSION
+from .candidate_index import CandidateIndex
 from .weather import validate, obtain, current_profile, instant
 from .solver import choose, choose_preview
 from .provider import propose, validate_proposal, candidate_window
@@ -21,11 +22,13 @@ from .service import current_catalog
 _catalog_lock = threading.Lock()
 _catalog_key = None
 _catalog_tracks = None
+_candidate_index_key = None
+_candidate_index = None
 
 
 def verified_catalog(catalog):
     """Keep one immutable, verified catalog version in this worker process."""
-    global _catalog_key, _catalog_tracks
+    global _catalog_key, _catalog_tracks, _candidate_index_key, _candidate_index
     require(catalog.ready, 'CATALOG_INVALID', '카탈로그 무결성 검증에 실패했어요.', 503)
     key = (catalog.pk, catalog.sha256)
     with _catalog_lock:
@@ -40,13 +43,65 @@ def verified_catalog(catalog):
         require(digest == catalog.sha256 and len({t['track_id'] for t in raw}) == len(raw),
                 'CATALOG_INVALID', '카탈로그 무결성 검증에 실패했어요.', 503)
         _catalog_key, _catalog_tracks = key, raw
+        _candidate_index_key, _candidate_index = None, None
         return raw
+
+
+def _index_for(catalog, raw):
+    global _candidate_index_key, _candidate_index
+    key = (catalog.pk, catalog.sha256, POLICY, MAPPING, WEATHER_SCORE_VERSION, OFF_SCORE_VERSION)
+    with _catalog_lock:
+        if _candidate_index_key == key:
+            return _candidate_index
+        index = CandidateIndex(raw)
+        _candidate_index_key, _candidate_index = key, index
+        return index
+
+
+def _collect_candidates(catalog, raw, context):
+    if len(raw) >= 5000:
+        index = _index_for(catalog, raw)
+        common_count = index.common_count(context['options'], context['allowed_genre_group_codes'],
+                                          context['allowed_speed_codes'], context['excluded_track_ids'])
+        selective_limit = max(1, min(5000, len(raw) // 10))
+        if context['options']['weather_influence_mode'] == 'ON' and common_count < selective_limit:
+            return index.candidates(context['options'], context['weather_code'],
+                                    context['allowed_genre_group_codes'], context['allowed_speed_codes'],
+                                    context['excluded_track_ids'])
+
+    on = context['options']['weather_influence_mode'] == 'ON'
+    candidates = []
+    audit = {'catalog_count': len(raw), 'common_eligible_count': 0, 'common_rejected_count': 0,
+             'common_eligible_total_ms': 0, 'weather_rejected_count': 0,
+             'off_missing_preference_count': 0}
+    for track in raw:
+        if not eligible(track, context['options'], context['allowed_genre_group_codes'],
+                        context['allowed_speed_codes'], context['excluded_track_ids']):
+            audit['common_rejected_count'] += 1
+            continue
+        audit['common_eligible_count'] += 1
+        audit['common_eligible_total_ms'] += track['duration_ms']
+        scored = score(track, context['options'], context['weather_code'])
+        if scored is None:
+            audit['weather_rejected_count'] += 1
+            continue
+        if (not on and scored['P'] is None and (context['options']['selected_theme_codes']
+                or context['options']['selected_genre_codes']
+                or context['options']['tempo_preference'] != 'auto')):
+            audit['off_missing_preference_count'] += 1
+            continue
+        candidates.append(dict(track, scores=scored))
+    audit['candidate_count'] = len(candidates)
+    audit['candidate_total_ms'] = sum(track['duration_ms'] for track in candidates)
+    return candidates, audit
 
 
 def warm_current_catalog():
     catalog = current_catalog()
     if catalog is not None:
-        verified_catalog(catalog)
+        raw = verified_catalog(catalog)
+        if len(raw) >= 5000:
+            _index_for(catalog, raw)
 
 
 def claim():
@@ -103,25 +158,7 @@ def run_one():
             validate(context['weather'],now)
         catalog = Catalog.objects.defer('tracks').get(pk=job.catalog_id)
         raw = verified_catalog(catalog)
-        candidates=[]
-        candidate_audit={'catalog_count':len(raw),'common_eligible_count':0,'common_rejected_count':0,
-                         'common_eligible_total_ms':0,'weather_rejected_count':0,'off_missing_preference_count':0}
-        for t in raw:
-            if not eligible(t,context['options'],context['allowed_genre_group_codes'],context['allowed_speed_codes'],context['excluded_track_ids']):
-                candidate_audit['common_rejected_count']+=1
-                continue
-            candidate_audit['common_eligible_count']+=1
-            candidate_audit['common_eligible_total_ms']+=t['duration_ms']
-            scored=score(t,context['options'],context['weather_code'])
-            if scored is None:
-                candidate_audit['weather_rejected_count']+=1
-                continue
-            if not on and scored['P'] is None and (context['options']['selected_theme_codes'] or context['options']['selected_genre_codes'] or context['options']['tempo_preference']!='auto'):
-                candidate_audit['off_missing_preference_count']+=1
-                continue
-            candidates.append(dict(t,scores=scored))
-        candidate_audit['candidate_count']=len(candidates)
-        candidate_audit['candidate_total_ms']=sum(t['duration_ms'] for t in candidates)
+        candidates, candidate_audit = _collect_candidates(catalog, raw, context)
         preview=settings.LOCAL_DEMO and catalog.source_ref.startswith('local-preview:')
         if job.method=='RULE_BASED':
             search_diagnostics={}
