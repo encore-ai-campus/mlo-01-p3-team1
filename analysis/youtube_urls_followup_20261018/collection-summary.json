@@ -1,0 +1,84 @@
+{
+  "schema_version": "CONTINUATION_URL_COLLECTION_EXPORT_V1",
+  "scope": "URL_COLLECTION_ONLY_NO_REVIEW_NO_REGISTRATION",
+  "generated_at": "2026-10-18T12:56:57.546325+00:00",
+  "export_is_final_snapshot": true,
+  "collection_complete": false,
+  "catalog_count": 86485,
+  "input_target_count": 25318,
+  "prior_collected_track_count": 61167,
+  "prior_unique_video_count": 68284,
+  "new_candidate_track_count": 1008,
+  "new_unique_video_count": 1008,
+  "new_candidate_pair_count": 1008,
+  "source_pair_count_before_deduplication": 1008,
+  "duplicate_source_pairs_removed": 0,
+  "remaining_uncollected_count": 24310,
+  "cumulative_collected_track_count": 62175,
+  "new_video_overlap_with_prior_collection": 0,
+  "new_track_overlap_with_prior_collection": 0,
+  "individual_search_attempted_track_count": 2092,
+  "individual_search_completed_track_count": 2092,
+  "remaining_retry_required_track_count": 0,
+  "web_evidence_tuple_count": 994,
+  "unselected_invalid_video_url_evidence_count": 0,
+  "source_counts": {
+    "PUBLIC_YOUNIVERSE_TITLE_DURATION_URL_COLLECTION": {
+      "pairs": 14,
+      "tracks": 14,
+      "unique_videos": 14
+    },
+    "WEB_SEARCH_RULE_CANDIDATE": {
+      "pairs": 994,
+      "tracks": 994,
+      "unique_videos": 994
+    }
+  },
+  "source_candidate_snapshots": [
+    {
+      "file": "auto-search-candidates.jsonl",
+      "row_count": 994,
+      "sha256": "3991ef4ba8746e61b956cef1b646441c59f2ba7063bdcaae469bd09075588ab8"
+    },
+    {
+      "file": "youniverse-candidates.jsonl",
+      "row_count": 14,
+      "sha256": "a1c2d8e46cbfdb77eba801a52736e8e084bcd435c3a61bc58a1eece6455f7345"
+    },
+    {
+      "file": "youniverse-channel-candidates.jsonl",
+      "row_count": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "individual_search_progress": {},
+  "partial_public_source": {
+    "name": "YouNiverse",
+    "source_download_complete": false,
+    "full_source_checksum_verified": false,
+    "note": "Only complete JSONL lines from the saved compressed prefix were used; prefix SHA256 is recorded per row."
+  },
+  "metadata_review_performed": false,
+  "playback_review_performed": false,
+  "url_liveness_checked": false,
+  "dashboard_registration_performed": false,
+  "baseline_files_preserved_sha256": {
+    "youtube-continue-new-candidates.csv": "2e92e89c045b63b85d5d4c64a93632246af4e2ccb17c28403a901c795673ddb6",
+    "youtube-continue-new-urls.txt": "a34a3e2f478cbda884a58bb01ba24e715442705bf8654c11e55fec550e61555f",
+    "remaining-uncollected.csv": "d37e1fbabd883b1f1dc5832cf366de9619614134e782e2441b58942992fa14fa"
+  },
+  "files": {
+    "youtube-followup-new-candidates.csv": {
+      "sha256": "a049444c420b5c4baf183b6579632f356e868c5120461c2af201298d435cbd43",
+      "bytes": 1498822
+    },
+    "youtube-followup-new-urls.txt": {
+      "sha256": "6271e33054e79e961e5456f844a46960536a18ea45993135c5f4f0920d38871b",
+      "bytes": 45360
+    },
+    "remaining-uncollected.csv": {
+      "sha256": "91f9f60ee89de68ad4d19ad3eacd5214518f79509495f3d662de76908de8c4eb",
+      "bytes": 5869020
+    }
+  }
+}

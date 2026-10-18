@@ -1,0 +1,88 @@
+{
+  "scope": "SYNTHETIC_URL_COLLECTION_RULE_BOUNDARIES_ONLY_NOT_MUSIC_REVIEW",
+  "passed": true,
+  "checked_cases": 16,
+  "cases": [
+    {
+      "case": "one_missing_terminal_label",
+      "candidate_allowed": true,
+      "passed": true
+    },
+    {
+      "case": "reverse_missing_side",
+      "candidate_allowed": true,
+      "passed": true
+    },
+    {
+      "case": "two_labelled_versions_never_collapsed",
+      "candidate_allowed": false,
+      "passed": true
+    },
+    {
+      "case": "same_two_labels_are_not_this_missing_label_lane",
+      "candidate_allowed": false,
+      "passed": true
+    },
+    {
+      "case": "live_version_preserved",
+      "candidate_allowed": false,
+      "passed": true
+    },
+    {
+      "case": "radio_edit_preserved",
+      "candidate_allowed": false,
+      "passed": true
+    },
+    {
+      "case": "acoustic_version_preserved",
+      "candidate_allowed": false,
+      "passed": true
+    },
+    {
+      "case": "different_full_artist_set",
+      "candidate_allowed": false,
+      "passed": true
+    },
+    {
+      "case": "different_album",
+      "candidate_allowed": false,
+      "passed": true
+    },
+    {
+      "case": "duration_over_three_seconds",
+      "candidate_allowed": false,
+      "passed": true
+    },
+    {
+      "case": "duration_three_second_boundary",
+      "candidate_allowed": true,
+      "passed": true
+    },
+    {
+      "case": "numeric_core_retained",
+      "candidate_allowed": true,
+      "passed": true
+    },
+    {
+      "case": "numeric_core_not_discarded",
+      "candidate_allowed": false,
+      "passed": true
+    },
+    {
+      "case": "bare_remastered_title_not_empty_core",
+      "candidate_allowed": false,
+      "passed": true
+    },
+    {
+      "case": "unbalanced_remaster_parenthesis_not_removed",
+      "candidate_allowed": false,
+      "passed": true
+    },
+    {
+      "case": "unbalanced_remaster_bracket_not_removed",
+      "candidate_allowed": false,
+      "passed": true
+    }
+  ],
+  "validated_at": "2026-10-18T11:02:06.083965+00:00"
+}
