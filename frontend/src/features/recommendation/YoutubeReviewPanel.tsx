@@ -4,7 +4,7 @@ import {YoutubeReviewPreview} from './YoutubeReviewPreview';
 import {canVerifyNativeYoutubeMapping, canVerifyYoutubeMapping, canonicalYoutubeVideoUrl, reviewCsvTemplate, reviewFailureMessages, reviewSearchUrl, reviewTrackListParams, validateReviewCsv, youtubeReviewApi, type ReviewFilter, type ReviewList, type ReviewMapping, type ReviewObservation, type ReviewStatus, type ReviewTrack} from './youtubeReview';
 import './YoutubeReviewPanel.css';
 
-export function YoutubeReviewPanel({playlistId, onUpdated, onPreviewActive, blocked = false}: {playlistId: string; onUpdated: () => void; onPreviewActive: (active: boolean) => void; blocked?: boolean}) {
+export function YoutubeReviewPanel({playlistId, onUpdated, onPreviewActive, blocked = false, adminSession = false}: {playlistId: string; onUpdated: () => void; onPreviewActive: (active: boolean) => void; blocked?: boolean; adminSession?: boolean}) {
   const [status, setStatus] = useState<ReviewStatus | null>(null), [codeInput, setCodeInput] = useState(''), [code, setCode] = useState('');
   const [filter, setFilter] = useState<ReviewFilter>('ALL'), [queryInput, setQueryInput] = useState(''), [query, setQuery] = useState(''), [page, setPage] = useState(1);
   const [data, setData] = useState<ReviewList | null>(null), [selected, setSelected] = useState<ReviewTrack | null>(null);
@@ -15,33 +15,38 @@ export function YoutubeReviewPanel({playlistId, onUpdated, onPreviewActive, bloc
   const [nativeDifference, setNativeDifference] = useState(false);
   const [csv, setCsv] = useState(''), [csvName, setCsvName] = useState(''), [csvErrors, setCsvErrors] = useState<string[]>([]);
   const previewCallback = useRef(onPreviewActive); previewCallback.current = onPreviewActive;
+  const base = adminSession ? '/api/admin/youtube-review' : '/api/youtube-review';
+  const authorized = adminSession || !!code;
+  function reviewRequest<T>(suffix: string, method = 'GET', body?: unknown, signal?: AbortSignal): Promise<T> {
+    return adminSession ? api<T>(base + suffix, method, body, undefined, signal) : youtubeReviewApi<T>(base + suffix, code, method, body, signal);
+  }
   useEffect(() => {
     const controller = new AbortController();
-    void api<ReviewStatus>('/api/youtube-review/status', 'GET', undefined, undefined, controller.signal).then(setStatus).catch(error => {if (!controller.signal.aborted) setErrors(reviewFailureMessages(error));});
+    void api<ReviewStatus>(base + '/status', 'GET', undefined, undefined, controller.signal).then(setStatus).catch(error => {if (!controller.signal.aborted) setErrors(reviewFailureMessages(error));});
     return () => controller.abort();
-  }, []);
+  }, [base]);
   useEffect(() => {previewCallback.current(!!preview); return () => previewCallback.current(false);}, [!!preview]);
   useEffect(() => {
     setPreview(null); setObservation(null); setConfirmed(false); setNativeReview(null); setNativePlayed(false); setNativeIdentity(false); setNativeDuration(''); setNativeDifference(false); setSelected(null); setPage(1);
   }, [playlistId]);
   useEffect(() => {
-    if (!code || !status?.enabled) return;
+    if (!authorized || !status?.enabled) return;
     const controller = new AbortController(); setBusy(true); setErrors([]);
     const params = reviewTrackListParams(playlistId, filter, query, page);
-    void youtubeReviewApi<ReviewList>(`/api/youtube-review/tracks?${params}`, code, 'GET', undefined, controller.signal).then(result => {
+    void reviewRequest<ReviewList>(`/tracks?${params}`, 'GET', undefined, controller.signal).then(result => {
       if (controller.signal.aborted) return;
       setData(result); setSelected(current => result.items.find(track => track.track_id === current?.track_id) || current || result.items[0] || null);
     }).catch(error => {if (!controller.signal.aborted) setErrors(reviewFailureMessages(error));}).finally(() => {if (!controller.signal.aborted) setBusy(false);});
     return () => controller.abort();
-  }, [playlistId, code, status?.enabled, query, filter, page, refresh]);
+  }, [playlistId, code, adminSession, status?.enabled, query, filter, page, refresh]);
   function choose(track: ReviewTrack) {setSelected(track); setPreview(null); setObservation(null); setConfirmed(false); setNativeReview(null); setNativePlayed(false); setNativeIdentity(false); setNativeDuration(''); setNativeDifference(false); setReason(''); setUrl(''); setNote(''); setNotice('');}
   function showPreview(mapping: ReviewMapping) {setNativeReview(null); setPreview(mapping); setObservation(null); setConfirmed(false); setReason(''); setNote(mapping.note || ''); setNotice('');}
   function showNativeReview(mapping: ReviewMapping) {setPreview(null); setObservation(null); setNativeReview(mapping); setNativePlayed(false); setNativeIdentity(false); setNativeDuration(''); setNativeDifference(false); setReason(''); setNote(mapping.note || ''); setNotice('');}
   async function mutate(path: string, body: Record<string, unknown>, success: string) {
-    if (busy || !code) return;
+    if (busy || !authorized) return;
     setBusy(true); setErrors([]); setNotice('');
     try {
-      const response = await youtubeReviewApi<{items?: Pick<ReviewTrack, 'track_id' | 'revision' | 'mappings'>[]; track_id?: string; revision?: number; mappings?: ReviewMapping[]}>(`/api/youtube-review/${path}`, code, 'POST', {...body, playlist_id: playlistId});
+      const response = await reviewRequest<{items?: Pick<ReviewTrack, 'track_id' | 'revision' | 'mappings'>[]; track_id?: string; revision?: number; mappings?: ReviewMapping[]}>(`/${path}`, 'POST', {...body, ...(!adminSession && playlistId ? {playlist_id: playlistId} : {})});
       const updates = response.items || (response.track_id && response.revision !== undefined && response.mappings ? [{track_id: response.track_id, revision: response.revision, mappings: response.mappings}] : []);
       setSelected(current => {const update = updates.find(item => item.track_id === current?.track_id); return current && update ? {...current, ...update} : current;});
       if (path === 'verify' || path === 'block') {setPreview(null); setObservation(null);}
@@ -51,13 +56,13 @@ export function YoutubeReviewPanel({playlistId, onUpdated, onPreviewActive, bloc
     finally {setBusy(false);}
   }
   async function downloadTemplate() {
-    if (!code || busy) return;
+    if (!authorized || busy) return;
     setBusy(true); setErrors([]);
     try {
       const tracks: ReviewTrack[] = [];
       for (let current = 1; ; current++) {
         const params = reviewTrackListParams(playlistId, filter, query, current);
-        const result = await youtubeReviewApi<ReviewList>(`/api/youtube-review/tracks?${params}`, code);
+        const result = await reviewRequest<ReviewList>(`/tracks?${params}`);
         tracks.push(...result.items.slice(0, 500 - tracks.length));
         if (tracks.length >= result.total || !result.items.length || tracks.length >= 500) break;
       }
@@ -78,16 +83,16 @@ export function YoutubeReviewPanel({playlistId, onUpdated, onPreviewActive, bloc
   if (!status) return <section className="youtube-review-panel"><p role="status">영상 연결 관리 설정을 확인하고 있어요.</p>{errors.map((error, index) => <p role="alert" key={index}>{error}</p>)}</section>;
   if (!status.enabled) return <section className="youtube-review-panel"><p>이 환경에서는 로컬 영상 연결 관리가 열려 있지 않아요.</p></section>;
   return <section className="youtube-review-panel" aria-label="영상 연결 관리">
-    <div className="youtube-review-heading"><h2>영상 연결 관리</h2><span>운영자 로컬 검수</span></div>
+    <div className="youtube-review-heading"><h2>영상 연결 관리</h2><span>{adminSession ? '공통 관리자 검수 · 로컬 저장소' : '운영자 로컬 검수'}</span></div>
     <p className="youtube-review-intro">곡의 YouTube 주소를 직접 등록하고, 외부 YouTube 재생과 원곡 정보를 확인합니다. 대시보드 삽입 재생 검수는 별도이며 등록만으로 완료되지는 않아요.</p>
-    {!code ? <form className="youtube-review-login" onSubmit={event => {event.preventDefault(); setCode(codeInput.trim()); setCodeInput(''); setErrors([]);}}>
+    {!authorized ? <form className="youtube-review-login" onSubmit={event => {event.preventDefault(); setCode(codeInput.trim()); setCodeInput(''); setErrors([]);}}>
       <label>로컬 검수 접근 코드<input type="password" autoComplete="off" value={codeInput} onChange={event => setCodeInput(event.target.value)} required/></label><button type="submit">영상 연결 관리 열기</button>
       <small>이 실행에서 발급한 로컬 코드입니다. Google 비밀번호나 API 키를 입력하지 마세요. 코드는 이 패널의 메모리에만 보관합니다.</small>
       {status.access_code_file && <details><summary>접근 코드 파일 위치</summary><code>{status.access_code_file}</code></details>}
     </form> : <>
       <div className="youtube-review-toolbar"><form onSubmit={event => {event.preventDefault(); setQuery(queryInput); setPage(1);}}><label>곡 검색<input value={queryInput} onChange={event => setQueryInput(event.target.value)} placeholder="곡명 · 아티스트"/></label><button disabled={busy} type="submit">검색</button></form>
         <label>연결 상태<select value={filter} onChange={event => {setFilter(event.target.value as ReviewFilter); setPage(1);}}><option value="ALL">전체</option><option value="UNMAPPED">미연결</option><option value="PENDING">검수 대기</option><option value="VERIFIED">검수 완료</option><option value="BLOCKED">차단</option></select></label>
-        <button type="button" onClick={() => {setCode(''); setData(null); setSelected(null); setPreview(null); setObservation(null); setConfirmed(false); setNativeReview(null); setNativePlayed(false); setNativeIdentity(false); setNativeDuration(''); setErrors([]);}}>관리 잠그기</button></div>
+        {!adminSession && <button type="button" onClick={() => {setCode(''); setData(null); setSelected(null); setPreview(null); setObservation(null); setConfirmed(false); setNativeReview(null); setNativePlayed(false); setNativeIdentity(false); setNativeDuration(''); setErrors([]);}}>관리 잠그기</button>}</div>
       {data && <div className="youtube-review-counts">전체 {data.summary.total ?? data.total}곡 · 미연결 {data.summary.unmapped ?? 0} · 검수 대기 {data.summary.pending ?? 0} · 검수 완료 {data.summary.verified ?? 0} · 차단 {data.summary.blocked ?? 0}<br/>현재 필터 {data.total}곡 · {page}페이지 · 등록/검수는 추천 결과와 점수를 바꾸지 않습니다.</div>}
       <div className="youtube-review-grid"><div className="youtube-review-track-list"><ul>{data?.items.map(track => <li key={track.track_id} className={selected?.track_id === track.track_id ? 'selected' : ''}><button type="button" onClick={() => choose(track)}><strong>{track.track_name}</strong><span>{track.artists_name}</span><small>{track.mappings.length ? `외부 ${track.mappings.filter(mapping => mapping.native_verified).length}개 · 삽입 ${track.mappings.filter(mapping => mapping.status === 'VERIFIED').length}개 확인 · ${track.mappings.length}개 후보` : '미연결'}</small></button></li>)}</ul>
         {data?.total === 0 && <p>이 조건에 해당하는 곡이 없어요.</p>}

@@ -21,8 +21,8 @@ export function Login(){
     <form onSubmit={async e=>{
       e.preventDefault();setBusy(true);setError('');
       try{
-        const response=await api<{role:string;landing_path:string}>('/api/auth/login','POST',{username,password});
-        if(response.role!=='ADMIN'||response.landing_path!=='/admin/ads')throw new Error('계정 권한을 확인해 주세요.');
+        const response=await api<{role:string;landing_path:string;allowed_menus:Menu[]}>('/api/auth/login','POST',{username,password});
+        if(response.role!=='ADMIN'||!['/admin/ads','/admin/music','/admin/music/youtube','/admin/feedback/exclusions'].includes(response.landing_path)||!response.allowed_menus.some(menu=>menu.path===response.landing_path))throw new Error('계정 권한을 확인해 주세요.');
         location.assign(response.landing_path);
       }catch(error){setError((error as Error).message);}
       finally{setBusy(false);setPassword('');}
@@ -40,7 +40,7 @@ export function Login(){
       <button className="primary" disabled={busy}>{busy?'로그인 중…':'로그인'}</button>
     </form>
     <a className="guest-link" href="/"><Icon name="home"/>로그인 없이 선곡 이용하기</a>
-    <p className="login-caption">관리자 계정은 광고 관리 페이지로 이동합니다.</p>
+    <p className="login-caption">관리자 계정의 권한에 맞는 관리 페이지로 이동합니다.</p>
   </section></main></>;
 }
 function ReviewEditor({row,onDone}:{row:Record<string,unknown>;onDone:()=>void}){

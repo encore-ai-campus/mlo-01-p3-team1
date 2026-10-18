@@ -29,7 +29,7 @@ export function reviewSearchUrl(track: Pick<ReviewTrack, 'track_name' | 'artists
 }
 
 export function reviewTrackListParams(playlistId: string, filter: ReviewFilter, query: string, page: number) {
-  return new URLSearchParams({playlist_id: playlistId, q: query, status: filter, page: String(page), page_size: '30'});
+  return new URLSearchParams({...(playlistId ? {playlist_id: playlistId} : {}), q: query, status: filter, page: String(page), page_size: '30'});
 }
 
 export function reviewCsvTemplate(tracks: (Pick<ReviewTrack, 'track_id' | 'revision'> & {mappings?: Pick<ReviewMapping, 'video_url' | 'native_verified' | 'note'>[]})[]) {
