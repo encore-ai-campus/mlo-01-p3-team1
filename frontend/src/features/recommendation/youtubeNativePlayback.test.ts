@@ -43,7 +43,8 @@ describe('native YouTube default playback', () => {
 
   it('renders the full queue action and account-storage caveat without a default iframe', () => {
     const html = renderToStaticMarkup(createElement(YoutubeNativeQueueView, {queue: complete, tracks, playlistId: 'result-1', onOpen: vi.fn()}));
-    expect(html).toContain('YouTube에서 연속 재생'); expect(html).toContain('계정에 저장한 재생목록이 아니며');
+    expect(html).toContain('YouTube에서 선곡표 연속 재생'); expect(html).toContain('계정에 저장한 재생목록이 아니며');
+    expect(html).toContain('aria-label="새 탭에서 YouTube 선곡표 연속 재생"');
     expect(html).not.toContain('<iframe'); expect(html).not.toContain('iframe_api');
     const initial = renderToStaticMarkup(createElement(YoutubeNativePlayback, {playlistId: 'result-1', tracks}));
     expect(initial).not.toContain('<iframe'); expect(initial).not.toContain('embed/');

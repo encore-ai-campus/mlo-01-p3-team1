@@ -1,0 +1,201 @@
+{
+  "date": "2026-10-18",
+  "catalog": "spotify-preview-b202fa49909b-general-c2478b153aa8-yt-39c5056603a0",
+  "catalog_track_count": 86485,
+  "catalog_sha256": "6d3cd811cf4f7c0386298ac08b572ab6237a5cc238e07ded02ded437b147b36f",
+  "sources": [
+    {
+      "path": "analysis/youtube_urls_1000_20261018/youtube-additional-1000-urls.csv",
+      "sha256": "af5fc1adab17d41ce47098fd6e3b58841187b2f34fb89649834f4ab6251ee002",
+      "counts": {
+        "input_rows": 1000,
+        "existing_or_duplicate_pairs": 3,
+        "planned_new_pairs": 997
+      }
+    },
+    {
+      "path": "analysis/youtube_urls_continue_20261018/youtube-continue-new-candidates.csv",
+      "sha256": "2e92e89c045b63b85d5d4c64a93632246af4e2ccb17c28403a901c795673ddb6",
+      "counts": {
+        "input_rows": 1315,
+        "planned_new_pairs": 1315
+      }
+    },
+    {
+      "path": "analysis/youtube_urls_followup_20261018/youtube-followup-new-candidates.csv",
+      "sha256": "a049444c420b5c4baf183b6579632f356e868c5120461c2af201298d435cbd43",
+      "counts": {
+        "input_rows": 1008,
+        "planned_new_pairs": 1008
+      }
+    },
+    {
+      "path": "analysis/youtube_urls_next_20261018/youtube-next-new-candidates.csv",
+      "sha256": "0047c49c17d8ea169a0dd65433b29db8cdd270488db993a2b635e92bdd5eabbb",
+      "counts": {
+        "input_rows": 2523,
+        "planned_new_pairs": 2523
+      }
+    },
+    {
+      "path": "analysis/youtube_urls_remaining_20261018/existing-url-reuse-candidates.csv",
+      "sha256": "7bb0e3c6f87351d621d146f1c9d50e6bf646f3da541f3114b74f77becd537529",
+      "counts": {
+        "input_rows": 326,
+        "planned_new_pairs": 326
+      }
+    },
+    {
+      "path": "analysis/youtube_urls_remaining_20261018/youtube-remaining-url-candidates.csv",
+      "sha256": "d1fd47857554913b8cb8e2520ee935e6bd80abcdb7dab396cee9cd6f4ff2f483",
+      "counts": {
+        "input_rows": 53544,
+        "planned_new_pairs": 53190,
+        "quarantined": 353,
+        "existing_or_duplicate_pairs": 1
+      }
+    },
+    {
+      "path": "analysis/youtube_urls_residual_20261018/youtube-residual-new-candidates.csv",
+      "sha256": "766ba4eb6e1acc6d06b28280d19adfae6dc41f5a3c036e30586d380505a83146",
+      "counts": {
+        "input_rows": 13266,
+        "planned_new_pairs": 12958,
+        "quarantined": 307,
+        "existing_or_duplicate_pairs": 1
+      }
+    },
+    {
+      "path": "analysis/youtube_urls_tail_20261018/youtube-tail-new-candidates.csv",
+      "sha256": "79075903616cceb8e42d526bf6e74118a7083cbc85872f629f1cd44b7d5dd860",
+      "counts": {
+        "input_rows": 2715,
+        "planned_new_pairs": 2715
+      }
+    }
+  ],
+  "input_rows": 75697,
+  "imported_new_candidate_pairs": 75032,
+  "already_registered_pairs_skipped": 5,
+  "overflow_pairs_preserved": 660,
+  "overflow_reason": "Existing 10 mappings per track limit; source rows and local quarantine.jsonl retained",
+  "registry_mapping_count": 75186,
+  "registry_track_count": 62175,
+  "native_verified_before": 151,
+  "native_verified_after": 153,
+  "existing_154_mapping_rows_preserved": true,
+  "original_collection_hashes_preserved": true,
+  "automatically_promoted_count": 0,
+  "browser_reviewed_count": 3,
+  "browser_native_accepted_count": 2,
+  "browser_native_blocked_count": 1,
+  "reviews": [
+    {
+      "track_id": "5yGTQzYbEdY6B9RFZJypgt",
+      "track_name": "Rhythm Of The Night",
+      "artists_name": "DeBarge",
+      "video_id": "eFs8FeXXW-k",
+      "original_duration_seconds": 229.106,
+      "observed_duration_seconds": 229.121,
+      "difference_seconds": 0.015,
+      "observed_content_time_seconds": 46.616,
+      "result": "NATIVE_VERIFIED",
+      "iframe_status": "CANDIDATE",
+      "album_observation": "Original album title also matches.",
+      "source_file": "analysis/youtube_urls_remaining_20261018/youtube-remaining-url-candidates.csv",
+      "source_row": 5494
+    },
+    {
+      "track_id": "0kUguV451c5jzdASysKaJh",
+      "track_name": "Happy Together",
+      "artists_name": "Mel Tormé",
+      "video_id": "OIyMGE8JpVo",
+      "original_duration_seconds": 152.659,
+      "observed_duration_seconds": 152.681,
+      "difference_seconds": 0.022,
+      "observed_content_time_seconds": 47.884,
+      "result": "NATIVE_VERIFIED",
+      "iframe_status": "CANDIDATE",
+      "album_observation": "Original catalog album The Greatest Jazz Mix is a compilation; provided recording album is A Time For Us (1969). Same title/artist and 0.022s duration difference; not a waveform/master comparison.",
+      "source_file": "analysis/youtube_urls_remaining_20261018/youtube-remaining-url-candidates.csv",
+      "source_row": 50006
+    },
+    {
+      "track_id": "4PIamC8GQJvPKxCipMvPGr",
+      "track_name": "La Cumparsita",
+      "artists_name": "Hugo Del Carril",
+      "video_id": "aMV6B3YJ2lg",
+      "result": "NATIVE_BLOCKED",
+      "iframe_status": "CANDIDATE",
+      "message": "동영상을 재생할 수 없음 / 동영상을 볼 수 없습니다.",
+      "restriction_cause": "UNDETERMINED",
+      "source_file": "analysis/youtube_urls_remaining_20261018/youtube-remaining-url-candidates.csv",
+      "source_row": 45139
+    }
+  ],
+  "queues": [
+    {
+      "playlist_id": "e92c1d98-6e24-4ab0-8224-03f5aaa48e4a",
+      "total_count": 46,
+      "ready_count": 2,
+      "missing_count": 44,
+      "video_ids_in_order": [
+        "OIyMGE8JpVo",
+        "eFs8FeXXW-k"
+      ],
+      "seconds": 0.102
+    },
+    {
+      "playlist_id": "0538a04c-76ce-44b4-a108-1f81a26778ae",
+      "total_count": 47,
+      "ready_count": 2,
+      "missing_count": 45,
+      "video_ids_in_order": [
+        "SwkqH_ar810",
+        "XthQbbcq0T8"
+      ],
+      "seconds": 0.106
+    }
+  ],
+  "stage_full_import_ok": true,
+  "idempotent_reimport_inserted_count": 0,
+  "idempotent_reimport_audit_added": 0,
+  "backend_tests_passed": 31,
+  "scope": "Local candidate registration and short IAB content playback/metadata review. No full listening, physical sound, native Chrome, production or iframe approval.",
+  "api_validation": {
+    "method": "Django Client with actual middleware and local access-code authentication; live registry; cloned recommendation DB",
+    "status": 200,
+    "missing_code_status": 403,
+    "summary": {
+      "total": 86485,
+      "unmapped": 24310,
+      "pending": 62021,
+      "verified": 153,
+      "blocked": 1
+    },
+    "seconds": 2.142,
+    "accepted_track_visible": true,
+    "failed_native_mapping_not_approved": true,
+    "iframe_status_preserved": true,
+    "secret_printed": false
+  },
+  "routing_audit": {
+    "changed_service_python_files": 0,
+    "preexisting_unmodified_analysis_script": "analysis/youtube_mapping_100_20261016/part1-build.py",
+    "preexisting_missing_document_or_index_count": 2,
+    "preexisting_file_hash_preserved": true
+  },
+  "new_external_queue": {
+    "video_ids_in_order": [
+      "OIyMGE8JpVo",
+      "eFs8FeXXW-k"
+    ],
+    "visible_playlist_items": 2,
+    "first_content_time_seconds": 54.837,
+    "first_content_duration_seconds": 152.681,
+    "ad_showing": false,
+    "player_error": null,
+    "paused_after_verification": true,
+    "new_pair_natural_full_transition_verified": false
+  }
+}
