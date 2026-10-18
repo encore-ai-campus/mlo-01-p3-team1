@@ -1,0 +1,400 @@
+{
+  "status": "ANALYSIS_ONLY_NOT_READY",
+  "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+  "score_formula_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+  "source_dataset_sha256": "b202fa49909b2d5cef71a04b1d21243cfeb36414535f2ca9272aa646721177bd",
+  "source_data_rows": 114000,
+  "source_unique_track_ids": 89741,
+  "source_screen_counts": {
+    "GENERAL": 86485,
+    "REVIEW_REQUIRED": 1805,
+    "SEASONAL_EVENT": 1450,
+    "UNSCREENED": 1
+  },
+  "general_is_metadata_screen_only": true,
+  "listening_review_completed": false,
+  "operational_ready_catalog_confirmed": false,
+  "weather": {
+    "CLEAR": {
+      "original_pool": {
+        "track_count": 36395,
+        "duration_ms": 8318465626,
+        "duration_minutes": 138641.09376666666
+      },
+      "general_pool": {
+        "track_count": 34883,
+        "duration_ms": 8029629622,
+        "duration_minutes": 133827.16036666668
+      },
+      "occasion_status_counts": {
+        "GENERAL": 34883,
+        "SEASONAL_EVENT": 600,
+        "REVIEW_REQUIRED": 912
+      }
+    },
+    "CLOUDY": {
+      "original_pool": {
+        "track_count": 36597,
+        "duration_ms": 8804989304,
+        "duration_minutes": 146749.82173333335
+      },
+      "general_pool": {
+        "track_count": 35170,
+        "duration_ms": 8527597057,
+        "duration_minutes": 142126.61761666666
+      },
+      "occasion_status_counts": {
+        "GENERAL": 35170,
+        "REVIEW_REQUIRED": 758,
+        "SEASONAL_EVENT": 669
+      }
+    },
+    "OVERCAST": {
+      "original_pool": {
+        "track_count": 14006,
+        "duration_ms": 3315058666,
+        "duration_minutes": 55250.97776666666
+      },
+      "general_pool": {
+        "track_count": 12944,
+        "duration_ms": 3094917058,
+        "duration_minutes": 51581.95096666666
+      },
+      "occasion_status_counts": {
+        "GENERAL": 12944,
+        "SEASONAL_EVENT": 624,
+        "REVIEW_REQUIRED": 438
+      }
+    },
+    "RAIN": {
+      "original_pool": {
+        "track_count": 9113,
+        "duration_ms": 2082492424,
+        "duration_minutes": 34708.20706666667
+      },
+      "general_pool": {
+        "track_count": 8248,
+        "duration_ms": 1903828462,
+        "duration_minutes": 31730.474366666665
+      },
+      "occasion_status_counts": {
+        "GENERAL": 8248,
+        "SEASONAL_EVENT": 509,
+        "REVIEW_REQUIRED": 356
+      }
+    },
+    "SNOW": {
+      "original_pool": {
+        "track_count": 9406,
+        "duration_ms": 1919502742,
+        "duration_minutes": 31991.712366666667
+      },
+      "general_pool": {
+        "track_count": 8535,
+        "duration_ms": 1768195605,
+        "duration_minutes": 29469.92675
+      },
+      "occasion_status_counts": {
+        "SEASONAL_EVENT": 434,
+        "GENERAL": 8535,
+        "REVIEW_REQUIRED": 437
+      }
+    },
+    "RAIN_SNOW_INTERSECTION": {
+      "original_pool": {
+        "track_count": 4768,
+        "duration_ms": 974980496,
+        "duration_minutes": 16249.674933333334
+      },
+      "general_pool": {
+        "track_count": 4264,
+        "duration_ms": 880493579,
+        "duration_minutes": 14674.892983333333
+      },
+      "occasion_status_counts": {
+        "GENERAL": 4264,
+        "REVIEW_REQUIRED": 209,
+        "SEASONAL_EVENT": 295
+      }
+    }
+  },
+  "examples": {
+    "CLEAR": {
+      "status": "ANALYSIS_FEASIBLE_NOT_PRODUCTION_ACCEPTANCE",
+      "selected": {
+        "track_count": 47,
+        "duration_ms": 10800000,
+        "duration_minutes": 180.0
+      },
+      "candidate_pool": {
+        "track_count": 34883,
+        "duration_ms": 8029629622,
+        "duration_minutes": 133827.16036666668
+      },
+      "searched_prefix_sizes": [
+        200
+      ],
+      "exact_target_achieved": true,
+      "within_allowed_duration": true,
+      "quality_time_weighted_exact": "100",
+      "quality_optimality": "PROVEN_GLOBAL_UPPER_BOUND_100",
+      "tie_optimality": "NOT_PROVEN",
+      "automatic_shortening": false,
+      "held_tracks_restored": false,
+      "allowed_speeds": [
+        "slow",
+        "medium",
+        "fast",
+        "fastest"
+      ],
+      "mixed_speed_is_preview_initial_value": false
+    },
+    "CLOUDY": {
+      "status": "ANALYSIS_FEASIBLE_NOT_PRODUCTION_ACCEPTANCE",
+      "selected": {
+        "track_count": 45,
+        "duration_ms": 10800000,
+        "duration_minutes": 180.0
+      },
+      "candidate_pool": {
+        "track_count": 35170,
+        "duration_ms": 8527597057,
+        "duration_minutes": 142126.61761666666
+      },
+      "searched_prefix_sizes": [
+        200
+      ],
+      "exact_target_achieved": true,
+      "within_allowed_duration": true,
+      "quality_time_weighted_exact": "100",
+      "quality_optimality": "PROVEN_GLOBAL_UPPER_BOUND_100",
+      "tie_optimality": "NOT_PROVEN",
+      "automatic_shortening": false,
+      "held_tracks_restored": false,
+      "allowed_speeds": [
+        "slow",
+        "medium",
+        "fast",
+        "fastest"
+      ],
+      "mixed_speed_is_preview_initial_value": false
+    },
+    "OVERCAST": {
+      "status": "ANALYSIS_FEASIBLE_NOT_PRODUCTION_ACCEPTANCE",
+      "selected": {
+        "track_count": 46,
+        "duration_ms": 10800000,
+        "duration_minutes": 180.0
+      },
+      "candidate_pool": {
+        "track_count": 12944,
+        "duration_ms": 3094917058,
+        "duration_minutes": 51581.95096666666
+      },
+      "searched_prefix_sizes": [
+        200
+      ],
+      "exact_target_achieved": true,
+      "within_allowed_duration": true,
+      "quality_time_weighted_exact": "100",
+      "quality_optimality": "PROVEN_GLOBAL_UPPER_BOUND_100",
+      "tie_optimality": "NOT_PROVEN",
+      "automatic_shortening": false,
+      "held_tracks_restored": false,
+      "allowed_speeds": [
+        "slow",
+        "medium",
+        "fast",
+        "fastest"
+      ],
+      "mixed_speed_is_preview_initial_value": false
+    },
+    "RAIN": {
+      "status": "ANALYSIS_FEASIBLE_NOT_PRODUCTION_ACCEPTANCE",
+      "selected": {
+        "track_count": 43,
+        "duration_ms": 10800000,
+        "duration_minutes": 180.0
+      },
+      "candidate_pool": {
+        "track_count": 4504,
+        "duration_ms": 1036885693,
+        "duration_minutes": 17281.428216666667
+      },
+      "searched_prefix_sizes": [
+        200
+      ],
+      "exact_target_achieved": true,
+      "within_allowed_duration": true,
+      "quality_time_weighted_exact": "100",
+      "quality_optimality": "PROVEN_GLOBAL_UPPER_BOUND_100",
+      "tie_optimality": "NOT_PROVEN",
+      "automatic_shortening": false,
+      "held_tracks_restored": false,
+      "allowed_speeds": [
+        "slow",
+        "medium"
+      ],
+      "mixed_speed_is_preview_initial_value": false
+    },
+    "SNOW": {
+      "status": "ANALYSIS_FEASIBLE_NOT_PRODUCTION_ACCEPTANCE",
+      "selected": {
+        "track_count": 68,
+        "duration_ms": 10800000,
+        "duration_minutes": 180.0
+      },
+      "candidate_pool": {
+        "track_count": 4019,
+        "duration_ms": 824376549,
+        "duration_minutes": 13739.60915
+      },
+      "searched_prefix_sizes": [
+        200
+      ],
+      "exact_target_achieved": true,
+      "within_allowed_duration": true,
+      "quality_time_weighted_exact": "100",
+      "quality_optimality": "PROVEN_GLOBAL_UPPER_BOUND_100",
+      "tie_optimality": "NOT_PROVEN",
+      "automatic_shortening": false,
+      "held_tracks_restored": false,
+      "allowed_speeds": [
+        "slow",
+        "medium"
+      ],
+      "mixed_speed_is_preview_initial_value": false
+    },
+    "RAIN_SNOW_INTERSECTION": {
+      "status": "ANALYSIS_FEASIBLE_NOT_PRODUCTION_ACCEPTANCE",
+      "selected": {
+        "track_count": 58,
+        "duration_ms": 10800000,
+        "duration_minutes": 180.0
+      },
+      "candidate_pool": {
+        "track_count": 4264,
+        "duration_ms": 880493579,
+        "duration_minutes": 14674.892983333333
+      },
+      "searched_prefix_sizes": [
+        200
+      ],
+      "exact_target_achieved": true,
+      "within_allowed_duration": true,
+      "quality_time_weighted_exact": "245947513/2592000",
+      "quality_optimality": "NOT_PROVEN",
+      "tie_optimality": "NOT_PROVEN",
+      "automatic_shortening": false,
+      "held_tracks_restored": false,
+      "allowed_speeds": [
+        "slow",
+        "medium",
+        "fast",
+        "fastest"
+      ],
+      "mixed_speed_is_preview_initial_value": true
+    }
+  },
+  "coverage": {
+    "original_base_track_count": 61931,
+    "general_base_track_count": 59210,
+    "held_or_event_track_count": 2721,
+    "general_weather_union_track_count": 59210,
+    "unmatched_general_track_count": 0,
+    "original_weather_assignment_unchanged": true,
+    "fallback_assignment_used": false,
+    "original_base_occasion_status_counts": {
+      "GENERAL": 59210,
+      "REVIEW_REQUIRED": 1473,
+      "SEASONAL_EVENT": 1248
+    }
+  },
+  "baseline_example_comparison": {
+    "CLEAR": {
+      "original_track_count": 49,
+      "occasion_status_counts": {
+        "GENERAL": 45,
+        "SEASONAL_EVENT": 4
+      },
+      "not_general_track_ids": [
+        "00ZGWtUFiGqWuFd7i4OeZV",
+        "01hV2UktTReYejmCouZ3dV",
+        "02NLx3HFHZhO2X7zT5e5DH",
+        "05nVzquNFrojXKRkyuZrPV"
+      ]
+    },
+    "CLOUDY": {
+      "original_track_count": 46,
+      "occasion_status_counts": {
+        "GENERAL": 43,
+        "REVIEW_REQUIRED": 3
+      },
+      "not_general_track_ids": [
+        "0H0NjRO6P3UAiMU5kJtKoW",
+        "0TkAuvwgK4ciIAeKQezeSb",
+        "0ZamEnH0D9EvQD1GchY21Y"
+      ]
+    },
+    "OVERCAST": {
+      "original_track_count": 45,
+      "occasion_status_counts": {
+        "GENERAL": 43,
+        "SEASONAL_EVENT": 2
+      },
+      "not_general_track_ids": [
+        "0HOrX3f1vhUpn5hknKAM9W",
+        "0KAiWkzEGqxjZqXDT0IwIz"
+      ]
+    },
+    "RAIN": {
+      "original_track_count": 44,
+      "occasion_status_counts": {
+        "GENERAL": 38,
+        "SEASONAL_EVENT": 5,
+        "REVIEW_REQUIRED": 1
+      },
+      "not_general_track_ids": [
+        "04JS6OitE9VGsIS3S94Osg",
+        "0KAiWkzEGqxjZqXDT0IwIz",
+        "0WOFJR54wyTwLB11jcBDb1",
+        "0adVktNVJXPZfhQe6B1NO5",
+        "0qGUX18J2oU5ccXn9IwJEU",
+        "15BFn2VmEtonsXfNL1lUmy"
+      ]
+    },
+    "SNOW": {
+      "original_track_count": 67,
+      "occasion_status_counts": {
+        "SEASONAL_EVENT": 12,
+        "GENERAL": 54,
+        "REVIEW_REQUIRED": 1
+      },
+      "not_general_track_ids": [
+        "00970cTs7LnxWt0d5Qk08m",
+        "0LZgf4LDn9hHNTtNgKhC0u",
+        "0SidD5FXjLY20EffJQDAI7",
+        "0WTigS05Km2D4NCg3p6AwN",
+        "0XOoWlEiKzyF5VS4oh3Yb6",
+        "0huiFyRSfBMAcFCErjxbiL",
+        "0pcxVCyHagJp84hRZJNaMs",
+        "0qHnnTrylCi1qnzdd4gM1S",
+        "0uZ14vmYf9O5LirYjN84GL",
+        "0xyWTqEEgiI5VZWSrHB8kh",
+        "13P0lQZCbajf0rkXKkui4P",
+        "1D0jiXy3pWSk1QxcB8WWhY",
+        "1IgtHMtJcoGSE5gHqC1diy"
+      ]
+    }
+  },
+  "checks": {
+    "source_sha256_matched": true,
+    "original_scores_copied_without_recalculation": true,
+    "general_weather_union_equals_general_base": true,
+    "mixed_exact_intersection": true,
+    "all_examples_general_only": true,
+    "all_examples_unique": true,
+    "automatic_shortening": false,
+    "held_tracks_restored": false
+  }
+}

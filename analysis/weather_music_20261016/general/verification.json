@@ -1,0 +1,46 @@
+{
+  "status": "PASS",
+  "scope": "PERSISTED_ANALYSIS_CSV_NOT_LIVE_PLAYBACK",
+  "source_dataset_sha256": "b202fa49909b2d5cef71a04b1d21243cfeb36414535f2ca9272aa646721177bd",
+  "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+  "checked_pool_rows": 104044,
+  "source_and_original_analysis_hashes_unchanged": true,
+  "manifest_artifact_hashes_matched": true,
+  "original_all_column_strings_preserved": true,
+  "all_occasion_decisions_matched": true,
+  "general_union_equals_screened_base": true,
+  "mixed_exact_intersection": true,
+  "examples": {
+    "CLEAR": {
+      "track_count": 47,
+      "duration_ms": 10800000,
+      "all_general": true
+    },
+    "CLOUDY": {
+      "track_count": 45,
+      "duration_ms": 10800000,
+      "all_general": true
+    },
+    "OVERCAST": {
+      "track_count": 46,
+      "duration_ms": 10800000,
+      "all_general": true
+    },
+    "RAIN": {
+      "track_count": 43,
+      "duration_ms": 10800000,
+      "all_general": true
+    },
+    "SNOW": {
+      "track_count": 68,
+      "duration_ms": 10800000,
+      "all_general": true
+    },
+    "RAIN_SNOW_INTERSECTION": {
+      "track_count": 58,
+      "duration_ms": 10800000,
+      "all_general": true
+    }
+  },
+  "listening_or_live_streaming_verified": false
+}
