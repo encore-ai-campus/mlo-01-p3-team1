@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:cafe-weather:phase3:contracts:20261014-1",
+  "$id": "urn:cafe-weather:phase3:contracts:20261016-1",
   "title": "3차 확정 API 입력·공통 응답·평가 이벤트 계약",
-  "description": "문서 계약입니다. 업무 소유·멱등·ACTIVE 날씨 정책·등록 곡·시간·신규 곡 수의 의미 검증은 서버에서 수행합니다. 실제 음악 스냅샷 규격·날씨 조회 전체 응답은 자료 대기입니다.",
+  "description": "문서 계약입니다. 기본 요청의 weather_influence_mode 생략은 ON, 재설정 생략은 부모 모드 상속입니다. 모드별 곡 자격·시간·소유·멱등·신규 곡 수의 의미 검증은 서버에서 수행합니다.",
   "$defs": {
     "BasicRequest": {
       "type": "object",
@@ -14,6 +14,10 @@
         "option_version": {
           "type": "string",
           "minLength": 1
+        },
+        "weather_influence_mode": {
+          "type": "string",
+          "enum": ["ON", "OFF"]
         },
         "vocal_option": {
           "type": "string",
@@ -68,6 +72,10 @@
         "option_version": {
           "type": "string",
           "minLength": 1
+        },
+        "weather_influence_mode": {
+          "type": "string",
+          "enum": ["ON", "OFF"]
         },
         "vocal_option": {
           "type": "string",
@@ -946,4 +954,3 @@
     }
   }
 }
-

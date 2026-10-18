@@ -1,9 +1,19 @@
 # 카페 날씨 기반 음악 서비스
 
+2026-10-16 최신 구현: 시·도→시·군·구→읍·면·동 선택, 목업 기준 광고 관리 화면, 날씨 반영 OFF의 지역 생략을 적용했습니다. 현재 입력 계약은 [phase3-20261016.2](./config/contracts/basic-request.phase3-20261016.2.schema.json), 변경 전후·원문 차이·검증은 [통합 변경 라우팅 7절](./docs/development/서비스_통합_구현_변경_라우팅.md#7-사용자-지적-3건의-실제-구현-수정--2026-10-16)을 확인합니다. 인프라 접속은 이번 사용자 지시에 따라 생략합니다.
+
 지역의 날씨와 음악 취향을 반영해 카페 운영자에게 선곡표를 제공하는 서비스입니다.
 
-- 수정일: 2026-10-14
-- 현재 단계: 제품 설계·데이터 인계·개발 계약 정리. 애플리케이션 코드는 구현 전입니다.
+- 수정일: 2026-10-16
+- 현재 단계: develop에 광고·추천/음악·공개 화면·날씨 코드를 수령한 뒤 폴더/개발 경로를 정리했습니다. 공통 인증·피드백·음악 관리·광고 인증·날씨 어댑터를 통합 작업 중이며 실제 운영 DB/호스트 연결은 별도 검증 대상입니다.
+
+## 통합 작업 시작점 — 2026-10-16
+
+기준은 `develop@b4499c5`이며 광고(PR #5), 추천·음악·공개 화면(PR #6), 날씨(PR #7)가 반영돼 있습니다. 당시 기준의 INF 코드는 별도였으며, 현재 feature/integration 작업 트리에는 인프라 코드·CI와 공통 연결 구현을 가져왔습니다. 아직 커밋/푸시하지 않았습니다.
+
+현재 실제 경로·분리된 실행 환경·이동 전후 매핑·검증은 [통합 폴더 변경 라우팅](./docs/development/통합_폴더_정리_변경_라우팅.md), 분야별 문서 진입은 [개발 문서 색인](./docs/development/README.md), 설정 위치는 [환경 설정 안내](./config/environments/README.md)를 먼저 확인합니다. 수령 원문은 보존하며 예전 코드 경로는 변경 라우팅의 매핑으로 찾아갑니다.
+
+추천·음악의 기존 구현/검증 이력은 [C 실행 인계](./docs/runbook/C_구현과_연결_인계.md)와 [C 검증 기록](./docs/acceptance/C_로컬_검증_20261015.md), 광고는 [광고 실행 인계](./docs/runbook/광고_서버_개발_준비.md)를 따릅니다. 과거 실행 결과와 이번 경로 변경 검증을 구분합니다.
 
 ## 1. 프로젝트 소개
 
@@ -24,7 +34,7 @@
 | 관리자 | 로그인·음악 등록/검수·제외 피드백 조회·광고 운영/통계 |
 | 광고 | 상하단 배너·별도 측정. 익명 문맥/광고별 노출60초·클릭5분 제한, 지연5분·발생일KST, 광고 원본/delivery90일·집계/예상 원장/관리 변경 이력365일 |
 
-표준 선곡 목표는 180분이며 후보 부족이 확인되면 최대 25% 자동 단축 정책을 적용합니다. 메인에는 재생시간을 표시하지 않고 서버에서 검증합니다. 날씨 적합도 W·음악 입력 보강 등 남은 사항은 [확인·인계 목록](./docs/product/3차_사용자_확인과_담당자_인계_목록.md)에서 관리합니다.
+표준 선곡 목표는 180분, 허용 범위는 176~184분이며 자동 단축은 사용하지 않습니다. 메인에는 재생시간을 표시하지 않고 서버에서 검증합니다. W 공식은 음악 통합 계약의 50:45:5와 0~100 척도를 적용하고, 취향 선택 시 전체75:25를 유지합니다. 혼합 최초 auto/fast·실제 검수·환경 등 미정은 임의 확정하지 않습니다.
 
 화면 참고: [메인](./docs/assets/mockups/05-main-v8-compact-feedback-no-language.png) · [로그인](./docs/assets/mockups/06-login.png) · [광고 관리자](./docs/assets/mockups/07-admin-ads.png)
 
@@ -35,17 +45,17 @@
 | 영역 | 기술/구성 |
 |---|---|
 | 프론트엔드 | React · TypeScript · Vite |
-| API | Python · FastAPI · Pydantic |
-| 온라인 업무 DB | PostgreSQL · SQLAlchemy · Alembic |
+| API | Python · Django · Django REST Framework |
+| 온라인 업무 DB | PostgreSQL · Django ORM/migrations (로컬 고정 검증은 명시적 SQLite 모드) |
 | 규칙 추천 작업자 | Python · OR-Tools CP-SAT |
 | 명시 재설정 | Gemini 3.8 Flash (`gemini-3.8-flash`) · Google Gen AI Python SDK (`google-genai`) |
 | 이벤트 처리 | Kafka · Spark |
-| 피드백 장기 데이터 | Delta Lake |
+| 로그·피드백 | PostgreSQL · B 담당 실제 파이프라인 연결 대기 |
 | 날씨 이력·최신 조회 | MongoDB · Elasticsearch |
 | 날씨 원문 보관 | 로컬 파일 · S3 |
 | 환경 | 로컬 클러스터 연결 검증 후 AWS 이전 |
 
-음악은 보유 CSV와 16개 관리 컬럼 기준으로 정제·검수하며 음악 RDB 제품/DDL은 별도 인계 사항입니다. 기술 상세는 [공통 개발 계약](./docs/product/3차_공통_개발_계약과_검증_기준.md)을 따릅니다.
+음악은 저장소에 포함한 [spotify_dataset.csv](./docs/handoff/music/spotify_dataset.csv)와 추천·표시18개＋검수 보조1개를 사용합니다. 음악4개 테이블의 ORM 모델/초기 migration은 작성했으며 실제 음악 RDB 제품/접속/운영 DDL 확정과는 구분합니다. [음악 인계](./docs/handoff/music/README.md)와 C 실행 인계를 함께 확인합니다.
 
 ## 4. 시스템 구성도
 
@@ -54,7 +64,7 @@
 ```mermaid
 flowchart TB
     subgraph DATA[데이터 준비]
-        CSV[음악 CSV] --> REVIEW[정제·수동 검수]
+        CSV[음악 CSV] --> REVIEW[원본 변환·분류 검수]
         REVIEW --> MUSIC[검증된 음악 RDB 카탈로그]
         KMA[기상청 API허브] --> COLLECT[날씨 수집]
         COLLECT --> RAW[원문: 로컬·S3]
@@ -64,7 +74,7 @@ flowchart TB
         MONGO --> ES[Elasticsearch 최신 조회]
     end
     subgraph SERVICE[추천 서비스]
-        WEB[공개 화면·지역/취향 선택] --> API[FastAPI]
+        WEB[공개 화면·지역/취향 선택] --> API[Django]
         ES --> API
         API --> WORKER[추천 작업자]
         MUSIC --> WORKER
@@ -80,7 +90,7 @@ flowchart TB
         RESULT --> SAVE[API 상태·피드백·outbox 원자 저장]
         SAVE --> FK[Kafka]
         FK --> FS[Spark 정제·집계]
-        FS --> DELTA[Delta Lake]
+        FS --> LOGDB[PostgreSQL 로그·피드백]
     end
 ```
 
@@ -88,28 +98,36 @@ flowchart TB
 
 ## 5. 폴더 구조와 담당 분야
 
-현재 저장소는 문서·계약·검증 자료·시안 중심입니다.
-
 ```text
-.
-├─ README.md                 프로젝트 안내
-├─ AGENTS.md                 담당 경계·작업 기준
-├─ CONTRIBUTING.md           GitHub 협업 방침
-└─ docs/
-   ├─ product/               기능·설계·추천·태스크·공통 계약
-   │  └─ archive/            이전 설계 이력
-   ├─ contracts/             기계 판독 계약
-   ├─ fixtures/              문서 단계의 고정 검증 자료
-   ├─ handoff/
-   │  ├─ infra/              인프라 인계
-   │  ├─ music/              음악 규격 인계
-   │  └─ weather/            날씨 수집·정제·저장 인계
-   └─ assets/
-      ├─ mockups/            화면 시안·생성 프롬프트
-      └─ penguin/            확정 공통 펭귄 원본
+frontend/
+  src/features/             공개 추천·날씨·음악 선택·평가·광고 배너·안내·관리 화면
+  src/shared/               공통 API 클라이언트·타입
+  src/components/           공통 헤더·아이콘
+  tests/                    개발 API 프록시 연결 검증
+backend/
+  cafe/                     추천/공통 API 호스트 설정·URL
+  recommendation/           추천 API·작업자·결과/평가
+  music/                    음악 모델·발행·migration
+  weather/                  지역·도로명·날씨 조회 함수(HTTP 어댑터 연결 대기)
+ad-server/
+  backend/                  독립 광고 Django·MongoDB·광고 작업자·로컬 도구
+  config/environments/ads/   광고 로컬 DB 환경
+pipeline/
+  music/                    음악 입력·정제
+  weather/                  날씨 수집·정규화·저장/발행·Spark 패키징
+config/environments/        실행 단위별 환경 위치 안내
+tests/                     날씨 경로·Spark ZIP 회귀 검증
+docs/
+  development/              현행 코드 경로·변경 라우팅·문서 색인
+  backend-routing/          기존 광고 파일별 인계 색인
+  handoff/                  수령 원문(변경하지 않음)
+  product/                  제품 기준·보관 이력
+  runbook/ acceptance/       기존 실행·검증 이력
+  contracts/ fixtures/      API 계약·고정 예시
+  assets/                   목업·공통 펭귄 원본
 ```
 
-구현 시 `frontend/`, `backend/`, `pipeline/`, `config/`, 실행 테스트용 `fixtures/`를 추가합니다. 협업 설정은 `.github/`, 실행/검증 기록은 `docs/runbook/`·`docs/acceptance/`에 구성할 예정입니다. 이 경로들은 현재 구현 완료된 폴더가 아닙니다.
+광고와 추천은 현재 별도 Django 실행 단위입니다. 같은 가상환경에 의존성을 합치지 않습니다. Vite에서 광고 API는 기본 8000, 나머지 API는 기본 8001로 전달합니다. 공유 ADMIN/guest·지역 HTTP API·날씨 추천 입력 어댑터와 운영 배포는 이 폴더 정리로 완료되지 않습니다.
 
 | 담당 | 분야 |
 |---|---|
@@ -123,35 +141,35 @@ flowchart TB
 
 ## 6. 개발 시작 방법
 
-현재 실행 가능한 앱과 의존성/잠금 파일은 없습니다. 설치·실행 명령은 각 기능 구현 후 추가합니다.
+1. [개발 문서 색인](./docs/development/README.md)에서 제품 기준 → 분야별 인계 → 현재 코드 경로 순서로 확인합니다.
+2. [환경 설정 안내](./config/environments/README.md)에 따라 추천·광고·날씨 의존성과 설정을 분리합니다. 실제 비밀값은 추적하지 않습니다.
+3. 추천 API는 기존 루트 가상환경에서 `python -m backend.manage runserver 127.0.0.1:8001`, 광고 API는 광고 가상환경/폴더에서 `python manage.py run_ads_dev --port 8000`을 사용합니다. 해당 실행 모드의 필수 설정과 공유 인증 대기를 먼저 확인합니다.
+4. 프론트는 `frontend/`에서 `pnpm dev`로 실행합니다. 개발 프록시 목적지는 `.env.local`에서 지정할 수 있습니다. 광고 sandbox의 단독 8001 실행과 추천 API 8001을 동시에 사용하지 않습니다.
+5. 날씨 명령은 저장소 루트에서 `python -m pipeline.weather.run_collector`, `python -m pipeline.weather.submit_spark`, `python -m pipeline.weather.publish_admin`입니다. 이 명령들은 실제 외부 호출/저장을 수행하므로 INF/A 설정과 준비가 필요하며 이번 정리에서 실행하지 않았습니다.
 
-1. [서비스 흐름](./docs/product/카페_음악_서비스_기능_및_사용자_흐름_정리.md)과 [공통 개발 계약](./docs/product/3차_공통_개발_계약과_검증_기준.md)으로 기능·API·상태 기준을 확인합니다.
-2. [구현 태스크](./docs/product/카페_음악_추천_서비스_3차_구현_태스크.md)에서 담당 작업 ID와 직접 선행 조건을 확인합니다.
-3. [인프라 인계 안내](./docs/handoff/infra/README.md)의 로컬 가이드 → AWS 계획 순서로 읽고 INF와 실제 버전·서비스 배치·접속을 검증합니다. AWS 계획의 공개 예시 값과 미조율 서비스 계약을 실제 설정으로 사용하지 않습니다.
-4. A의 날씨 계약/고정 샘플을 공유해 B/C가 병행 개발하고 최소 추천 흐름부터 연결합니다.
-5. 각 담당이 실행 명령·환경 변수 이름·검증/복구 결과를 기록하고 실제 자료 연결을 별도로 확인합니다.
-
-실제 비밀키·비밀번호·개인정보는 저장소에 넣지 않습니다. 자료 수령·샘플 검증과 실제 운영 연결은 구분합니다.
+날씨 `.env` 인계 위치는 `pipeline/weather/.env`입니다. 기상청 KMA_API_KEY는 실행 환경변수가 없을 때 이 파일에서 자동으로 읽습니다. Kafka·DB 등 다른 설정과 추천 서버 설정은 프로세스 환경변수로 전달해야 합니다. [날씨 환경설정 변경 라우팅](./docs/development/날씨_환경설정_변경_라우팅.md)을 확인합니다. 추천·광고 작업자/자료 준비와 실제 실행의 자세한 경계는 [통합 폴더 변경 라우팅](./docs/development/통합_폴더_정리_변경_라우팅.md)을 따릅니다.
 
 ## 7. 협업 방법과 상세 문서
 
-브랜치 기본안은 `main`(검증된 기준/릴리스)·`develop`(통합)·작업별 브랜치입니다. develop에서 분기해 PR·리뷰로 통합하고 검증 후 main에 반영합니다. 현재 원격 저장소·main/develop·보호 설정·CI는 구성 전이며 상세 절차는 [CONTRIBUTING.md](./CONTRIBUTING.md)를 따릅니다.
+브랜치 기본안은 `main`(검증된 기준/릴리스)·`develop`(통합)·작업별 브랜치입니다. develop에서 분기해 PR·리뷰로 통합하고 검증 후 main에 반영합니다. 원격 저장소와 main/develop은 존재합니다. 보호 설정·필수 CI의 실제 적용 여부는 별도 확인 대상이며 상세 절차는 [CONTRIBUTING.md](./CONTRIBUTING.md)를 따릅니다.
 
 | 문서 | 확인할 내용 |
 |---|---|
 | [서비스 기능 및 사용자 흐름](./docs/product/카페_음악_서비스_기능_및_사용자_흐름_정리.md) | 기능·화면·3차/4차 범위 |
 | [구현 설계도](./docs/product/카페_음악_서비스_구현_설계도.md) | API·저장·작업 처리·예외 |
-| [추천 로직 가이드](./docs/product/카페_음악_추천_서비스_3차_컬럼_기반_추천_로직_가이드.md) | 음악16개·기본 규칙·시간·검증 |
+| [음악 통합 계약](./docs/product/3차_음악_정책_통합_계약.md) | 현행 음악18개/검수 보조·필수 필터·규칙/Gemini·176~184분 |
 | [Gemini 재설정 설계](./docs/product/카페_음악_서비스_3차_Gemini_API_추천_설계.md) | 외부 응답·후보 제한·실패/부모 보존 |
 | [구현 태스크](./docs/product/카페_음악_추천_서비스_3차_구현_태스크.md) | 작업 ID·선행 관계·완료 조건 |
 | [공통 개발 계약](./docs/product/3차_공통_개발_계약과_검증_기준.md) | 기술·입출력·상태·공통 검증 |
 | [확인·인계 목록](./docs/product/3차_사용자_확인과_담당자_인계_목록.md) | 남은 결정·담당 자료·보완 사항 |
 | [구현 결정과 원문 보관](./docs/product/3차_구현_결정과_익명문맥_원문보관_가이드.md) | 최신 결정·익명 소유·로컬/S3·인프라 수령 상태 |
 | [광고 정책과 결정사항](./docs/product/3차_광고_운영_회의_결정사항_목록.md) | 광고 운영·측정·초기 정책과 남은 결정 |
-| [음악 컬럼 정의](./docs/handoff/music/음악_분류_컬럼_정의.md) | 음악16개·수동 특성·검수 입력 |
+| [음악 컬럼 정의](./docs/handoff/music/음악_분류_컬럼_정의.md) | 음악18개·원본 변환·검수 우선 입력 |
 | [날씨 인계 자료](./docs/handoff/weather/01_날씨_수집과_지역매핑.md) | 수집/지역 매핑부터 정제·저장·분류로 연결 |
 | [인프라 인계 안내](./docs/handoff/infra/README.md) · [AWS 구축 계획](./docs/handoff/infra/AWS_인프라_구축_계획서.md) | 로컬 개발에서 AWS 이전으로 연결·원문 수령 상태·서비스 조율 사항 |
 
 안내 시안: [1 지역·날씨](./docs/assets/mockups/01-guide-region-weather-3step.png) · [2 음악 취향](./docs/assets/mockups/02-guide-music-3step.png) · [3 선곡표](./docs/assets/mockups/03-guide-playlist-3step.png). 공통 자산은 [확정 펭귄 PNG](./docs/assets/penguin/penguin-guide-first.png)를 재사용합니다.
 
 이전 정책은 `docs/product/archive/`에 보관합니다. 시안·인계 자료의 시험 이력과 현행 계약은 구분하며 미확보 코드 링크는 실제 실행 경로로 간주하지 않습니다.
+
+현재 기능 연결의 구현·시험·남은 운영 연결과 2026-10-16 재지정된 날씨 문서 기준은 [서비스 통합 구현 변경 라우팅](./docs/development/서비스_통합_구현_변경_라우팅.md)을 우선 확인합니다. 수령 원문은 보존하며, 날씨의 최신 저장 방향은 PostgreSQL 매핑 / Elasticsearch 최신·공통 특징 / 원천 응답 파일 미보관입니다.

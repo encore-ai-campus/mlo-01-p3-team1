@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="same-origin">
+<title>{{ presentation.login_title }} · {{ presentation.service_name }} {{ presentation.service_accent }}</title>
+<link rel="stylesheet" href="/dev/ads/assets/ads.css"></head><body><header class="site-header"><div class="header-inner">
+  <a class="brand" href="/dev/ads/">{{ presentation.service_name }} <span>{{ presentation.service_accent }}</span></a>
+  <span class="admin-badge">{{ presentation.admin_badge }}</span>
+  <div class="header-account"><span class="local-label">{{ presentation.local_mode }}</span></div>
+</div></header>
+<main class="login-layout"><section class="login-card">
+  <div class="login-art"><img src="/dev/ads/assets/penguin.png" width="132" height="132" alt="파란 목도리를 두른 안내 펭귄"></div>
+  <span class="environment-pill">{{ presentation.local_mode }}</span><h1>{{ presentation.login_title }}</h1><p class="page-description">{{ presentation.login_description }}</p>
+  <form method="post" action="/dev/ads/login">{% csrf_token %}
+    <div class="field"><label for="access-code">로컬 접근 코드</label><input id="access-code" name="access_code" type="password" required autocomplete="off" autofocus placeholder="access.txt의 코드를 입력하세요"></div>
+    {% if error %}<p class="message error" role="alert">{{ error }}</p>{% endif %}
+    <button class="primary login-button" type="submit">관리 화면 열기 <span>→</span></button>
+  </form><div class="login-help"><strong>접근 코드는 어디 있나요?</strong><p>실행 터미널에 표시된 access.txt 파일에서 확인하세요.<br>서버를 다시 시작하면 코드가 새로 발급됩니다.</p></div>
+  <p class="login-footnote">이 컴퓨터의 광고 시험 환경입니다.<br>공유 서비스 계정과 별도로 사용합니다.</p>
+</section></main></body></html>

@@ -1,0 +1,39 @@
+# ad-server/backend/tests/test_ads_delivery_policy.py
+
+- 작성일: 2026-10-15
+- 수정일: 2026-10-15
+- [원본 코드](../../../../../../ad-server/backend/tests/test_ads_delivery_policy.py)
+
+배달 마감·소재 자격의21개 순수 helper 시험입니다. 기본30분/추가300초·광고 종료 단축·명시적 다음 KST 자정 cap·자정에 정확히 발급/도달·UTC밀리초·양의 정수 TTL·자정 cap 기본 미적용/strict bool·잘못된 시각/표현 범위 초과를 검증합니다.
+
+현재 creative_version/placement 변경은 부적격, 수정 전 역사 snapshot은 적격임을 확인합니다. 필드 누락/빈 참조·입력 불변과 paused/기간/예산 검사 분리도 확인합니다. 실제 운영 정책 확정·provider 활성화·MongoDB/브라우저 실행을 의미하지 않습니다.
+
+## AST 시그니처
+
+```python
+class DeliveryDeadlinesTests(SimpleTestCase)
+DeliveryDeadlinesTests.setUp(self)
+DeliveryDeadlinesTests.test_default_display_is_thirty_minutes_and_report_has_five_more(self)
+DeliveryDeadlinesTests.test_campaign_end_shortens_display_but_retains_reporting_grace(self)
+DeliveryDeadlinesTests.test_next_kst_midnight_caps_display_and_report_crosses_into_next_day(self)
+DeliveryDeadlinesTests.test_unconfirmed_midnight_cap_is_not_enabled_by_default(self)
+DeliveryDeadlinesTests.test_midnight_cap_rejects_non_boolean_configuration(self)
+DeliveryDeadlinesTests.test_issue_exactly_at_kst_midnight_uses_the_following_midnight(self)
+DeliveryDeadlinesTests.test_offset_input_and_millisecond_precision_are_normalized_to_utc(self)
+DeliveryDeadlinesTests.test_custom_positive_ttl_still_has_separate_report_grace(self)
+DeliveryDeadlinesTests.test_ttl_exactly_reaching_midnight_keeps_reporting_grace(self)
+DeliveryDeadlinesTests.test_campaign_end_must_be_strictly_after_issue(self)
+DeliveryDeadlinesTests.test_millisecond_normalization_cannot_create_a_zero_length_display(self)
+DeliveryDeadlinesTests.test_naive_or_invalid_times_are_rejected(self)
+DeliveryDeadlinesTests.test_ttl_rejects_booleans_nonintegers_and_nonpositive_values(self)
+DeliveryDeadlinesTests.test_unrepresentable_ttl_is_a_domain_validation_error(self)
+DeliveryDeadlinesTests.test_unrepresentable_next_midnight_is_a_domain_validation_error(self)
+class DeliveryCreativePolicyTests(SimpleTestCase)
+DeliveryCreativePolicyTests.setUp(self)
+DeliveryCreativePolicyTests.test_current_matching_creative_and_placement_are_eligible(self)
+DeliveryCreativePolicyTests.test_current_creative_replacement_or_placement_change_invalidates_old_delivery(self)
+DeliveryCreativePolicyTests.test_pre_edit_occurrence_uses_the_old_historical_snapshot(self)
+DeliveryCreativePolicyTests.test_missing_invalid_or_blank_creative_references_are_ineligible(self)
+DeliveryCreativePolicyTests.test_helpers_leave_period_state_and_budget_checks_to_the_service(self)
+DeliveryCreativePolicyTests.test_creative_checks_do_not_mutate_delivery_or_ad(self)
+```
