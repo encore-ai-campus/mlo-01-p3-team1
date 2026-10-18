@@ -2,7 +2,18 @@ from django.urls import path
 from backend.recommendation import api
 from backend.common import api as common, music_api, history_api
 
+from backend.recommendation import youtube_review_api as review
+from backend.recommendation.youtube_queue_api import YoutubeQueue
+
 urlpatterns = [
+    path('api/youtube-review/status',review.ReviewStatus.as_view()),
+    path('api/youtube-review/tracks',review.ReviewTracks.as_view()),
+    path('api/youtube-review/mappings',review.ReviewMappings.as_view()),
+    path('api/youtube-review/import',review.ReviewImport.as_view()),
+    path('api/youtube-review/verify',review.ReviewVerify.as_view()),
+    path('api/youtube-review/native-verify',review.ReviewNativeVerify.as_view()),
+    path('api/youtube-review/native-block',review.ReviewNativeBlock.as_view()),
+    path('api/youtube-review/block',review.ReviewBlock.as_view()),
     path('health/',common.Health.as_view()),
     path('api/auth/me',common.Me.as_view()),
     path('api/auth/login',common.Login.as_view()),
@@ -24,6 +35,8 @@ urlpatterns = [
     path('api/recommendation-jobs',api.Jobs.as_view()),
     path('api/recommendation-jobs/<str:pk>',api.JobDetail.as_view()),
     path('api/playlists/<str:pk>',api.PlaylistDetail.as_view()),
+    path('api/playlists/<str:pk>/youtube-playback',api.YoutubePlayback.as_view()),
+    path('api/playlists/<str:pk>/youtube-queue',YoutubeQueue.as_view()),
     path('api/playlists/<str:pk>/regenerations',api.Regenerate.as_view()),
     path('api/playlists/<str:pk>/weather-refresh',api.WeatherRefresh.as_view()),
     path('api/playlists/<str:pk>/approval',api.Approve.as_view()),

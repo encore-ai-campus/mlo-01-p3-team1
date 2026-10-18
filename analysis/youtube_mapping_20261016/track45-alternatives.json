@@ -1,0 +1,139 @@
+{
+  "schema_version": "YOUTUBE_TRACK_ALTERNATIVES_RESEARCH_V1",
+  "research_date": "2026-10-16",
+  "source_position": 45,
+  "source_file": "docs/acceptance/assets/dashboard-general-result-20261016.json",
+  "source_file_sha256": "233880987fe3436650368ada98a25a2c00a905a70659e7d2d1e135124326e280",
+  "source_track": {
+    "track_id": "05oFyvdztPdpwSwpoclD4c",
+    "track_name": "If You Leave - From \"Pretty In Pink\"",
+    "artists_name": "Orchestral Manoeuvres In The Dark",
+    "album_name": "If You Leave",
+    "duration_ms": 268546,
+    "occasion_status": "GENERAL",
+    "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+    "occasion_decision_version": "abab8efcf04c7e00392df464bf3c0964beae0e3e502ebaff35de5a205acc576c",
+    "genre_group_codes": [
+      "POP"
+    ],
+    "theme_codes": [],
+    "speed": "fast",
+    "scores": {
+      "W": "100.00",
+      "P": null,
+      "S": "100.00"
+    }
+  },
+  "replaces_candidate": {
+    "youtube_video_id": "n3jO84dtg9M",
+    "status": "NOT_SELECTED_PENDING_ROOT_RECHECK",
+    "reason": "root가 실제 47곡 native 임시 목록 시험에서 이 ID의 자동 생략을 관측했습니다. 삭제·지역제한 등 정확한 원인은 이 연구에서 단정하지 않습니다."
+  },
+  "status": "CANDIDATES_PENDING_ROOT_BROWSER_VERIFICATION",
+  "candidates": [
+    {
+      "priority": 1,
+      "youtube_video_id": "4zbk24eMzQ0",
+      "youtube_title": "If You Leave",
+      "youtube_channel": "Orchestral Manoeuvres in the Dark",
+      "youtube_album_evidence": "If You Leave",
+      "youtube_provider_evidence": "Universal Music Group",
+      "youtube_release_date_evidence": "2009-01-01",
+      "youtube_copyright_evidence": "1986 Virgin Records Limited",
+      "version_alignment": "EXACT_SOURCE_SINGLE_AND_RELEASE_DATE",
+      "verification_note": "원본 Spotify track_id 페이지는 If You Leave 싱글·2009-01-01 발매·4:28을 표시합니다. 공식 자동 제공 영상도 곡·아티스트·If You Leave 앨범·2009-01-01 발매가 일치하고, Tom Lord-Alge 프로듀서를 명시합니다. 대체 후보 중 가장 직접적인 원앨범 일치 근거입니다. 영상 길이 및 native 큐 수용은 root 확인 전입니다.",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=4zbk24eMzQ0",
+        "https://open.spotify.com/track/05oFyvdztPdpwSwpoclD4c",
+        "https://music.amazon.com/albums/B002JB3OVU"
+      ],
+      "youtube_url": "https://www.youtube.com/watch?v=4zbk24eMzQ0",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "checked_at": null,
+      "verified_by": null,
+      "duration_evidence": {
+        "status": "YOUTUBE_DURATION_NOT_OBSERVED",
+        "source_duration_ms": 268546,
+        "source_spotify_display": "4:28",
+        "source_amazon_display": "4:29",
+        "youtube_observed_seconds": null
+      }
+    },
+    {
+      "priority": 2,
+      "youtube_video_id": "tVT5cSp_H3s",
+      "youtube_title": "If You Leave (From \"Pretty In Pink\" Soundtrack)",
+      "youtube_channel": "Orchestral Manoeuvres in the Dark",
+      "youtube_album_evidence": "Synth Pop Off",
+      "youtube_provider_evidence": "Universal Music Group",
+      "youtube_release_date_evidence": "2022-07-11",
+      "youtube_copyright_evidence": "1986 Virgin Records Limited",
+      "version_alignment": "EXACT_SOUNDTRACK_TAG_COMPILATION_REISSUE",
+      "verification_note": "공식 자동 제공 음원에 원본의 Pretty In Pink Soundtrack 표기·아티스트·1986 Virgin 원녹음·Tom Lord-Alge 프로듀서가 일치합니다. 다른 컴필레이션 재수록이므로 원본과 실제 녹음·길이 일치를 추가 확인해야 합니다.",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=tVT5cSp_H3s"
+      ],
+      "youtube_url": "https://www.youtube.com/watch?v=tVT5cSp_H3s",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "checked_at": null,
+      "verified_by": null,
+      "duration_evidence": {
+        "status": "YOUTUBE_DURATION_NOT_OBSERVED",
+        "source_duration_ms": 268546,
+        "source_spotify_display": "4:28",
+        "source_amazon_display": "4:29",
+        "youtube_observed_seconds": null
+      }
+    },
+    {
+      "priority": 3,
+      "youtube_video_id": "d02LyyD8a-w",
+      "youtube_title": "If You Leave (From \"Pretty In Pink\" Soundtrack)",
+      "youtube_channel": "Orchestral Manoeuvres in the Dark",
+      "youtube_album_evidence": "Back To The Eighties'",
+      "youtube_provider_evidence": "Universal Music Group",
+      "youtube_release_date_evidence": "2023-05-30",
+      "youtube_copyright_evidence": "1986 Virgin Records Limited",
+      "version_alignment": "EXACT_SOUNDTRACK_TAG_COMPILATION_REISSUE",
+      "verification_note": "공식 자동 제공 음원에 Pretty In Pink Soundtrack·원아티스트·1986 Virgin·Tom Lord-Alge가 명시됩니다. 원본 싱글 대신 컴필레이션 재수록이므로 실제 녹음·길이와 native 큐 수용 확인 전입니다.",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=d02LyyD8a-w"
+      ],
+      "youtube_url": "https://www.youtube.com/watch?v=d02LyyD8a-w",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "checked_at": null,
+      "verified_by": null,
+      "duration_evidence": {
+        "status": "YOUTUBE_DURATION_NOT_OBSERVED",
+        "source_duration_ms": 268546,
+        "source_spotify_display": "4:28",
+        "source_amazon_display": "4:29",
+        "youtube_observed_seconds": null
+      }
+    }
+  ],
+  "rejected_or_deprioritized": [
+    {
+      "youtube_video_id": "fVnsiFHfeAM",
+      "youtube_title": "If You Leave (Remastered 2019)",
+      "reason": "공식 음원이지만 원본에 없는 명시적 2019 리마스터 버전이므로 우선 대체하지 않습니다."
+    },
+    {
+      "youtube_video_id": "EPmTGFg06zA",
+      "youtube_title": "Orchestral Manoeuvres In The Dark - If You Leave (Official Music Video)",
+      "reason": "공식 MV이며 도입부·영상 길이 차이가 있을 수 있습니다. 정확한 싱글 공식 음원을 우선합니다."
+    }
+  ],
+  "limitations": [
+    "후보 ID·제목·공식 채널·제공자·앨범 근거를 웹검색으로 확인했습니다.",
+    "platform_duration_seconds는 전부 null입니다. 원본 길이 또는 다른 플랫폼의 반올림 길이를 YouTube 실제 길이로 복사하지 않았습니다.",
+    "국내 가용성·실제 재생·native 큐 수용과 동일 녹음 최종 확인은 root 담당입니다.",
+    "기존 part3.json·원본 CSV·문서·코드·DB를 변경하지 않았습니다."
+  ]
+}

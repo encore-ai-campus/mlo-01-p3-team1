@@ -1,0 +1,939 @@
+{
+  "schema_version": "INDEPENDENT_YOUTUBE_PLAYBACK_VERIFICATION_V1",
+  "verified_at": "2026-10-16T06:15:07.553431+00:00",
+  "overall_status": "PASS",
+  "scope": "Read-only comparison of saved source, mapping, selection, metadata and parent-observed native queue artifacts. New result file only; no browser, database, account, media download or audio playback.",
+  "files": {
+    "analysis/youtube_mapping_20261016/mapping-47-verified-v1.json": {
+      "sha256": "39c5056603a08372320835465a75b7d7fd73a58c1d438b07ef3b5bce15174b68"
+    },
+    "analysis/youtube_mapping_20261016/playback-selection-v1.json": {
+      "sha256": "9b64e386131c6525ad0985c15d13c09a7ab15723cfbaa1d6866419596aafef58"
+    },
+    "analysis/youtube_mapping_20261016/final-candidates.json": {
+      "sha256": "8ddf283b072f09b9b388ab41c4a712f06313c8fa782eb1c9dbfc6130099fc7dc"
+    },
+    "analysis/youtube_mapping_20261016/native-final-47-observed.json": {
+      "sha256": "493d80a9e6c91867985a4b91576fae958109752eac99ee7e1166d8ef094a4498"
+    },
+    "analysis/youtube_mapping_20261016/ordered-candidates.json": {
+      "sha256": "0ff000c9d533551d224fef3582bd4ca44b2e34318855f13fa3a9039bf2832375"
+    },
+    "analysis/youtube_mapping_20261016/http-metadata.json": {
+      "sha256": "2a173459b097697c7b65a46cca10253b2a59ee880473651e46eae3f49661d8ba"
+    },
+    "analysis/youtube_mapping_20261016/http-alternatives.json": {
+      "sha256": "7902f9e10f7e32c1be1edaa595ce2eb3ebcfd9467e87ac3c5e5aa8f6fdda94b2"
+    },
+    "analysis/youtube_mapping_20261016/replacement-candidate.json": {
+      "sha256": "752e9cc6a33ecd3994e5173ba1caa27587b40108224f3c680e4e9a40e36d72d6"
+    }
+  },
+  "original_source_file": "docs/acceptance/assets/dashboard-general-result-20261016.json",
+  "original_source_sha256": "233880987fe3436650368ada98a25a2c00a905a70659e7d2d1e135124326e280",
+  "summary": {
+    "check_count": 35,
+    "passed": 35,
+    "failed": [],
+    "tracks": 47,
+    "unchanged_original_source_rows": 46,
+    "removed_track_id": "04hjo1F3q8K5EtY9BQoX0w",
+    "added_track_id": "0WIeJxgsLtiUGqoSxB9Bht",
+    "source_duration_ms": 10632974,
+    "source_duration": "177m12.974s",
+    "youtube_metadata_duration_seconds": 10648,
+    "youtube_metadata_duration": "177m28s",
+    "original_replaced_position": 36,
+    "replacement_native_position": 47,
+    "native_observation_time": "2026-10-16T06:09:51.400Z",
+    "native_playlist_url": "https://www.youtube.com/watch?v=qNq3Qx7oQHE&list=TLGGMtHtKoO40TUxNjEwMjAyNg",
+    "physical_sound_verified": false,
+    "all_tracks_listened": false,
+    "waveform_identity_verified": false
+  },
+  "checks": [
+    {
+      "check": "all4_artifact_counts47",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "all47_track_ids_unique",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "only_original36_removed_and_allonme_added",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "remaining46_relative_order_preserved",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "runtime_mapping_order_equals_selection",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "final_candidate_array_order_equals_runtime_mapping",
+      "status": "PASS",
+      "detail": {
+        "mapping_track_order": [
+          "000RDCYioLteXcutOjeweY",
+          "006Bi4j0yzwOc3y69GOlYV",
+          "00Vp4bBQAZ1s9KEIw5MjgQ",
+          "00qaydBkSEAZAMkf75CfsU",
+          "010LzZsO4eqQUdUv1f1y9m",
+          "012JFkVnfxxnL0dN29j73L",
+          "014DA3BdnmD3kI5pBogH7c",
+          "015ASDUjzFvQrKgVI23aki",
+          "015SmK4Fvjv13dVwtGoMC0",
+          "01R8E80wecrjrq6iwrdZx3",
+          "01xqHIwd7hQLROgelUQ6w2",
+          "01yDjImCcOaHDT4uy6VOPw",
+          "01ymAdRAqv2YG5FTXmXTuz",
+          "022nJwdqNEHRazWpp55bWa",
+          "02GGlQrUckPW2fJmYVpU8l",
+          "02Q9pW0hdgO0OuzkxIRgG6",
+          "02VBYrHfVwfEWXk5DXyf0T",
+          "02YAbVNakOle4LWElPxcc5",
+          "02fuv91GGA2FwaOTiKQVa7",
+          "02gKvoYVXSINVj1HP95yZ6",
+          "02uRToy7bttYcKCO3vIStA",
+          "02yEhcqA7tqfca3gwPxXdF",
+          "0343bYQtSfznf6v90jRLRK",
+          "03I89EqsberXEAapUd1yWu",
+          "03N7wdRyQShcktyGpffq79",
+          "03PjRjDn7JNYY2P57QX8Q5",
+          "03UnPfDS0FvZzi0Z3I7yue",
+          "03Y9Gez0KGG8zYY3KWIqdk",
+          "03YUNUpazIbzwqJq2YSBvB",
+          "03eJ2DclFWXYU8GWgANdmZ",
+          "03tF3P98XyiJrQhxx7q0M6",
+          "045eZUNgQ7hjemzvK7VS2l",
+          "048KE72zqhDQpy7V7YOyRb",
+          "04CHEoMbrLOiX8co3EG5dO",
+          "04fYoQSUTfPhVjyW8aXkix",
+          "04qx1yENXdu9yN6zzRiVfP",
+          "0530i8KhAfzyJfHhjlSlUS",
+          "0572KbbV9g5j56X5ujG8Ax",
+          "05OYrX2wIpHZYVuy56Rce8",
+          "05QsnIXjPo4ZUhvlV1JxfA",
+          "05f8Hg3RSfiPSCBQOtxl3i",
+          "05fHQeRbCSjKVS6z0WbQKJ",
+          "05ngREvdGhL4Omvxw4Hjmo",
+          "05oFyvdztPdpwSwpoclD4c",
+          "05y79YGqS94EQe0v29lHIo",
+          "05zDB03E1WxCLyraJJ2I2r",
+          "0WIeJxgsLtiUGqoSxB9Bht"
+        ],
+        "candidate_track_order": [
+          "000RDCYioLteXcutOjeweY",
+          "006Bi4j0yzwOc3y69GOlYV",
+          "00Vp4bBQAZ1s9KEIw5MjgQ",
+          "00qaydBkSEAZAMkf75CfsU",
+          "010LzZsO4eqQUdUv1f1y9m",
+          "012JFkVnfxxnL0dN29j73L",
+          "014DA3BdnmD3kI5pBogH7c",
+          "015ASDUjzFvQrKgVI23aki",
+          "015SmK4Fvjv13dVwtGoMC0",
+          "01R8E80wecrjrq6iwrdZx3",
+          "01xqHIwd7hQLROgelUQ6w2",
+          "01yDjImCcOaHDT4uy6VOPw",
+          "01ymAdRAqv2YG5FTXmXTuz",
+          "022nJwdqNEHRazWpp55bWa",
+          "02GGlQrUckPW2fJmYVpU8l",
+          "02Q9pW0hdgO0OuzkxIRgG6",
+          "02VBYrHfVwfEWXk5DXyf0T",
+          "02YAbVNakOle4LWElPxcc5",
+          "02fuv91GGA2FwaOTiKQVa7",
+          "02gKvoYVXSINVj1HP95yZ6",
+          "02uRToy7bttYcKCO3vIStA",
+          "02yEhcqA7tqfca3gwPxXdF",
+          "0343bYQtSfznf6v90jRLRK",
+          "03I89EqsberXEAapUd1yWu",
+          "03N7wdRyQShcktyGpffq79",
+          "03PjRjDn7JNYY2P57QX8Q5",
+          "03UnPfDS0FvZzi0Z3I7yue",
+          "03Y9Gez0KGG8zYY3KWIqdk",
+          "03YUNUpazIbzwqJq2YSBvB",
+          "03eJ2DclFWXYU8GWgANdmZ",
+          "03tF3P98XyiJrQhxx7q0M6",
+          "045eZUNgQ7hjemzvK7VS2l",
+          "048KE72zqhDQpy7V7YOyRb",
+          "04CHEoMbrLOiX8co3EG5dO",
+          "04fYoQSUTfPhVjyW8aXkix",
+          "04qx1yENXdu9yN6zzRiVfP",
+          "0530i8KhAfzyJfHhjlSlUS",
+          "0572KbbV9g5j56X5ujG8Ax",
+          "05OYrX2wIpHZYVuy56Rce8",
+          "05QsnIXjPo4ZUhvlV1JxfA",
+          "05f8Hg3RSfiPSCBQOtxl3i",
+          "05fHQeRbCSjKVS6z0WbQKJ",
+          "05ngREvdGhL4Omvxw4Hjmo",
+          "05oFyvdztPdpwSwpoclD4c",
+          "05y79YGqS94EQe0v29lHIo",
+          "05zDB03E1WxCLyraJJ2I2r",
+          "0WIeJxgsLtiUGqoSxB9Bht"
+        ]
+      }
+    },
+    {
+      "check": "remaining46_full_source_rows_deep_equal_original",
+      "status": "PASS",
+      "detail": {
+        "preserved_track_count": 46
+      }
+    },
+    {
+      "check": "source_fields_match_by_track_id_not_array_index",
+      "status": "PASS",
+      "detail": []
+    },
+    {
+      "check": "all47_source_GENERAL",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "replacement_source_projection_preserved",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "replacement_same_clear_genre_speed_score",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "all47_runtime_mapping_VERIFIED",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "all47_research_candidates_remain_CANDIDATE",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "47_unique_valid11_character_video_ids",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "old4_blocked_ids_absent",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "mapping_and_final_candidate_video_ids_match_by_track_id",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "all47_mapping_verification_fields_present",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "all_selection_mapping_versions_match",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "source_result_sha_matches_original",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "dataset_sha_matches_saved_pool_source",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "saved_public_metadata_evidence_matches_by_track_id",
+      "status": "PASS",
+      "detail": []
+    },
+    {
+      "check": "all_platform_lengths_and_deltas_match_metadata",
+      "status": "PASS",
+      "detail": []
+    },
+    {
+      "check": "all47_public_metadata_OK_and_KR_listed",
+      "status": "PASS",
+      "detail": []
+    },
+    {
+      "check": "native47_exact_video_order_equals_runtime_mapping",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "native_indices1_through47",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "mapping_position_fields1_through47",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "source_total10632974_matches_headers",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "youtube_total10648_matches_header",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "both_source_and_youtube_totals176_to184_minutes",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "replacement_total_independently_recomputed",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "test_preview_only_flags_preserved",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "input_files_unchanged_during_this_verification",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "final_candidate_source_positions_contiguous",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "runtime_sort_scope_and_proposed_slot_preserved",
+      "status": "PASS",
+      "detail": null
+    },
+    {
+      "check": "all_input_hashes_still_match_captured_versions",
+      "status": "PASS",
+      "detail": null
+    }
+  ],
+  "duration_identity_warnings": [
+    {
+      "native_position": 1,
+      "original_source_position": 1,
+      "track_id": "000RDCYioLteXcutOjeweY",
+      "youtube_video_id": "qNq3Qx7oQHE",
+      "source_duration_ms": 190203,
+      "youtube_metadata_length_seconds": 187,
+      "difference_ms": -3203,
+      "note": "Difference exceeds 2 seconds; exact edit/waveform identity was not established."
+    },
+    {
+      "native_position": 8,
+      "original_source_position": 8,
+      "track_id": "015ASDUjzFvQrKgVI23aki",
+      "youtube_video_id": "ICn_Fv0XKM8",
+      "source_duration_ms": 213226,
+      "youtube_metadata_length_seconds": 240,
+      "difference_ms": 26774,
+      "note": "Difference exceeds 2 seconds; exact edit/waveform identity was not established."
+    },
+    {
+      "native_position": 37,
+      "original_source_position": 38,
+      "track_id": "0530i8KhAfzyJfHhjlSlUS",
+      "youtube_video_id": "KjLyC1hzSF8",
+      "source_duration_ms": 309775,
+      "youtube_metadata_length_seconds": 304,
+      "difference_ms": -5775,
+      "note": "Difference exceeds 2 seconds; exact edit/waveform identity was not established."
+    }
+  ],
+  "per_track": [
+    {
+      "native_position": 1,
+      "original_source_position": 1,
+      "track_id": "000RDCYioLteXcutOjeweY",
+      "youtube_video_id": "qNq3Qx7oQHE",
+      "source_duration_ms": 190203,
+      "youtube_metadata_length_seconds": 187,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 2,
+      "original_source_position": 2,
+      "track_id": "006Bi4j0yzwOc3y69GOlYV",
+      "youtube_video_id": "KZg_m0z4NLI",
+      "source_duration_ms": 193200,
+      "youtube_metadata_length_seconds": 193,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 3,
+      "original_source_position": 3,
+      "track_id": "00Vp4bBQAZ1s9KEIw5MjgQ",
+      "youtube_video_id": "ZAxUiYgJBE8",
+      "source_duration_ms": 289493,
+      "youtube_metadata_length_seconds": 289,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 4,
+      "original_source_position": 4,
+      "track_id": "00qaydBkSEAZAMkf75CfsU",
+      "youtube_video_id": "T2GYiiCKDtc",
+      "source_duration_ms": 235173,
+      "youtube_metadata_length_seconds": 235,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 5,
+      "original_source_position": 5,
+      "track_id": "010LzZsO4eqQUdUv1f1y9m",
+      "youtube_video_id": "fmQviVOk7s4",
+      "source_duration_ms": 225877,
+      "youtube_metadata_length_seconds": 226,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 6,
+      "original_source_position": 6,
+      "track_id": "012JFkVnfxxnL0dN29j73L",
+      "youtube_video_id": "oU2q27LnONw",
+      "source_duration_ms": 168280,
+      "youtube_metadata_length_seconds": 168,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 7,
+      "original_source_position": 7,
+      "track_id": "014DA3BdnmD3kI5pBogH7c",
+      "youtube_video_id": "EM7MxIsGt98",
+      "source_duration_ms": 270000,
+      "youtube_metadata_length_seconds": 270,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 8,
+      "original_source_position": 8,
+      "track_id": "015ASDUjzFvQrKgVI23aki",
+      "youtube_video_id": "ICn_Fv0XKM8",
+      "source_duration_ms": 213226,
+      "youtube_metadata_length_seconds": 240,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 9,
+      "original_source_position": 9,
+      "track_id": "015SmK4Fvjv13dVwtGoMC0",
+      "youtube_video_id": "ULIX5dVYRY4",
+      "source_duration_ms": 343866,
+      "youtube_metadata_length_seconds": 343,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 10,
+      "original_source_position": 10,
+      "track_id": "01R8E80wecrjrq6iwrdZx3",
+      "youtube_video_id": "IIigySjacSg",
+      "source_duration_ms": 173415,
+      "youtube_metadata_length_seconds": 173,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 11,
+      "original_source_position": 11,
+      "track_id": "01xqHIwd7hQLROgelUQ6w2",
+      "youtube_video_id": "WeHyiXPfm2M",
+      "source_duration_ms": 131039,
+      "youtube_metadata_length_seconds": 131,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 12,
+      "original_source_position": 12,
+      "track_id": "01yDjImCcOaHDT4uy6VOPw",
+      "youtube_video_id": "ap-WOuekCOY",
+      "source_duration_ms": 226442,
+      "youtube_metadata_length_seconds": 226,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 13,
+      "original_source_position": 13,
+      "track_id": "01ymAdRAqv2YG5FTXmXTuz",
+      "youtube_video_id": "kVNgZ85nHrU",
+      "source_duration_ms": 249568,
+      "youtube_metadata_length_seconds": 250,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 14,
+      "original_source_position": 14,
+      "track_id": "022nJwdqNEHRazWpp55bWa",
+      "youtube_video_id": "VTgB3HCS5ZE",
+      "source_duration_ms": 245139,
+      "youtube_metadata_length_seconds": 245,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 15,
+      "original_source_position": 15,
+      "track_id": "02GGlQrUckPW2fJmYVpU8l",
+      "youtube_video_id": "UQgF_l-h--I",
+      "source_duration_ms": 166051,
+      "youtube_metadata_length_seconds": 166,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 16,
+      "original_source_position": 16,
+      "track_id": "02Q9pW0hdgO0OuzkxIRgG6",
+      "youtube_video_id": "Z2z8E7_nfEM",
+      "source_duration_ms": 214986,
+      "youtube_metadata_length_seconds": 215,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 17,
+      "original_source_position": 17,
+      "track_id": "02VBYrHfVwfEWXk5DXyf0T",
+      "youtube_video_id": "YwIblpZRT84",
+      "source_duration_ms": 242096,
+      "youtube_metadata_length_seconds": 242,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 18,
+      "original_source_position": 18,
+      "track_id": "02YAbVNakOle4LWElPxcc5",
+      "youtube_video_id": "dESR5YkSgeg",
+      "source_duration_ms": 256666,
+      "youtube_metadata_length_seconds": 257,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 19,
+      "original_source_position": 19,
+      "track_id": "02fuv91GGA2FwaOTiKQVa7",
+      "youtube_video_id": "LMXK2lie1C8",
+      "source_duration_ms": 286693,
+      "youtube_metadata_length_seconds": 287,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 20,
+      "original_source_position": 20,
+      "track_id": "02gKvoYVXSINVj1HP95yZ6",
+      "youtube_video_id": "OZ9U-EPZILI",
+      "source_duration_ms": 247773,
+      "youtube_metadata_length_seconds": 248,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 21,
+      "original_source_position": 21,
+      "track_id": "02uRToy7bttYcKCO3vIStA",
+      "youtube_video_id": "dldqlKqO8oc",
+      "source_duration_ms": 203050,
+      "youtube_metadata_length_seconds": 203,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 22,
+      "original_source_position": 22,
+      "track_id": "02yEhcqA7tqfca3gwPxXdF",
+      "youtube_video_id": "lWY2dMHob74",
+      "source_duration_ms": 227226,
+      "youtube_metadata_length_seconds": 227,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 23,
+      "original_source_position": 23,
+      "track_id": "0343bYQtSfznf6v90jRLRK",
+      "youtube_video_id": "26RVQMdfYyU",
+      "source_duration_ms": 167911,
+      "youtube_metadata_length_seconds": 168,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 24,
+      "original_source_position": 24,
+      "track_id": "03I89EqsberXEAapUd1yWu",
+      "youtube_video_id": "jFIXI6OekbY",
+      "source_duration_ms": 170720,
+      "youtube_metadata_length_seconds": 171,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 25,
+      "original_source_position": 25,
+      "track_id": "03N7wdRyQShcktyGpffq79",
+      "youtube_video_id": "0PiZAPfq1Cg",
+      "source_duration_ms": 182500,
+      "youtube_metadata_length_seconds": 182,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 26,
+      "original_source_position": 26,
+      "track_id": "03PjRjDn7JNYY2P57QX8Q5",
+      "youtube_video_id": "LB23_dC24ZE",
+      "source_duration_ms": 146933,
+      "youtube_metadata_length_seconds": 147,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 27,
+      "original_source_position": 27,
+      "track_id": "03UnPfDS0FvZzi0Z3I7yue",
+      "youtube_video_id": "bEaO5HSIplw",
+      "source_duration_ms": 155468,
+      "youtube_metadata_length_seconds": 155,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 28,
+      "original_source_position": 28,
+      "track_id": "03Y9Gez0KGG8zYY3KWIqdk",
+      "youtube_video_id": "f3YwemoKWWI",
+      "source_duration_ms": 209960,
+      "youtube_metadata_length_seconds": 210,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 29,
+      "original_source_position": 29,
+      "track_id": "03YUNUpazIbzwqJq2YSBvB",
+      "youtube_video_id": "z49yRsIrW04",
+      "source_duration_ms": 152692,
+      "youtube_metadata_length_seconds": 153,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 30,
+      "original_source_position": 30,
+      "track_id": "03eJ2DclFWXYU8GWgANdmZ",
+      "youtube_video_id": "eOV0rr1P3WQ",
+      "source_duration_ms": 150475,
+      "youtube_metadata_length_seconds": 150,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 31,
+      "original_source_position": 31,
+      "track_id": "03tF3P98XyiJrQhxx7q0M6",
+      "youtube_video_id": "Vwp0s6crl9Q",
+      "source_duration_ms": 252626,
+      "youtube_metadata_length_seconds": 253,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 32,
+      "original_source_position": 32,
+      "track_id": "045eZUNgQ7hjemzvK7VS2l",
+      "youtube_video_id": "4TsTRnjA8rA",
+      "source_duration_ms": 236563,
+      "youtube_metadata_length_seconds": 237,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 33,
+      "original_source_position": 33,
+      "track_id": "048KE72zqhDQpy7V7YOyRb",
+      "youtube_video_id": "ze4NvFQAwg8",
+      "source_duration_ms": 246200,
+      "youtube_metadata_length_seconds": 246,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 34,
+      "original_source_position": 34,
+      "track_id": "04CHEoMbrLOiX8co3EG5dO",
+      "youtube_video_id": "phT2MJAn1KY",
+      "source_duration_ms": 211399,
+      "youtube_metadata_length_seconds": 211,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 35,
+      "original_source_position": 35,
+      "track_id": "04fYoQSUTfPhVjyW8aXkix",
+      "youtube_video_id": "NfAA9FAaO7M",
+      "source_duration_ms": 283480,
+      "youtube_metadata_length_seconds": 283,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 36,
+      "original_source_position": 37,
+      "track_id": "04qx1yENXdu9yN6zzRiVfP",
+      "youtube_video_id": "53t-QjzGrC8",
+      "source_duration_ms": 213333,
+      "youtube_metadata_length_seconds": 213,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 37,
+      "original_source_position": 38,
+      "track_id": "0530i8KhAfzyJfHhjlSlUS",
+      "youtube_video_id": "KjLyC1hzSF8",
+      "source_duration_ms": 309775,
+      "youtube_metadata_length_seconds": 304,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 38,
+      "original_source_position": 39,
+      "track_id": "0572KbbV9g5j56X5ujG8Ax",
+      "youtube_video_id": "7xkRkdOIVWE",
+      "source_duration_ms": 148149,
+      "youtube_metadata_length_seconds": 148,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 39,
+      "original_source_position": 40,
+      "track_id": "05OYrX2wIpHZYVuy56Rce8",
+      "youtube_video_id": "Mb3qWTDnIyk",
+      "source_duration_ms": 195706,
+      "youtube_metadata_length_seconds": 196,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 40,
+      "original_source_position": 41,
+      "track_id": "05QsnIXjPo4ZUhvlV1JxfA",
+      "youtube_video_id": "mkfFvreNpMs",
+      "source_duration_ms": 238960,
+      "youtube_metadata_length_seconds": 238,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 41,
+      "original_source_position": 42,
+      "track_id": "05f8Hg3RSfiPSCBQOtxl3i",
+      "youtube_video_id": "28ZOwVAZS0o",
+      "source_duration_ms": 428851,
+      "youtube_metadata_length_seconds": 429,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 42,
+      "original_source_position": 43,
+      "track_id": "05fHQeRbCSjKVS6z0WbQKJ",
+      "youtube_video_id": "p3tH4Ksu50o",
+      "source_duration_ms": 267000,
+      "youtube_metadata_length_seconds": 267,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 43,
+      "original_source_position": 44,
+      "track_id": "05ngREvdGhL4Omvxw4Hjmo",
+      "youtube_video_id": "Fs-3fP7-HE8",
+      "source_duration_ms": 236693,
+      "youtube_metadata_length_seconds": 237,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 44,
+      "original_source_position": 45,
+      "track_id": "05oFyvdztPdpwSwpoclD4c",
+      "youtube_video_id": "4zbk24eMzQ0",
+      "source_duration_ms": 268546,
+      "youtube_metadata_length_seconds": 269,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 45,
+      "original_source_position": 46,
+      "track_id": "05y79YGqS94EQe0v29lHIo",
+      "youtube_video_id": "liIeZSb7rT0",
+      "source_duration_ms": 272000,
+      "youtube_metadata_length_seconds": 272,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 46,
+      "original_source_position": 47,
+      "track_id": "05zDB03E1WxCLyraJJ2I2r",
+      "youtube_video_id": "OVBl7cdP8zk",
+      "source_duration_ms": 262946,
+      "youtube_metadata_length_seconds": 263,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    },
+    {
+      "native_position": 47,
+      "original_source_position": null,
+      "track_id": "0WIeJxgsLtiUGqoSxB9Bht",
+      "youtube_video_id": "3_K5hKcw1nw",
+      "source_duration_ms": 224626,
+      "youtube_metadata_length_seconds": 225,
+      "metadata_status": "OK",
+      "KR_listed": true,
+      "source_snapshot_preserved": true,
+      "metadata_matches_independent_saved_observation": true
+    }
+  ],
+  "limitations": [
+    "Runtime VERIFIED is checked only within the explicit metadata/KR availability/native queue membership and order scope.",
+    "Physical sound, Premium benefits, full-track listening, waveform/ISRC/fingerprint identity and uninterrupted natural playback were not verified.",
+    "Public availability is timestamped and can change.",
+    "The other 46 source snapshots and their relative order are preserved; appending the replacement at the end is distinguished from replacing original position36 in place.",
+    "The native observation was supplied by root; this verifier independently compared the saved IDs and order without operating a browser.",
+    "Native display duration labels may differ by one second from public integer lengthSeconds; ID/order were compared."
+  ],
+  "ordering_scope": "Runtime ON score ties use track_id order; the approved new ID sorts last. proposed_replacement_slot preserves the earlier preparation order."
+}

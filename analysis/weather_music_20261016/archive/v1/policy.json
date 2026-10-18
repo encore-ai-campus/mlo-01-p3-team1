@@ -1,0 +1,28 @@
+{
+  "policy_version": "WEATHER_SCORE_PROPOSAL_20261016_V1",
+  "status": "PLANNING_INITIAL_PARAMETERS_NOT_FITTED",
+  "model_version": null,
+  "initial_intercept": 100,
+  "score_features": ["energy", "acousticness", "valence", "mode"],
+  "core_features": ["energy", "acousticness"],
+  "parameter_order": ["lower", "upper", "decay_width"],
+  "missing_continuous_feature": "HOLD_WITH_NULL_SCORE",
+  "missing_mode": "COMPONENT_ZERO_PRESERVE_NULL_NO_WEIGHT_REDISTRIBUTION",
+  "boundary_comparison": "INCLUSIVE_EXACT_UNROUNDED",
+  "sorted_by": ["weather_score_desc", "track_id_asc"],
+  "weather_updates": {"reference": "LATEST_VALID_SINGLE_LOCATION_WEATHER", "trigger": "WEATHER_CLASS_CHANGED", "action": "BUILD_NEW_PLAYLIST_VERSION", "forecast_score_average": false, "poll_interval_seconds": null},
+  "mixed_precipitation": {"source_pty": [2, 6], "pool_rule": "INTERSECTION_RAIN_SNOW", "ranking_proposal": "MIN_RAIN_SNOW", "separate_trained_weather_model": false},
+  "score_threshold": 75,
+  "core_component_min": 20,
+  "input_scale": "raw_spotify_0_to_1",
+  "target_duration_ms": 10800000,
+  "min_duration_ms": 10560000,
+  "max_duration_ms": 11040000,
+  "weather": {
+    "CLEAR": {"label": "맑음", "weights": {"energy": 40, "acousticness": 25, "valence": 30, "mode": 5}, "energy": [0.50, 0.80, 0.35], "acousticness": [0.00, 0.55, 0.40], "valence": [0.55, 0.90, 0.35], "preferred_mode": 1, "example_allowed_speeds": ["slow", "medium", "fast", "fastest"]},
+    "CLOUDY": {"label": "구름낌", "weights": {"energy": 30, "acousticness": 35, "valence": 30, "mode": 5}, "energy": [0.30, 0.60, 0.30], "acousticness": [0.25, 0.75, 0.40], "valence": [0.35, 0.65, 0.30], "preferred_mode": 0, "example_allowed_speeds": ["slow", "medium", "fast", "fastest"]},
+    "OVERCAST": {"label": "흐림", "weights": {"energy": 25, "acousticness": 40, "valence": 30, "mode": 5}, "energy": [0.15, 0.45, 0.30], "acousticness": [0.50, 1.00, 0.35], "valence": [0.15, 0.45, 0.30], "preferred_mode": 0, "example_allowed_speeds": ["slow", "medium", "fast", "fastest"]},
+    "RAIN": {"label": "비", "weights": {"energy": 30, "acousticness": 40, "valence": 25, "mode": 5}, "energy": [0.10, 0.40, 0.25], "acousticness": [0.65, 1.00, 0.30], "valence": [0.10, 0.40, 0.30], "preferred_mode": 0, "example_allowed_speeds": ["slow", "medium"]},
+    "SNOW": {"label": "눈", "weights": {"energy": 20, "acousticness": 45, "valence": 30, "mode": 5}, "energy": [0.05, 0.35, 0.25], "acousticness": [0.70, 1.00, 0.30], "valence": [0.45, 0.80, 0.30], "preferred_mode": 1, "example_allowed_speeds": ["slow", "medium"]}
+  }
+}
