@@ -213,12 +213,12 @@ class Manager:
             if result.returncode:raise ValueError('Local template validation failed; no paid resources created')
 
     def ensure(self,profile,kind):
-        a=accounts(self.c)[profile];aws,name,params,template,admin=infra.stack_spec(self.c,a,kind)
-        assert not admin,'Management IAM is not part of create/destroy'
-        body=self.run/'templates'/(template+'.json')
-        expected=json.loads(body.read_text());s=infra.get_stack(aws,name,self.c)
         record_path=self.run/(profile+'-'+kind+'.json')
         record=json.loads(record_path.read_text()) if record_path.exists() else {}
+        a=accounts(self.c)[profile];aws,name,params,template,admin=infra.stack_spec(self.c,a,kind,review_record=record)
+        assert not admin,'Management IAM is not part of create/destroy'
+        body=self.run/'templates'/(template+'.json')
+        expected=json.loads(body.read_text());s=infra.get_stack(aws,name,self.c,review_record=record)
         if s and s['StackStatus'] in TERMINAL:
             t=aws.call('cloudformation','get-template','--stack-name',name,'--template-stage','Original')['TemplateBody']
             t=json.loads(t) if isinstance(t,str) else t
@@ -234,7 +234,7 @@ class Manager:
             if record.get('status','').startswith('unknown'):
                 raise AwsError('Previous create-change-set outcome is unknown; inspect the recorded name before retry')
             if s and s['StackStatus'] not in TERMINAL:raise AwsError('Stack is failed or rolled back; destroy/inspect it before recreate')
-            token=record.get('token') or 'lifecycle-'+uuid.uuid4().hex
+            token=record.get('token') or name+'-create-'+uuid.uuid4().hex[:16]
             record={'token':token,'profile':profile,'kind':kind,'name':name,'status':'change set creation intent','implementation':source_identity()};write(record_path,record)
             args=['--stack-name',name,'--change-set-name',token,'--change-set-type','UPDATE' if s else 'CREATE',
                 '--template-body','file://'+str(body),'--tags',json.dumps(infra.tags(self.c)),
@@ -447,6 +447,10 @@ def main():
     commands=p.add_subparsers(dest='action',required=True)
     commands.add_parser('plan');commands.add_parser('status')
     commands.add_parser('readiness',help='Offline preparation checks; no AWS calls or lifecycle changes')
+    q=commands.add_parser('integration-plan',help='Offline connector/checkpoint/fencing preparation; no AWS calls')
+    q.add_argument('--connector-bundle')
+    q=commands.add_parser('control-plan',help='Offline Control fencing preparation; no AWS calls')
+    q.add_argument('--runtime-bundle',default=str(ROOT/'.local/control-fencing/runtime'))
     q=commands.add_parser('preflight');q.add_argument('--without-alb',action='store_true');q.add_argument('--resolve-inputs',action='store_true');q.add_argument('--connected-cidr',action='append',default=[])
     q=commands.add_parser('create');q.add_argument('--execute',action='store_true');q.add_argument('--without-alb',action='store_true')
     q=commands.add_parser('add-alb');q.add_argument('--execute',action='store_true')
@@ -454,6 +458,18 @@ def main():
     q=commands.add_parser('verify');q.add_argument('--execute',action='store_true')
     q=commands.add_parser('destroy');q.add_argument('--confirm',required=True)
     a=p.parse_args();c=load(a.config)
+    if a.action=='control-plan':
+        import importlib.util
+        spec=importlib.util.spec_from_file_location('control_preparation',ROOT/'bin/control-fencing.py')
+        module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+        report=module.plan(c,a.runtime_bundle)
+        write(ROOT/'.state/control-plan/latest.json',report)
+        print(json.dumps(report,indent=2));return
+    if a.action=='integration-plan':
+        from integration_preparation import plan
+        report=plan(c,a.connector_bundle)
+        write(ROOT/'.state/integration-plan/latest.json',report)
+        print(json.dumps(report,indent=2));return
     if a.action=='readiness':
         from readiness import check
         report=check(c)

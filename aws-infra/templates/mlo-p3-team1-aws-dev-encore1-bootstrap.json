@@ -2,7 +2,7 @@
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description": "Administrator bootstrap: scoped Mac operations, CloudFormation service role, per-node EC2 roles and peering trust.",
   "Metadata": {
-    "ProjectCodeVersion": "0.3.2",
+    "ProjectCodeVersion": "0.3.20",
     "AWSToolsMetrics": {
       "AWSAgentToolkit": "aws-cloudformation@3"
     },
@@ -286,6 +286,16 @@
                     "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-artifacts",
                     "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-checkpoints"
                   ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "ec2:DescribeAccountAttributes",
+                  "Resource": "*",
+                  "Condition": {
+                    "StringEquals": {
+                      "aws:RequestedRegion": "ap-northeast-2"
+                    }
+                  }
                 },
                 {
                   "Effect": "Allow",
@@ -717,7 +727,7 @@
       "Type": "AWS::IAM::Role",
       "Metadata": {
         "com.aws.cloudformation.Context": {
-          "why": "Optional scoped operator assumption from encore1 login; student remains bootstrap administrator.",
+          "why": "Scoped operator from encore1 login; regional validation-event reads; student remains bootstrap administrator.",
           "must": [
             "SignInSessionArn is session context presence, not a direct MFA proof."
           ]
@@ -932,6 +942,16 @@
                   "Effect": "Allow",
                   "Action": "acm:DescribeCertificate",
                   "Resource": "arn:aws:acm:ap-northeast-2:111111111111:certificate/*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "cloudformation:DescribeEvents",
+                  "Resource": "*",
+                  "Condition": {
+                    "StringEquals": {
+                      "aws:RequestedRegion": "ap-northeast-2"
+                    }
+                  }
                 }
               ]
             }

@@ -114,6 +114,8 @@ def bootstrap(c, a):
     if a['profile']=='encore1':
         lb=f'arn:aws:elasticloadbalancing:{region}:{account}:'
         exec_policy['Statement'] += [
+            allow('ec2:DescribeAccountAttributes','*',
+                Condition={'StringEquals':{'aws:RequestedRegion':region}}),
             allow(['elasticloadbalancing:'+x for x in ('DescribeLoadBalancers','DescribeLoadBalancerAttributes',
                 'DescribeTargetGroups','DescribeTargetGroupAttributes','DescribeListeners','DescribeTags','DescribeTargetHealth')],'*'),
             allow(['elasticloadbalancing:'+x for x in ('CreateLoadBalancer','DeleteLoadBalancer','ModifyLoadBalancerAttributes',
@@ -199,18 +201,23 @@ def bootstrap(c, a):
         operator['Statement'].append(allow(['elasticloadbalancing:DescribeLoadBalancers','elasticloadbalancing:DescribeTargetGroups',
             'elasticloadbalancing:DescribeTargetHealth','elasticloadbalancing:DescribeTags'],'*'))
         operator['Statement'].append(allow('acm:DescribeCertificate',f'arn:aws:acm:{region}:{account}:certificate/*'))
+    # DescribeEvents is denied by the live service with stack/change-set ARNs,
+    # despite the SAR listing those resources. This exception is read-only and
+    # regional; all mutation and IAM permissions keep their existing scope.
+    operator['Statement'].append(allow('cloudformation:DescribeEvents','*',
+        Condition={'StringEquals':{'aws:RequestedRegion':region}}))
     if a['profile']=='encore1':
         resource(t,'OperatorRole','AWS::IAM::Role',{'RoleName':pre+'-operator',
             'AssumeRolePolicyDocument':doc([{'Effect':'Allow','Principal':{'AWS':c['operator_principal_arn']},
                 'Action':'sts:AssumeRole','Condition':{'Null':{'aws:SignInSessionArn':'false'}}}]),
             'Policies':[{'PolicyName':'project-operations','PolicyDocument':operator}],'Tags':tags(c)},
-            'Optional scoped operator assumption from encore1 login; student remains bootstrap administrator.',
+            'Scoped operator from encore1 login; regional validation-event reads; student remains bootstrap administrator.',
             ['SignInSessionArn is session context presence, not a direct MFA proof.'])
         output(t,'OperatorRoleArn',attr('OperatorRole'),'Scoped operator role for encore1')
     else:
         resource(t,'OperatorPolicy','AWS::IAM::ManagedPolicy',{'ManagedPolicyName':pre+'-operator',
            'Roles':['ProjectInfraRole'],'PolicyDocument':operator},
-           'Add project CloudFormation and SSM operations to the existing team role.',
+           'Project CloudFormation/SSM operations and regional validation-event reads on the existing team role.',
            ['Administrator applies; preserves existing role trust and EC2 managed policies.'])
     output(t,'ExecutionRoleArn',attr('ExecutionRole'),'Role passed to subsequent infrastructure change sets')
     return t
@@ -248,7 +255,7 @@ def ingress_sources(c,node):
     elif role=='es':
         add(('spark','control','es'),[(9200,9200)]); add(('es',),[(9300,9300)])
     elif role in ('postgresql','mongodb') and c['service_ports'].get(role):
-        add(('control',) if role=='postgresql' else ('advertising',),[(c['service_ports'][role],c['service_ports'][role])])
+        add(('control',) if role=='postgresql' else ('advertising','control'),[(c['service_ports'][role],c['service_ports'][role])])
     return rules
 
 
@@ -307,7 +314,9 @@ def network(c,a):
         resource(t,lid+'SG','AWS::EC2::SecurityGroup',{'VpcId':ref('Vpc'),'GroupDescription':'Project private '+n['role'],
             'SecurityGroupIngress':rules,'Tags':tags(c,n['name'],n['role'])},
             'Exact node /32 sources and service ports derived from pinned Ubuntu renderer.',
-            ['No public SSH/DB/Kibana/Spark UI; Spark maxRetries=32 is included.'])
+            ['No public SSH/DB/Kibana/Spark UI; Spark maxRetries=32 is included.'] +
+            (['MongoDB27017 admits only advertising and the two Control /32 addresses; weather uses a separate database/user.',
+              'Spark executors remain excluded; no transitive peering or additional peering is assumed.'] if n['role']=='mongodb' else []))
         resource(t,lid+'ENI','AWS::EC2::NetworkInterface',{'SubnetId':ref('Private'+n['az_slot'].upper()),
             'PrivateIpAddress':n['private_ip'],'GroupSet':[ref(lid+'SG')],'Tags':tags(c,n['name'],n['role'])},
             'Network stack owns stable node primary ENI separately from compute stack.',

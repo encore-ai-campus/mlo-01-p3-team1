@@ -1,6 +1,7 @@
 import hashlib
 import json
 import threading
+import zlib
 from datetime import timedelta
 from decimal import Decimal, ROUND_HALF_UP
 from django.conf import settings
@@ -13,6 +14,7 @@ from .policy import eligible, score, weather_fit, off_preference_details, DURATI
 from .weather import validate, obtain, current_profile, instant
 from .solver import choose, choose_preview
 from .provider import propose, validate_proposal, candidate_window
+from .catalog_storage import unpack
 
 
 _catalog_lock = threading.Lock()
@@ -28,7 +30,11 @@ def verified_catalog(catalog):
     with _catalog_lock:
         if _catalog_key == key:
             return _catalog_tracks
-        raw = Catalog.objects.only('tracks').get(pk=catalog.pk).tracks
+        stored = Catalog.objects.only('tracks').get(pk=catalog.pk).tracks
+        try:
+            raw = unpack(stored)
+        except (ValueError, TypeError, KeyError, UnicodeError, zlib.error):
+            raise DomainError('CATALOG_INVALID', '카탈로그 무결성 검증에 실패했어요.', 503) from None
         digest = hashlib.sha256(json.dumps(raw, ensure_ascii=False, sort_keys=True).encode()).hexdigest()
         require(digest == catalog.sha256 and len({t['track_id'] for t in raw}) == len(raw),
                 'CATALOG_INVALID', '카탈로그 무결성 검증에 실패했어요.', 503)

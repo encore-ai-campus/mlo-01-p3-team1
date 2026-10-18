@@ -2,7 +2,7 @@
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description": "Administrator bootstrap: scoped Mac operations, CloudFormation service role, per-node EC2 roles and peering trust.",
   "Metadata": {
-    "ProjectCodeVersion": "0.3.2",
+    "ProjectCodeVersion": "0.3.20",
     "AWSToolsMetrics": {
       "AWSAgentToolkit": "aws-cloudformation@3"
     },
@@ -607,7 +607,7 @@
       "Type": "AWS::IAM::ManagedPolicy",
       "Metadata": {
         "com.aws.cloudformation.Context": {
-          "why": "Add project CloudFormation and SSM operations to the existing team role.",
+          "why": "Project CloudFormation/SSM operations and regional validation-event reads on the existing team role.",
           "must": [
             "Administrator applies; preserves existing role trust and EC2 managed policies."
           ]
@@ -787,6 +787,16 @@
               "Resource": [
                 "arn:aws:s3:::mlo-p3-team1-aws-dev-555555555555-artifacts/*"
               ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": "cloudformation:DescribeEvents",
+              "Resource": "*",
+              "Condition": {
+                "StringEquals": {
+                  "aws:RequestedRegion": "ap-northeast-2"
+                }
+              }
             }
           ]
         }

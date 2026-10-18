@@ -58,7 +58,7 @@
 ## 저장소 구조
 
 - 기존 Git 저장소 루트 아래 aws-infra에서 명령을 실행한다. 공유 문서는 ../docs/handoff/infra, CI는 ../.github/workflows/aws-infra-check.yml에 둔다.
-- 최근 AWS 읽기 검증(2026-10-14 18:05 KST)은 ALB 포함 입력 준비 통과, 워크로드 0개다. 새 배포 지시 전까지 실제 생성/설치 완료로 표현하지 않는다.
+- 공개 문서의 과거 AWS 읽기 검증은 당시 입력/리소스의 확인이다. 현재 AWS 상태·bootstrap 보완·배포 시도는 `.state`의 계정별 최신 영수증으로 확인하고 명시 실행 요청과 실제 성공 근거를 구분한다.
 - 실제 CIDR은 config/project.json에만 보관한다. 현재 코드의 0.0.0.0/0 차단을 질문만으로 해제하지 않는다.
 - `readiness`는 로컬 준비 검사이며 AWS 로그인/조회·변경 세트·SSM·배포를 호출하지 않는다. `preflight`의 AWS 읽기 검증과 실제 변경 단계의 서비스 사전 검증을 구분한다. 결과는 `.state/`에 기록한다.
 - 웹 포트의 공개 키는 `service_ports.web`이다. 기존 `gunicorn`은 호환 별칭이며 Gunicorn 채택을 뜻하지 않는다. 기존 실제 설정을 자동 변환하지 않고 두 키가 충돌하면 차단한다.

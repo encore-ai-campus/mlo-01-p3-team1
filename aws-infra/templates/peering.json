@@ -2,7 +2,7 @@
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description": "One direct cross-account VPC peering connection; route stacks are owned independently by both accounts.",
   "Metadata": {
-    "ProjectCodeVersion": "0.3.2",
+    "ProjectCodeVersion": "0.3.20",
     "AWSToolsMetrics": {
       "AWSAgentToolkit": "aws-cloudformation@3"
     },

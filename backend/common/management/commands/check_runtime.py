@@ -7,7 +7,10 @@ from django.core.management.base import BaseCommand, CommandError
 
 def configuration():
     required=['GUEST_TTL_SECONDS','ADMIN_SESSION_SECONDS','CSV_UPLOAD_MAX_BYTES','SEARCH_SECONDS','MUSIC_RAW_DIRECTORY']
-    if not settings.LOCAL_DEMO:required+=['PGHOST','PGDATABASE','PGUSER','MUSIC_S3_BUCKET','MUSIC_S3_REGION','MUSIC_S3_PREFIX']
+    if not settings.LOCAL_DEMO:
+        required+=['PGHOST','PGDATABASE','PGUSER']
+        if not settings.MUSIC_S3_ARCHIVE_DEFERRED:
+            required+=['MUSIC_S3_BUCKET','MUSIC_S3_REGION','MUSIC_S3_PREFIX']
     checks={name:bool(getattr(settings,name,os.environ.get(name,''))) for name in required}
     from pathlib import Path
     for name in ('GUEST_TTL_SECONDS','ADMIN_SESSION_SECONDS','CSV_UPLOAD_MAX_BYTES','SEARCH_SECONDS'):
@@ -65,6 +68,9 @@ def connections():
     report={}
     for name,check in [('postgres_migrations',database),('administrator_permissions',administrators),('active_catalog',catalog),('weather_regions',regions),
                        ('weather_es_schema',elasticsearch),('feedback_topic',kafka),('music_archive_versioning',archive)]:
+        if name=='music_archive_versioning' and settings.MUSIC_S3_ARCHIVE_DEFERRED:
+            report[name]={'ok':None,'status':'DEFERRED'}
+            continue
         try:report[name]={'ok':bool(check())}
         except Exception as error:report[name]={'ok':False,'error_type':type(error).__name__}
     return report
@@ -80,12 +86,16 @@ class Command(BaseCommand):
     def handle(self,*args,**options):
         config=configuration()
         live=connections() if options['connect'] else {}
-        ready=all(config.values()) and bool(live) and all(row['ok'] for row in live.values())
+        required_live={name:row for name,row in live.items()
+                       if not (name=='music_archive_versioning' and settings.MUSIC_S3_ARCHIVE_DEFERRED
+                               and row=={'ok':None,'status':'DEFERRED'})}
+        ready=all(config.values()) and bool(required_live) and all(row['ok'] for row in required_live.values())
         admin_ready=(all(config.values()) and bool(live) and options['allow_pending_music']
-                     and all(row['ok'] for name,row in live.items() if name!='active_catalog')
+                     and all(row['ok'] for name,row in required_live.items() if name!='active_catalog')
                      and live.get('active_catalog')=={'ok':False})
         self.stdout.write(json.dumps({'configuration':config,'connections':live,'ready':ready,
-                                     'status':'STORAGE_READY' if ready else 'ADMIN_READY_MUSIC_PENDING' if admin_ready else 'NOT_READY' if options['connect'] else 'NOT_CONNECTED',
+                                     'status':('STORAGE_READY_ARCHIVE_DEFERRED' if settings.MUSIC_S3_ARCHIVE_DEFERRED else 'STORAGE_READY') if ready else 'ADMIN_READY_MUSIC_PENDING' if admin_ready else 'NOT_READY' if options['connect'] else 'NOT_CONNECTED',
+                                     'deferred':['music_s3_archive'] if settings.MUSIC_S3_ARCHIVE_DEFERRED else [],
                                      'scope':'STORAGE_STRUCTURE_AND_CONFIG','weather_data_verified':False,
                                      'ads_shared_authentication_verified':False}))
         if not all(config.values()) or (options['connect'] and not ready and not admin_ready):raise CommandError('runtime_not_ready')

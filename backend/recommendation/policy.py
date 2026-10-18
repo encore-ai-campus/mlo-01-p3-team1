@@ -1,6 +1,7 @@
 """2026-10-16 ON/OFF candidate contract. Scores use exact decimal fractions."""
 from decimal import Decimal, InvalidOperation
 from fractions import Fraction
+from functools import lru_cache
 from .errors import require
 
 POLICY = 'WEATHER_CHOICE_20261016_V2'
@@ -91,14 +92,28 @@ def eligible(track, options, allowed_genres, allowed_speeds, excluded):
 
 
 def unit(value):
-    try: n = Fraction(Decimal(str(value)))
+    try: text=str(value)
+    except (InvalidOperation, ValueError, TypeError): return None
+    return _unit_text(text)
+
+
+@lru_cache(maxsize=16384)
+def _unit_text(text):
+    try: n = Fraction(Decimal(text))
     except (InvalidOperation, ValueError, TypeError): return None
     return n if 0 <= n <= 1 else None
 
 
 def component(value, interval, width):
-    low, high = map(lambda x: Fraction(Decimal(str(x))), interval)
-    h = Fraction(Decimal(str(width)))
+    low, high = interval
+    return _component_exact(value, str(low), str(high), str(width))
+
+
+@lru_cache(maxsize=65536, typed=True)
+def _component_exact(value, low, high, width):
+    # Immutable inputs/results only; exact decimal arithmetic and gates are unchanged.
+    low, high = Fraction(Decimal(low)), Fraction(Decimal(high))
+    h = Fraction(Decimal(width))
     return 100 * (1 - min(1, max(low-value, 0, value-high) / h))
 
 

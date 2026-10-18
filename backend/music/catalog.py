@@ -1,11 +1,10 @@
-import hashlib
-import json
 from django.db import transaction
 from django.conf import settings
 from pipeline.music.normalize import FIELDS
 from backend.recommendation.errors import require
 from backend.recommendation.policy import groups, THEMES, precompute_scores
 from backend.recommendation.models import Catalog
+from backend.recommendation.catalog_storage import pack
 from .models import Track
 
 
@@ -19,7 +18,8 @@ def export_tracks(approved_only=False, source_sha256=None):
         query=query.filter(review__status='approved')
     if source_sha256 is not None:
         query=query.filter(trackorigin__source_id=source_sha256)
-    for track in query.select_related('album').prefetch_related(Prefetch('tracktag_set',queryset=links,to_attr='approved_links')).order_by('track_id'):
+    records=query.select_related('album').prefetch_related(Prefetch('tracktag_set',queryset=links,to_attr='approved_links')).order_by('track_id')
+    for track in records.iterator(chunk_size=1000):
         tags = {'genre':[], 'mood':[], 'instrument':[]}
         for link in track.approved_links: tags[link.tag.tag_type].append(link.tag.tag_code)
         row = {key:getattr(track,key,None) for key in FIELDS}
@@ -42,8 +42,8 @@ def publish(version, source_ref, source_sha256, is_test=False):
     rows = [precompute_scores(row) for row in export_tracks(approved_only=settings.INTEGRATION_ENABLED,
                              source_sha256=source_sha256 if settings.INTEGRATION_ENABLED else None)]
     require(rows, message='발행할 음악이 없습니다.')
-    digest = hashlib.sha256(json.dumps(rows,ensure_ascii=False,sort_keys=True).encode()).hexdigest()
+    stored, digest = pack(rows)
     with transaction.atomic():
         require(not Catalog.objects.filter(version=version).exists(), message='이미 발행된 버전입니다.',status=409)
-        return Catalog.objects.create(version=version,tracks=rows,sha256=digest,source_ref=source_ref,
+        return Catalog.objects.create(version=version,tracks=stored,sha256=digest,source_ref=source_ref,
                                       source_sha256=source_sha256,is_test=is_test,ready=True)

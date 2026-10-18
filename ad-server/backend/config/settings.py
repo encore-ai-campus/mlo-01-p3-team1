@@ -16,6 +16,7 @@ ALLOWED_HOSTS = [
     for value in os.environ.get("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
     if value.strip()
 ]
+CSRF_TRUSTED_ORIGINS = [value.strip() for value in os.environ.get("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",") if value.strip()]
 INSTALLED_APPS = [
     "django.contrib.auth",
     "django.contrib.contenttypes",

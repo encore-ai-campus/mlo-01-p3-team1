@@ -10,6 +10,11 @@ from backend.recommendation.errors import DomainError, require
 def store(path, digest, client=None):
     raw=Path(path).read_bytes()
     require(hashlib.sha256(raw).hexdigest()==digest,'SOURCE_CORRUPT','원본 해시를 확인해 주세요.',503)
+    if settings.MUSIC_S3_ARCHIVE_DEFERRED:
+        directory=Path(settings.MUSIC_RAW_DIRECTORY)
+        require(directory.is_absolute() and Path(path).resolve().is_relative_to(directory.resolve()),
+                'SOURCE_ARCHIVE_UNAVAILABLE','보류 중인 원본은 지정된 로컬 보관 경로에 보존해야 합니다.',503)
+        return {'mode':'S3_DEFERRED','sha256':digest}
     bucket=settings.MUSIC_S3_BUCKET;region=settings.MUSIC_S3_REGION;prefix=settings.MUSIC_S3_PREFIX.strip('/')
     if not bucket and settings.LOCAL_DEMO:return {'mode':'LOCAL_DEMO','sha256':digest}
     require(bool(bucket and region and prefix),'POLICY_NOT_READY','음악 S3 보관 설정이 필요합니다.',503)

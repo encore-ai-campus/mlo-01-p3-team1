@@ -71,6 +71,11 @@ def install_packages(c):
         # Prevent postinst from creating an unmanaged root-volume main cluster.
         save('/etc/postgresql-common/createcluster.conf', 'create_main_cluster = false\n', mode=0o644)
     else:
+        keyring = Path('/usr/share/keyrings/music-mongodb-8.0.gpg')
+        # This is a public repository key. apt drops privileges to _apt, so
+        # repair a prior 0600 file before refreshing an existing repository.
+        if keyring.exists():
+            keyring.chmod(0o644)
         run('apt-get', 'update', env=env)
         run('apt-get', '-o', 'DPkg::Lock::Timeout=120', 'install', '-y', '--no-install-recommends', 'gnupg', 'ca-certificates', env=env)
         key = urlopen(lock['signing_key_url'], timeout=30).read()
@@ -78,7 +83,8 @@ def install_packages(c):
             raise ValueError('MongoDB signing-key checksum mismatch')
         armored = cache / 'mongodb.asc'
         armored.write_bytes(key)
-        run('gpg', '--batch', '--yes', '--dearmor', '--output', '/usr/share/keyrings/music-mongodb-8.0.gpg', str(armored))
+        run('gpg', '--batch', '--yes', '--dearmor', '--output', str(keyring), str(armored))
+        keyring.chmod(0o644)
         save('/etc/apt/sources.list.d/music-mongodb-8.0.list',
              'deb [arch=amd64 signed-by=/usr/share/keyrings/music-mongodb-8.0.gpg] https://repo.mongodb.org/apt/ubuntu noble/mongodb-org/8.0 multiverse\n', mode=0o644)
     run('apt-get', 'update', env=env)
