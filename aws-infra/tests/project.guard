@@ -1,0 +1,32 @@
+let buckets = Resources.*[ Type == 'AWS::S3::Bucket' ]
+rule s3_private_encrypted when %buckets !empty {
+    %buckets.Properties.PublicAccessBlockConfiguration.BlockPublicAcls == true
+    %buckets.Properties.PublicAccessBlockConfiguration.BlockPublicPolicy == true
+    %buckets.Properties.PublicAccessBlockConfiguration.IgnorePublicAcls == true
+    %buckets.Properties.PublicAccessBlockConfiguration.RestrictPublicBuckets == true
+    %buckets.Properties.BucketEncryption.ServerSideEncryptionConfiguration[*].ServerSideEncryptionByDefault.SSEAlgorithm IN ['AES256', 'aws:kms']
+    %buckets.Properties.VersioningConfiguration.Status == 'Enabled'
+    %buckets.DeletionPolicy == 'Retain'
+}
+let instances = Resources.*[ Type == 'AWS::EC2::Instance' ]
+rule ec2_imdsv2_and_encrypted_disks when %instances !empty {
+    %instances.Properties.MetadataOptions.HttpTokens == 'required'
+    %instances.Properties.BlockDeviceMappings[*].Ebs.Encrypted == true
+    %instances.Properties.PropagateTagsToVolumeOnCreation == true
+    %instances.Properties.NetworkInterfaces[*].NetworkInterfaceId exists
+    %instances.Properties.NetworkInterfaces[*].AssociatePublicIpAddress !exists
+    %instances.Properties.NetworkInterfaces[*].DeleteOnTermination !exists
+}
+let groups = Resources.*[ Type == 'AWS::EC2::SecurityGroup' ]
+rule private_service_ingress when %groups !empty {
+    %groups {
+        when Properties.SecurityGroupIngress exists {
+          when Properties.SecurityGroupIngress !empty {
+            Properties.SecurityGroupIngress[*] {
+                when CidrIp exists { CidrIp != '0.0.0.0/0' }
+                when CidrIpv6 exists { CidrIpv6 != '::/0' }
+            }
+          }
+        }
+    }
+}

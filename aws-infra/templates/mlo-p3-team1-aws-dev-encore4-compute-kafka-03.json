@@ -1,0 +1,152 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Single private Ubuntu EC2 attached to a stable separately-owned ENI; remove then recreate for replacement.",
+  "Metadata": {
+    "ProjectCodeVersion": "0.3.20",
+    "AWSToolsMetrics": {
+      "AWSAgentToolkit": "aws-cloudformation@3"
+    },
+    "com.aws.cloudformation.Context": {
+      "ref": [
+        "../README.md",
+        "../SECURITY.md",
+        "../../docs/handoff/infra/README.md"
+      ],
+      "must": [
+        "Five independent accounts; 14 private EC2 nodes; three physical AZ IDs.",
+        "No local VM operations. No secrets or CA private key in templates."
+      ]
+    }
+  },
+  "Parameters": {
+    "AmiId": {
+      "Type": "AWS::EC2::Image::Id"
+    },
+    "InstanceType": {
+      "Type": "String",
+      "AllowedPattern": "[a-z0-9]+\\.[a-z0-9]+",
+      "AllowedValues": [
+        "t3.medium"
+      ]
+    },
+    "EniId": {
+      "Type": "String",
+      "AllowedPattern": "eni-[0-9a-f]+"
+    },
+    "RootGiB": {
+      "Type": "Number",
+      "MinValue": 8,
+      "MaxValue": 16384
+    },
+    "DataGiB": {
+      "Type": "Number",
+      "MinValue": 8,
+      "MaxValue": 16384
+    }
+  },
+  "Resources": {
+    "Instance": {
+      "Type": "AWS::EC2::Instance",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Only EC2 ownership changes on node replacement; data reset is explicitly allowed for new generations. T3 Standard avoids surplus CPU-credit charges in the selected 96h estimate.",
+          "must": [
+            "Never add DeleteOnTermination to an existing ENI launch specification.",
+            "Data disk formatting requires explicit init-disk stage; cloud-init does not format it.",
+            "Changing AMI/type/volume through ordinary replacement may collide with attached primary ENI.",
+            "Keep Standard CPU credits for the selected budget; credit exhaustion reduces CPU to baseline."
+          ]
+        }
+      },
+      "Properties": {
+        "ImageId": {
+          "Ref": "AmiId"
+        },
+        "InstanceType": {
+          "Ref": "InstanceType"
+        },
+        "IamInstanceProfile": "mlo-p3-team1-aws-dev-kafka-03-runtime",
+        "NetworkInterfaces": [
+          {
+            "NetworkInterfaceId": {
+              "Ref": "EniId"
+            },
+            "DeviceIndex": "0"
+          }
+        ],
+        "MetadataOptions": {
+          "HttpTokens": "required",
+          "HttpEndpoint": "enabled",
+          "HttpPutResponseHopLimit": 1,
+          "InstanceMetadataTags": "enabled"
+        },
+        "BlockDeviceMappings": [
+          {
+            "DeviceName": "/dev/sda1",
+            "Ebs": {
+              "Encrypted": true,
+              "VolumeType": "gp3",
+              "VolumeSize": {
+                "Ref": "RootGiB"
+              },
+              "DeleteOnTermination": true
+            }
+          },
+          {
+            "DeviceName": "/dev/sdf",
+            "Ebs": {
+              "Encrypted": true,
+              "VolumeType": "gp3",
+              "VolumeSize": {
+                "Ref": "DataGiB"
+              },
+              "DeleteOnTermination": true
+            }
+          }
+        ],
+        "PropagateTagsToVolumeOnCreation": true,
+        "UserData": {
+          "Fn::Base64": "#!/bin/bash\nset -Eeuo pipefail\nhostnamectl set-hostname kafka-03\nprintf 'preserve_hostname: true\n' > /etc/cloud/cloud.cfg.d/99-music-hostname.cfg\nif snap list amazon-ssm-agent >/dev/null 2>&1; then\n  snap start amazon-ssm-agent\nelse\n  snap install amazon-ssm-agent --classic\n  snap start amazon-ssm-agent\nfi\n"
+        },
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "kafka-03"
+          },
+          {
+            "Key": "Role",
+            "Value": "kafka"
+          }
+        ],
+        "CreditSpecification": {
+          "CPUCredits": "standard"
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "InstanceId": {
+      "Value": {
+        "Ref": "Instance"
+      },
+      "Description": "Actual EC2 ID; do not infer it from logical name"
+    },
+    "PrivateIp": {
+      "Value": {
+        "Fn::GetAtt": [
+          "Instance",
+          "PrivateIp"
+        ]
+      },
+      "Description": "Actual private IP to verify against ENI inventory"
+    }
+  }
+}

@@ -14,6 +14,7 @@ from pathlib import Path
 from pipeline.weather.collect import configured_key, stream_request
 import requests
 from kafka import KafkaProducer
+from pipeline.kafka_config import python_options
 from pipeline.weather.common import KST, UTC
 from pipeline.weather.make_jobs import make_jobs
 from pipeline.weather.publish import send_events
@@ -119,7 +120,7 @@ def run(directory, bootstrap, topic):
         raise RuntimeError('use_separate_stream_runtime_directory')
     # 접속 실패 시에도 요청 계획은 남음. 원천 데이터는 메모리에서만 처리.
     with requests.Session() as session:
-        producer = KafkaProducer(bootstrap_servers=bootstrap, acks='all', retries=3,
+        producer = KafkaProducer(bootstrap_servers=bootstrap, acks='all', retries=3, **python_options(),
                                  compression_type='gzip', max_request_size=1000000)
         try:
             while not (directory/'stop.flag').exists():
@@ -179,6 +180,8 @@ def run(directory, bootstrap, topic):
 
 
 def main():
+    from pipeline.environment import load
+    load('weather')
     parser = argparse.ArgumentParser()
     parser.add_argument('--directory', default=os.environ.get('WEATHER_STATE_DIR') or str(ROOT/'runtime/collector'))
     parser.add_argument('--bootstrap', default=os.environ.get('KAFKA_BOOTSTRAP'))

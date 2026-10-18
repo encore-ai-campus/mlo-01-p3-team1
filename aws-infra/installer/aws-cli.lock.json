@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "version": "2.38.1",
+  "architecture": "x86_64",
+  "archive_url": "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.38.1.zip",
+  "signature_url": "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.38.1.zip.sig",
+  "archive_sha256": "b11ed416d91f4251da363a17706938eeaf0e520745754c104c0c1890dd8363c7",
+  "signature_sha256": "a715b2fc8a9fe21213fd5e1349e269a5675411876e1cb74f3b837d292ac88657",
+  "public_key_sha256": "279541b6dd1c831a260ee0f9fb71d63bbcc14ebc4bf62c605336e86c11d4eefb",
+  "signer_fingerprint": "FB5DB77FD5C118B80511ADA8A6310ACC4672475C",
+  "key_source": "https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html",
+  "install_dir": "/opt/music-cluster/aws-cli",
+  "bin_dir": "/opt/music-cluster/aws-cli-bin",
+  "binary": "/opt/music-cluster/aws-cli/v2/2.38.1/bin/aws",
+  "policy": "No existing CLI replacement, credentials/profile changes, global PATH change or automatic upgrade; verify PGP and SHA256 before extraction."
+}

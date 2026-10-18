@@ -1,0 +1,984 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Administrator bootstrap: scoped Mac operations, CloudFormation service role, per-node EC2 roles and peering trust.",
+  "Metadata": {
+    "ProjectCodeVersion": "0.3.20",
+    "AWSToolsMetrics": {
+      "AWSAgentToolkit": "aws-cloudformation@3"
+    },
+    "com.aws.cloudformation.Context": {
+      "ref": [
+        "../README.md",
+        "../SECURITY.md",
+        "../../docs/handoff/infra/README.md"
+      ],
+      "must": [
+        "Five independent accounts; 14 private EC2 nodes; three physical AZ IDs.",
+        "No local VM operations. No secrets or CA private key in templates."
+      ]
+    }
+  },
+  "Parameters": {},
+  "Resources": {
+    "ExecutionRole": {
+      "Type": "AWS::IAM::Role",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "CloudFormation owns infrastructure; ordinary IAM role/trust/boundary creation remains administrator-only.",
+          "must": [
+            "PassRole only the named EC2 runtime roles; regional EC2 resource wildcards require review.",
+            "CPU-credit modification requires this project and environment on the target instance.",
+            "Only the boundary-constrained peering role inline policy may be changed by network stacks.",
+            "The sole service-linked-role exception is the AWS-managed ELB service role."
+          ]
+        }
+      },
+      "Properties": {
+        "RoleName": "mlo-p3-team1-aws-dev-cfn-execution",
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "cloudformation.amazonaws.com"
+              },
+              "Action": "sts:AssumeRole"
+            }
+          ]
+        },
+        "Policies": [
+          {
+            "PolicyName": "project-resources",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "ec2:DescribeVpcs",
+                    "ec2:DescribeVpcAttribute",
+                    "ec2:DescribeSubnets",
+                    "ec2:DescribeRouteTables",
+                    "ec2:DescribeInternetGateways",
+                    "ec2:DescribeAddresses",
+                    "ec2:DescribeNatGateways",
+                    "ec2:DescribeSecurityGroups",
+                    "ec2:DescribeSecurityGroupRules",
+                    "ec2:DescribeNetworkInterfaces",
+                    "ec2:DescribeVpcEndpoints",
+                    "ec2:DescribeVpcPeeringConnections",
+                    "ec2:DescribeInstances",
+                    "ec2:DescribeInstanceAttribute",
+                    "ec2:DescribeInstanceStatus",
+                    "ec2:DescribeVolumes",
+                    "ec2:DescribeImages",
+                    "ec2:DescribeTags",
+                    "ec2:DescribeInstanceCreditSpecifications",
+                    "ec2:DescribeLaunchTemplates",
+                    "ec2:DescribeLaunchTemplateVersions",
+                    "ec2:DescribeIamInstanceProfileAssociations",
+                    "ec2:DescribeKeyPairs",
+                    "ec2:DescribeNetworkAcls",
+                    "ec2:DescribeVpnGateways",
+                    "ec2:DescribeAvailabilityZones",
+                    "ec2:DescribeInstanceTypes",
+                    "ec2:DescribeInstanceTypeOfferings"
+                  ],
+                  "Resource": "*",
+                  "Condition": {
+                    "StringEquals": {
+                      "aws:RequestedRegion": "ap-northeast-2"
+                    }
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "ec2:CreateVpc",
+                    "ec2:DeleteVpc",
+                    "ec2:ModifyVpcAttribute",
+                    "ec2:CreateSubnet",
+                    "ec2:DeleteSubnet",
+                    "ec2:ModifySubnetAttribute",
+                    "ec2:CreateRouteTable",
+                    "ec2:DeleteRouteTable",
+                    "ec2:AssociateRouteTable",
+                    "ec2:DisassociateRouteTable",
+                    "ec2:CreateRoute",
+                    "ec2:DeleteRoute",
+                    "ec2:ReplaceRoute",
+                    "ec2:CreateInternetGateway",
+                    "ec2:AttachInternetGateway",
+                    "ec2:DetachInternetGateway",
+                    "ec2:DeleteInternetGateway",
+                    "ec2:AllocateAddress",
+                    "ec2:ReleaseAddress",
+                    "ec2:CreateNatGateway",
+                    "ec2:DeleteNatGateway",
+                    "ec2:CreateSecurityGroup",
+                    "ec2:DeleteSecurityGroup",
+                    "ec2:AuthorizeSecurityGroupIngress",
+                    "ec2:RevokeSecurityGroupIngress",
+                    "ec2:AuthorizeSecurityGroupEgress",
+                    "ec2:RevokeSecurityGroupEgress",
+                    "ec2:CreateNetworkInterface",
+                    "ec2:DeleteNetworkInterface",
+                    "ec2:ModifyNetworkInterfaceAttribute",
+                    "ec2:CreateVpcEndpoint",
+                    "ec2:DeleteVpcEndpoints",
+                    "ec2:ModifyVpcEndpoint",
+                    "ec2:CreateVpcPeeringConnection",
+                    "ec2:DeleteVpcPeeringConnection",
+                    "ec2:ModifyVpcPeeringConnectionOptions",
+                    "ec2:ReplaceRouteTableAssociation",
+                    "ec2:CreateTags",
+                    "ec2:DeleteTags",
+                    "ec2:TerminateInstances",
+                    "ec2:ModifyInstanceAttribute",
+                    "ec2:AssociateIamInstanceProfile",
+                    "ec2:ModifyInstanceMetadataOptions",
+                    "ec2:ModifyPrivateDnsNameOptions"
+                  ],
+                  "Resource": [
+                    "arn:aws:ec2:ap-northeast-2:333333333333:vpc/*",
+                    "arn:aws:ec2:ap-northeast-2:333333333333:subnet/*",
+                    "arn:aws:ec2:ap-northeast-2:333333333333:route-table/*",
+                    "arn:aws:ec2:ap-northeast-2:333333333333:internet-gateway/*",
+                    "arn:aws:ec2:ap-northeast-2:333333333333:natgateway/*",
+                    "arn:aws:ec2:ap-northeast-2:333333333333:elastic-ip/*",
+                    "arn:aws:ec2:ap-northeast-2:333333333333:security-group/*",
+                    "arn:aws:ec2:ap-northeast-2:333333333333:security-group-rule/*",
+                    "arn:aws:ec2:ap-northeast-2:333333333333:network-interface/*",
+                    "arn:aws:ec2:ap-northeast-2:333333333333:vpc-endpoint/*",
+                    "arn:aws:ec2:ap-northeast-2:333333333333:vpc-peering-connection/*",
+                    "arn:aws:ec2:ap-northeast-2:333333333333:instance/*",
+                    "arn:aws:ec2:ap-northeast-2:333333333333:volume/*"
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "ec2:RunInstances"
+                  ],
+                  "Resource": [
+                    "arn:aws:ec2:ap-northeast-2:333333333333:instance/*",
+                    "arn:aws:ec2:ap-northeast-2:333333333333:volume/*",
+                    "arn:aws:ec2:ap-northeast-2:333333333333:subnet/*",
+                    "arn:aws:ec2:ap-northeast-2:333333333333:network-interface/*",
+                    "arn:aws:ec2:ap-northeast-2:333333333333:security-group/*",
+                    "arn:aws:ec2:ap-northeast-2::image/*",
+                    "arn:aws:ec2:ap-northeast-2::snapshot/*"
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "ec2:ModifyInstanceCreditSpecification",
+                  "Resource": "arn:aws:ec2:ap-northeast-2:333333333333:instance/*",
+                  "Condition": {
+                    "StringEquals": {
+                      "ec2:ResourceTag/Project": "mlo-p3-team1",
+                      "ec2:ResourceTag/Environment": "aws-dev"
+                    }
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "iam:PassRole"
+                  ],
+                  "Resource": [
+                    "arn:aws:iam::333333333333:role/mlo-p3-team1-aws-dev-kafka-02-runtime",
+                    "arn:aws:iam::333333333333:role/mlo-p3-team1-aws-dev-spark-02-runtime",
+                    "arn:aws:iam::333333333333:role/mlo-p3-team1-aws-dev-es-02-runtime"
+                  ],
+                  "Condition": {
+                    "StringEquals": {
+                      "iam:PassedToService": "ec2.amazonaws.com"
+                    }
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "iam:GetRole"
+                  ],
+                  "Resource": [
+                    "arn:aws:iam::333333333333:role/mlo-p3-team1-aws-dev-kafka-02-runtime",
+                    "arn:aws:iam::333333333333:role/mlo-p3-team1-aws-dev-spark-02-runtime",
+                    "arn:aws:iam::333333333333:role/mlo-p3-team1-aws-dev-es-02-runtime"
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "ssm:DescribeAssociation",
+                    "ssm:ListAssociations"
+                  ],
+                  "Resource": "*",
+                  "Condition": {
+                    "StringEquals": {
+                      "aws:RequestedRegion": "ap-northeast-2"
+                    }
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "iam:GetInstanceProfile"
+                  ],
+                  "Resource": [
+                    "arn:aws:iam::333333333333:instance-profile/mlo-p3-team1-aws-dev-kafka-02-runtime",
+                    "arn:aws:iam::333333333333:instance-profile/mlo-p3-team1-aws-dev-spark-02-runtime",
+                    "arn:aws:iam::333333333333:instance-profile/mlo-p3-team1-aws-dev-es-02-runtime"
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "sts:AssumeRole"
+                  ],
+                  "Resource": [
+                    "arn:aws:iam::444444444444:role/mlo-p3-team1-aws-dev-peering-accepter"
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "s3:CreateBucket",
+                    "s3:DeleteBucket",
+                    "s3:GetBucketLocation",
+                    "s3:GetBucketPolicy",
+                    "s3:PutBucketPolicy",
+                    "s3:DeleteBucketPolicy",
+                    "s3:GetBucketPublicAccessBlock",
+                    "s3:PutBucketPublicAccessBlock",
+                    "s3:GetEncryptionConfiguration",
+                    "s3:PutEncryptionConfiguration",
+                    "s3:GetBucketVersioning",
+                    "s3:PutBucketVersioning",
+                    "s3:GetBucketTagging",
+                    "s3:PutBucketTagging",
+                    "s3:GetBucketOwnershipControls",
+                    "s3:PutBucketOwnershipControls",
+                    "s3:GetLifecycleConfiguration",
+                    "s3:PutLifecycleConfiguration",
+                    "s3:GetAccelerateConfiguration",
+                    "s3:GetAnalyticsConfiguration",
+                    "s3:GetBucketCORS",
+                    "s3:GetInventoryConfiguration",
+                    "s3:GetBucketLogging",
+                    "s3:GetMetricsConfiguration",
+                    "s3:GetBucketNotification",
+                    "s3:GetReplicationConfiguration",
+                    "s3:GetBucketWebsite",
+                    "s3:GetBucketObjectLockConfiguration",
+                    "s3:GetBucketAbac",
+                    "s3:GetIntelligentTieringConfiguration",
+                    "s3:GetBucketMetadataTableConfiguration",
+                    "s3:ListBucket",
+                    "s3:ListTagsForResource"
+                  ],
+                  "Resource": [
+                    "arn:aws:s3:::mlo-p3-team1-aws-dev-333333333333-artifacts"
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "iam:GetRole",
+                    "iam:GetRolePolicy",
+                    "iam:PutRolePolicy",
+                    "iam:DeleteRolePolicy"
+                  ],
+                  "Resource": "arn:aws:iam::333333333333:role/mlo-p3-team1-aws-dev-peering-accepter"
+                }
+              ]
+            }
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "shared"
+          },
+          {
+            "Key": "Role",
+            "Value": "infrastructure"
+          }
+        ]
+      }
+    },
+    "PeeringBoundary": {
+      "Type": "AWS::IAM::ManagedPolicy",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Caps the accepter role at acceptance of project-tagged VPCs; inline policies cannot expand beyond this boundary.",
+          "must": [
+            "CF execution cannot change/remove this boundary or edit accepter trust.",
+            "Accept requires both VPC and peering-connection authorization; tags are checked on the VPC."
+          ]
+        }
+      },
+      "Properties": {
+        "ManagedPolicyName": "mlo-p3-team1-aws-dev-peering-boundary",
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": "ec2:AcceptVpcPeeringConnection",
+              "Resource": "arn:aws:ec2:ap-northeast-2:333333333333:vpc/*",
+              "Condition": {
+                "StringEquals": {
+                  "ec2:ResourceTag/Project": "mlo-p3-team1",
+                  "ec2:ResourceTag/Environment": "aws-dev"
+                }
+              }
+            },
+            {
+              "Effect": "Allow",
+              "Action": "ec2:AcceptVpcPeeringConnection",
+              "Resource": "arn:aws:ec2:ap-northeast-2:333333333333:vpc-peering-connection/*",
+              "Condition": {
+                "ArnLike": {
+                  "ec2:AccepterVpc": "arn:aws:ec2:ap-northeast-2:333333333333:vpc/*"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "PeeringAccepter": {
+      "Type": "AWS::IAM::Role",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Cross-account peering acceptance by requester CloudFormation roles only.",
+          "must": [
+            "No operator/user/root session trust; network stacks bind acceptance to their actual VPC ID.",
+            "Keep the administrator-owned permissions boundary attached."
+          ]
+        }
+      },
+      "Properties": {
+        "RoleName": "mlo-p3-team1-aws-dev-peering-accepter",
+        "PermissionsBoundary": {
+          "Ref": "PeeringBoundary"
+        },
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "AWS": [
+                  "arn:aws:iam::111111111111:root",
+                  "arn:aws:iam::222222222222:root"
+                ]
+              },
+              "Action": "sts:AssumeRole",
+              "Condition": {
+                "ArnEquals": {
+                  "aws:PrincipalArn": [
+                    "arn:aws:iam::111111111111:role/mlo-p3-team1-aws-dev-cfn-execution",
+                    "arn:aws:iam::222222222222:role/mlo-p3-team1-aws-dev-cfn-execution"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "shared"
+          },
+          {
+            "Key": "Role",
+            "Value": "infrastructure"
+          }
+        ]
+      }
+    },
+    "Kafka02Role": {
+      "Type": "AWS::IAM::Role",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "SSM-managed EC2 with its own private artifact path; Spark and Control use checkpoint S3.",
+          "must": [
+            "No AWS keys in code; no CA private key in artifact; no fencing permission until HA implementation review."
+          ]
+        }
+      },
+      "Properties": {
+        "RoleName": "mlo-p3-team1-aws-dev-kafka-02-runtime",
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "ec2.amazonaws.com"
+              },
+              "Action": "sts:AssumeRole"
+            }
+          ]
+        },
+        "ManagedPolicyArns": [
+          "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+        ],
+        "Policies": [
+          {
+            "PolicyName": "node-storage",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": "s3:GetBucketLocation",
+                  "Resource": "arn:aws:s3:::mlo-p3-team1-aws-dev-333333333333-artifacts"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "s3:ListBucket",
+                  "Resource": "arn:aws:s3:::mlo-p3-team1-aws-dev-333333333333-artifacts",
+                  "Condition": {
+                    "StringLike": {
+                      "s3:prefix": [
+                        "public/*",
+                        "private/kafka-02/*"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "s3:GetObject",
+                  "Resource": [
+                    "arn:aws:s3:::mlo-p3-team1-aws-dev-333333333333-artifacts/public/*",
+                    "arn:aws:s3:::mlo-p3-team1-aws-dev-333333333333-artifacts/private/kafka-02/*"
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "kafka-02"
+          },
+          {
+            "Key": "Role",
+            "Value": "kafka"
+          }
+        ]
+      }
+    },
+    "Kafka02Profile": {
+      "Type": "AWS::IAM::InstanceProfile",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Separate named instance profile for this logical node.",
+          "must": []
+        }
+      },
+      "Properties": {
+        "InstanceProfileName": "mlo-p3-team1-aws-dev-kafka-02-runtime",
+        "Roles": [
+          {
+            "Ref": "Kafka02Role"
+          }
+        ]
+      }
+    },
+    "Spark02Role": {
+      "Type": "AWS::IAM::Role",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "SSM-managed EC2 with its own private artifact path; Spark and Control use checkpoint S3.",
+          "must": [
+            "No AWS keys in code; no CA private key in artifact; no fencing permission until HA implementation review."
+          ]
+        }
+      },
+      "Properties": {
+        "RoleName": "mlo-p3-team1-aws-dev-spark-02-runtime",
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "ec2.amazonaws.com"
+              },
+              "Action": "sts:AssumeRole"
+            }
+          ]
+        },
+        "ManagedPolicyArns": [
+          "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+        ],
+        "Policies": [
+          {
+            "PolicyName": "node-storage",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": "s3:GetBucketLocation",
+                  "Resource": "arn:aws:s3:::mlo-p3-team1-aws-dev-333333333333-artifacts"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "s3:ListBucket",
+                  "Resource": "arn:aws:s3:::mlo-p3-team1-aws-dev-333333333333-artifacts",
+                  "Condition": {
+                    "StringLike": {
+                      "s3:prefix": [
+                        "public/*",
+                        "private/spark-02/*"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "s3:GetObject",
+                  "Resource": [
+                    "arn:aws:s3:::mlo-p3-team1-aws-dev-333333333333-artifacts/public/*",
+                    "arn:aws:s3:::mlo-p3-team1-aws-dev-333333333333-artifacts/private/spark-02/*"
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "s3:GetBucketLocation",
+                  "Resource": "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-checkpoints"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "s3:ListBucket",
+                  "Resource": "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-checkpoints",
+                  "Condition": {
+                    "StringLike": {
+                      "s3:prefix": "aws/aws-dev/*"
+                    }
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "s3:GetObject",
+                    "s3:PutObject",
+                    "s3:DeleteObject",
+                    "s3:AbortMultipartUpload",
+                    "s3:ListMultipartUploadParts"
+                  ],
+                  "Resource": "arn:aws:s3:::mlo-p3-team1-aws-dev-111111111111-checkpoints/aws/aws-dev/*"
+                }
+              ]
+            }
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "spark-02"
+          },
+          {
+            "Key": "Role",
+            "Value": "spark"
+          }
+        ]
+      }
+    },
+    "Spark02Profile": {
+      "Type": "AWS::IAM::InstanceProfile",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Separate named instance profile for this logical node.",
+          "must": []
+        }
+      },
+      "Properties": {
+        "InstanceProfileName": "mlo-p3-team1-aws-dev-spark-02-runtime",
+        "Roles": [
+          {
+            "Ref": "Spark02Role"
+          }
+        ]
+      }
+    },
+    "Es02Role": {
+      "Type": "AWS::IAM::Role",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "SSM-managed EC2 with its own private artifact path; Spark and Control use checkpoint S3.",
+          "must": [
+            "No AWS keys in code; no CA private key in artifact; no fencing permission until HA implementation review."
+          ]
+        }
+      },
+      "Properties": {
+        "RoleName": "mlo-p3-team1-aws-dev-es-02-runtime",
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "ec2.amazonaws.com"
+              },
+              "Action": "sts:AssumeRole"
+            }
+          ]
+        },
+        "ManagedPolicyArns": [
+          "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+        ],
+        "Policies": [
+          {
+            "PolicyName": "node-storage",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": "s3:GetBucketLocation",
+                  "Resource": "arn:aws:s3:::mlo-p3-team1-aws-dev-333333333333-artifacts"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "s3:ListBucket",
+                  "Resource": "arn:aws:s3:::mlo-p3-team1-aws-dev-333333333333-artifacts",
+                  "Condition": {
+                    "StringLike": {
+                      "s3:prefix": [
+                        "public/*",
+                        "private/es-02/*"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "s3:GetObject",
+                  "Resource": [
+                    "arn:aws:s3:::mlo-p3-team1-aws-dev-333333333333-artifacts/public/*",
+                    "arn:aws:s3:::mlo-p3-team1-aws-dev-333333333333-artifacts/private/es-02/*"
+                  ]
+                }
+              ]
+            }
+          }
+        ],
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "es-02"
+          },
+          {
+            "Key": "Role",
+            "Value": "es"
+          }
+        ]
+      }
+    },
+    "Es02Profile": {
+      "Type": "AWS::IAM::InstanceProfile",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Separate named instance profile for this logical node.",
+          "must": []
+        }
+      },
+      "Properties": {
+        "InstanceProfileName": "mlo-p3-team1-aws-dev-es-02-runtime",
+        "Roles": [
+          {
+            "Ref": "Es02Role"
+          }
+        ]
+      }
+    },
+    "OperatorPolicy": {
+      "Type": "AWS::IAM::ManagedPolicy",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Project CloudFormation/SSM operations and regional validation-event reads on the existing team role.",
+          "must": [
+            "Administrator applies; preserves existing role trust and EC2 managed policies."
+          ]
+        }
+      },
+      "Properties": {
+        "ManagedPolicyName": "mlo-p3-team1-aws-dev-operator",
+        "Roles": [
+          "ProjectInfraRole"
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "cloudformation:DescribeChangeSet",
+                "cloudformation:DeleteChangeSet",
+                "cloudformation:ExecuteChangeSet",
+                "cloudformation:DescribeStacks",
+                "cloudformation:DescribeStackResources",
+                "cloudformation:ListStackResources",
+                "cloudformation:DeleteStack",
+                "cloudformation:GetTemplate",
+                "cloudformation:DescribeStackEvents",
+                "cloudformation:DescribeEvents",
+                "cloudformation:ListChangeSets"
+              ],
+              "Resource": [
+                "arn:aws:cloudformation:ap-northeast-2:333333333333:stack/mlo-p3-team1-aws-dev-encore3-*/*"
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": "cloudformation:CreateChangeSet",
+              "Resource": "arn:aws:cloudformation:ap-northeast-2:333333333333:stack/mlo-p3-team1-aws-dev-encore3-*/*",
+              "Condition": {
+                "ArnEquals": {
+                  "cloudformation:RoleArn": "arn:aws:iam::333333333333:role/mlo-p3-team1-aws-dev-cfn-execution"
+                }
+              }
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "cloudformation:ListStacks",
+                "cloudformation:ValidateTemplate",
+                "cloudformation:GetTemplateSummary"
+              ],
+              "Resource": "*"
+            },
+            {
+              "Effect": "Allow",
+              "Action": "iam:PassRole",
+              "Resource": "arn:aws:iam::333333333333:role/mlo-p3-team1-aws-dev-cfn-execution",
+              "Condition": {
+                "StringEquals": {
+                  "iam:PassedToService": "cloudformation.amazonaws.com"
+                }
+              }
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "ec2:DescribeVpcs",
+                "ec2:DescribeVpcAttribute",
+                "ec2:DescribeSubnets",
+                "ec2:DescribeRouteTables",
+                "ec2:DescribeInternetGateways",
+                "ec2:DescribeAddresses",
+                "ec2:DescribeNatGateways",
+                "ec2:DescribeSecurityGroups",
+                "ec2:DescribeSecurityGroupRules",
+                "ec2:DescribeNetworkInterfaces",
+                "ec2:DescribeVpcEndpoints",
+                "ec2:DescribeVpcPeeringConnections",
+                "ec2:DescribeInstances",
+                "ec2:DescribeInstanceAttribute",
+                "ec2:DescribeInstanceStatus",
+                "ec2:DescribeVolumes",
+                "ec2:DescribeImages",
+                "ec2:DescribeTags",
+                "ec2:DescribeInstanceCreditSpecifications",
+                "ec2:DescribeLaunchTemplates",
+                "ec2:DescribeLaunchTemplateVersions",
+                "ec2:DescribeIamInstanceProfileAssociations",
+                "ec2:DescribeKeyPairs",
+                "ec2:DescribeNetworkAcls",
+                "ec2:DescribeVpnGateways",
+                "ec2:DescribeAvailabilityZones",
+                "ec2:DescribeInstanceTypes",
+                "ec2:DescribeInstanceTypeOfferings"
+              ],
+              "Resource": "*",
+              "Condition": {
+                "StringEquals": {
+                  "aws:RequestedRegion": "ap-northeast-2"
+                }
+              }
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "ssm:DescribeInstanceInformation",
+                "ssm:GetCommandInvocation",
+                "ssm:ListCommands",
+                "ssm:ListCommandInvocations"
+              ],
+              "Resource": "*",
+              "Condition": {
+                "StringEquals": {
+                  "aws:RequestedRegion": "ap-northeast-2"
+                }
+              }
+            },
+            {
+              "Effect": "Allow",
+              "Action": "ssm:SendCommand",
+              "Resource": "arn:aws:ec2:ap-northeast-2:333333333333:instance/*",
+              "Condition": {
+                "StringEquals": {
+                  "ssm:resourceTag/Project": "mlo-p3-team1",
+                  "ssm:resourceTag/Environment": "aws-dev"
+                }
+              }
+            },
+            {
+              "Effect": "Allow",
+              "Action": "ssm:SendCommand",
+              "Resource": [
+                "arn:aws:ssm:ap-northeast-2::document/AWS-RunShellScript",
+                "arn:aws:ssm:ap-northeast-2::document/AWS-RunRemoteScript"
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": "servicequotas:GetServiceQuota",
+              "Resource": "arn:aws:servicequotas:ap-northeast-2:333333333333:ec2/L-1216C47A"
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:ListBucket",
+                "s3:GetBucketLocation"
+              ],
+              "Resource": [
+                "arn:aws:s3:::mlo-p3-team1-aws-dev-333333333333-artifacts"
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:PutObject",
+                "s3:GetObject"
+              ],
+              "Resource": "arn:aws:s3:::mlo-p3-team1-aws-dev-333333333333-artifacts/*"
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:GetBucketTagging",
+                "s3:ListBucketVersions",
+                "s3:ListBucketMultipartUploads",
+                "s3:DeleteBucket"
+              ],
+              "Resource": [
+                "arn:aws:s3:::mlo-p3-team1-aws-dev-333333333333-artifacts"
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:DeleteObject",
+                "s3:DeleteObjectVersion",
+                "s3:AbortMultipartUpload"
+              ],
+              "Resource": [
+                "arn:aws:s3:::mlo-p3-team1-aws-dev-333333333333-artifacts/*"
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": "cloudformation:DescribeEvents",
+              "Resource": "*",
+              "Condition": {
+                "StringEquals": {
+                  "aws:RequestedRegion": "ap-northeast-2"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "PeeringAccepterArn": {
+      "Value": {
+        "Fn::GetAtt": [
+          "PeeringAccepter",
+          "Arn"
+        ]
+      },
+      "Description": "Accepter role; initially no acceptance policy"
+    },
+    "Kafka02InstanceProfile": {
+      "Value": {
+        "Ref": "Kafka02Profile"
+      },
+      "Description": "Instance profile name"
+    },
+    "Spark02InstanceProfile": {
+      "Value": {
+        "Ref": "Spark02Profile"
+      },
+      "Description": "Instance profile name"
+    },
+    "Es02InstanceProfile": {
+      "Value": {
+        "Ref": "Es02Profile"
+      },
+      "Description": "Instance profile name"
+    },
+    "ExecutionRoleArn": {
+      "Value": {
+        "Fn::GetAtt": [
+          "ExecutionRole",
+          "Arn"
+        ]
+      },
+      "Description": "Role passed to subsequent infrastructure change sets"
+    }
+  }
+}

@@ -62,6 +62,8 @@ class RoadConnection:
     def close(self): self.db.close()
 
 def main():
+    from pipeline.environment import load
+    load('weather')
     parser=argparse.ArgumentParser()
     parser.add_argument('--regions',type=Path,required=True)
     parser.add_argument('--roads',type=Path,required=True)

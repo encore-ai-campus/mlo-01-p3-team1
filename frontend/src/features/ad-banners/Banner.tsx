@@ -4,7 +4,33 @@ type Delivery={ad:null|{ad_id:string;title:string;image_url:string;link_url:stri
 type Report={body:{delivery_id:string;event_id:string;event_type:string;occurred_at:string};attempts:number;next:number;created:number;done:boolean;inflight:boolean};
 // Transport defaults for this draft; B/INF must confirm production retry settings.
 const maxAttempts=3,retryDelayMs=1000;
-export function Banner({placement,blocked,enabled=true,onReady}:{placement:'top'|'bottom';blocked:boolean;enabled?:boolean;onReady?:()=>void}){
+function imageSrc(value:string){
+  try{
+    const url=new URL(value);
+    // The local ad API advertises an HTTPS delivery URL; Vite serves its loopback proxy over HTTP.
+    if(import.meta.env.DEV&&url.protocol==='https:'&&url.hostname==='127.0.0.1'&&url.port==='8000'&&
+      url.pathname.startsWith('/api/ad-deliveries/'))return url.pathname+url.search;
+  }catch{/* The browser will report a malformed image URL through onError. */}
+  return value;
+}
+const previewAds={
+  top:{title:'카페 용품 광고 예시',image:'/ad-examples/cafe-supplies-top-1536x120.jpg'},
+  bottom:{title:'카페 식물 광고 예시',image:'/ad-examples/cafe-plants-bottom-1536x104.jpg'},
+};
+const localPreview=import.meta.env.DEV&&new URLSearchParams(location.search).get('ad_preview')==='1';
+export function Banner(props:{placement:'top'|'bottom';blocked:boolean;enabled?:boolean;onReady?:()=>void}){
+  return localPreview?<PreviewBanner {...props}/>:<LiveBanner {...props}/>;
+}
+function PreviewBanner({placement,blocked,enabled=true,onReady}:{placement:'top'|'bottom';blocked:boolean;enabled?:boolean;onReady?:()=>void}){
+  useEffect(()=>{if(enabled&&!blocked)onReady?.();},[enabled,blocked,onReady]);
+  const ad=previewAds[placement];
+  return <aside className={'banner banner-'+placement} aria-label={(placement==='top'?'상단':'하단')+' 광고 예시'}>
+    {!blocked&&enabled?<a href="https://www.coupang.com/" target="_blank" rel="noopener noreferrer">
+      <img src={ad.image} alt={ad.title}/><span>광고 예시 · {ad.title}</span>
+    </a>:<span className="ad-empty">광고 예시 대기</span>}
+  </aside>;
+}
+function LiveBanner({placement,blocked,enabled=true,onReady}:{placement:'top'|'bottom';blocked:boolean;enabled?:boolean;onReady?:()=>void}){
   const [delivery,setDelivery]=useState<Delivery|null>(null);
   const [empty,setEmpty]=useState(false);
   const root=useRef<HTMLElement>(null),last=useRef<Delivery|null>(null),deadline=useRef(0),visible=useRef(false),loaded=useRef(false);
@@ -83,7 +109,7 @@ export function Banner({placement,blocked,enabled=true,onReady}:{placement:'top'
   },[delivery?.ad?.delivery_id,blocked]);
   return <aside className={'banner banner-'+placement} ref={root} aria-label={(placement==='top'?'상단':'하단')+' 광고'}>
     {!blocked&&delivery?.ad?<a href={delivery.ad.link_url} target="_blank" rel="noopener noreferrer" onClick={()=>report('CLICK')}>
-      <img src={delivery.ad.image_url} alt={delivery.ad.title} onLoad={()=>{loaded.current=true;}}
+      <img src={imageSrc(delivery.ad.image_url)} alt={delivery.ad.title} onLoad={()=>{loaded.current=true;}}
         onError={()=>{last.current=null;loaded.current=false;setDelivery(null);}}/>
       <span>광고 · {delivery.ad.title}</span>
     </a>:<span className="ad-empty">{empty?'광고':'광고 연결 대기'}</span>}

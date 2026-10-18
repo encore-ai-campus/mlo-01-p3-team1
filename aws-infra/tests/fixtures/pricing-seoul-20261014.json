@@ -1,0 +1,605 @@
+{
+  "retrieved_at": "2026-10-13T15:45:50.881854+00:00",
+  "region": "ap-northeast-2",
+  "source": "AWS Price List Query API",
+  "prices": [
+    {
+      "name": "t3.small",
+      "service": "AmazonEC2",
+      "filters": {
+        "location": "Asia Pacific (Seoul)",
+        "instanceType": "t3.small",
+        "operatingSystem": "Linux",
+        "tenancy": "Shared",
+        "preInstalledSw": "NA",
+        "capacitystatus": "Used",
+        "productFamily": "Compute Instance"
+      },
+      "rates": [
+        {
+          "sku": "PZHVQ3KFPA3RHA5V",
+          "attributes": {
+            "enhancedNetworkingSupported": "No",
+            "intelTurboAvailable": "Yes",
+            "memory": "2 GiB",
+            "dedicatedEbsThroughput": "Up to 2085 Mbps",
+            "vcpu": "2",
+            "classicnetworkingsupport": "false",
+            "capacitystatus": "Used",
+            "locationType": "AWS Region",
+            "storage": "EBS only",
+            "instanceFamily": "General purpose",
+            "operatingSystem": "Linux",
+            "intelAvx2Available": "Yes",
+            "instanceFamilyCategory": "General Purpose",
+            "regionCode": "ap-northeast-2",
+            "physicalProcessor": "Intel Skylake E5 2686 v5",
+            "clockSpeed": "3.1 GHz",
+            "ecu": "NA",
+            "networkPerformance": "Up to 5 Gigabit",
+            "servicename": "Amazon Elastic Compute Cloud",
+            "gpuMemory": "NA",
+            "dedicatedEbsThroughputDescription": "174 Mbps",
+            "vpcnetworkingsupport": "true",
+            "instanceType": "t3.small",
+            "tenancy": "Shared",
+            "usagetype": "APN2-BoxUsage:t3.small",
+            "normalizationSizeFactor": "1",
+            "intelAvxAvailable": "Yes",
+            "processorFeatures": "AVX; AVX2; Intel AVX; Intel AVX2; Intel AVX512; Intel Turbo",
+            "servicecode": "AmazonEC2",
+            "licenseModel": "No License required",
+            "currentGeneration": "Yes",
+            "preInstalledSw": "NA",
+            "location": "Asia Pacific (Seoul)",
+            "processorArchitecture": "64-bit",
+            "marketoption": "OnDemand",
+            "operation": "RunInstances",
+            "availabilityzone": "NA"
+          },
+          "effective_date": "2026-10-01T00:00:00Z",
+          "unit": "Hrs",
+          "usd": "0.0260000000",
+          "begin_range": "0",
+          "end_range": "Inf",
+          "description": "$0.026 per On Demand Linux t3.small Instance Hour"
+        }
+      ]
+    },
+    {
+      "name": "t3.medium",
+      "service": "AmazonEC2",
+      "filters": {
+        "location": "Asia Pacific (Seoul)",
+        "instanceType": "t3.medium",
+        "operatingSystem": "Linux",
+        "tenancy": "Shared",
+        "preInstalledSw": "NA",
+        "capacitystatus": "Used",
+        "productFamily": "Compute Instance"
+      },
+      "rates": [
+        {
+          "sku": "G5CAZXC4M5ENHEZN",
+          "attributes": {
+            "enhancedNetworkingSupported": "No",
+            "intelTurboAvailable": "Yes",
+            "memory": "4 GiB",
+            "dedicatedEbsThroughput": "Up to 2085 Mbps",
+            "vcpu": "2",
+            "classicnetworkingsupport": "false",
+            "capacitystatus": "Used",
+            "locationType": "AWS Region",
+            "storage": "EBS only",
+            "instanceFamily": "General purpose",
+            "operatingSystem": "Linux",
+            "intelAvx2Available": "Yes",
+            "instanceFamilyCategory": "General Purpose",
+            "regionCode": "ap-northeast-2",
+            "physicalProcessor": "Intel Skylake E5 2686 v5",
+            "clockSpeed": "3.1 GHz",
+            "ecu": "NA",
+            "networkPerformance": "Up to 5 Gigabit",
+            "servicename": "Amazon Elastic Compute Cloud",
+            "gpuMemory": "NA",
+            "dedicatedEbsThroughputDescription": "347 Mbps",
+            "vpcnetworkingsupport": "true",
+            "instanceType": "t3.medium",
+            "tenancy": "Shared",
+            "usagetype": "APN2-BoxUsage:t3.medium",
+            "normalizationSizeFactor": "2",
+            "intelAvxAvailable": "Yes",
+            "processorFeatures": "AVX; AVX2; Intel AVX; Intel AVX2; Intel AVX512; Intel Turbo",
+            "servicecode": "AmazonEC2",
+            "licenseModel": "No License required",
+            "currentGeneration": "Yes",
+            "preInstalledSw": "NA",
+            "location": "Asia Pacific (Seoul)",
+            "processorArchitecture": "64-bit",
+            "marketoption": "OnDemand",
+            "operation": "RunInstances",
+            "availabilityzone": "NA"
+          },
+          "effective_date": "2026-10-01T00:00:00Z",
+          "unit": "Hrs",
+          "usd": "0.0520000000",
+          "begin_range": "0",
+          "end_range": "Inf",
+          "description": "$0.052 per On Demand Linux t3.medium Instance Hour"
+        }
+      ]
+    },
+    {
+      "name": "t3.large",
+      "service": "AmazonEC2",
+      "filters": {
+        "location": "Asia Pacific (Seoul)",
+        "instanceType": "t3.large",
+        "operatingSystem": "Linux",
+        "tenancy": "Shared",
+        "preInstalledSw": "NA",
+        "capacitystatus": "Used",
+        "productFamily": "Compute Instance"
+      },
+      "rates": [
+        {
+          "sku": "822X28N5YHCZG5KZ",
+          "attributes": {
+            "enhancedNetworkingSupported": "No",
+            "intelTurboAvailable": "Yes",
+            "memory": "8 GiB",
+            "dedicatedEbsThroughput": "Up to 2780 Mbps",
+            "vcpu": "2",
+            "classicnetworkingsupport": "false",
+            "capacitystatus": "Used",
+            "locationType": "AWS Region",
+            "storage": "EBS only",
+            "instanceFamily": "General purpose",
+            "operatingSystem": "Linux",
+            "intelAvx2Available": "Yes",
+            "instanceFamilyCategory": "General Purpose",
+            "regionCode": "ap-northeast-2",
+            "physicalProcessor": "Intel Skylake E5 2686 v5",
+            "clockSpeed": "3.1 GHz",
+            "ecu": "NA",
+            "networkPerformance": "Up to 5 Gigabit",
+            "servicename": "Amazon Elastic Compute Cloud",
+            "gpuMemory": "NA",
+            "dedicatedEbsThroughputDescription": "695 Mbps",
+            "vpcnetworkingsupport": "true",
+            "instanceType": "t3.large",
+            "tenancy": "Shared",
+            "usagetype": "APN2-BoxUsage:t3.large",
+            "normalizationSizeFactor": "4",
+            "intelAvxAvailable": "Yes",
+            "processorFeatures": "AVX; AVX2; Intel AVX; Intel AVX2; Intel AVX512; Intel Turbo",
+            "servicecode": "AmazonEC2",
+            "licenseModel": "No License required",
+            "currentGeneration": "Yes",
+            "preInstalledSw": "NA",
+            "location": "Asia Pacific (Seoul)",
+            "processorArchitecture": "64-bit",
+            "marketoption": "OnDemand",
+            "operation": "RunInstances",
+            "availabilityzone": "NA"
+          },
+          "effective_date": "2026-10-01T00:00:00Z",
+          "unit": "Hrs",
+          "usd": "0.1040000000",
+          "begin_range": "0",
+          "end_range": "Inf",
+          "description": "$0.104 per On Demand Linux t3.large Instance Hour"
+        }
+      ]
+    },
+    {
+      "name": "m6i.large",
+      "service": "AmazonEC2",
+      "filters": {
+        "location": "Asia Pacific (Seoul)",
+        "instanceType": "m6i.large",
+        "operatingSystem": "Linux",
+        "tenancy": "Shared",
+        "preInstalledSw": "NA",
+        "capacitystatus": "Used",
+        "productFamily": "Compute Instance"
+      },
+      "rates": [
+        {
+          "sku": "YNF8U8R6NK3DHPTM",
+          "attributes": {
+            "enhancedNetworkingSupported": "Yes",
+            "intelTurboAvailable": "Yes",
+            "memory": "8 GiB",
+            "dedicatedEbsThroughput": "Up to 10000 Mbps",
+            "vcpu": "2",
+            "classicnetworkingsupport": "false",
+            "capacitystatus": "Used",
+            "locationType": "AWS Region",
+            "storage": "EBS only",
+            "instanceFamily": "General purpose",
+            "operatingSystem": "Linux",
+            "intelAvx2Available": "Yes",
+            "instanceFamilyCategory": "General Purpose",
+            "regionCode": "ap-northeast-2",
+            "physicalProcessor": "Intel Xeon 8375C (Ice Lake)",
+            "clockSpeed": "3.5 GHz",
+            "ecu": "NA",
+            "networkPerformance": "Up to 12500 Megabit",
+            "servicename": "Amazon Elastic Compute Cloud",
+            "gpuMemory": "NA",
+            "dedicatedEbsThroughputDescription": "650 Mbps",
+            "vpcnetworkingsupport": "true",
+            "instanceType": "m6i.large",
+            "tenancy": "Shared",
+            "usagetype": "APN2-BoxUsage:m6i.large",
+            "normalizationSizeFactor": "4",
+            "intelAvxAvailable": "Yes",
+            "processorFeatures": "Intel AVX; Intel AVX2; Intel AVX512; Intel Turbo",
+            "servicecode": "AmazonEC2",
+            "licenseModel": "No License required",
+            "currentGeneration": "Yes",
+            "preInstalledSw": "NA",
+            "location": "Asia Pacific (Seoul)",
+            "processorArchitecture": "64-bit",
+            "marketoption": "OnDemand",
+            "operation": "RunInstances",
+            "availabilityzone": "NA"
+          },
+          "effective_date": "2026-10-01T00:00:00Z",
+          "unit": "Hrs",
+          "usd": "0.1180000000",
+          "begin_range": "0",
+          "end_range": "Inf",
+          "description": "$0.118 per On Demand Linux m6i.large Instance Hour"
+        }
+      ]
+    },
+    {
+      "name": "nat_hour",
+      "service": "AmazonEC2",
+      "filters": {
+        "location": "Asia Pacific (Seoul)",
+        "usagetype": "APN2-NatGateway-Hours"
+      },
+      "rates": [
+        {
+          "sku": "P63FHTYZXQBC6HX5",
+          "attributes": {
+            "regionCode": "ap-northeast-2",
+            "servicecode": "AmazonEC2",
+            "groupDescription": "Hourly charge for NAT Gateways",
+            "usagetype": "APN2-NatGateway-Hours",
+            "locationType": "AWS Region",
+            "location": "Asia Pacific (Seoul)",
+            "servicename": "Amazon Elastic Compute Cloud",
+            "operation": "NatGateway",
+            "group": "NGW:NatGateway"
+          },
+          "effective_date": "2026-10-01T00:00:00Z",
+          "unit": "Hrs",
+          "usd": "0.0590000000",
+          "begin_range": "0",
+          "end_range": "Inf",
+          "description": "$0.059 per NAT Gateway Hour"
+        }
+      ]
+    },
+    {
+      "name": "nat_gb",
+      "service": "AmazonEC2",
+      "filters": {
+        "location": "Asia Pacific (Seoul)",
+        "usagetype": "APN2-NatGateway-Bytes"
+      },
+      "rates": [
+        {
+          "sku": "HC3MBQKUG7PB4BYX",
+          "attributes": {
+            "regionCode": "ap-northeast-2",
+            "servicecode": "AmazonEC2",
+            "groupDescription": "Charge for per GB data processed by NatGateways",
+            "usagetype": "APN2-NatGateway-Bytes",
+            "locationType": "AWS Region",
+            "location": "Asia Pacific (Seoul)",
+            "servicename": "Amazon Elastic Compute Cloud",
+            "operation": "NatGateway",
+            "group": "NGW:NatGateway"
+          },
+          "effective_date": "2026-10-01T00:00:00Z",
+          "unit": "GB",
+          "usd": "0.0590000000",
+          "begin_range": "0",
+          "end_range": "Inf",
+          "description": "$0.059 per GB Data Processed by NAT Gateways"
+        }
+      ]
+    },
+    {
+      "name": "ebs_gp3",
+      "service": "AmazonEC2",
+      "filters": {
+        "location": "Asia Pacific (Seoul)",
+        "usagetype": "APN2-EBS:VolumeUsage.gp3"
+      },
+      "rates": [
+        {
+          "sku": "MTK7D9SGKGYR3JD6",
+          "attributes": {
+            "maxThroughputvolume": "2000 MiB/s",
+            "volumeType": "General Purpose",
+            "maxIopsvolume": "80000",
+            "usagetype": "APN2-EBS:VolumeUsage.gp3",
+            "locationType": "AWS Region",
+            "maxVolumeSize": "64 TiB",
+            "storageMedia": "SSD-backed",
+            "regionCode": "ap-northeast-2",
+            "servicecode": "AmazonEC2",
+            "volumeApiName": "gp3",
+            "location": "Asia Pacific (Seoul)",
+            "servicename": "Amazon Elastic Compute Cloud",
+            "operation": ""
+          },
+          "effective_date": "2026-10-01T00:00:00Z",
+          "unit": "GB-Mo",
+          "usd": "0.0912000000",
+          "begin_range": "0",
+          "end_range": "Inf",
+          "description": "$0.0912 per GB-month of General Purpose (gp3) provisioned storage - Asia Pacific (Seoul)"
+        }
+      ]
+    },
+    {
+      "name": "ipv4",
+      "service": "AmazonVPC",
+      "filters": {
+        "location": "Asia Pacific (Seoul)",
+        "usagetype": "APN2-PublicIPv4:InUseAddress"
+      },
+      "rates": [
+        {
+          "sku": "ZKBHEVDXYBRCKFQ8",
+          "attributes": {
+            "regionCode": "ap-northeast-2",
+            "servicecode": "AmazonVPC",
+            "groupDescription": "Hourly charge for In-use Public IPv4 Addresses",
+            "usagetype": "APN2-PublicIPv4:InUseAddress",
+            "locationType": "AWS Region",
+            "location": "Asia Pacific (Seoul)",
+            "servicename": "Amazon Virtual Private Cloud",
+            "operation": "",
+            "group": "VPCPublicIPv4Address"
+          },
+          "effective_date": "2026-09-01T00:00:00Z",
+          "unit": "Hrs",
+          "usd": "0.0050000000",
+          "begin_range": "0",
+          "end_range": "Inf",
+          "description": "$0.005 per In-use public IPv4 address per hour"
+        }
+      ]
+    },
+    {
+      "name": "alb_hour",
+      "service": "AWSELB",
+      "filters": {
+        "location": "Asia Pacific (Seoul)",
+        "usagetype": "APN2-LoadBalancerUsage"
+      },
+      "rates": [
+        {
+          "sku": "9V4MUNSTKX75UF58",
+          "attributes": {
+            "regionCode": "ap-northeast-2",
+            "servicecode": "AWSELB",
+            "groupDescription": "LoadBalancer hourly usage by Gateway Load Balancer",
+            "usagetype": "APN2-LoadBalancerUsage",
+            "locationType": "AWS Region",
+            "location": "Asia Pacific (Seoul)",
+            "servicename": "Elastic Load Balancing",
+            "operation": "LoadBalancing:Gateway",
+            "group": "ELB:Balancing"
+          },
+          "effective_date": "2026-08-01T00:00:00Z",
+          "unit": "Hrs",
+          "usd": "0.0125000000",
+          "begin_range": "0",
+          "end_range": "Inf",
+          "description": "$0.0125 per Gateway LoadBalancer-hour (or partial hour) in Asia Pacific (Seoul)"
+        },
+        {
+          "sku": "9W5F5W76Y7AFNTVY",
+          "attributes": {
+            "regionCode": "ap-northeast-2",
+            "servicecode": "AWSELB",
+            "groupDescription": "LoadBalancer hourly usage by Classic Load Balancer",
+            "usagetype": "APN2-LoadBalancerUsage",
+            "locationType": "AWS Region",
+            "location": "Asia Pacific (Seoul)",
+            "servicename": "Elastic Load Balancing",
+            "operation": "LoadBalancing",
+            "group": "ELB:Balancing"
+          },
+          "effective_date": "2026-08-01T00:00:00Z",
+          "unit": "Hrs",
+          "usd": "0.0250000000",
+          "begin_range": "0",
+          "end_range": "Inf",
+          "description": "$0.025 per LoadBalancer-hour (or partial hour)"
+        },
+        {
+          "sku": "FTU9EQE348PCR5Y2",
+          "attributes": {
+            "regionCode": "ap-northeast-2",
+            "servicecode": "AWSELB",
+            "groupDescription": "LoadBalancer hourly usage by Network Load Balancer",
+            "usagetype": "APN2-LoadBalancerUsage",
+            "locationType": "AWS Region",
+            "location": "Asia Pacific (Seoul)",
+            "servicename": "Elastic Load Balancing",
+            "operation": "LoadBalancing:Network",
+            "group": "ELB:Balancing"
+          },
+          "effective_date": "2026-08-01T00:00:00Z",
+          "unit": "Hrs",
+          "usd": "0.0225000000",
+          "begin_range": "0",
+          "end_range": "Inf",
+          "description": "$0.0225 per Network LoadBalancer-hour (or partial hour)"
+        },
+        {
+          "sku": "VUV9M7PZ543S2SC9",
+          "attributes": {
+            "regionCode": "ap-northeast-2",
+            "servicecode": "AWSELB",
+            "groupDescription": "LoadBalancer hourly usage by Application Load Balancer",
+            "usagetype": "APN2-LoadBalancerUsage",
+            "locationType": "AWS Region",
+            "location": "Asia Pacific (Seoul)",
+            "servicename": "Elastic Load Balancing",
+            "operation": "LoadBalancing:Application",
+            "group": "ELB:Balancing"
+          },
+          "effective_date": "2026-08-01T00:00:00Z",
+          "unit": "Hrs",
+          "usd": "0.0225000000",
+          "begin_range": "0",
+          "end_range": "Inf",
+          "description": "$0.0225 per Application LoadBalancer-hour (or partial hour)"
+        }
+      ]
+    },
+    {
+      "name": "alb_lcu",
+      "service": "AWSELB",
+      "filters": {
+        "location": "Asia Pacific (Seoul)",
+        "usagetype": "APN2-LCUUsage"
+      },
+      "rates": [
+        {
+          "sku": "78BE4GERQQJGJ5XN",
+          "attributes": {
+            "regionCode": "ap-northeast-2",
+            "servicecode": "AWSELB",
+            "groupDescription": "Used Gateway Load Balancer capacity units-hr",
+            "usagetype": "APN2-LCUUsage",
+            "locationType": "AWS Region",
+            "location": "Asia Pacific (Seoul)",
+            "servicename": "Elastic Load Balancing",
+            "operation": "LoadBalancing:Gateway",
+            "group": "ELB:Balancing"
+          },
+          "effective_date": "2026-08-01T00:00:00Z",
+          "unit": "LCU-Hrs",
+          "usd": "0.0040000000",
+          "begin_range": "0",
+          "end_range": "Inf",
+          "description": "$0.0040 per used Gateway load balancer capacity unit-hour (or partial hour) in Asia Pacific (Seoul)"
+        },
+        {
+          "sku": "CX4ZBV2SE6F5HJV3",
+          "attributes": {
+            "regionCode": "ap-northeast-2",
+            "servicecode": "AWSELB",
+            "groupDescription": "Used Application Load Balancer capacity units-hr",
+            "usagetype": "APN2-LCUUsage",
+            "locationType": "AWS Region",
+            "location": "Asia Pacific (Seoul)",
+            "servicename": "Elastic Load Balancing",
+            "operation": "LoadBalancing:Application",
+            "group": "ELB:Balancing"
+          },
+          "effective_date": "2026-08-01T00:00:00Z",
+          "unit": "LCU-Hrs",
+          "usd": "0.0080000000",
+          "begin_range": "0",
+          "end_range": "Inf",
+          "description": "$0.008 per used Application load balancer capacity unit-hour (or partial hour)"
+        },
+        {
+          "sku": "W2KCCPTV7TC5BGW9",
+          "attributes": {
+            "regionCode": "ap-northeast-2",
+            "servicecode": "AWSELB",
+            "groupDescription": "Used Network Load Balancer capacity units-hr",
+            "usagetype": "APN2-LCUUsage",
+            "locationType": "AWS Region",
+            "location": "Asia Pacific (Seoul)",
+            "servicename": "Elastic Load Balancing",
+            "operation": "LoadBalancing:Network",
+            "group": "ELB:Balancing"
+          },
+          "effective_date": "2026-08-01T00:00:00Z",
+          "unit": "LCU-Hrs",
+          "usd": "0.0060000000",
+          "begin_range": "0",
+          "end_range": "Inf",
+          "description": "$0.006 per used Network load balancer capacity unit-hour (or partial hour)"
+        }
+      ]
+    },
+    {
+      "name": "m7i.large",
+      "service": "AmazonEC2",
+      "filters": {
+        "location": "Asia Pacific (Seoul)",
+        "instanceType": "m7i.large",
+        "operatingSystem": "Linux",
+        "tenancy": "Shared",
+        "preInstalledSw": "NA",
+        "capacitystatus": "Used"
+      },
+      "rates": [
+        {
+          "sku": "UJJMFBN4RBJ2G2DD",
+          "attributes": {
+            "enhancedNetworkingSupported": "Yes",
+            "intelTurboAvailable": "Yes",
+            "memory": "8 GiB",
+            "dedicatedEbsThroughput": "Up to 10000 Mbps",
+            "vcpu": "2",
+            "classicnetworkingsupport": "false",
+            "capacitystatus": "Used",
+            "locationType": "AWS Region",
+            "storage": "EBS only",
+            "instanceFamily": "General purpose",
+            "operatingSystem": "Linux",
+            "intelAvx2Available": "Yes",
+            "instanceFamilyCategory": "General Purpose",
+            "regionCode": "ap-northeast-2",
+            "physicalProcessor": "Intel Xeon Scalable (Sapphire Rapids)",
+            "clockSpeed": "3.2 GHz",
+            "ecu": "NA",
+            "networkPerformance": "Up to 12500 Megabit",
+            "servicename": "Amazon Elastic Compute Cloud",
+            "gpuMemory": "NA",
+            "dedicatedEbsThroughputDescription": "650 Mbps",
+            "vpcnetworkingsupport": "true",
+            "instanceType": "m7i.large",
+            "tenancy": "Shared",
+            "usagetype": "APN2-BoxUsage:m7i.large",
+            "normalizationSizeFactor": "4",
+            "intelAvxAvailable": "Yes",
+            "processorFeatures": "Intel AVX; Intel AVX2; Intel AVX512; Intel Turbo; Intel AMX",
+            "servicecode": "AmazonEC2",
+            "licenseModel": "No License required",
+            "currentGeneration": "Yes",
+            "preInstalledSw": "NA",
+            "location": "Asia Pacific (Seoul)",
+            "processorArchitecture": "64-bit",
+            "marketoption": "OnDemand",
+            "operation": "RunInstances",
+            "availabilityzone": "NA"
+          },
+          "effective_date": "2026-10-01T00:00:00Z",
+          "unit": "Hrs",
+          "usd": "0.1239000000",
+          "begin_range": "0",
+          "end_range": "Inf",
+          "description": "$0.1239 per On Demand Linux m7i.large Instance Hour"
+        }
+      ]
+    }
+  ]
+}
