@@ -35,7 +35,7 @@ class YoutubeQueue(Endpoint):
     def get(self,request,pk):
         owner=self.owner(request)
         playlist=service.owned(Playlist,owner,pk)
-        require(settings.LOCAL_DEMO,'POLICY_NOT_READY','공유 영상 연결 저장소의 운영 연결을 기다리고 있어요.',503)
+        require(settings.LOCAL_DEMO or getattr(settings,'YOUTUBE_REGISTRY_BACKEND','disabled')=='database','POLICY_NOT_READY','공유 영상 연결 저장소의 운영 연결을 기다리고 있어요.',503)
         require(set(playlist.snapshot['context']['excluded_track_ids'])==set(playlist.family.excluded),
                 'EXCLUSIONS_NOT_APPLIED','제외 변경을 반영한 선곡표를 먼저 받아 주세요.',409)
         return Response(native_queue(playlist.pk,playlist.snapshot['items']))

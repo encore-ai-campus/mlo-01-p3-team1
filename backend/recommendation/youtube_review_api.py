@@ -27,7 +27,10 @@ def _scope(request, owner):
         require(isinstance(playlist_id, str) and len(playlist_id) <= 256)
         playlist = service.owned(Playlist, owner, playlist_id)
         return playlist.snapshot['items']
-    return service.catalog().tracks
+    if settings.LOCAL_DEMO:
+        return service.catalog().tracks
+    from .worker import verified_catalog
+    return verified_catalog(service.catalog())
 
 
 def _known_tracks(request, owner, ids):
@@ -51,16 +54,34 @@ def _state(mappings):
 
 
 class ReviewEndpoint(Endpoint):
+    def dispatch(self,request,*args,**kwargs):
+        from .youtube_database import review_actor
+        token=review_actor.set('system')
+        try:return super().dispatch(request,*args,**kwargs)
+        finally:review_actor.reset(token)
+
     def authorize(self, request):
-        registry.validate_access_code(request.headers.get('X-Youtube-Review-Code'))
+        if settings.LOCAL_DEMO:
+            registry.validate_access_code(request.headers.get('X-Youtube-Review-Code'))
+        else:
+            require(getattr(settings,'YOUTUBE_REGISTRY_BACKEND','disabled')=='database','POLICY_NOT_READY','영상 연결 저장소 설정이 필요합니다.',503)
+            from backend.common.identity import admin
+            from .youtube_database import review_actor
+            user=admin(request,'manage_music')
+            review_actor.set(str(user.pk))
         return self.owner(request)
 
 
 class ReviewStatus(Endpoint):
     def get(self, request):
-        enabled = bool(settings.LOCAL_DEMO)
-        return Response({'enabled': enabled, 'is_test': enabled,
-                         'access_code_file': str(registry.access_code_path()) if enabled else None})
+        if settings.LOCAL_DEMO:
+            return Response({'enabled':True,'is_test':True,'auth_mode':'LOCAL_CODE','access_code_file':str(registry.access_code_path())})
+        from django.contrib.auth import get_user
+        from backend.common.identity import raw_request
+        user=get_user(raw_request(request))
+        from backend.common.admin_roles import permitted
+        allowed=bool(user.is_authenticated and user.is_active and user.is_staff and permitted(user, 'manage_music'))
+        return Response({'enabled':getattr(settings,'YOUTUBE_REGISTRY_BACKEND','disabled')=='database','is_test':False,'auth_mode':'ADMIN_SESSION','authenticated':allowed})
 
 
 class ReviewTracks(ReviewEndpoint):

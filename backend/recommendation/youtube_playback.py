@@ -278,7 +278,7 @@ def resolve_playback_candidates(track, excluded_video_ids=(), owner_id=''):
 def _keyless_candidates(track, excluded_video_ids):
     """Never fall through to native metadata or remote search in keyless mode."""
     from .errors import DomainError
-    if not settings.LOCAL_DEMO:
+    if not settings.LOCAL_DEMO and getattr(settings,'YOUTUBE_REGISTRY_BACKEND','disabled') != 'database':
         return {'track_id': track['track_id'], 'status': 'SEARCH_UNAVAILABLE', 'candidates': [],
                 'reason': 'REGISTRY_NOT_CONFIGURED', 'message': '공유 영상 연결 저장소의 운영 연결을 기다리고 있어요.'}
     try:

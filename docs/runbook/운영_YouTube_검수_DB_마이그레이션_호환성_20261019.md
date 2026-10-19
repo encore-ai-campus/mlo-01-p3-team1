@@ -9,7 +9,7 @@
 
 공개 develop의 `0006_distributed_dispatch`는 신규 Job 필드·DispatchControl을 추가하는 별도 additive 마이그레이션입니다. 서로 독립적인 두 `0006`을 모두 유지하고 `0007_merge_youtube_dispatch`가 양쪽에 의존하게 구성합니다. 이미 각자의 `0006`을 적용한 환경에서도 기존 migration 이름을 바꾸거나 fake 처리하지 않습니다.
 
-공유 YouTube 검수 데이터 읽기·쓰기에는 배포 중인 기존 PostgreSQL 어댑터를 사용하며, 비운영 로컬 리뷰는 계속 로컬 SQLite를 사용합니다. 기존 검수자 식별·revision 충돌 검사·원자적 커밋 계약을 유지합니다.
+공유 YouTube 검수 데이터 읽기·쓰기에는 배포 중인 기존 PostgreSQL 어댑터를 사용하며, 비운영 로컬 리뷰는 계속 로컬 SQLite를 사용합니다. 운영 KEYLESS 재생·영상 대기열·관리자 검수 API도 `YOUTUBE_REGISTRY_BACKEND=database`인 경우 이 공유 저장소를 사용합니다. 관리자 검수는 기존 관리자 세션과 `manage_music` 권한으로 보호하며 로컬 검수 접근 코드를 운영 인증으로 대체하지 않습니다. 기존 검수자 식별·revision 충돌 검사·원자적 커밋 계약을 유지합니다.
 
 ## 배포 안전 확인
 
