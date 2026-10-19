@@ -1,0 +1,252 @@
+/* Muther public web visual refresh. All overrides are scoped to the public app. */
+body:has(.muther-app){background:radial-gradient(ellipse at 48% 8%,#dceeff 0%,#eff7ff 58%,#e7f0fb 100%)}
+.muther-app{
+  width:min(1580px,calc(100% - 32px));margin:14px auto 24px;min-height:calc(100vh - 28px);
+  background:#fff;border-radius:22px;box-shadow:0 18px 68px #3377af20;overflow:hidden;
+  color:#112147;font-family:Inter,Pretendard,"Noto Sans KR",system-ui,sans-serif;
+}
+.muther-app .header{
+  height:100px;min-height:100px;max-width:none;padding:8px 3.1%;gap:34px;
+  background:linear-gradient(120deg,#fff 15%,#fff 64%,#f5faff 100%);border:0;
+}
+.muther-app .brand.muther-brand{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:2px;flex:none;white-space:nowrap;text-decoration:none;letter-spacing:0}
+.muther-app .muther-wordmark{display:block;font-size:49px;font-weight:900;letter-spacing:-3.2px;line-height:.95;font-family:Arial,Helvetica,sans-serif}
+.muther-app .muther-wordmark-mu{color:#277df1}
+.muther-app .muther-wordmark-ther{color:#101c42}
+.muther-app .muther-wordmark-dot{color:#fa6b25}
+.muther-app .muther-description{font-size:15px;font-weight:500;color:#6b82a5;letter-spacing:-.4px;line-height:1.25}
+.muther-app .muther-header-nav{display:flex;align-items:center;justify-content:center;gap:36px;margin-left:auto;flex:1;font-size:15px;white-space:nowrap}
+.muther-app .muther-header-nav a,.muther-app .muther-header-nav button{position:relative;border:0;background:none;color:#647895;font-weight:600;font-size:15px;text-decoration:none;padding:14px 0}
+.muther-app .muther-header-nav a:hover,.muther-app .muther-header-nav button:hover{color:#126df7}
+.muther-app .muther-header-nav [aria-current=page]{color:#126df7}
+.muther-app .muther-header-nav [aria-current=page]::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:4px;background:#176dfe;border-radius:99px}
+.muther-app .muther-header-nav .muther-nav-account{border:1px solid #c9dff8;border-radius:22px;padding:10px 20px;background:#edf5ff;color:#245aa2}
+.muther-app .demo-note{font-size:11px;max-width:185px;overflow:hidden;text-overflow:ellipsis;color:#7d90ae}
+.muther-app .public-main{max-width:none;margin:0;padding:0 16px 28px}
+.muther-app .banner{width:calc(100% - 32px);max-width:none;margin:0 16px 12px;height:120px;
+  border:1px solid #d8e8f8;border-radius:15px;overflow:hidden;background:#f1f7fd}
+.muther-app .banner-bottom{margin:12px 16px 16px;height:104px}
+.muther-app .banner img{max-height:100%;object-fit:cover}
+.muther-app .ad-empty{color:#91a7c0}
+.muther-hero{
+  min-height:328px;display:grid;grid-template-columns:56% 44%;overflow:hidden;
+  border-radius:16px;background:#eaf3ff;border:1px solid #d7eafb;box-shadow:0 8px 28px #6ba8ed0a
+}
+.muther-hero-photo{
+  min-width:0;position:relative;display:flex;align-items:center;padding:32px 6.5%;
+  background-image:linear-gradient(90deg,#f0f7ff 0%,#f4f9ffeb 29%,#eaf4ffc7 43%,#eaf4ff15 75%),url('/muther/hero-headphones.jpg');
+  background-size:cover;background-position:center 45%
+}
+.muther-hero-copy{position:relative;z-index:1;max-width:470px}
+.muther-hero-eyebrow,.muther-section-eyebrow{display:block;color:#1876fa;font-size:12px;font-weight:800;letter-spacing:2.4px}
+.muther-hero h1{color:#09163a;font-size:clamp(38px,4vw,66px);line-height:1.05;font-weight:900;letter-spacing:-3.5px;margin:14px 0 13px;white-space:nowrap}
+.muther-hero-copy>p{font-size:clamp(14px,1.6vw,21px);line-height:1.55;font-weight:600;letter-spacing:-.7px;color:#4f678d;margin:0 0 23px}
+.muther-hero-cta{display:inline-flex;align-items:center;gap:11px;border:0;border-radius:999px;padding:15px 23px;background:#176cf8;color:#fff;font-size:17px;font-weight:800;box-shadow:0 11px 23px #2073f43a}
+.muther-hero-cta:hover{background:#075adf}
+.muther-hero-cta .icon{width:18px;height:18px}
+.muther-play-icon{display:grid;place-items:center;width:24px;height:24px;font-size:18px}
+.muther-hero-brand{
+  position:relative;min-width:0;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;background:radial-gradient(circle at 52% 40%,#fff 0%,#f8fbff 40%,#dbeaff 93%);padding:25px
+}
+.muther-hero-brand:before,.muther-hero-brand:after{content:"";position:absolute;border-radius:50%;background:#add5ff90;z-index:-1}
+.muther-hero-brand:before{width:265px;height:265px;top:-92px;left:12%}
+.muther-hero-brand:after{width:180px;height:180px;bottom:-70px;right:-35px}
+.muther-brand-orbit{position:absolute;inset:26px 8% 37px 11%;transform:rotate(-17deg);border:2px solid #3182fa;border-left-color:#ffffffac;border-bottom-color:#ffffffad;border-radius:60% 50%;z-index:-1}
+.muther-brand-sun{position:absolute;top:15px;right:23%;width:88px;height:88px;border-radius:50%;background:linear-gradient(145deg,#ffcfae,#ff772e);box-shadow:0 0 35px #ffab6b40;z-index:-1}
+.muther-brand-cloud{position:absolute;font-size:114px;color:#edf7ff;text-shadow:0 10px 14px #b6d8ff6f;z-index:-1}
+.muther-brand-cloud.cloud-a{right:0;top:10%}.muther-brand-cloud.cloud-b{bottom:12px;left:6%;font-size:85px}
+.muther-hero-logotype{display:flex;flex-direction:column;align-items:center;gap:0;font-family:Arial,Helvetica,sans-serif;font-weight:900;line-height:.99;text-shadow:0 2px 12px #fff}
+.muther-hero-music{color:#2678f5;font-size:clamp(38px,4.7vw,72px);letter-spacing:-2.3px}
+.muther-hero-cross{font-size:40px;line-height:1.1;color:#287af4;font-weight:300}
+.muther-hero-weather{color:#101b40;font-size:clamp(31px,4vw,61px);letter-spacing:-2px}
+.muther-hero-period{color:#f87530}
+.muther-hero-brand p{font-size:14px;letter-spacing:3.2px;color:#536d95;text-align:center;line-height:1.9;margin:23px 0 0}
+.muther-brand-wave{position:absolute;width:92px;height:70px;fill:#71b5ff;opacity:.85}
+.muther-brand-wave.left{left:3%;top:38%}.muther-brand-wave.right{right:-4%;bottom:20%}
+.muther-app .weather-panel.muther-weather-panel{
+  position:relative;display:grid;grid-template-columns:minmax(0,45%) minmax(0,55%);align-items:stretch;gap:0;
+  height:auto;min-height:219px;margin:12px 0 18px;padding:18px 22px;border-radius:17px;
+  background:radial-gradient(ellipse at 92% 28%,#fafdff 10%,#eaf5ff 67%,#deeeff 100%);border:1px solid #d1e9ff;
+  box-shadow:inset 0 2px 8px #8dc1f527,0 6px 20px #4c8ede0c;
+}
+.muther-region-side{min-width:0;padding:2px 24px 2px 4px;border-right:1px solid #c9dcf3}
+.muther-weather-title{display:flex;align-items:center;gap:10px;margin-bottom:21px}
+.muther-title-icon{display:grid;place-items:center;flex:none;width:39px;height:39px;border-radius:12px;background:#247cf5;color:#fff;box-shadow:0 8px 18px #247cf42e}
+.muther-title-icon .icon{width:23px;height:23px}
+.muther-weather-title h2,.muther-forecast-heading h2{font-size:clamp(17px,1.6vw,23px);letter-spacing:-.6px;color:#0e1c41;line-height:1.25;margin:0}
+.muther-weather-title p{color:#61799e;font-size:12px;font-weight:500;line-height:1.55;margin:5px 0 0}
+.muther-app .region-picker{max-width:none;width:100%}
+.muther-app .region-selectors{display:grid;grid-template-columns:1.06fr 1fr 1fr auto;gap:7px;align-items:end}
+.muther-app .region-select-label{display:flex;flex-direction:column;min-width:0;gap:5px;color:#6d86a9;font-size:11px;font-weight:600}
+.muther-app .region-select-label select{
+  width:100%;min-width:0;height:43px;padding:0 28px 0 9px;border:1px solid #bfd8f5;border-radius:9px;
+  background:#fff;color:#233e71;font-weight:700;font-size:12px;box-shadow:0 4px 14px #c4e0fb30;text-overflow:ellipsis;outline-offset:3px
+}
+.muther-app .region-select-label select:focus-visible{outline:3px solid #7cb6ff}
+.muther-app .region-select-label select:disabled{color:#93a7bf;background:#f1f6fc}
+.muther-app .region-apply{
+  display:flex;align-items:center;justify-content:center;gap:6px;height:43px;white-space:nowrap;border:1px solid #b6d8fe;
+  border-radius:9px;padding:0 11px;background:#1971ef;color:white;font-size:12px
+}
+.muther-app .region-apply:disabled{background:#e6effa;border-color:#e0eaf7;color:#96a9c2}
+.muther-app .region-apply .icon{width:14px;height:14px}
+.muther-app .region-selected{display:flex;align-items:center;gap:5px;color:#6082ad;font-size:11px;margin:11px 0 0;max-width:none;white-space:normal}
+.muther-app .region-selected .icon{width:13px;height:13px;color:#2c89ff;flex:none}
+.muther-app .region-message{font-size:12px;margin:8px 0;color:#a64b37}
+.muther-app .region-message button{margin-left:8px}
+.muther-forecast-side{min-width:0;display:flex;flex-direction:column;padding:1px 2px 0 27px}
+.muther-forecast-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:11px}
+.muther-forecast-heading>span{font-size:11px;white-space:nowrap;color:#6b84a5}
+.muther-clock-icon{color:#2380f5;font-size:29px;vertical-align:-1px;margin-right:5px}
+.muther-forecast-cells{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;flex:1}
+.muther-forecast-cell{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;gap:2px;
+  border-right:1px solid #cde0f7;padding:7px 2px;color:#182e55}
+.muther-forecast-cell:last-child{border:0}
+.muther-forecast-cell.current{background:#daeeffb7;border:0;border-radius:16px}
+.muther-forecast-cell time{font-size:12px;font-weight:600;color:#4c79bd;white-space:nowrap}
+.muther-forecast-cell .weather-icon{width:52px;height:45px;flex:none}
+.muther-forecast-cell strong{font-size:23px;color:#162b58;font-weight:900;line-height:1.2}
+.muther-forecast-cell>span{font-size:11px;color:#526f98;font-weight:600}
+.muther-forecast-note{font-size:10px;text-align:right;color:#7b99b9;margin:8px 5px 0}
+.muther-app .muther-guide-widget{position:absolute;right:12px;bottom:-2px;transform:translateY(calc(100% + 9px));min-width:initial;z-index:7}
+.muther-app .muther-guide-widget .guide-bubble{min-width:192px}
+.muther-app .muther-guide-widget img{width:65px;object-fit:contain}
+.muther-app .weather-error,.muther-app .weather-readiness{font-size:12px;color:#aa5239;margin:9px 0 0}
+.muther-moods{margin:25px 0 30px}
+.muther-moods-header{display:flex;align-items:end;justify-content:space-between;gap:20px;margin:0 5px 12px}
+.muther-moods-header h2,.muther-create-heading h2,.muther-home-next h2{font-size:clamp(21px,2vw,30px);color:#111d41;letter-spacing:-1px;margin:5px 0}
+.muther-moods-header p,.muther-create-heading p,.muther-home-next p{font-size:13px;color:#7589a6;margin:4px 0}
+.muther-mood-tabs{display:flex;align-items:center;flex-wrap:wrap;gap:6px}
+.muther-mood-tabs button{border:0;border-radius:999px;background:#edf3fb;color:#556f95;padding:10px 16px;font-size:12px;white-space:nowrap}
+.muther-mood-tabs button[aria-pressed=true]{background:#2578f9;color:#fff}
+.muther-mood-cards{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.muther-mood-card{min-height:191px;position:relative;display:flex;flex-direction:column;justify-content:space-between;
+  background-size:cover;background-position:center;border:1px solid #dce9f6;border-radius:15px;overflow:hidden;
+  padding:15px 13px;color:#fff;box-shadow:0 6px 22px #1e477020}
+.muther-mood-meta{font-size:12px;display:flex;align-items:center;gap:5px;font-weight:700;text-shadow:0 2px 8px #061938}
+.muther-mood-meta span{font-size:19px}
+.muther-mood-info h3{font-size:16px;line-height:1.35;font-weight:800;margin:0 0 5px;color:white;letter-spacing:-.6px}
+.muther-mood-info p{font-size:11px;line-height:1.5;color:#f0f7ff;margin:0}
+.muther-home-next{margin:12px 0 17px;padding:21px 28px;background:linear-gradient(110deg,#f1f7ff,#dfeeff);
+  border:1px solid #d5e7fd;border-radius:16px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.muther-home-next button{display:inline-flex;align-items:center;gap:8px;background:#176ef6;color:#fff;border:0;border-radius:999px;padding:14px 20px;font-size:14px;white-space:nowrap}
+.muther-home-next button .icon{width:16px;height:16px}
+.muther-playlist-intro{position:relative;min-height:239px;display:flex;align-items:center;overflow:hidden;
+  border-radius:16px;border:1px solid #cfe7ff;background:linear-gradient(115deg,#eef8ff 8%,#d4eaff 63%,#f7fbff 100%);padding:27px 5%}
+.muther-playlist-intro-copy{position:relative;z-index:2}
+.muther-playlist-intro h1{font-size:clamp(30px,3.4vw,51px);line-height:1.2;letter-spacing:-2.4px;color:#132550;margin:11px 0}
+.muther-playlist-intro h1 span{color:#2174f2}
+.muther-playlist-intro-copy>p{font-size:14px;color:#607a9d;line-height:1.7;margin:6px 0 12px}
+.muther-intro-context{display:flex;align-items:center;gap:11px;background:#ffffffc2;padding:9px 14px;border:1px solid #e5f2ff;border-radius:13px;width:fit-content;max-width:min(100%,520px)}
+.muther-intro-context .weather-icon{width:36px;height:32px;flex:none}
+.muther-intro-context>div{display:flex;flex-direction:column;gap:2px}
+.muther-intro-context strong{font-size:13px;color:#1c4988}
+.muther-intro-context span{font-size:11px;color:#6b83a3}
+.muther-playlist-deco{position:absolute;right:4%;inset-block:0;width:min(50%,600px);display:flex;align-items:center;justify-content:center}
+.muther-deco-disc{position:absolute;right:11%;width:250px;height:250px;border-radius:50%;
+  background:repeating-radial-gradient(circle at center,#1c355d 0 3px,#0e2142 3px 7px,#0e1831 7px 10px);
+  box-shadow:22px 18px 42px #182c5a39}
+.muther-deco-disc-center{position:absolute;inset:37%;border-radius:50%;background:#b5d8ff;border:18px solid #eaf5ff}
+.muther-deco-sun{position:absolute;top:-42px;right:37%;width:160px;height:160px;border-radius:50%;background:linear-gradient(145deg,#ffdbc0,#ff9552)}
+.muther-deco-cloud{position:absolute;font-size:155px;top:-56px;right:-8px;color:#f9fcff;filter:drop-shadow(0 8px 10px #8fbafc8c)}
+.muther-deco-words{position:absolute;top:25px;right:45%;font-family:Arial,sans-serif;font-size:21px;font-weight:900;color:#347ce6;line-height:1.05;letter-spacing:1px;transform:rotate(-9deg)}
+.muther-deco-words strong{font-size:34px;color:#152656}
+.muther-create-heading{margin:23px 5px 15px}
+.muther-app .music-grid{grid-template-columns:minmax(0,.85fr) minmax(0,1fr) minmax(0,1.2fr);align-items:stretch;gap:14px;scroll-margin-top:18px}
+.muther-app .music-grid>.card{height:auto;min-height:615px;border:1px solid #dbe9fa;background:linear-gradient(150deg,#ffffff,#f9fcff);
+  box-shadow:0 8px 26px #2f69aa11;border-radius:16px;padding:22px}
+.muther-app .music-grid .selection h2,.muther-app .music-grid .cover-heading h2,.muther-app .music-grid .list-heading h2{font-size:23px;color:#12214b}
+.muther-app .music-grid .selection fieldset{border-bottom:1px solid #e6effa;padding-bottom:15px;margin-bottom:14px}
+.muther-app .music-grid .selection legend{font-size:15px;font-weight:800;color:#203964}
+.muther-app .music-grid .primary{border-radius:10px;background:#1c73f5}
+.muther-app .music-grid .playlist{max-height:740px}
+.muther-app .music-grid .tracks{max-height:450px}
+.muther-app .music-grid .cover-wrap{max-height:350px}
+.muther-app .music-grid .album-cover{max-height:100%;width:auto}
+.muther-app .music-grid .tag-popover{z-index:31}
+.muther-app button:focus-visible,.muther-app a:focus-visible{outline:3px solid #438fff;outline-offset:3px}
+.muther-app .login-header{min-height:96px}
+@media(max-width:1270px){
+  .muther-app .header{gap:16px}.muther-app .muther-header-nav{gap:18px}
+  .muther-app .region-selectors{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .muther-app .region-apply{grid-column:1/-1}
+  .muther-app .weather-panel.muther-weather-panel{min-height:265px}
+  .muther-app .muther-guide-widget{display:none}
+  .muther-mood-cards{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .muther-mood-card{min-height:215px}
+}
+@media(max-width:950px){
+  .muther-app .header{height:auto;min-height:97px;flex-wrap:wrap;gap:10px;padding:16px 24px}
+  .muther-app .muther-header-nav{justify-content:flex-end;gap:17px}
+  .muther-app .demo-note{display:none}
+  .muther-hero{grid-template-columns:1fr 1fr;min-height:300px}
+  .muther-hero-photo{padding:28px 6%}
+  .muther-hero h1{font-size:40px}
+  .muther-app .weather-panel.muther-weather-panel{grid-template-columns:1fr;gap:14px;min-height:0}
+  .muther-region-side{border:0;border-bottom:1px solid #cce0f4;padding:0 0 15px}
+  .muther-forecast-side{padding:0}
+  .muther-app .region-selectors{grid-template-columns:repeat(3,minmax(0,1fr)) auto}
+  .muther-app .region-apply{grid-column:auto}
+  .muther-app .music-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .muther-app .music-grid>.playlist{grid-column:1/-1;min-height:520px}
+  .muther-deco-disc{width:198px;height:198px}
+}
+@media(max-width:700px){
+  .muther-app{width:calc(100% - 12px);margin:6px auto;border-radius:15px}
+  .muther-app .header{height:auto;min-height:0;padding:18px 18px 12px;gap:14px;display:block}
+  .muther-app .muther-wordmark{font-size:39px}
+  .muther-app .muther-description{font-size:12px}
+  .muther-app .muther-header-nav{justify-content:flex-start;gap:21px;margin-top:11px;overflow-x:auto;max-width:100%;padding-bottom:3px}
+  .muther-app .muther-header-nav a,.muther-app .muther-header-nav button{font-size:12px;padding:8px 0}
+  .muther-app .muther-header-nav .muther-nav-account{padding:7px 10px}
+  .muther-app .public-main{padding:0 10px 18px}
+  .muther-app .banner{width:calc(100% - 20px);margin:0 10px 10px;height:75px}
+  .muther-app .banner-bottom{margin:10px;height:75px}
+  .muther-hero{grid-template-columns:1fr;min-height:0}
+  .muther-hero-photo{height:266px;padding:22px 7%;background-position:center 54%}
+  .muther-hero-copy h1{font-size:36px;letter-spacing:-2px;margin:8px 0}
+  .muther-hero-copy>p{font-size:13px;margin-bottom:13px}
+  .muther-hero-eyebrow{font-size:10px}
+  .muther-hero-cta{font-size:13px;padding:11px 15px}
+  .muther-hero-brand{min-height:210px;padding:20px}
+  .muther-hero-music{font-size:47px}.muther-hero-cross{font-size:27px}.muther-hero-weather{font-size:43px}
+  .muther-hero-brand p{font-size:10px;margin:12px 0 0}
+  .muther-app .weather-panel.muther-weather-panel{padding:18px 14px;margin:10px 0 17px}
+  .muther-weather-title h2,.muther-forecast-heading h2{font-size:18px}
+  .muther-weather-title p{font-size:11px}
+  .muther-app .region-selectors{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .muther-app .region-select-label select{font-size:11px;height:42px;padding:0 18px 0 5px}
+  .muther-app .region-apply{grid-column:1/-1;justify-self:stretch}
+  .muther-forecast-cells{gap:2px}
+  .muther-forecast-cell .weather-icon{width:37px;height:36px}
+  .muther-forecast-cell strong{font-size:20px}
+  .muther-forecast-cell time,.muther-forecast-cell>span{font-size:10px}
+  .muther-forecast-heading>span{font-size:9px}
+  .muther-moods-header{display:block;margin-bottom:13px}
+  .muther-moods-header h2{font-size:21px}
+  .muther-mood-tabs{margin-top:12px;overflow-x:auto;flex-wrap:nowrap;padding-bottom:5px}
+  .muther-mood-tabs button{padding:9px 13px;flex:none}
+  .muther-mood-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .muther-mood-card{min-height:195px}
+  .muther-mood-info h3{font-size:14px}
+  .muther-home-next{display:block;padding:19px;margin:12px 0}
+  .muther-home-next button{margin-top:15px;font-size:12px}
+  .muther-playlist-intro{min-height:250px;padding:22px}
+  .muther-playlist-intro h1{font-size:31px}
+  .muther-playlist-intro-copy>p{font-size:12px}
+  .muther-playlist-deco{opacity:.3;right:-15%;width:69%}
+  .muther-app .music-grid{display:grid;grid-template-columns:1fr}
+  .muther-app .music-grid>.card{height:auto;min-height:0;grid-column:1;padding:20px}
+  .muther-app .music-grid .playlist{max-height:none}
+  .muther-app .music-grid .tracks{max-height:420px}
+  .muther-app .music-grid .representative{min-height:365px}
+  .muther-app .music-grid .cover-wrap{max-height:245px}
+}
+@media(max-width:390px){
+  .muther-app .region-selectors{grid-template-columns:1fr 1fr}
+  .muther-app .region-select-label:nth-child(3){grid-column:1/-1}
+  .muther-app .region-select-label select{font-size:12px;padding-left:10px}
+  .muther-hero-brand{min-height:190px}
+}
+@media(prefers-reduced-motion:reduce){.muther-app *{scroll-behavior:auto!important;animation:none!important;transition:none!important}}

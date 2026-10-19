@@ -16,12 +16,27 @@ import {YoutubeReviewPanel} from './YoutubeReviewPanel';
 import {YoutubeNativePlayback} from './YoutubeNativePlayback';
 import {RecommendationErrorNotice} from './RecommendationErrorNotice';
 import type {RecommendationFailure} from './RecommendationErrorNotice';
+import {HeroBanner} from './HeroBanner';
+import {MoodGallery} from './MoodGallery';
+import {PlaylistIntro} from './PlaylistIntro';
+import '../../muther-home.css';
 
 const defaults:Choices={region_id:'',vocal_option:'any',tempo_preference:'auto',weather_influence_mode:'ON',selected_theme_codes:[],selected_genre_codes:[],option_version:''};
 function Cover({url,small=false}:{url?:string|null;small?:boolean}){
   return <img className={small?'track-cover':'album-cover'} src={url||'/default-cover.svg'} alt={small?'':'현재 선곡표 첫 곡의 앨범 이미지'} onError={e=>{e.currentTarget.onerror=null;e.currentTarget.src='/default-cover.svg';}}/>;
 }
 export function PublicPage(){
+  const [page,setPage]=useState<'home'|'playlist'>(()=>window.location.pathname==='/playlist'?'playlist':'home');
+  useEffect(()=>{
+    const update=()=>setPage(window.location.pathname==='/playlist'?'playlist':'home');
+    window.addEventListener('popstate',update);
+    return()=>window.removeEventListener('popstate',update);
+  },[]);
+  function navigate(next:'home'|'playlist'){
+    const target=next==='home'?'/':'/playlist';
+    if(window.location.pathname!==target)window.history.pushState(null,'',target+window.location.search);
+    setPage(next);window.scrollTo({top:0,behavior:'instant'});
+  }
   const [choices,setChoices]=useState(defaults),[options,setOptions]=useState<Option[]>([]),[regions,setRegions]=useState<RegionOption[]>([]);
   const [result,setResult]=useState<Playlist|null>(null),[excluded,setExcluded]=useState<Exclusions|null>(null),[draft,setDraft]=useState<string[]>([]);
   const [weather,setWeather]=useState<Weather|null>(null),[weatherError,setWeatherError]=useState(''),[error,setError]=useState<string|RecommendationFailure>(''),[saveError,setSaveError]=useState('');
@@ -46,6 +61,8 @@ export function PublicPage(){
       if(import.meta.env.VITE_C_DEMO==='1'){
         const context=await api<{csrf_token:string;regions:typeof regions;music_source?:{kind:string}}>('/api/c-demo/context','GET',undefined,undefined,controller.signal);
         setCsrf(context.csrf_token);setRegions(context.regions);setMusicSource(context.music_source?.kind);setDemo(true);setContextReady(true);
+        let stored='';try{stored=localStorage.getItem('cafe-region')||'';}catch{/* optional */}
+        if(context.regions.some(row=>row.region_id===stored))setChoices(c=>c.region_id?c:{...c,region_id:stored});
       }else{
         await api('/api/auth/me','GET',undefined,undefined,controller.signal);
         setContextReady(true);
@@ -76,7 +93,7 @@ export function PublicPage(){
     const interval=setInterval(()=>void refresh(),Math.max(1000,Number(import.meta.env.VITE_WEATHER_POLL_MS||30000)));
     return()=>{controller.abort();clearInterval(interval);};
   },[choices.region_id,weatherRetry,isDemo]);
-  useEffect(()=>{if(choices.region_id&&!isDemo)try{localStorage.setItem('cafe-region',choices.region_id);}catch{/* optional */}},[choices.region_id,isDemo]);
+  useEffect(()=>{if(choices.region_id)try{localStorage.setItem('cafe-region',choices.region_id);}catch{/* optional */}},[choices.region_id,isDemo]);
   function normalized(value:Choices){
     const result={...value};
     for(const [type,field] of [['theme','selected_theme_codes'],['genre','selected_genre_codes']] as const){
@@ -181,10 +198,13 @@ export function PublicPage(){
     result?.approved_playlist_id===result?.playlist_id&&result?result.preview_only?'CSV 검증용 선곡표를 승인했어요.':'승인한 선곡표예요.':
     result?.preview_only?'실제 CSV 곡을 보여주는 검증용 선곡표예요.':result?'선곡표를 확인해 주세요.':effectiveMode==='OFF'?'지역 없이 취향으로 선곡표를 받아 보세요.':'지역을 선택하고 선곡표를 받아 보세요.';
   return <>
-    <div inert={guide}>
-      <Header showGuide={()=>setGuide(true)} isDemo={isDemo} musicSource={musicSource} weatherIsTest={weather?.is_test}/>
+    <div className="muther-app" inert={guide}>
+      <Header showGuide={()=>setGuide(true)} isDemo={isDemo} musicSource={musicSource} weatherIsTest={weather?.is_test}
+        currentPage={page} onNavigate={navigate}/>
       <Banner placement="top" blocked={guide} onReady={()=>setAdContextReady(true)}/>
       <main className="public-main">
+        {page==='home'?<HeroBanner onCreate={()=>navigate('playlist')}/>:
+          <PlaylistIntro regionName={regions.find(row=>row.region_id===choices.region_id)?.name} weather={weather}/>}
         <WeatherPanel region={choices.region_id} regions={regions}
           regionLoading={regionLoading} regionError={regionError} onRegionsRetry={()=>setRegionRetry(x=>x+1)}
           onRegion={id=>setChoices(c=>({...c,region_id:id}))} locked={locked} weather={weather} error={weatherError}
@@ -192,7 +212,20 @@ export function PublicPage(){
         {error&&<RecommendationErrorNotice failure={typeof error==='string'?{message:error}:error} pendingRequest={!!jobIntent} locked={locked}
           onResume={()=>void generate(false,true)} onReconnect={()=>{refreshed.current='';setWeatherRetry(x=>x+1);setInitRetry(x=>x+1);}}
           onReviewConditions={()=>document.getElementById('selection-title')?.focus()}/>}
-        <div className="music-grid">
+        {page==='home'?<><MoodGallery/>
+          <div className="muther-home-next">
+            <div><span className="muther-section-eyebrow">MADE FOR YOUR DAY</span>
+              <h2>나만의 날씨, 나만의 음악</h2><p>우리 동네 날씨를 설정했다면 이제 음악 취향을 골라보세요.</p>
+            </div>
+            <button type="button" onClick={()=>navigate('playlist')}>선곡표 만들러 가기 <Icon name="arrow"/></button>
+          </div>
+        </>:<>
+        <div className="muther-create-heading">
+          <span className="muther-section-eyebrow">MAKE YOUR PLAYLIST</span>
+          <h2>오늘의 선곡 만들기</h2>
+          <p>날씨 반영 여부와 음악 취향을 고른 뒤 실제 선곡표를 받아보세요.</p>
+        </div>
+        <div className="music-grid" id="music-choice">
           <section className="selection card" aria-labelledby="selection-title" data-guide="selection">
             <h2 id="selection-title" tabIndex={-1}>음악 선택</h2>
             <fieldset disabled={locked}><legend>날씨 반영</legend><div className="radio-options weather-mode-options">
@@ -298,6 +331,7 @@ export function PublicPage(){
           </section>
         </div>
         {result&&isDemo&&reviewOpen&&<div id="youtube-review-panel"><YoutubeReviewPanel key={result.playlist_id} playlistId={result.playlist_id} onUpdated={()=>setMappingRevision(value=>value+1)} onPreviewActive={setReviewPreview} blocked={guide||locked}/></div>}
+        </>}
       </main>
       <Banner placement="bottom" blocked={guide} enabled={adContextReady}/>
     </div>
