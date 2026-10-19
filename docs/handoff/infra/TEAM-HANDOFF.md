@@ -1,6 +1,6 @@
 # 팀원 애플리케이션 배포 규약
 
-- 수정일: 2026-10-14
+- 수정일: 2026-10-15
 - 적용 범위: AWS 앱 호스트 인계와 실행 계약. 제품·팀 공통 기준은 [루트 AGENTS](../../../AGENTS.md), AWS 설치·운영은 [aws-infra/AGENTS](../../../aws-infra/AGENTS.md)를 따른다.
 
 인프라 담당은 AWS 생성·삭제·재생성, Kafka·Spark/ZooKeeper·ES·PostgreSQL·MongoDB 기반 서비스와 운영 접속 경로를 준비한다.
@@ -8,7 +8,7 @@
 애플리케이션 소스 제출은 코어 인프라 생성·기반 서비스 setup의 선행 조건이 아니다.
 Control 주/대기·fencing과 S3 단일 writer는 합의한 방향을 유지하며 앱 시작/종료 계약에 맞춰 별도 연동·검증한다.
 
-이 파일은 접속·배포 규약이다. 2026-10-14 18:05 KST 기준 5계정 bootstrap과 ALB 포함 입력 준비는 통과했지만, 실제 인프라와 기반 서비스는 아직 배포하지 않았다.
+이 파일은 접속·배포 규약이다. 과거 bootstrap/입력 확인을 현재 배포 완료로 해석하지 않는다. 최신 AWS 조회·IAM 보완·생성 시도는 `aws-infra/.state`에서 확인하고 기반 설치와 업무 앱·서비스 검증을 별도로 진행한다.
 실행 방법은 [aws-infra/README](../../../aws-infra/README.md), 현재 완료/미완료 상태는 [문서 안내](README.md)를 참고한다. 허용 /32 CIDR은 Git 제외 로컬 설정에 반영했다.
 
 ## 1. 노드와 기본 접속 규약
@@ -31,7 +31,7 @@ Control 주/대기·fencing과 S3 단일 writer는 합의한 방향을 유지하
 ## 2. 접속과 파일 업로드
 
 EC2는 public IP와 inbound SSH 없이 SSM으로 관리한다.
-계정 소유자는 본인 계정에서 필요한 Session Manager 권한이 있는 로그인으로 해당 EC2에 접속한다.
+2026-10-15 사용자 요청으로 encore1~5의 지정된 `student` 로그인에 5계정 전체 관리용 역할을 추가했다. 25개 로그인/대상 조합의 역할 전환·EC2/SSM 조회를 검증했다. 개인 PC의 본인 로그인에서 대상 계정의 관리자 역할로 전환하며, 개인별 설정·권한 범위·SSM 명령은 [팀원 AWS 전체 인프라 접속](TEAM-ACCESS.md)을 따른다. 기존 인프라 실행용 역할은 유지한다.
 AWS 콘솔의 EC2 → 인스턴스 선택 → 연결 → Session Manager 또는 Systems Manager의 Session Manager를 사용한다.
 AWS 운영 CLI의 Run Command 권한과 팀원별 interactive session 권한은 구분한다. 팀원이 사용할 IAM 주체의 권한은 실제 접속 시 확인한다.
 
@@ -47,6 +47,7 @@ setup은 Control과 광고 호스트에 아래 환경 파일을 생성한다. �
 |---|---|---|
 | Control A/B | `/etc/music-cluster/control/database.env` | PostgreSQL host/port/database/user/password, `sslmode=verify-full`, CA 경로 |
 | 광고 서비스 | `/etc/music-cluster/advertising/database.env` | MongoDB host/port/database/user/password/authSource, TLS 사용 및 CA 경로 |
+| Control A/B 날씨 writer | `/etc/music-cluster/control/weather-database.env` | 별도 `WEATHER_MONGO_*`, weather/weather_app/authSource=weather, 검증 TLS. 0.3.18 명시 단계이며 기본 setup에 자동 포함하지 않음 |
 
 systemd의 `EnvironmentFile=` 또는 데이터 전용 환경 파일 로더로 읽는다. 실제 값을 소스에 하드코딩하거나 Git에 커밋하지 않는다.
 CA는 각 호스트의 `/etc/music-cluster/<role>/tls/ca.crt`다. 인증서와 호스트 이름/IP 검증을 유지한다.
@@ -55,7 +56,7 @@ PostgreSQL 앱 사용자는 대상 DB owner이며 superuser·role 생성·DB 생
 
 Kafka/Spark/ES의 노드별 접속 설정과 비밀값은 SSM으로 전달한 root 전용 runtime에 있다.
 권한 있는 담당자가 필요한 앱용 설정만 서비스 사용자에게 분리하여 전달한다. 관리자 비밀값이나 CA private key를 앱에 배포하지 않는다.
-Control 앱의 Spark/Kafka/S3A connector 의존성과 ES 연동은 팀의 앱 의존성 및 현재 미해결 connector lock과 함께 검증해야 한다.
+Control 앱은 검토된 Kafka/S3A lock과 별도 Delta addon을 작업별로 연결한다. ES 전송 방식과 업무 앱 의존성은 별도 실행 계약으로 정한다.
 
 ## 4. 서비스 운영과 HA
 
@@ -82,13 +83,27 @@ checkpoint 사용 prefix는 `aws/aws-dev/<generation>/<query>/`이며 재생성�
 | 단일 active | Collector/Driver/스케줄러 lifecycle, ZK 경로/ACL, 이전 프로세스·Spark application 종료 증거와 실패 시 승계 차단 | A/B/C·INF |
 | connector/checkpoint | Kafka/S3A/Delta/ES 의존성 호환, query prefix/실제 writer·재시작·승계 중 단일 writer | A/B/C·INF |
 | 날씨 MongoDB | Spark 실행 위치와 실제 writer의 도달/반환 경로. 계정5↔2~4 직접 Peering 없음; 계정1 경유/새 Peering을 자동 채택하지 않음 | A·INF |
-| DB 분리 | 현재 MongoDB client 설정은 광고 DB/authSource/사용자용. 날씨 DB·사용자·권한을 광고 자격 증명으로 대체하지 않고 별도 합의 | A/B·INF |
+| DB 분리 | 광고 환경과 전용 weather DB/사용자/authSource·WEATHER_MONGO 환경을 분리. 실제 업무 collection/index·데이터 흐름은 A/B가 인계 | A/B·INF |
 | 공개/작업자 배치 | 광고 API 경로·추천 작업자/outbox 실행 위치/개수와 앱 권한 | B/C·INF |
 
-위 항목과 앱 소스 확보는 기반 인프라 준비의 선행 조건이 아니다. 실제 앱 통합·HA 완료 판정 전에 해당 계약과 검증 근거가 필요하다. 확정된 14노드·7 Peering·제품 기능/담당을 이 목록으로 바꾸지 않는다.
+앱 소스 확보는 기반 인프라 준비의 선행 조건이 아니다. 위 실행 계약은 실제 앱 통합·HA 완료 판정 전에 필요하다. 확정된 14노드·7 Peering·제품 기능/담당을 이 목록으로 바꾸지 않는다.
+
+0.3.18의 [ES·날씨 MongoDB·앱 실행 계약](APPLICATION-CONTRACT.md)은 Driver/executor 쓰기 위치별 직접 경로와 목적지 ingress를 구분한다. 사용자 요청으로 Control Driver의 날씨 MongoDB 접근을 채택하고 정확한 두 Control /32·27017과 전용 weather DB/사용자·환경을 분리한다. 적용·TLS/권한 검증은 비공개 영수증을 확인한다. Spark executor의 계정5 직접 접근과 업무 앱/HA 완료는 포함하지 않는다.
+
+0.3.19의 `application-handoff.py`는 `.state/application-contract.json`의 미입력 담당 목록과 현재 세대의 로컬 설정/lock 참조를 비공개 묶음으로 정리한다. B/C는 ASGI 프로그램/정확한 버전·진입점·worker/argv·작업 경로·의존성 lock/SHA256을, A/B/C는 실제 supervised 명령·Driver 식별·고정 query/checkpoint·종료 증거를 제공한다. ES 전송/최신성/오류/서비스별 credential 참조는 A·INF가 연결한다. 입력 완료 때 생성하는 unit/patch도 검토안이며 기존 canary 전용 설치기로 업무 앱을 활성화하지 않는다. [실행·판정 범위](APPLICATION-CONTRACT.md#4-비공개-인계-묶음과-검토안)를 따른다.
 
 ## 6. 검증 책임
 
 인프라 `verify --execute`는 실제 inventory/SSM과 기반 Kafka/Spark/ES/DB health·smoke를 확인한다.
 업무 앱, ALB target health, 앱 migration·데이터 흐름·Control fencing·실제 앱 checkpoint 정합성은 팀과 별도로 검증한다.
 EC2 running이나 SSM Online만으로 앱 배포 완료를 판단하지 않는다.
+
+## 7. connector·checkpoint·fencing 준비 코드
+
+검토된 Kafka/S3A lock, 기존 배포본을 보존하는 설치 조건과 격리 checkpoint 순차 재시작 probe는 [후속 통합 준비](INTEGRATION-READINESS.md)를 따른다. 0.3.12의 live coordinator/정확한 peer 중지/전체 Spark 종료 관측·프로세스 감독은 [Control fencing 적용 전 검토](CONTROL-FENCING.md)에 분리했다. 실제 권한/설치·물리 fencing/S3 승계와 앱 lifecycle 연결은 별도다. 업무 앱 소스는 기반 준비의 선행 조건이 아니다.
+
+현 준비 패키지는 canary만 사용한다. 업무 연결 시 client-mode foreground Driver와 자식 프로세스를 같은 supervisor/cgroup에 두며 daemonize/cluster-mode Driver로 빠져나가지 않는다. peer 중지는 해당 Control 전체에 영향을 주므로 Control 전체 writer의 감독·웹 가용성·수동 복구를 함께 합의한다. 현재 전역 idle 정책에서 다른 query가 실행 중이면 승계하지 않으며 query별 병렬 선택 fencing을 가정하지 않는다. ES 연결 방식과 실제 앱의 Delta 트랜잭션 검증은 별도 인계 사항이다.
+
+0.3.15의 Delta4.3.1은 기존 Spark classpath 밖의 별도 고정9개 JAR addon으로 준비한다. 앱별 `--jars`와 Delta 세션 설정을 명시하며 같은 S3 Delta 테이블에 쓰는 Driver는 하나로 유지한다. 설치/합성 S3 시험의 실제 상태와 앱의 업무 정합성을 구분하며 [후속 통합 준비](INTEGRATION-READINESS.md)를 따른다.
+
+supervisor의 정상 종료 대기는 0.3.14에서180초로 둔다. 앱의 foreground 종료와 실제 Spark idle 확인·owner 해제를 마칠 수 있어야 하며, lease 상실 시에는 프로세스 그룹을 종료한다. S3는 epoch를 검증해 쓰기를 거부하지 않으므로 감독 밖 writer를 허용하지 않는 실행 계약이 필요하다. 격리 인프라 시험의 성공은 업무 query의 offset·중복 제거·트랜잭션 정합성 검증을 대신하지 않는다.

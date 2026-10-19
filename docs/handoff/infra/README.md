@@ -50,3 +50,11 @@ AWS 원문 출처는 사용자가 제공한 `AWS 인프라 구축 계획서 (1).
 Control 두 대가 전체 서비스의 이중화를 뜻하지 않습니다. PostgreSQL/MongoDB 단일 노드와 NAT 장애 수용 범위, 서비스별 복구 목표를 별도로 검증합니다. 비용 추정은 원문 수령값이며 가격 재검증은 하지 않았습니다.
 
 실제 AWS 변경 명령은 실행하지 않습니다. 기존 작업 ID·담당 배정·제품 범위는 유지하고 위 항목을 D-03/I 계열과 도메인 작업의 실행 인계에서 확인합니다.
+
+## 최신 인프라 실행 인계 자료
+
+- [Connector·Checkpoint·Fencing 후속 준비](INTEGRATION-READINESS.md): 의존성 및 재시작·승계 검증 경계.
+- [Control Fencing 실행 검토](CONTROL-FENCING.md): canary와 실제 Control 승계 경계.
+- [ES·날씨 MongoDB·앱 실행 계약](APPLICATION-CONTRACT.md): 쓰기 위치·DB 권한 및 앱 인계 항목.
+- [AWS 비용 모델 분석](<AWS 인프라 과금 요소 분석.md>): 예상 비용과 실제 청구 자료를 구분한 자료.
+- [AWS 리소스 목록 안내](<AWS 인프라 리소스 현황.md>): 실제 식별자는 Git 제외 운영 기록에서만 관리.
