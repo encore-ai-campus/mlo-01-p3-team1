@@ -12,7 +12,7 @@ from backend.recommendation.errors import DomainError, require
 from .admin_roles import ROLES, assign_role, role_for
 from .identity import admin, raw_request
 from .models import AdminSSOIdentity
-from .admin_dashboards import target_for
+from .admin_dashboards import validated_target
 
 
 def secure_url(value):
@@ -128,9 +128,13 @@ class KibanaDashboard(Endpoint):
 
     def get(self, request):
         admin(request, 'view_operations')
-        require(settings.ADMIN_SSO_ENABLED and raw_request(request).session.get('admin_sso'),
-                'SSO_REQUIRED', '대시보드는 통합 로그인 후 이용해 주세요.', 403)
-        return HttpResponseRedirect(secure_url(target_for(self.dashboard_kind)))
+        if settings.ADMIN_SSO_ENABLED:
+            require(raw_request(request).session.get('admin_sso'),
+                    'SSO_REQUIRED', '대시보드는 통합 로그인 후 이용해 주세요.', 403)
+        target = validated_target(self.dashboard_kind)
+        require(target is not None, 'DASHBOARD_NOT_CONFIGURED',
+                '대시보드 연결 설정을 확인해 주세요.', 503)
+        return HttpResponseRedirect(target)
 
 
 class OperationsDashboard(KibanaDashboard):

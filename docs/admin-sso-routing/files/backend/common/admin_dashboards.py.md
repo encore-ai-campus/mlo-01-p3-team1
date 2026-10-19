@@ -7,5 +7,6 @@
 
 ```python
 target_for(kind)
+validated_target(kind)
 access_for(user, kind)
 ```

@@ -10,10 +10,11 @@ const allMenus=[
   {path:'/api/admin/operations/kibana',label:'운영 대시보드'},
 ];
 (async()=>{
-  const browser=await chromium.launch({headless:true,...(process.platform==='win32'?{channel:'msedge'}:{})});
+  const channel=process.env.PLAYWRIGHT_CHROMIUM_CHANNEL||(process.platform==='win32'?'msedge':null);
+  const browser=await chromium.launch({headless:true,...(channel?{channel}:{})});
   try{
     const page=await browser.newPage();
-    let authenticated=false,localLogin=false,adminRole='SUPER_ADMIN',operationsConfigured=true,logsConfigured=true;
+    let authenticated=false,localLogin=false,ssoEnabled=true,adminRole='SUPER_ADMIN',operationsConfigured=true,logsConfigured=true;
     const errors=[];
     page.on('pageerror',error=>errors.push(error.message));
     await page.route('https://identity.example.org/**',route=>route.fulfill({body:'Identity provider logout reached'}));
@@ -27,7 +28,7 @@ const allMenus=[
         const menus=adminRole==='ADS_ADMIN'?allMenus.filter(item=>item.path==='/admin/ads'):
           adminRole==='OPS_ADMIN'?allMenus.filter(item=>item.path!=='/admin/ads'):allMenus;
         return json({authenticated,role:authenticated?'ADMIN':null,admin_role:authenticated?adminRole:null,
-          allowed_menus:authenticated?menus:[],sso_enabled:true,local_login_enabled:localLogin,csrf_token:'test-only-csrf',
+          allowed_menus:authenticated?menus:[],sso_enabled:ssoEnabled,local_login_enabled:localLogin,csrf_token:'test-only-csrf',
           operations_dashboard:{allowed,configured:operationsConfigured,path:allowed&&operationsConfigured?'/api/admin/operations/dashboard':null},
           log_dashboard:{allowed,configured:logsConfigured,path:allowed&&logsConfigured?'/api/admin/operations/logs':null}});
       }
@@ -78,7 +79,19 @@ const allMenus=[
     assert.equal(await logsButton.count(),0,'ADS_ADMIN must not see the logs button');
     await page.getByRole('button',{name:'로그아웃',exact:true}).click();
     await page.waitForURL('https://identity.example.org/logout');
+    // Native Basic mode is intentionally independent of the old OIDC login.
+    ssoEnabled=false;localLogin=true;authenticated=false;
+    await page.goto(base+'/login');
+    assert.equal(await page.getByRole('link',{name:'관리자 통합 로그인'}).count(),0);
+    await page.locator('#username').waitFor();
+    authenticated=true;adminRole='OPS_ADMIN';operationsConfigured=true;logsConfigured=true;
+    await page.goto(base+'/admin/music');
+    await operationsButton.waitFor();await logsButton.waitFor();
+    assert.equal(await operationsButton.isEnabled(),true);
+    assert.equal(await logsButton.isEnabled(),true);
+    await logsButton.click();
+    await page.waitForURL('https://logs.example.org/dashboard');
     assert.deepEqual(errors,[]);
-    console.log('PASS: SSO login/local form; two independent dashboard states and destinations for SUPER_ADMIN/OPS_ADMIN; 390px viewport; ADS_ADMIN hides both; IdP logout; no page errors');
+    console.log('PASS: SSO and native separate login; two dashboard destinations; role constraints and mobile; IdP logout; no page errors');
   }finally{await browser.close();}
 })().catch(error=>{console.error(error);process.exitCode=1;});

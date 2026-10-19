@@ -61,6 +61,9 @@ ADMIN_SSO_KEYCLOAK_ADMIN_URL = os.environ.get('ADMIN_SSO_KEYCLOAK_ADMIN_URL', ''
 ADMIN_KIBANA_URL = os.environ.get('ADMIN_KIBANA_URL', '')
 ADMIN_OPERATIONS_DASHBOARD_URL = os.environ.get('ADMIN_OPERATIONS_DASHBOARD_URL', '')
 ADMIN_LOG_DASHBOARD_URL = os.environ.get('ADMIN_LOG_DASHBOARD_URL', '')
+# In native-login mode, dashboard redirects must stay on explicitly approved Kibana hosts.
+ADMIN_KIBANA_ALLOWED_HOSTS = tuple(part.strip().lower() for part in
+    os.environ.get('ADMIN_KIBANA_ALLOWED_HOSTS', '').split(',') if part.strip())
 ADMIN_SSO_ELASTICSEARCH_URL = os.environ.get('ADMIN_SSO_ELASTICSEARCH_URL', '')
 ADS_INTERNAL_SECRET = os.environ.get('ADS_INTERNAL_SECRET', '')
 FEEDBACK_ENVELOPE_VERSION = 'phase3-20261014.1'

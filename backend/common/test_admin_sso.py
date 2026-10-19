@@ -6,6 +6,7 @@ from unittest.mock import Mock, patch
 import requests
 from joserfc import jwt
 from joserfc.jwk import RSAKey
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group, Permission
 from django.contrib.sessions.models import Session
@@ -322,3 +323,87 @@ class SSOProvisionTests(TestCase):
                 with self.assertRaisesRegex(ValueError,'request_failed'):
                     client.call('GET','/users')
                 self.assertFalse(send.call_args.kwargs['allow_redirects'])
+
+
+@override_settings(
+    LOCAL_DEMO=True,
+    ADMIN_SSO_ENABLED=False,
+    ADMIN_LOCAL_LOGIN_ENABLED=True,
+    ADMIN_SESSION_SECONDS=600,
+    ADMIN_KIBANA_ALLOWED_HOSTS=('d55cemi1yl53l.cloudfront.net',),
+    ADMIN_KIBANA_URL='',
+    ADMIN_OPERATIONS_DASHBOARD_URL='https://d55cemi1yl53l.cloudfront.net/ops/app/dashboards'
+        '#/view/music-operations-v1',
+    ADMIN_LOG_DASHBOARD_URL='https://d55cemi1yl53l.cloudfront.net/ops/app/dashboards'
+        '#/view/music-guest-behavior-v1?_g=(filters:!())',
+)
+class NativeKibanaDashboardTests(TestCase):
+    """Django and Kibana each enforce their own authentication boundaries."""
+
+    def test_authorized_native_login_can_follow_both_exact_dashboard_links(self):
+        for role in ('SUPER_ADMIN', 'OPS_ADMIN'):
+            user = get_user_model().objects.create_user('native-' + role, password='test-password')
+            assign_role(user, role)
+            login_response = self.client.post(
+                '/api/auth/login', {'username': user.username, 'password': 'test-password'},
+                content_type='application/json')
+            self.assertEqual(login_response.status_code, 200)
+            me = self.client.get('/api/auth/me').json()
+            self.assertEqual(me['admin_role'], role)
+            for name, route in (('operations_dashboard', '/api/admin/operations/dashboard'),
+                                ('log_dashboard', '/api/admin/operations/logs')):
+                self.assertEqual(me[name], {'allowed': True, 'configured': True, 'path': route})
+                response = self.client.get(route)
+                self.assertEqual(response.status_code, 302)
+                expected = (settings.ADMIN_OPERATIONS_DASHBOARD_URL if name == 'operations_dashboard'
+                            else settings.ADMIN_LOG_DASHBOARD_URL)
+                self.assertEqual(response['Location'], expected)
+            self.client.post('/api/auth/logout', {}, content_type='application/json')
+
+    def test_anonymous_ads_and_disabled_staff_are_denied_direct_urls(self):
+        for route in ('/api/admin/operations/dashboard', '/api/admin/operations/logs'):
+            self.assertEqual(self.client.get(route).status_code, 401)
+        user = get_user_model().objects.create_user('ads-native')
+        assign_role(user, 'ADS_ADMIN')
+        self.client.force_login(user)
+        me = self.client.get('/api/auth/me').json()
+        for key in ('operations_dashboard', 'log_dashboard'):
+            self.assertFalse(me[key]['allowed'])
+            self.assertIsNone(me[key]['path'])
+        for route in ('/api/admin/operations/dashboard', '/api/admin/operations/logs'):
+            self.assertEqual(self.client.get(route).status_code, 403)
+        user.is_active = False
+        user.save()
+        self.assertEqual(self.client.get('/api/admin/operations/dashboard').status_code, 401)
+
+    def test_fail_closed_on_untrusted_or_malformed_deep_links(self):
+        from django.conf import settings
+        from .admin_dashboards import validated_target
+        accepted = settings.ADMIN_LOG_DASHBOARD_URL
+        self.assertEqual(validated_target('logs'), accepted)
+        rejected = (
+            'http://d55cemi1yl53l.cloudfront.net/ops/app/dashboards#/view/music-guest-behavior-v1',
+            'https://evil.example.org/ops/app/dashboards#/view/music-guest-behavior-v1',
+            'https://d55cemi1yl53l.cloudfront.net.evil.org/ops/app/dashboards#/view/music-guest-behavior-v1',
+            'https://bad@d55cemi1yl53l.cloudfront.net/ops/app/dashboards#/view/music-guest-behavior-v1',
+            'https://d55cemi1yl53l.cloudfront.net:444/ops/app/dashboards#/view/music-guest-behavior-v1',
+            'https://d55cemi1yl53l.cloudfront.net/ops/login#/view/music-guest-behavior-v1',
+            'https://d55cemi1yl53l.cloudfront.net/ops/app/dashboards#/view/music-operations-v1',
+            'https://d55cemi1yl53l.cloudfront.net/ops/app/dashboards#/view/music-guest-behavior-v1/other',
+            'https://d55cemi1yl53l.cloudfront.net/ops/app/dashboards?next=https://evil.example.org'
+                '#/view/music-guest-behavior-v1',
+            'https://d55cemi1yl53l.cloudfront.net/ops/app/dashboards'
+                '#/view/music-guest-behavior-v1?evil=true',
+            'https://d55cemi1yl53l.cloudfront.net/ops/app/dashboards'
+                '#/view/music-guest-behavior-v1\nLocation:https://evil.example.org',
+        )
+        for url in rejected:
+            with self.subTest(url=url), override_settings(ADMIN_LOG_DASHBOARD_URL=url):
+                self.assertIsNone(validated_target('logs'))
+        with override_settings(ADMIN_KIBANA_ALLOWED_HOSTS=()):
+            self.assertIsNone(validated_target('logs'))
+            user = get_user_model().objects.create_user('ops-native')
+            assign_role(user, 'OPS_ADMIN')
+            self.client.force_login(user)
+            self.assertFalse(self.client.get('/api/auth/me').json()['log_dashboard']['configured'])
+            self.assertEqual(self.client.get('/api/admin/operations/logs').status_code, 503)
