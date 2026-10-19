@@ -85,3 +85,9 @@ SSO API에는 인증 redirect의 code/state가 포함되므로 운영 프록시/
 ## 병합 전 PostgreSQL CI 보완 — 2026-10-19
 
 사용자의 후속 병합/브랜치 삭제 요청으로 GitHub CI를 확인했고, PostgreSQL 제외 이력 회귀 2건이 403으로 실패했습니다. 테스트 계정이 개별 view_feedback만 갖고 있어 새 운영 환경의 단일 역할 정책을 통과하지 못한 것이 원인입니다. `backend/common/test_exclusion_history.py`의 setUp은 OPS_ADMIN을 명시하도록 바꿨고, 클래스에 LOCAL_DEMO=False를 고정해 로컬 SQLite 회귀에서도 운영 권한 경로를 반드시 검사합니다. revision/as_of 정합성 검사와 운영 권한 요구를 완화하지 않았습니다. 함수 시그니처는 그대로이며 코드 변경 근거는 이 절에 남깁니다. 실제 PostgreSQL 재검증은 GitHub CI로 확인한 뒤에만 병합합니다.
+
+## 병합 전 브라우저 CI 보완 — 2026-10-19
+
+PostgreSQL 재검사는 통과했지만 브라우저 통합은 이전 음악 관리 제목(음악 등록 · 검수)을 기다리다 실패했습니다. frontend/scripts/integration-smoke.cjs의 제목 검사를 현재 화면의 음악 관리로 갱신하고, tests/run_browser_integration.py의 격리 계정은 모든 개별 권한을 부여하는 방식 대신 SUPER_ADMIN 역할을 명시하도록 변경했습니다. 실제 API→worker→테스트 DB 연결 검사와 공개 추천·피드백·지역·관리 이력·로그아웃 검사는 유지합니다. 실제 운영 계정은 이 테스트와 관계없이 INF에서 재발급합니다.
+
+이력 조회 버튼의 접근성 이름도 현재 곡별 '이력 보기'에 맞춰 갱신했습니다. python -B tests/run_browser_integration.py(BROWSER_USE_BUILD=1)에서 실제 공개 추천·반응/평가/제외·지역 선택·관리자 로그인/이력/로그아웃 통합, 광고 레이아웃, 공개 배너 proof/재시도 검사 세 묶음이 모두 통과했습니다. 광고 HTTP 부분은 격리 응답이며 MongoDB 통합은 별도 GitHub CI에서 검사합니다.
