@@ -49,7 +49,7 @@ const allMenus=[
     await page.locator('#username').waitFor();
     authenticated=true;
     const operationsButton=page.getByRole('button',{name:/^운영 대시보드/});
-    const logsButton=page.getByRole('button',{name:/^로그 대시보드/});
+    const logsButton=page.getByRole('button',{name:/^사용자 행동 분석/});
     for(const role of ['SUPER_ADMIN','OPS_ADMIN']){
       adminRole=role;
       for(const [operations,logs] of [[false,false],[true,false],[false,true],[true,true]]){
