@@ -2,7 +2,7 @@ import {describe, expect, it} from 'vitest';
 import {createElement} from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
 import type {Track} from '../../shared/types';
-import {nativeYoutubePlaylistUrl, stopMusicEventPropagation, youtubeTrackDestination, youtubeTemporaryQueueUrl} from './youtubeDestinations';
+import {checkedTrackLinks, nativeYoutubePlaylistUrl, stopMusicEventPropagation, youtubeTrackDestination, youtubeTemporaryQueueUrl} from './youtubeDestinations';
 import {YoutubePlaylistLinks, YoutubeTrackLink} from './YoutubeLinks';
 
 // Synthetic IDs here exercise URL validation only; they are never catalog mappings.
@@ -87,5 +87,29 @@ describe('YouTube dashboard destinations', () => {
     expect(search).toContain('/results?search_query=');
     const excluded = renderToStaticMarkup(createElement(YoutubeTrackLink, {track: verifiedTracks[0], excluded: true}));
     expect(excluded).not.toContain('href=');
+  });
+});
+
+describe('current collected URL links', () => {
+  const track: Track = {track_id: 'owned-track', track_name: 'O Sopro do Fole', artists_name: 'Maria Bethânia', album_name: 'Noturno', cover_image_url: null, genre_group_codes: [], theme_codes: [], scores: {W: null, P: null, S: null}};
+  const candidate = {video_id: 'ZeQCSNL_Xxw', native_verified: false};
+  it('uses a collected candidate directly without changing its approval or the snapshot', () => {
+    const before = JSON.stringify(track);
+    expect(youtubeTrackDestination(track, [candidate])).toEqual({kind: 'candidate', href: 'https://www.youtube.com/watch?v=ZeQCSNL_Xxw', label: '수집 영상 확인 (미검수)'});
+    const html = renderToStaticMarkup(createElement(YoutubeTrackLink, {track, mappings: [candidate, {video_id: 'alternative', native_verified: false}]}));
+    expect(html).toContain('수집 영상 확인 (미검수)'); expect(html).toContain('watch?v=ZeQCSNL_Xxw');
+    expect(html).toContain('다른 수집 영상 1개'); expect(html).toContain('watch?v=alternative');
+    expect(html).not.toContain('/results?'); expect(JSON.stringify(track)).toBe(before); expect(candidate.native_verified).toBe(false);
+  });
+  it('prefers native approval and never restores a revoked snapshot ID', () => {
+    expect(youtubeTrackDestination(track, [candidate, {video_id: 'approved001', native_verified: true}])?.href).toContain('approved001');
+    expect(youtubeTrackDestination({...track, youtube_video_id: 'oldVideo001', youtube_match_status: 'VERIFIED'}, [])?.kind).toBe('search');
+    const html = renderToStaticMarkup(createElement(YoutubeTrackLink, {track, mappings: [candidate], excluded: true}));
+    expect(html).not.toContain('href=');
+  });
+  it('validates exact result membership/order, candidate limits, revisions and IDs', () => {
+    const items = [{track_id: track.track_id, revision: 1, candidates: [candidate]}];
+    expect(checkedTrackLinks(items, [track])).toEqual(items);
+    for (const value of [null, [], [{...items[0], track_id: 'foreign'}], [{...items[0], revision: -1}], [{...items[0], candidates: Array(11).fill(candidate)}], [{...items[0], candidates: [candidate, candidate]}], [{...items[0], candidates: [{...candidate, native_verified: 'true'}]}], [{...items[0], candidates: [{...candidate, video_id: 'bad&list=x'}]}]]) expect(checkedTrackLinks(value, [track])).toBeNull();
   });
 });

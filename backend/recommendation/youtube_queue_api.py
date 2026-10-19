@@ -11,24 +11,35 @@ from .models import Playlist
 
 
 def native_queue(playlist_id, tracks):
-    ready, missing, used = [], [], set()
+    ready, missing, used, track_links = [], [], set(), []
+    registry = youtube_registry.track_registries(track['track_id'] for track in tracks)
     for track in tracks:
-        mappings=youtube_registry.track_registry(track['track_id'])['mappings']
-        candidates=[item for item in mappings if item.get('native_verified')
-                    and isinstance(item.get('video_id'),str) and youtube_registry.VIDEO_ID.fullmatch(item['video_id'])]
+        record = registry[track['track_id']]
+        mappings = record['mappings']
+        # Public navigation exposes IDs/readiness only, never operator notes or audit identity.
+        visible = [item for item in mappings
+                   if isinstance(item.get('video_id'), str) and youtube_registry.VIDEO_ID.fullmatch(item['video_id'])
+                   and (item.get('native_verified') or (item.get('status') != 'BLOCKED'
+                        and item.get('native_source') != 'OPERATOR_NATIVE_BLOCK'))]
+        visible.sort(key=lambda item: not item.get('native_verified', False))
+        track_links.append({'track_id': track['track_id'], 'revision': record['revision'],
+                            'candidates': [{'video_id': item['video_id'], 'native_verified': bool(item.get('native_verified'))}
+                                           for item in visible[:10]]})
+        candidates = visible
         candidate=next((item for item in candidates if item['video_id'] not in used),None)
         if candidate is None:
             missing.append({'track_id':track['track_id'],'track_name':track['track_name'],
-                            'reason':'DUPLICATE_VIDEO' if candidates else 'NATIVE_REVIEW_REQUIRED'})
+                            'reason':'DUPLICATE_VIDEO' if candidates else 'MAPPING_REQUIRED'})
             continue
         used.add(candidate['video_id'])
         ready.append({'track_id':track['track_id'],'video_id':candidate['video_id'],
-                      'source':candidate.get('native_source') or 'OPERATOR_NATIVE_REVIEW'})
+                      'source':(candidate.get('native_source') or 'OPERATOR_NATIVE_REVIEW') if candidate.get('native_verified') else 'COLLECTED_UNREVIEWED',
+                      'native_verified':bool(candidate.get('native_verified'))})
     url=('https://www.youtube.com/watch_videos?'+urlencode({'video_ids':','.join(item['video_id'] for item in ready)},safe=',')
          if ready else None)
     return {'playlist_id':playlist_id,'tracks':ready,'missing':missing,'total_count':len(tracks),
-            'ready_count':len(ready),'is_complete':bool(tracks) and not missing,'url':url,
-            'queue_kind':'TEMPORARY_NATIVE_QUEUE','account_saved':False}
+            'ready_count':len(ready),'unreviewed_count':sum(not item['native_verified'] for item in ready),'is_complete':bool(tracks) and not missing,'url':url,
+            'queue_kind':'TEMPORARY_NATIVE_QUEUE','account_saved':False,'track_links':track_links}
 
 
 class YoutubeQueue(Endpoint):

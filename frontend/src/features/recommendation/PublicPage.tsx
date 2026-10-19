@@ -14,6 +14,7 @@ import {YoutubeTrackLink} from './YoutubeLinks';
 import {YoutubePlayer} from './YoutubePlayer';
 import {YoutubeReviewPanel} from './YoutubeReviewPanel';
 import {YoutubeNativePlayback} from './YoutubeNativePlayback';
+import type {YoutubeMappingSnapshot} from './youtubeDestinations';
 import {RecommendationErrorNotice} from './RecommendationErrorNotice';
 import type {RecommendationFailure} from './RecommendationErrorNotice';
 import {RecommendationRun} from '../../shared/recommendationRun';
@@ -46,6 +47,7 @@ export function PublicPage(){
   const [musicSource,setMusicSource]=useState<string>();
   const [adContextReady,setAdContextReady]=useState(false);
   const [reviewOpen,setReviewOpen]=useState(false),[reviewPreview,setReviewPreview]=useState(false),[mappingRevision,setMappingRevision]=useState(0);
+  const [liveYoutubeMappings,setLiveYoutubeMappings]=useState<YoutubeMappingSnapshot|null>(null);
   const [iframePlaylistId,setIframePlaylistId]=useState<string|null>(null);
   const iframeOpen=!!result&&iframePlaylistId===result.playlist_id;
   const [contextReady,setContextReady]=useState(false);
@@ -291,7 +293,7 @@ export function PublicPage(){
               <p className="representative-artist">{result.items[0]?.artists_name}</p>
               <p className="representative-album">{result.items[0]?.album_name}</p>
               <small className="representative-caption">선곡표 첫 곡 · 실제 재생은 YouTube 새 탭에서 진행됩니다.</small>
-              <YoutubeNativePlayback playlistId={result.playlist_id} tracks={result.items} blockReason={youtubeBlockReason} mappingRevision={mappingRevision} onOpen={()=>setIframePlaylistId(null)}/>
+              <YoutubeNativePlayback playlistId={result.playlist_id} tracks={result.items} blockReason={youtubeBlockReason} mappingRevision={mappingRevision} onMappings={setLiveYoutubeMappings} onOpen={()=>setIframePlaylistId(null)}/>
               <button className="youtube-iframe-toggle" type="button" aria-expanded={iframeOpen} aria-controls="youtube-iframe-secondary" onClick={()=>setIframePlaylistId(value=>value===result.playlist_id?null:result.playlist_id)}>{iframeOpen?'대시보드 재생 닫기':'대시보드에서 재생 (보조)'}</button>
               {iframeOpen&&<div className="youtube-iframe-secondary" id="youtube-iframe-secondary"><p className="youtube-iframe-caution">이 보조 플레이어는 영상의 삽입 허용 여부에 따라 재생이 제한될 수 있어요.</p><YoutubePlayer playlistId={result.playlist_id} tracks={result.items} blockReason={youtubeBlockReason} mappingRevision={mappingRevision}/></div>}
             </>:<>
@@ -312,7 +314,7 @@ export function PublicPage(){
               const feedbackReady=!!feedback.feedback?.track_reactions.some(r=>r.track_id===track.track_id);
               return <li key={track.track_id} className={isExcluded?'excluded':''}>
                 <Cover url={track.cover_image_url} small/>
-                <div className="track-info"><strong title={track.track_name}>{track.track_name}</strong><span>{track.artists_name}{isExcluded?' · 제외됨':''}</span><YoutubeTrackLink track={track} excluded={isExcluded}/></div>
+                <div className="track-info"><strong title={track.track_name}>{track.track_name}</strong><span>{track.artists_name}{isExcluded?' · 제외됨':''}</span><YoutubeTrackLink track={track} excluded={isExcluded} mappings={liveYoutubeMappings?.playlist_id===result.playlist_id&&liveYoutubeMappings.mappingRevision===mappingRevision?liveYoutubeMappings.track_links.find(item=>item.track_id===track.track_id)?.candidates||[]:[]}/></div>
                   <div className="reactions">
                     <button aria-label={track.track_name+' 좋아요'} aria-pressed={reaction==='LIKE'}
                       disabled={!feedbackReady||feedback.pending.includes(track.track_id)}

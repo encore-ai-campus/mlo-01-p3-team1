@@ -50,3 +50,12 @@ describe('native YouTube default playback', () => {
     expect(initial).not.toContain('<iframe'); expect(initial).not.toContain('embed/');
   });
 });
+
+it('includes unreviewed collected videos in the queue without claiming they are verified', () => {
+  const queue = {...complete, unreviewed_count: 3, tracks: complete.tracks.map(track => ({...track, native_verified: false, source: 'COLLECTED_UNREVIEWED'}))};
+  expect(checkedNativeQueueHref(queue, 'result-1', tracks)).toBe(complete.url);
+  const html = renderToStaticMarkup(createElement(YoutubeNativeQueueView, {queue, tracks, playlistId: 'result-1'}));
+  expect(html).toContain('3곡은 미검수 수집 영상'); expect(html).toContain('수집한 미검수 영상도 연속 재생에 포함');
+  expect(html).toContain('watch_videos?video_ids=');
+  expect(checkedNativeQueueHref({...queue, unreviewed_count: 0}, 'result-1', tracks)).toBeNull();
+});

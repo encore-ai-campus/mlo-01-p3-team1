@@ -1,5 +1,41 @@
 # backend/recommendation/tests/test_youtube_registry.py 라우팅
 
+## 2026-10-19 수집 URL 공개 연결 — 현행
+
+- 담당: Codex root / U-01·M-06·Q-02 연결 수정
+- 브랜치/기준: feature/youtube-url-connection / develop a7dfafb
+- 작성/수정: 2026-10-19. 기존 수령 원문은 보존합니다. 아래 앞 단계 서술은 당시 구현 이력이며 이번 절이 현행입니다.
+- 계약·전체 검증: [수집 URL 연결 변경 라우팅](../../../../../development/수집_URL_공개화면_연결_변경_라우팅.md).
+
+로컬 batch 조회와 기존 단일 곡 조회가 revision·대안·검수 값을 동일하게 반환하며 미등록 ID 조회가 DB에 새 곡을 삽입하지 않는 회귀를 추가합니다.
+
+### AST 시그니처 — 검사 결과
+
+```python
+class YoutubeRegistryTests(SimpleTestCase)
+YoutubeRegistryTests.setUp(self)
+YoutubeRegistryTests.register(self, video='testVideo01', revision=0, track_id='track-one', **extra)
+YoutubeRegistryTests.test_url_allowlist_never_fetches_and_rejects_confusable_or_credential_urls(self)
+YoutubeRegistryTests.test_registration_pending_then_operator_playing_and_identity_required(self)
+YoutubeRegistryTests.test_large_duration_mismatch_nan_and_bool_never_verify(self)
+YoutubeRegistryTests.test_revisions_prevent_overwriting_another_operator(self)
+YoutubeRegistryTests.test_blocked_mapping_is_not_revived_by_same_url_or_legacy_seed(self)
+YoutubeRegistryTests.test_legacy_verified_metadata_only_seeds_pending(self)
+YoutubeRegistryTests.test_csv_bom_formula_note_and_same_track_alternatives_preserved(self)
+YoutubeRegistryTests.test_invalid_csv_or_stale_later_row_rolls_back_all_rows(self)
+YoutubeRegistryTests.test_csv_headers_row_limit_and_bad_revision_rejected(self)
+YoutubeRegistryTests.test_code_is_persistent_rotatable_and_never_printed(self)
+YoutubeRegistryTests.test_production_never_accepts_local_secret(self)
+YoutubeRegistryTests.test_native_operator_review_is_independent_of_blocked_iframe(self)
+YoutubeRegistryTests.test_native_legacy_seed_requires_exact_reviewed_identity_and_preserves_iframe(self)
+YoutubeRegistryTests.test_existing_registry_additive_native_schema_upgrade_is_idempotent(self)
+YoutubeRegistryTests.test_native_duration_difference_requires_explicit_noted_acknowledgment(self)
+YoutubeRegistryTests.test_native_duration_acknowledgment_is_bounded_and_does_not_change_iframe_rules(self)
+YoutubeRegistryTests.test_batch_read_matches_local_single_track_registry_without_inserting_unknown_tracks(self)
+```
+
+## 앞 단계 기록
+
 - 작성일/수정일: 2026-10-16
 - 담당: API 키 없는 YouTube 등록·검수 백엔드 / 통합팀
 - 기준 브랜치/커밋: feature/ad-logic / f22f974

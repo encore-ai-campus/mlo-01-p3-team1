@@ -133,3 +133,11 @@ R-02/R-04의 성능 부분을 검증된 카탈로그 작업자와 선택 장르 
 | `backend/recommendation/tests/test_exact_search.py` | 장르 비율·대표·동점 및 CP-SAT 대체 경로 비교 | [짝 문서](files/backend/recommendation/tests/test_exact_search.py.md) |
 
 86,485개 실제 GENERAL CSV 후보의 네 조건에서 ID·정확 점수·감사 집계가 전체 순회와 같았습니다. 좁은 ON 후보 생성은 로컬 검사에서 인덱스 재사용 뒤 약 0.6ms였습니다. 넓은 조건은 인덱스가 더 느린 측정이 있어 기존 순회를 유지합니다. 해당 수치는 전체 선곡 API/AWS 응답 P95나 동시 작업 부하가 아닙니다.
+
+## 2026-10-19 수집 URL 연결 후속
+
+최신 사용자 요청으로 미검수 수집 영상도 외부 임시 큐에 포함하며, 검수 자동 승인은 하지 않습니다. 곡별 링크도 현재 레지스트리에서 조회합니다. 운영 공유 어댑터·로컬 저장소를 유지하며 앞 단계의 승인 영상 전용 큐 설명은 당시 이력입니다. [현재 변경 라우팅](../development/수집_URL_공개화면_연결_변경_라우팅.md).
+
+| 소스 | 목적 | 문서 |
+|---|---|---|
+| `backend/recommendation/tests/test_youtube_collected_links.py` | 공유 저장소의 수집 후보·승인/철회·batch 회귀 | [짝 문서](files/backend/recommendation/tests/test_youtube_collected_links.py.md) |

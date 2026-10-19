@@ -178,6 +178,24 @@ def track_registry(track_id):
                 'mappings': [_mapping(row) for row in rows]}
 
 
+def track_registries(track_ids):
+    """Read only the requested tracks in bounded batches, on one connection."""
+    ids = list(dict.fromkeys(track_ids))
+    result = {track_id: {'track_id': track_id, 'revision': 0, 'mappings': []} for track_id in ids}
+    if not ids:
+        return result
+    with _connection() as connection:
+        for start in range(0, len(ids), 500):
+            batch = ids[start:start + 500]
+            slots = ','.join('?' for _ in batch)
+            for row in connection.execute(f'SELECT track_id,revision FROM track_revision WHERE track_id IN ({slots})', batch):
+                result[row['track_id']]['revision'] = row['revision']
+            rows = connection.execute(f"SELECT * FROM mapping WHERE track_id IN ({slots}) ORDER BY CASE status WHEN 'VERIFIED' THEN 0 WHEN 'CANDIDATE' THEN 1 ELSE 2 END,updated_at DESC,video_id", batch)
+            for row in rows:
+                result[row['track_id']]['mappings'].append(_mapping(row))
+    return result
+
+
 def playback_candidates(track_id, excluded_video_ids=()):
     """Only operator-verified IDs are exposed to public playback."""
     return [{'video_id': item['video_id'], 'title': '', 'channel_title': '',

@@ -23,10 +23,9 @@ class YoutubeQueueApiTests(TransactionTestCase):
     def test_owned_native_queue_preserves_order_and_result_without_search_or_account_write(self):
         before=deepcopy(self.playlist.snapshot)
         ids=[item['track_id'] for item in before['items']]
-        def lookup(track_id):
-            index=ids.index(track_id)
-            return {'mappings':[{'video_id':f'video{index:06}','status':'BLOCKED','native_verified':True,'native_source':'LEGACY_NATIVE_METADATA_REVIEW'}]}
-        with patch('backend.recommendation.youtube_registry.track_registry',side_effect=lookup), \
+        def lookup(track_ids):
+            return {track_id: {'revision': 1, 'mappings': [{'video_id': f'video{ids.index(track_id):06}', 'status': 'BLOCKED', 'native_verified': True, 'native_source': 'LEGACY_NATIVE_METADATA_REVIEW'}]} for track_id in track_ids}
+        with patch('backend.recommendation.youtube_registry.track_registries',side_effect=lookup), \
                 patch('backend.recommendation.youtube_playback._api_json',side_effect=AssertionError('API forbidden')):
             response=self.client.get(self.path)
         self.assertEqual(response.status_code,200,response.content)
@@ -41,24 +40,26 @@ class YoutubeQueueApiTests(TransactionTestCase):
 
     def test_partial_queue_does_not_silently_deduplicate_or_claim_complete(self):
         tracks=self.playlist.snapshot['items'][:3]
-        def lookup(track_id):
-            return {'mappings':[] if track_id==tracks[2]['track_id'] else [{'video_id':'sameVideo01','native_verified':True}]}
-        with patch('backend.recommendation.youtube_registry.track_registry',side_effect=lookup):
+        def lookup(track_ids):
+            return {track_id: {'revision': 1, 'mappings': [] if track_id == tracks[2]['track_id'] else [{'video_id': 'sameVideo01', 'native_verified': True}]} for track_id in track_ids}
+        with patch('backend.recommendation.youtube_registry.track_registries',side_effect=lookup):
             result=native_queue('owned',tracks)
         self.assertFalse(result['is_complete'])
         self.assertEqual(result['ready_count'],1)
         self.assertEqual(result['total_count'],3)
-        self.assertEqual([item['reason'] for item in result['missing']],['DUPLICATE_VIDEO','NATIVE_REVIEW_REQUIRED'])
+        self.assertEqual([item['reason'] for item in result['missing']],['DUPLICATE_VIDEO','MAPPING_REQUIRED'])
 
-    def test_pending_native_review_does_not_use_iframe_verification_as_substitute(self):
-        with patch('backend.recommendation.youtube_registry.track_registry',return_value={'mappings':[{'video_id':'testVideo01','status':'VERIFIED','native_verified':False}]}):
+    def test_iframe_only_review_is_included_without_claiming_native_approval(self):
+        records = {track['track_id']: {'revision': 1, 'mappings': [{'video_id': f'video{index:06}', 'status': 'VERIFIED', 'native_verified': False}]} for index, track in enumerate(self.playlist.snapshot['items'])}
+        with patch('backend.recommendation.youtube_registry.track_registries', return_value=records):
             result=native_queue('owned',self.playlist.snapshot['items'])
-        self.assertIsNone(result['url'])
-        self.assertEqual(result['ready_count'],0)
+        self.assertTrue(result['is_complete'])
+        self.assertEqual(result['unreviewed_count'], len(self.playlist.snapshot['items']))
+        self.assertTrue(all(not track['native_verified'] for track in result['tracks']))
 
     def test_foreign_owner_and_unapplied_exclusions_never_read_mapping_registry(self):
         other=Client();other.get('/api/c-demo/context')
-        with patch('backend.recommendation.youtube_registry.track_registry') as lookup:
+        with patch('backend.recommendation.youtube_registry.track_registries') as lookup:
             self.assertEqual(other.get(self.path).status_code,404)
             family=self.playlist.family
             family.excluded=[self.playlist.snapshot['items'][0]['track_id']]
@@ -68,6 +69,6 @@ class YoutubeQueueApiTests(TransactionTestCase):
 
     @override_settings(LOCAL_DEMO=False, OWNER_RESOLVER='')
     def test_unconfigured_production_has_no_local_registry_fallback(self):
-        with patch('backend.recommendation.youtube_registry.track_registry') as lookup:
+        with patch('backend.recommendation.youtube_registry.track_registries') as lookup:
             self.assertEqual(self.client.get(self.path).status_code,503)
         lookup.assert_not_called()

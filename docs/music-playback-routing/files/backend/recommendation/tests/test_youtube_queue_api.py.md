@@ -1,5 +1,28 @@
 # backend/recommendation/tests/test_youtube_queue_api.py 라우팅
 
+## 2026-10-19 수집 URL 공개 연결 — 현행
+
+- 담당: Codex root / U-01·M-06·Q-02 연결 수정
+- 브랜치/기준: feature/youtube-url-connection / develop a7dfafb
+- 작성/수정: 2026-10-19. 기존 수령 원문은 보존합니다. 아래 앞 단계 서술은 당시 구현 이력이며 이번 절이 현행입니다.
+- 계약·전체 검증: [수집 URL 연결 변경 라우팅](../../../../../development/수집_URL_공개화면_연결_변경_라우팅.md).
+
+HTTP 소유/제외 선검사와 운영 fail-closed를 유지하고 batch 조회 mock으로 갱신합니다. iframe 승인만 있는 영상도 미검수 외부 영상으로 큐에 포함하되 native 승인으로 표시하지 않는 회귀를 검증합니다. 공개 후보 포함·native 독립 판정·중복 대안·실제 공유 DB 읽기는 신규 test_youtube_collected_links에서 추가 검증합니다.
+
+### AST 시그니처 — 검사 결과
+
+```python
+class YoutubeQueueApiTests(TransactionTestCase)
+YoutubeQueueApiTests.setUp(self)
+YoutubeQueueApiTests.test_owned_native_queue_preserves_order_and_result_without_search_or_account_write(self)
+YoutubeQueueApiTests.test_partial_queue_does_not_silently_deduplicate_or_claim_complete(self)
+YoutubeQueueApiTests.test_iframe_only_review_is_included_without_claiming_native_approval(self)
+YoutubeQueueApiTests.test_foreign_owner_and_unapplied_exclusions_never_read_mapping_registry(self)
+YoutubeQueueApiTests.test_unconfigured_production_has_no_local_registry_fallback(self)
+```
+
+## 앞 단계 기록
+
 - 작성일: 2026-10-16
 - 수정일: 2026-10-18
 - 담당: 키 없는 음악 통합팀 / 외부 YouTube 큐
