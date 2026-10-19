@@ -1,0 +1,10 @@
+{
+  "cafe_super_admin": {
+    "elasticsearch":{"cluster":[],"indices":[{"names":["ops-mlo-*"],"privileges":["read","view_index_metadata"]}]},
+    "kibana":[{"base":["all"],"spaces":["*"]}]
+  },
+  "cafe_operations": {
+    "elasticsearch":{"cluster":[],"indices":[{"names":["ops-mlo-*"],"privileges":["read","view_index_metadata"]}]},
+    "kibana":[{"base":[],"feature":{"dashboard":["read"],"discover":["read"]},"spaces":["operations"]}]
+  }
+}

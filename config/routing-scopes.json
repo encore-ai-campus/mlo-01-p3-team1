@@ -34,5 +34,22 @@
     "backend/recommendation/matching.py",
     "backend/recommendation/tests/test_exact_search.py",
     "backend/recommendation/tests/test_candidate_index.py"
+  ],
+  "docs/admin-sso-routing": [
+    "backend/common/admin_roles.py",
+    "backend/common/sso.py",
+    "backend/common/sso_tokens.py",
+    "backend/common/sso_provision.py",
+    "backend/common/management/commands/provision_sso_admin.py",
+    "backend/common/management/commands/bootstrap_admin.py",
+    "backend/common/management/commands/prepare_runtime.py",
+    "backend/common/management/commands/check_runtime.py",
+    "backend/common/models.py",
+    "backend/common/identity.py",
+    "backend/common/test_admin_sso.py",
+    "backend/common/test_runtime.py",
+    "backend/cafe/settings.py",
+    "backend/common/migrations/0006_alter_guest_options_adminssoidentity.py",
+    "backend/common/admin_dashboards.py"
   ]
 }

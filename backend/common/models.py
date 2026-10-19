@@ -17,7 +17,17 @@ class Guest(models.Model):
     class Meta:
         permissions = [('manage_ads', 'Manage advertisements'),
                        ('manage_music', 'Import and review music'),
-                       ('view_feedback', 'Read feedback history')]
+                       ('view_feedback', 'Read feedback history'),
+                       ('view_operations', 'Access operations dashboards')]
+
+
+class AdminSSOIdentity(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    issuer = models.URLField(max_length=500)
+    subject = models.CharField(max_length=255)
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=['issuer', 'subject'], name='admin_sso_subject')]
 
 
 class FeedbackEvent(models.Model):

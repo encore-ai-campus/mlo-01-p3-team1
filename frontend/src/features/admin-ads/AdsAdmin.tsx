@@ -1,13 +1,14 @@
 import {useEffect,useRef,useState} from 'react';
 import {api,canonical,key} from '../../shared/api';
 import {Icon} from '../../components/Icons';
+import {AdminHeader,type AdminMe} from '../admin/AdminLayout';
 
 type Measurement={status?:string;impressions:number|null;clicks:number|null;as_of?:string|null;is_stale?:boolean};
 type Ad={ad_id:string;title:string;asset_id:string;link_url:string;placement:'top'|'bottom';starts_at:string;ends_at:string;
   priority:number;daily_budget_tokens:number|null;total_budget_tokens:number|null;version:number;paused:boolean;
   status:'RESERVED'|'ACTIVE'|'ENDED'|'STOPPED';measurement?:Measurement};
 type Summary={counts:Partial<Record<Ad['status'],number>>;measurement:Measurement;evaluated_at:string};
-type Me={authenticated:boolean;role:string;allowed_menus:{path:string;label:string}[]};
+type Me=AdminMe;
 const empty={title:'',asset_id:'',link_url:'',placement:'top' as 'top'|'bottom',starts_at:'',ends_at:'',priority:'1',daily_budget_tokens:'',total_budget_tokens:''};
 const statusNames={ACTIVE:'게시 중',RESERVED:'예약',ENDED:'종료',STOPPED:'중단'};
 const kst=(value:string)=>new Date(value).toLocaleString('sv-SE',{timeZone:'Asia/Seoul'}).replace(' ','T').slice(0,16);
@@ -98,10 +99,7 @@ export function AdsAdmin(){
   const shownPreview=previewAsset?.placement===previewPlacement?previewAsset:rows.find(ad=>ad.placement===previewPlacement);
   const selectedImage=fileUrl||(form.asset_id?assetUrl(form.asset_id):'');
   return <>
-    <header className="header ads-header"><a className="brand" href="/">날씨 기반 <span>음악 선곡</span></a><span className="ads-admin-badge">관리자</span>
-      <nav>{me?.allowed_menus.map(item=><a key={item.path} href={item.path} aria-current={item.path==='/admin/ads'?'page':undefined}>{item.label}</a>)}
-        <span className="ads-account">관리자 계정</span>{me?.authenticated&&<button onClick={()=>void api('/api/auth/logout','POST',{}).then(()=>location.assign('/login')).catch(error=>setError(error.message))}>로그아웃</button>}</nav>
-    </header>
+    <AdminHeader me={me} path="/admin/ads" onError={setError}/>
     <main className="admin ads-admin"><h1>광고 관리</h1><p className="ads-subtitle">상·하단 배너 게시 상태를 관리하세요.</p>
       {error&&<p role="alert" className="notice error">{error} <button disabled={busy||loading} onClick={()=>void load()}>다시 확인</button></p>}
       {notice&&<p role="status" className="notice">{notice}</p>}

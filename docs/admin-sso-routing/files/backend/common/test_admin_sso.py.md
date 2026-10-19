@@ -1,0 +1,38 @@
+# backend/common/test_admin_sso.py
+
+- 작성/수정일: 2026-10-19
+- 담당: Codex, 관리자 역할/SSO 및 운영·로그 대시보드 분리
+- 기준: develop@183ea87
+- [코드·API·설정·검증 연결](../../../../development/관리자_3역할과_SSO_변경_라우팅.md)
+
+```python
+class AdminRoleTests(TestCase)
+AdminRoleTests.test_role_matrix_overrides_extra_direct_permissions_and_superuser_flag(self)
+AdminRoleTests.test_multiple_roles_or_inactive_account_fail_closed(self)
+AdminRoleTests.test_role_change_revokes_local_sessions(self)
+AdminRoleTests.test_kibana_button_state_is_independent_of_link_configuration(self)
+AdminRoleTests.test_local_password_cannot_bypass_sso_and_kibana_requires_sso_session(self)
+AdminRoleTests.test_operations_and_logs_have_independent_targets_and_same_role_boundary(self)
+class OIDCFlowTests(TestCase)
+OIDCFlowTests.setUpClass(cls)
+OIDCFlowTests.setUp(self)
+OIDCFlowTests.send(self, request, **kwargs)
+OIDCFlowTests.start(self)
+OIDCFlowTests.callback(self, state=None)
+OIDCFlowTests.test_signed_login_pkce_binding_role_menu_logout_and_replay(self)
+OIDCFlowTests.test_wrong_state_issuer_audience_expiry_nonce_and_roles_are_rejected(self)
+OIDCFlowTests.test_disabled_local_binding_is_not_reactivated_and_unverified_username_not_linked(self)
+OIDCFlowTests.test_ads_sso_cannot_open_kibana_directly(self)
+OIDCFlowTests.test_invalid_signature_and_insecure_provider_configuration_are_rejected(self)
+OIDCFlowTests.test_provider_unavailable_logout_still_clears_local_session(self)
+class SSOProvisionTests(TestCase)
+SSOProvisionTests.setUp(self)
+SSOProvisionTests.test_one_command_creates_role_and_revocation_expires_both_sides(self)
+SSOProvisionTests.test_partial_failure_keeps_account_disabled_and_does_not_report_success(self)
+SSOProvisionTests.test_unmanaged_account_cannot_be_adopted(self)
+SSOProvisionTests.test_role_downgrade_revokes_sessions_and_replaces_capabilities(self)
+SSOProvisionTests.test_kibana_invalidation_failure_does_not_leave_enabled_local_account(self)
+SSOProvisionTests.test_dry_run_never_calls_provider_or_database_writes(self)
+SSOProvisionTests.test_bootstrap_local_roles_and_production_requires_role(self)
+SSOProvisionTests.test_keycloak_adapter_rejects_other_realm_and_redirects(self)
+```

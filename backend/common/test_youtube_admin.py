@@ -89,6 +89,8 @@ class YoutubeAdminTests(TestCase):
         self.assertEqual(self.client.get('/api/admin/youtube-review/status').status_code,401)
 
     def test_production_registry_remains_unavailable(self):
+        from .admin_roles import assign_role
+        assign_role(self.user, 'OPS_ADMIN')
         self.authenticate()
         with override_settings(LOCAL_DEMO=False):
             self.assertFalse(self.client.get('/api/admin/youtube-review/status').json()['enabled'])

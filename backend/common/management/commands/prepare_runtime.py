@@ -27,10 +27,15 @@ class Command(BaseCommand):
                 if not existing_user.is_active or not existing_user.is_staff:raise CommandError('configured_account_not_active_admin')
                 self.stdout.write(json.dumps({'existing_admin_preserved':True}))
             else:
-                permissions=[x.strip() for x in os.environ.get('BOOTSTRAP_ADMIN_PERMISSIONS','').split(',') if x.strip()]
-                if not permissions or not set(permissions)<={'manage_ads','manage_music','view_feedback'}:
+                role=os.environ.get('BOOTSTRAP_ADMIN_ROLE','')
+                if role:
+                    call_command('bootstrap_admin',username,role=role,stdout=self.stdout)
+                    permissions=[]
+                else:
+                    permissions=[x.strip() for x in os.environ.get('BOOTSTRAP_ADMIN_PERMISSIONS','').split(',') if x.strip()]
+                if not role and (not permissions or not set(permissions)<={'manage_ads','manage_music','view_feedback'}):
                     raise CommandError('explicit_admin_permissions_required')
-                call_command('bootstrap_admin',username,permissions=permissions,stdout=self.stdout)
+                if not role:call_command('bootstrap_admin',username,permissions=permissions,stdout=self.stdout)
         if options['streams']:
             from pipeline.prepare_kafka import ensure_topic
             self.stdout.write(json.dumps({'feedback_topic':ensure_topic('FEEDBACK_KAFKA_')}))
