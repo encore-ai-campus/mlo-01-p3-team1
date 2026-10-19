@@ -79,7 +79,11 @@ def catalog():
     return obj
 
 
+@transaction.atomic
 def enqueue(family, request_id, parent=None, weather_refresh=False):
+    from .dispatch import admit
+    method = 'RULE_BASED' if not parent or weather_refresh else 'GEMINI_RECONFIGURE'
+    admit(method)
     now = timezone.now()
     on = family.options['weather_influence_mode']=='ON'
     bundle = obtain(family.options['region_id'],now) if on else None
@@ -93,7 +97,7 @@ def enqueue(family, request_id, parent=None, weather_refresh=False):
              'allowed_speed_codes':speeds,'policy_version':family.policy_version,'mapping_version':family.mapping_version}
     job = Job.objects.create(family=family,input=fixed,catalog=selected_catalog,request_id=request_id,
                              parent_id=parent.pk if parent else None,
-                              method='RULE_BASED' if not parent or weather_refresh else 'GEMINI_RECONFIGURE')
+                              method=method)
     if settings.INTEGRATION_ENABLED:
         event('WEATHER_REFRESH_REQUESTED' if weather_refresh else 'RECONFIGURATION_REQUESTED' if parent else 'RECOMMENDATION_REQUESTED',
               family,request_id,{'source_playlist_id':parent.pk if parent else None,'job_id':job.pk,'context_snapshot':fixed})

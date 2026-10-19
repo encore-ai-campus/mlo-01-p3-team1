@@ -65,6 +65,24 @@ class Job(models.Model):
     lease_expires_at = models.DateTimeField(null=True)
     provider_attempted = models.BooleanField(default=False)
     provider_diagnostics = models.JSONField(default=dict)
+    worker_id = models.CharField(max_length=160, default='')
+    claimed_at = models.DateTimeField(null=True)
+    finished_at = models.DateTimeField(null=True)
+    recovery_count = models.PositiveIntegerField(default=0)
+    provider_started_at = models.DateTimeField(null=True)
+    provider_lease_until = models.DateTimeField(null=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['method', 'status', 'created_at'], name='rec_method_queue_idx'),
+            models.Index(fields=['status', 'lease_expires_at'], name='rec_expired_lease_idx'),
+        ]
+
+
+class DispatchControl(models.Model):
+    """Shared admission/provider locks; never held during recommendation or HTTP work."""
+    name = models.CharField(max_length=40, primary_key=True)
+    next_provider_at = models.DateTimeField(null=True)
 
 
 class Playlist(models.Model):

@@ -1,0 +1,37 @@
+[Unit]
+Description=Music recommendation worker (%i)
+Wants=network-online.target
+After=network-online.target
+StartLimitIntervalSec=120
+StartLimitBurst=6
+
+[Service]
+Type=simple
+User=control
+Group=control
+WorkingDirectory=/opt/music-apps/control
+Environment=PYTHONUNBUFFERED=1
+Environment=OMP_NUM_THREADS=1
+Environment=OPENBLAS_NUM_THREADS=1
+Environment=MKL_NUM_THREADS=1
+EnvironmentFile=/etc/music-cluster/control/database.env
+EnvironmentFile=/etc/music-cluster/control/application.env
+EnvironmentFile=/etc/music-cluster/control/recommendation.env
+EnvironmentFile=/etc/music-cluster/control/recommendation-%i.env
+ExecStart=/opt/music-apps/control/.venv/bin/python -m backend.manage run_recommendations
+Restart=on-failure
+RestartSec=5
+KillSignal=SIGTERM
+KillMode=control-group
+TimeoutStopSec=210
+SendSIGKILL=yes
+CPUWeight=100
+CPUQuota=100%
+MemoryHigh=1536M
+MemoryMax=2G
+UMask=0027
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

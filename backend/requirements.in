@@ -7,3 +7,4 @@ drf-spectacular
 argon2-cffi
 kafka-python
 boto3
+uvicorn

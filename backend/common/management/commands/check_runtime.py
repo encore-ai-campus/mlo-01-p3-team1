@@ -24,6 +24,8 @@ def configuration():
         checks[name]=bool(os.environ.get(name))
     checks['shared_mapping_configured']=bool(os.environ.get('WEATHER_MAPPING_DSN') or os.environ.get('PGHOST'))
     checks['integration_enabled']=settings.INTEGRATION_ENABLED
+    from backend.recommendation.dispatch import configuration as recommendation_configuration
+    checks.update(recommendation_configuration())
     return checks
 
 

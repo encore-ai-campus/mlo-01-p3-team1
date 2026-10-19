@@ -1,14 +1,18 @@
 import hashlib
 import json
+import logging
 import threading
+import time
 import zlib
 from datetime import timedelta
 from decimal import Decimal, ROUND_HALF_UP
 from django.conf import settings
-from django.db import transaction, close_old_connections
-from django.db.models import Q
+from django.db import DatabaseError, transaction, close_old_connections
+from django.db.models import Value
+from django.db.models.functions import Least, Now
 from django.utils import timezone
-from .models import Job, Playlist, Family, Catalog, uid
+from .models import Job, Playlist, Family, Catalog
+from . import dispatch
 from .errors import DomainError, require
 from .policy import eligible, score, weather_fit, off_preference_details, DURATION_POLICY, TARGET, MINIMUM, MAXIMUM, POLICY, MAPPING, WEATHER_SCORE_VERSION, OFF_SCORE_VERSION
 from .candidate_index import CandidateIndex
@@ -24,6 +28,7 @@ _catalog_key = None
 _catalog_tracks = None
 _candidate_index_key = None
 _candidate_index = None
+logger = logging.getLogger('recommendation.worker')
 
 
 def verified_catalog(catalog):
@@ -104,44 +109,37 @@ def warm_current_catalog():
             _index_for(catalog, raw)
 
 
-def claim():
-    now = timezone.now()
-    with transaction.atomic():
-        # SQLite is single-worker local verification only; PostgreSQL supports concurrent claims.
-        jobs = Job.objects.select_for_update(skip_locked=not settings.LOCAL_DEMO).filter(
-            Q(status='QUEUED') | Q(status='RUNNING',lease_expires_at__lt=now)).order_by('created_at')
-        job = jobs.first()
-        if not job: return None
-        if job.provider_attempted and job.status == 'RUNNING':
-            job.status='FAILED'; job.error={'code':'PROVIDER_OUTCOME_UNKNOWN','message':'중단된 외부 호출 결과를 확인해야 해요.','details':{}}
-            job.save(); return None
-        if job.lease_generation >= 3:
-            job.status='FAILED'; job.error={'code':'WORKER_RETRY_EXHAUSTED','message':'작업 복구 한도를 초과했어요.','details':{}}
-            job.save(); return None
-        job.status='RUNNING'; job.lease_token=uid(); job.lease_generation+=1
-        job.lease_expires_at=now+timedelta(seconds=30); job.save()
-        return job
+def claim(queue=None, worker_id=None):
+    return dispatch.claim(queue or settings.RECOMMENDATION_QUEUE,
+                          worker_id if worker_id is not None else settings.RECOMMENDATION_WORKER_ID)
 
 
 def heartbeat(job, stopped):
     close_old_connections()
     try:
-        while not stopped.wait(10):
-            changed = Job.objects.filter(pk=job.pk,status='RUNNING',lease_token=job.lease_token,
-                                         lease_generation=job.lease_generation,
-                                         lease_expires_at__gt=timezone.now()).update(lease_expires_at=timezone.now()+timedelta(seconds=30))
+        deadline = job.claimed_at + timedelta(seconds=settings.RECOMMENDATION_JOB_TIMEOUT_SECONDS)
+        while not stopped.wait(settings.RECOMMENDATION_HEARTBEAT_SECONDS):
+            changed = active_job(job).update(lease_expires_at=Least(
+                Now() + timedelta(seconds=settings.RECOMMENDATION_LEASE_SECONDS), Value(deadline)))
             if not changed: return
+    except DatabaseError:
+        logger.warning('recommendation_heartbeat_lost job_id=%s worker_id=%s', job.pk, job.worker_id)
     finally: close_old_connections()
 
 
 def active_job(job):
-    return Job.objects.filter(pk=job.pk,status='RUNNING',lease_token=job.lease_token,
-                              lease_generation=job.lease_generation,lease_expires_at__gt=timezone.now())
+    return dispatch.active_job(job)
 
 
-def run_one():
-    job = claim()
+def run_one(queue=None, worker_id=None):
+    job = claim(queue, worker_id)
     if not job: return False
+    started, cpu_started = time.monotonic(), time.process_time()
+    outcome = 'UNKNOWN'
+    logger.info(json.dumps({'event': 'recommendation_claimed', 'job_id': job.pk,
+                           'worker_id': job.worker_id, 'method': job.method,
+                           'generation': job.lease_generation,
+                           'queue_wait_seconds': round(max(0, (job.claimed_at - job.created_at).total_seconds()), 3)}))
     stopped = threading.Event()
     thread = threading.Thread(target=heartbeat,args=(job,stopped),daemon=True)
     thread.start()
@@ -181,8 +179,12 @@ def run_one():
             parent=Playlist.objects.get(pk=job.parent_id)
             ids=[t['track_id'] for t in parent.snapshot['items']]
             offered=candidate_window(candidates,context,ids)
-            require(active_job(job).update(provider_attempted=True)==1,'LEASE_LOST','작업 실행 권한이 만료됐어요.',409)
+            while True:
+                delay = dispatch.begin_provider(job)
+                if delay == 0: break
+                time.sleep(min(delay, 0.25))
             proposal,diagnostics=propose(offered,context,ids)
+            dispatch.end_provider(job)
             diagnostics.update({'eligible_candidate_count':len(candidates),'offered_candidate_count':len(offered),
                                 'searched_full_pool':len(offered)==len(candidates)})
             active_job(job).update(provider_diagnostics=diagnostics)
@@ -211,9 +213,9 @@ def run_one():
                           'score_evidence':exact(evidence),
                           'reason':reasons.get(t['track_id'])})
         with transaction.atomic():
-            current=Job.objects.select_for_update().get(pk=job.pk)
+            current=Job.objects.select_for_update().annotate(dispatch_now=Now()).get(pk=job.pk)
             require(current.status=='RUNNING' and current.lease_token==job.lease_token and current.lease_generation==job.lease_generation
-                    and current.lease_expires_at>timezone.now(),'LEASE_LOST','작업 실행 권한이 만료됐어요.',409)
+                    and current.lease_expires_at>current.dispatch_now,'LEASE_LOST','작업 실행 권한이 만료됐어요.',409)
             f=Family.objects.select_for_update().get(pk=job.family_id)
             if not job.parent_id:
                 f.allowed_genres=sorted({g for t in tracks for g in t['genre_group_codes']}) if not f.options['selected_genre_codes'] else f.options['selected_genre_codes']
@@ -233,16 +235,24 @@ def run_one():
                 from .service import event
                 event('PLAYLIST_GENERATED',f,job.request_id,{'source_playlist_id':result.pk,'context_snapshot':fixed,
                                                            'track_snapshots':items})
-            current.status='SUCCEEDED'; current.error=None; current.save()
+            current.status='SUCCEEDED'; current.error=None; current.finished_at=current.dispatch_now; current.save()
+            outcome = 'SUCCEEDED'
     except DomainError as exc:
         if exc.code in ('CANDIDATE_SHORTAGE','SEARCH_INCOMPLETE','NO_MEANINGFUL_CHANGE') and 'candidate_audit' in locals():
             exc.details.update(candidate_audit)
-        active_job(job).update(
-            status='EXPIRED' if exc.code=='JOB_EXPIRED' else 'FAILED',error={'code':exc.code,'message':exc.message,'details':exc.details})
+        outcome = 'EXPIRED' if exc.code=='JOB_EXPIRED' else 'FAILED'
+        if not active_job(job).update(status=outcome, finished_at=Now(),
+                                      error={'code':exc.code,'message':exc.message,'details':exc.details}):
+            outcome = 'STALE'
     except Exception:
-        active_job(job).update(
-            status='FAILED',error={'code':'INTERNAL_ERROR','message':'작업 처리에 실패했어요. 현재 결과는 유지됩니다.','details':{}})
+        changed = active_job(job).update(status='FAILED', finished_at=Now(),
+            error={'code':'INTERNAL_ERROR','message':'작업 처리에 실패했어요. 현재 결과는 유지됩니다.','details':{}})
+        outcome = 'FAILED' if changed else 'STALE'
         raise
     finally:
         stopped.set(); thread.join(timeout=1)
+        logger.info(json.dumps({'event': 'recommendation_finished', 'job_id': job.pk,
+                               'worker_id': job.worker_id, 'method': job.method, 'status': outcome,
+                               'run_seconds': round(time.monotonic() - started, 3),
+                               'cpu_seconds': round(time.process_time() - cpu_started, 3)}))
     return True

@@ -74,6 +74,16 @@ MUSIC_S3_ARCHIVE_DEFERRED = os.environ.get('MUSIC_S3_ARCHIVE_DEFERRED') == '1'
 SEARCH_MAX_CANDIDATES = int(os.environ.get('SEARCH_MAX_CANDIDATES', '200' if LOCAL_DEMO else '0'))
 SEARCH_SECONDS = float(os.environ.get('SEARCH_SECONDS', '10' if LOCAL_DEMO else '0'))
 RECOMMENDATION_WORKER_IDLE_SECONDS = float(os.environ.get('RECOMMENDATION_WORKER_IDLE_SECONDS', '0.25' if LOCAL_DEMO else '1'))
+RECOMMENDATION_QUEUE = os.environ.get('RECOMMENDATION_QUEUE', 'all')
+RECOMMENDATION_WORKER_ID = os.environ.get('RECOMMENDATION_WORKER_ID', '')
+RECOMMENDATION_LEASE_SECONDS = int(os.environ.get('RECOMMENDATION_LEASE_SECONDS', '30'))
+RECOMMENDATION_HEARTBEAT_SECONDS = float(os.environ.get('RECOMMENDATION_HEARTBEAT_SECONDS', '10'))
+RECOMMENDATION_JOB_TIMEOUT_SECONDS = int(os.environ.get('RECOMMENDATION_JOB_TIMEOUT_SECONDS', '180'))
+RECOMMENDATION_MAX_RECOVERIES = int(os.environ.get('RECOMMENDATION_MAX_RECOVERIES', '2'))
+RECOMMENDATION_MAX_QUEUED_RULE = int(os.environ.get('RECOMMENDATION_MAX_QUEUED_RULE', '100'))
+RECOMMENDATION_MAX_QUEUED_GEMINI = int(os.environ.get('RECOMMENDATION_MAX_QUEUED_GEMINI', '20'))
+GEMINI_MAX_CONCURRENT = int(os.environ.get('GEMINI_MAX_CONCURRENT', '1'))
+GEMINI_MIN_INTERVAL_SECONDS = float(os.environ.get('GEMINI_MIN_INTERVAL_SECONDS', '2'))
 GEMINI_ENABLED = os.environ.get('GEMINI_ENABLED') == '1'
 GEMINI_TIMEOUT_MS = int(os.environ.get('GEMINI_TIMEOUT_MS', '0'))
 GEMINI_MAX_CANDIDATES = int(os.environ.get('GEMINI_MAX_CANDIDATES', '0'))
@@ -86,3 +96,9 @@ YOUTUBE_SEARCH_TIMEOUT_SECONDS = float(os.environ.get('YOUTUBE_SEARCH_TIMEOUT_SE
 YOUTUBE_SEARCH_PER_OWNER_MINUTE = int(os.environ.get('YOUTUBE_SEARCH_PER_OWNER_MINUTE') or '6')
 YOUTUBE_SEARCH_DAILY_LIMIT = int(os.environ.get('YOUTUBE_SEARCH_DAILY_LIMIT') or '80')
 YOUTUBE_SEARCH_CACHE_SECONDS = int(os.environ.get('YOUTUBE_SEARCH_CACHE_SECONDS') or '21600')
+LOGGING = {
+    'version': 1, 'disable_existing_loggers': False,
+    'handlers': {'recommendation_console': {'class': 'logging.StreamHandler'}},
+    'loggers': {'recommendation.worker': {
+        'handlers': ['recommendation_console'], 'level': 'INFO', 'propagate': False}},
+}

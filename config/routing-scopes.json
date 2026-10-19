@@ -51,5 +51,12 @@
     "backend/cafe/settings.py",
     "backend/common/migrations/0006_alter_guest_options_adminssoidentity.py",
     "backend/common/admin_dashboards.py"
+  ],
+  "docs/recommendation-dispatch-routing": [
+    "backend/recommendation/dispatch.py",
+    "backend/recommendation/management/commands/run_recommendations.py",
+    "backend/recommendation/management/commands/check_recommendations.py",
+    "backend/recommendation/migrations/0006_distributed_dispatch.py",
+    "backend/recommendation/tests/test_dispatch.py"
   ]
 }

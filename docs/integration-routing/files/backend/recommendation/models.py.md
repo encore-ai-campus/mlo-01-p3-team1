@@ -1,7 +1,7 @@
 # backend/recommendation/models.py 연결 라우팅
 
 - 작성일: 2026-10-18
-- 수정일: 2026-10-18
+- 수정일: 2026-10-19
 - 담당: Codex / 사용자 승인 통합 정합성 수정
 - 브랜치/기준: develop / 160a66c
 - [대응 코드](../../../../../backend/recommendation/models.py)
@@ -26,3 +26,11 @@ class DemoFeedback(models.Model)
 class Idempotency(models.Model)
 class PendingEvent(models.Model)
 ```
+
+```python
+class DispatchControl(models.Model)
+```
+
+## 2026-10-19 추천 분산 실행 연결
+
+이번 큐·worker·provider 예약·설정/검증 변경은 별도 `docs/development/추천_분산처리_변경_라우팅.md`와 `docs/runbook/추천_분산처리_인프라_인계.md`에서 관리합니다. 기존 담당 기록과 수령 원문은 보존합니다.

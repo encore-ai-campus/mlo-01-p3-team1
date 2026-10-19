@@ -38,10 +38,10 @@ verified_catalog(catalog)
 _index_for(catalog, raw)
 _collect_candidates(catalog, raw, context)
 warm_current_catalog()
-claim()
+claim(queue=None, worker_id=None)
 heartbeat(job, stopped)
 active_job(job)
-run_one()
+run_one(queue=None, worker_id=None)
 ```
 
 ## 2026-10-18 develop 동기화 보완
@@ -49,3 +49,7 @@ run_one()
 current_catalog 사전 로딩과 develop의 압축 카탈로그 unpack·candidate_window·PLAYLIST_GENERATED 원자 이벤트를 함께 유지합니다.
 
 기준 develop `8bdad88`·기존 feature/ad-logic `0a0cc82`의 대조와 실제 재검증은 [통합 기록](../../../../development/feature_전체_동기화_변경_라우팅_20261018.md)을 따릅니다.
+
+## 2026-10-19 추천 분산 실행 연결
+
+이번 큐·worker·provider 예약·설정/검증 변경은 별도 `docs/development/추천_분산처리_변경_라우팅.md`와 `docs/runbook/추천_분산처리_인프라_인계.md`에서 관리합니다. 기존 담당 기록과 수령 원문은 보존합니다.

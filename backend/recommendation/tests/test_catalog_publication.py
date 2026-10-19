@@ -53,4 +53,5 @@ class CatalogPublicationMigrationTests(TransactionTestCase):
             self.assertEqual(Catalog.objects.get(pk='legacy-a').sha256,'legacy-a')
             with override_settings(LOCAL_DEMO=True):self.assertEqual(current_catalog().pk,'legacy-b')
         finally:
-            MigrationExecutor(connection).migrate(after)
+            restore = MigrationExecutor(connection)
+            restore.migrate(restore.loader.graph.leaf_nodes())
