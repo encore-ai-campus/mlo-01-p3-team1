@@ -55,6 +55,21 @@ def current_catalog():
         query = query.exclude(source_ref__startswith='local-preview:youtube-playback-selection:')
     return query.order_by('-publication__id').first()
 
+def cancel_job(owner,job_id,key,data):
+    body=shape(data,[])
+    owned(Job,owner,job_id)  # Missing and foreign jobs share the same 404.
+    def operation():
+        # The worker also locks Job before committing a Playlist. Whichever locks
+        # first determines cancellation versus completion; no successful result is deleted.
+        job=Job.objects.select_for_update().get(pk=job_id)
+        if job.status in ('QUEUED','RUNNING'):
+            job.status='CANCELLED';job.error=None
+            job.lease_token=None;job.lease_expires_at=None
+            job.save(update_fields=['status','error','lease_token','lease_expires_at'])
+        playlist=Playlist.objects.filter(job=job).first()
+        return {'job_id':job.pk,'status':job.status,'playlist_id':playlist.pk if playlist else None},200
+    return mutate(owner,'cancel-job:'+job_id,key,body,operation)
+
 
 def catalog():
     obj = current_catalog()

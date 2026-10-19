@@ -77,3 +77,16 @@
 .playlist .stars button{width:24px;height:26px;font-size:19.5px}
 .playlist .stars .rating-clear{width:auto;height:26px;font-size:10px;white-space:nowrap}
 .playlist .playlist-actions{padding-top:8px;margin-top:4px}
+
+
+/* Requested controls; page density and advertisement placement remain unchanged. */
+.tag-bulk-actions{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.tag-bulk-actions button{min-height:36px;padding:6px 10px;font-size:12px;color:var(--tag-ink);border-color:var(--tag-border);background:#fff}
+.region-section .selected-region{font-size:20px;font-weight:700;line-height:1.4;color:#24466f;margin:0 0 8px;overflow-wrap:anywhere}
+.weather-panel:has(.selected-region){height:auto}
+.generation-actions{display:flex;align-items:stretch;gap:8px}
+.selection-bottom .generation-actions .primary{flex:1;min-width:0;width:auto}
+.generation-cancel{flex:none;min-width:60px;min-height:44px;padding:8px 12px;font-size:14px;border-color:#b5c8df}
+.selection-bottom .generation-notice{margin:8px 0 0;font-size:12px;line-height:1.5;color:#537399}
+@media(min-width:1301px){.region-section .selected-region{font-size:22px}}
+@media(max-width:700px){.region-section .selected-region{font-size:18px}}

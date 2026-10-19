@@ -14,6 +14,7 @@ export async function api<T>(path:string,method='GET',body?:unknown,idempotencyK
   return json;
 }
 export const wait=(ms:number,signal:AbortSignal)=>new Promise<void>((resolve,reject)=>{
+  if(signal.aborted){reject(new DOMException('Aborted','AbortError'));return;}
   const onAbort=()=>{clearTimeout(timer);reject(new DOMException('Aborted','AbortError'));};
   const timer=setTimeout(()=>{signal.removeEventListener('abort',onAbort);resolve();},ms);
   signal.addEventListener('abort',onAbort,{once:true});

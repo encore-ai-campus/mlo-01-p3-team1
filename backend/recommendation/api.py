@@ -104,6 +104,12 @@ class JobDetail(Endpoint):
         return Response({'job_id':j.pk,'status':j.status,'playlist_id':p.pk if p else None,'error':error})
 
 
+class JobCancel(Endpoint):
+    def post(self,request,pk):
+        value,status=service.cancel_job(self.owner(request),pk,self.key(request),request.data)
+        return Response(value,status=status)
+
+
 class PlaylistDetail(Endpoint):
     def get(self,request,pk):
         p=service.owned(Playlist,self.owner(request),pk)

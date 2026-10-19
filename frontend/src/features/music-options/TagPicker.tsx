@@ -7,11 +7,12 @@ type Props={
   choices:Choices;
   disabled:boolean;
   onToggle:(option:Option)=>void;
+  onSelectGroup:(type:TagType,codes:string[])=>void;
 };
 
 const labels:Record<TagType,string>={theme:'테마',genre:'장르'};
 
-export function TagPicker({options,choices,disabled,onToggle}:Props){
+export function TagPicker({options,choices,disabled,onToggle,onSelectGroup}:Props){
   const [open,setOpen]=useState<TagType|null>(null);
   const rootRef=useRef<HTMLDivElement>(null);
   const themeTrigger=useRef<HTMLButtonElement>(null);
@@ -28,6 +29,9 @@ export function TagPicker({options,choices,disabled,onToggle}:Props){
   useEffect(()=>{if(disabled)setOpen(null);},[disabled]);
 
   const visibleOptions=options.filter(option=>option.type===open);
+  const enabledCodes=visibleOptions.filter(option=>option.enabled).map(option=>option.code).sort();
+  const selectedCodes=open==='genre'?choices.selected_genre_codes:choices.selected_theme_codes;
+  const allSelected=enabledCodes.length>0&&enabledCodes.every(code=>selectedCodes.includes(code));
   return <div className="tag-selector" ref={rootRef}
     onKeyDown={event=>{
       if(event.key!=='Escape'||!open)return;
@@ -51,6 +55,12 @@ export function TagPicker({options,choices,disabled,onToggle}:Props){
           role="group" aria-label={`${labels[type]} 선택`}>
           <strong>{labels[type]} 선택</strong>
           <p>여러 개 선택할 수 있어요.</p>
+          <div className="tag-bulk-actions">
+            <button type="button" disabled={disabled||!enabledCodes.length||allSelected}
+              aria-label={`${labels[type]} 전체선택`} onClick={()=>onSelectGroup(type,enabledCodes)}>전체선택</button>
+            <button type="button" disabled={disabled||!selectedCodes.length}
+              aria-label={`${labels[type]} 전체선택 해제`} onClick={()=>onSelectGroup(type,[])}>전체선택 해제</button>
+          </div>
           <div className="tag-option-grid">
             {visibleOptions.map(option=>{
               const selected=(type==='theme'?choices.selected_theme_codes:choices.selected_genre_codes).includes(option.code);

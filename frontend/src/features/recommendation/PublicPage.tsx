@@ -16,6 +16,7 @@ import {YoutubeReviewPanel} from './YoutubeReviewPanel';
 import {YoutubeNativePlayback} from './YoutubeNativePlayback';
 import {RecommendationErrorNotice} from './RecommendationErrorNotice';
 import type {RecommendationFailure} from './RecommendationErrorNotice';
+import {RecommendationRun} from '../../shared/recommendationRun';
 import {HeroBanner} from './HeroBanner';
 import {MoodGallery} from './MoodGallery';
 import {PlaylistIntro} from './PlaylistIntro';
@@ -51,7 +52,8 @@ export function PublicPage(){
   const [regionLoading,setRegionLoading]=useState(true),[regionError,setRegionError]=useState(''),[regionRetry,setRegionRetry]=useState(0);
   const [saveIntent,setSaveIntent]=useState<{ids:string[];body:unknown;id:string}|null>(null);
   const [jobIntent,setJobIntent]=useState<{path:string;body:unknown;id:string}|null>(null);
-  const abort=useRef<AbortController|null>(null);
+  const activeRun=useRef<RecommendationRun|null>(null);
+  const [cancelling,setCancelling]=useState(false),[jobNotice,setJobNotice]=useState('');
   const feedback=useFeedback(result?.playlist_id);
   useEffect(()=>{
     const controller=new AbortController();setError('');setContextReady(false);
@@ -84,7 +86,7 @@ export function PublicPage(){
       .finally(()=>{if(!controller.signal.aborted)setRegionLoading(false);});
     return()=>controller.abort();
   },[regionRetry,contextReady]);
-  useEffect(()=>()=>abort.current?.abort(),[]);
+  useEffect(()=>()=>activeRun.current?.dispose(),[]);
   useEffect(()=>{
     setWeather(null);setWeatherError('');if(!choices.region_id)return;
     const controller=new AbortController();
@@ -115,21 +117,24 @@ export function PublicPage(){
     if(!weatherMismatch||!result||!weather||!excluded||busy||saving||approving||changed||dirty||!weather.recommendation_ready)return;
     const identity=result.playlist_id+'/'+weather.bundle_version;
     if(refreshed.current===identity)return;refreshed.current=identity;
-    const controller=new AbortController();abort.current=controller;setBusy(true);setError('');
+    const run=new RecommendationRun({path:'/api/playlists/'+result.playlist_id+'/weather-refresh',body:{exclusion_revision:excluded.revision},id:key()});
+    activeRun.current=run;const controller={signal:run.signal};setBusy(true);setError('');setJobNotice('');
     async function refresh(){
       try{
-        const accepted=await api<{job_id?:string}>('/api/playlists/'+result!.playlist_id+'/weather-refresh','POST',{exclusion_revision:excluded!.revision},key(),controller.signal);
+        const accepted=await run.accepted;
+        if(controller.signal.aborted)return;
         if(!accepted.job_id)return;
         const start=performance.now();
         for(;;){
           if(performance.now()-start>Number(import.meta.env.VITE_JOB_POLL_TIMEOUT_MS||120000))throw new Error('날씨 갱신 작업이 지연되고 있어요. 기존 선곡표는 유지됩니다.');
           const job=await api<{status:string;playlist_id:string;error?:{message:string}}>('/api/recommendation-jobs/'+accepted.job_id,'GET',undefined,undefined,controller.signal);
           if(job.status==='SUCCEEDED'){await loadResult(job.playlist_id,controller.signal);break;}
+          if(job.status==='CANCELLED'){setJobNotice('선곡표 준비를 취소했어요.');break;}
           if(job.status==='FAILED'||job.status==='EXPIRED')throw new Error(job.error?.message||'새 날씨에 맞춘 선곡표를 만들지 못했어요.');
           await wait(1000,controller.signal);
         }
       }catch(e){if(!controller.signal.aborted)setError((e as Error).message);}
-      finally{if(!controller.signal.aborted)setBusy(false);}
+      finally{if(activeRun.current===run&&!controller.signal.aborted){activeRun.current=null;setBusy(false);}}
     }
     void refresh();
   },[weather?.bundle_version,result?.playlist_id,weatherMismatch,busy,saving,approving,changed,dirty]);
@@ -137,9 +142,14 @@ export function PublicPage(){
     const field=option.type==='genre'?'selected_genre_codes':'selected_theme_codes';
     setChoices(c=>({...c,[field]:c[field].includes(option.code)?c[field].filter(x=>x!==option.code):[...c[field],option.code].sort()}));
   }
+  function selectGroup(type:'theme'|'genre',codes:string[]){
+    const field=type==='genre'?'selected_genre_codes':'selected_theme_codes';
+    setChoices(c=>({...c,[field]:codes}));
+  }
   async function loadResult(id:string,signal?:AbortSignal){
     const p=await api<Playlist>(`/api/playlists/${id}`,'GET',undefined,undefined,signal);
     const ex=await api<Exclusions>(`/api/playlist-families/${p.family_id}/exclusions`,'GET',undefined,undefined,signal);
+    if(signal?.aborted)return;
     setResult(p);setExcluded(ex);setDraft(ex.excluded_track_ids);setSaveError('');setSaveIntent(null);
   }
   async function generate(regenerate=false,retry=false){
@@ -147,19 +157,36 @@ export function PublicPage(){
     const intent=retry?jobIntent:{path:regenerate?`/api/playlists/${result!.playlist_id}/regenerations`:'/api/recommendation-jobs',
       body:regenerate?{exclusion_revision:excluded!.revision}:normalized(choices),id:key()};
     if(!intent)return;
-    setBusy(true);setError('');setJobIntent(intent);abort.current?.abort();const controller=new AbortController();abort.current=controller;
+    activeRun.current?.dispose();const run=new RecommendationRun(intent);activeRun.current=run;
+    const controller={signal:run.signal};setBusy(true);setError('');setJobNotice('');setJobIntent(intent);
     try{
-      const job=await api<{job_id:string}>(intent.path,'POST',intent.body,intent.id,controller.signal);
+      const job=await run.accepted;
+      if(controller.signal.aborted)return;
       const started=performance.now();
       for(;;){
         if(performance.now()-started>Number(import.meta.env.VITE_JOB_POLL_TIMEOUT_MS||120000))throw new Error('작업 조회를 잠시 멈췄어요. 같은 요청 다시 확인으로 진행 상태를 확인해 주세요.');
         const status=await api<{status:string;playlist_id:string|null;error:{code:string;message:string;details?:Record<string,unknown>}|null}>(`/api/recommendation-jobs/${job.job_id}`,'GET',undefined,undefined,controller.signal);
         if(status.status==='SUCCEEDED'){await loadResult(status.playlist_id!,controller.signal);setJobIntent(null);break;}
+          if(status.status==='CANCELLED'){setJobIntent(null);setJobNotice('선곡표 준비를 취소했어요.');break;}
         if(status.status==='FAILED'||status.status==='EXPIRED'){setJobIntent(null);throw new ApiError(status.error?.code||'RECOMMENDATION_FAILED',status.error?.message||'선곡표 생성에 실패했어요.',status.error?.details);}
         await wait(performance.now()-started<5000?300:1000,controller.signal);
       }
     }catch(e){if(!controller.signal.aborted){setError(e instanceof ApiError?{code:e.code,message:e.message}:(e as Error).message);if(e instanceof ApiError)setJobIntent(null);}}
-    finally{if(!controller.signal.aborted)setBusy(false);}
+    finally{if(activeRun.current===run&&!controller.signal.aborted){activeRun.current=null;setBusy(false);}}
+  }
+  async function cancelGeneration(){
+    const run=activeRun.current;if(!run||cancelling)return;
+    setCancelling(true);setError('');
+    try{
+      const job=await run.cancel();
+      if(activeRun.current!==run)return;
+      setJobIntent(null);setBusy(false);activeRun.current=null;
+      setJobNotice(job?.status==='SUCCEEDED'?'작업이 이미 완료되어 취소할 수 없어요. 현재 화면의 선곡표는 유지됩니다.':
+        !job?'진행 중인 작업이 없어요. 기존 선곡표는 유지됩니다.':job.status==='CANCELLED'?'선곡표 준비를 취소했어요. 기존 선곡표는 유지됩니다.':'작업이 이미 종료됐어요. 기존 선곡표는 유지됩니다.');
+      run.dispose();
+    }catch{
+      if(activeRun.current===run)setError('서버의 취소 여부를 확인하지 못했어요. 취소 버튼을 다시 눌러 확인해 주세요.');
+    }finally{setCancelling(false);}
   }
   async function saveExclusions(ids:string[],retry=false){
     if(!result||!excluded||saving)return;
@@ -245,11 +272,15 @@ export function PublicPage(){
                   onChange={()=>setChoices(c=>({...c,tempo_preference:value}))}/>{label}</label>)}
             </div></fieldset>
             <fieldset className="tag-fieldset" disabled={locked}><legend>테마 · 장르 <small>복수 선택 가능</small></legend>
-              <TagPicker options={options} choices={choices} disabled={locked} onToggle={toggleOption}/>
+              <TagPicker options={options} choices={choices} disabled={locked} onToggle={toggleOption} onSelectGroup={selectGroup}/>
             </fieldset>
             <div className="selection-bottom">
-              <button className="primary" disabled={!contextReady||!choices.option_version||(effectiveMode==='ON'&&(!weather||weather.recommendation_ready===false))||locked||!!jobIntent}
-                onClick={()=>void generate()}>{busy?'선곡표 준비 중…':'선곡표 받기'}</button>
+              <div className="generation-actions">
+                <button className="primary" disabled={!contextReady||!choices.option_version||(effectiveMode==='ON'&&(!weather||weather.recommendation_ready===false))||locked||!!jobIntent}
+                  onClick={()=>void generate()}>{busy?'선곡표 준비 중…':'선곡표 받기'}</button>
+                {busy&&<button type="button" className="generation-cancel" disabled={cancelling} onClick={()=>void cancelGeneration()}>{cancelling?'취소 중…':'취소'}</button>}
+              </div>
+              {jobNotice&&<p className="generation-notice" role="status">{jobNotice}</p>}
             </div>
           </section>
           <section className="representative card representative-playback" aria-labelledby="cover-title">

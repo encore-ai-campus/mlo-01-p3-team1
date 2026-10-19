@@ -48,6 +48,7 @@ urlpatterns = [
     path('api/weather',api.Weather.as_view()),
     path('api/recommendation-jobs',api.Jobs.as_view()),
     path('api/recommendation-jobs/<str:pk>',api.JobDetail.as_view()),
+    path('api/recommendation-jobs/<str:pk>/cancel',api.JobCancel.as_view()),
     path('api/playlists/<str:pk>',api.PlaylistDetail.as_view()),
     path('api/playlists/<str:pk>/youtube-playback',api.YoutubePlayback.as_view()),
     path('api/playlists/<str:pk>/youtube-queue',YoutubeQueue.as_view()),
