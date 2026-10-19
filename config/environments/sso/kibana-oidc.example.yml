@@ -1,0 +1,12 @@
+# Merge, do not overwrite existing Kibana configuration.
+server.publicBaseUrl: https://ops.example.org
+xpack.security.secureCookies: true
+xpack.security.authc.providers:
+  oidc.oidc1:
+    order: 0
+    realm: cafe_sso
+    description: 관리자 통합 로그인
+    session.idleTimeout: 10m
+    session.lifespan: 8h
+# No shared native admin/basic provider for daily dashboard access.
+# Keep an isolated recovery path documented by INF before switching authentication.

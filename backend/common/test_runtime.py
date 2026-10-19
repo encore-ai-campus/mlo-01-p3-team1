@@ -90,6 +90,8 @@ class DeferredPublicationTests(TestCase):
         from backend.music.models import Album, Track
         user=get_user_model().objects.create_user('publisher',password='Test-only-pass-123',is_staff=True)
         user.user_permissions.add(Permission.objects.get(content_type__app_label='common',codename='manage_music'))
+        from .admin_roles import assign_role
+        assign_role(user,'OPS_ADMIN')
         self.client.force_login(user)
         album=Album.objects.create(album_name='test album')
         track=Track.objects.create(track_id='test-track',track_name='test',artists_name='test',album=album,

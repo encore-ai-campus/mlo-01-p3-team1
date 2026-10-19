@@ -32,9 +32,9 @@ def main():
         run([sys.executable,'backend/manage.py','migrate','--noinput'])
         run([sys.executable,'backend/manage.py','seed_c_demo'])
         run([sys.executable,'backend/manage.py','shell','-c',
-             "from django.contrib.auth import get_user_model; from django.contrib.auth.models import Permission; "
+             "from django.contrib.auth import get_user_model; from backend.common.admin_roles import assign_role; "
              "u=get_user_model().objects.create_user('browser-reviewer',password='Browser-test-only-123!',is_staff=True); "
-             "u.user_permissions.add(*Permission.objects.filter(content_type__app_label='common'))"])
+             "assign_role(u,'SUPER_ADMIN')"])
         processes=[]
         # Prebuilt UI avoids development dependency scanning on restricted Windows runners.
         web_command=['node','./node_modules/vite/bin/vite.js']

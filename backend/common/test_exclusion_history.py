@@ -1,17 +1,18 @@
 from datetime import timedelta
 
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import Permission
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.utils import timezone
 
 from backend.common.models import FeedbackEvent
+from backend.common.admin_roles import assign_role
 
 
+@override_settings(LOCAL_DEMO=False)
 class ExclusionHistoryRevisionTests(TestCase):
     def setUp(self):
         user=get_user_model().objects.create_user('history-reviewer',is_staff=True)
-        user.user_permissions.add(Permission.objects.get(content_type__app_label='common',codename='view_feedback'))
+        assign_role(user, 'OPS_ADMIN')
         self.client.force_login(user)
         self.at=timezone.now()-timedelta(seconds=1)
         self.exclusion=self.event('ffffffff-ffff-4fff-8fff-ffffffffffff','TRACK_EXCLUDED',1,self.at)

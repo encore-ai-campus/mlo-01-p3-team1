@@ -8,6 +8,8 @@ from backend.recommendation.api import Endpoint
 from backend.recommendation.inputs import shape
 from backend.recommendation.errors import require, DomainError
 from .identity import admin, guest, raw_request
+from .admin_roles import permitted, role_for
+from .admin_dashboards import access_for, target_for
 
 
 def account_data_for_user(user):
@@ -18,16 +20,26 @@ def account_data_for_user(user):
                 ('manage_music','/admin/music','음악 관리'),
                 ('manage_music','/admin/music/youtube','YouTube 연결 검수'),
                 ('view_feedback','/admin/feedback/exclusions','제외 이력')]:
-            if user.has_perm('common.'+permission):
+            if permitted(user, permission):
                 menus.append({'path':path,'label':label})
+        if target_for('operations') and permitted(user, 'view_operations'):
+            menus.append({'path':'/api/admin/operations/kibana', 'label':'운영 대시보드'})
     return menus
 
 
 def account_data(request):
     user = get_user(raw_request(request))
     active = user.is_authenticated and user.is_active and user.is_staff
+    operations = access_for(user, 'operations')
+    logs = access_for(user, 'logs')
     return {'authenticated':bool(active), 'role':'ADMIN' if active else None,
-            'allowed_menus':account_data_for_user(user), 'csrf_token':get_token(raw_request(request))}
+            'allowed_menus':account_data_for_user(user), 'csrf_token':get_token(raw_request(request)),
+            'admin_role':role_for(user),
+            'sso_enabled':settings.ADMIN_SSO_ENABLED,
+            'local_login_enabled':settings.ADMIN_LOCAL_LOGIN_ENABLED,
+            'operations_dashboard':operations, 'log_dashboard':logs,
+            # Compatibility for the initial single-dashboard client.
+            'kibana_dashboard':{**operations, 'path':'/api/admin/operations/kibana' if operations['path'] else None}}
 
 
 class Me(Endpoint):
@@ -37,6 +49,7 @@ class Me(Endpoint):
 
 class Login(Endpoint):
     def post(self, request):
+        require(settings.ADMIN_LOCAL_LOGIN_ENABLED, 'SSO_REQUIRED', '통합 로그인으로 접속해 주세요.', 403)
         body = shape(request.data, ['username','password'], ['username','password'])
         require(all(type(body[k]) is str and body[k] for k in body))
         user = authenticate(raw_request(request), username=body['username'], password=body['password'])
@@ -53,8 +66,10 @@ class Login(Endpoint):
 class Logout(Endpoint):
     def post(self, request):
         shape(request.data, [])
+        from .sso import logout_url
+        target = logout_url(raw_request(request))
         logout(raw_request(request))
-        return Response({'authenticated':False})
+        return Response({'authenticated':False, 'logout_url':target})
 
 
 class AdsContext(APIView):

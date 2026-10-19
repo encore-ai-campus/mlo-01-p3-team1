@@ -6,6 +6,9 @@ from django.core.exceptions import ValidationError
 from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 from django.contrib.sessions.models import Session
+from django.conf import settings
+from backend.common.admin_roles import ROLES, assign_role
+from backend.common.models import AdminSSOIdentity
 
 
 class Command(BaseCommand):
@@ -14,14 +17,21 @@ class Command(BaseCommand):
     def add_arguments(self,parser):
         parser.add_argument('username')
         parser.add_argument('--permissions',nargs='*',choices=['manage_ads','manage_music','view_feedback'],default=[])
+        parser.add_argument('--role', choices=ROLES)
         action=parser.add_mutually_exclusive_group()
         action.add_argument('--revoke',action='store_true')
         action.add_argument('--reset-password',action='store_true')
+        action.add_argument('--set-role',action='store_true')
 
     def handle(self,*args,**options):
         User=get_user_model()
         with transaction.atomic():
             user=User.objects.select_for_update().filter(username=options['username']).first()
+            if user and AdminSSOIdentity.objects.filter(user=user).exists():
+                raise CommandError('use_provision_sso_admin_for_sso_accounts')
+            if options['set_role']:
+                if not user or not options['role']:raise CommandError('existing_account_and_role_required')
+                assign_role(user, options['role']);self.stdout.write('admin_role_updated');return
             if options['revoke']:
                 if user is None:raise CommandError('account_not_found')
                 user.is_active=False;user.save(update_fields=['is_active'])
@@ -40,11 +50,15 @@ class Command(BaseCommand):
                 self.stdout.write('admin_password_reset_sessions_revoked');return
             if user is not None:raise CommandError('existing_account_unchanged')
             password=os.environ.get('BOOTSTRAP_ADMIN_PASSWORD','')
-            if not password or not options['permissions']:raise CommandError('password_and_explicit_permissions_required')
+            if options['role'] and options['permissions']:raise CommandError('role_and_permissions_are_exclusive')
+            if not settings.LOCAL_DEMO and not options['role']:raise CommandError('explicit_admin_role_required')
+            if not password or not (options['role'] or options['permissions']):raise CommandError('password_and_explicit_permissions_required')
             user=User(username=options['username'],is_staff=True,is_active=True)
             try:validate_password(password,user)
             except ValidationError:raise CommandError('password_policy_failed') from None
             permissions=list(Permission.objects.filter(content_type__app_label='common',codename__in=options['permissions']))
             if len(permissions)!=len(set(options['permissions'])):raise CommandError('run_migrations_first')
-            user.set_password(password);user.save();user.user_permissions.set(permissions)
+            user.set_password(password);user.save()
+            if options['role']:assign_role(user, options['role'])
+            else:user.user_permissions.set(permissions)
         self.stdout.write('admin_created')

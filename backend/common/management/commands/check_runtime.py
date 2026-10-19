@@ -41,8 +41,9 @@ def connections():
     def catalog():return Catalog.objects.filter(ready=True,is_test=settings.LOCAL_DEMO).exists()
     def administrators():
         from django.contrib.auth import get_user_model
+        from backend.common.admin_roles import permitted
         users=list(get_user_model().objects.filter(is_active=True,is_staff=True))
-        return all(any(user.has_perm('common.'+permission) for user in users)
+        return all(any(permitted(user,permission) for user in users)
                    for permission in ('manage_ads','manage_music','view_feedback'))
     def regions():return bool(load_regions().get('entries'))
     def elasticsearch():

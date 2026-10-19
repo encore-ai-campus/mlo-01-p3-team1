@@ -6,6 +6,7 @@ from django.contrib.auth import get_user
 from django.utils import timezone
 from backend.recommendation.errors import require
 from .models import Guest
+from .admin_roles import permitted
 
 
 def raw_request(request):
@@ -43,7 +44,7 @@ def admin(request, permission=None):
     require(user.is_authenticated and user.is_active, 'AUTH_REQUIRED', '관리자 로그인이 필요합니다.', 401)
     require(user.is_staff, 'FORBIDDEN', '관리자 권한이 없습니다.', 403)
     if permission:
-        require(user.has_perm('common.'+permission), 'FORBIDDEN', '이 기능의 권한이 없습니다.', 403)
+        require(permitted(user, permission), 'FORBIDDEN', '이 기능의 권한이 없습니다.', 403)
     return user
 
 
