@@ -118,5 +118,3 @@ class CandidateIndexTests(TestCase):
         actual, audit = CandidateIndex(rows).candidates(options, None, [], [], set())
         self.assertEqual([row['track_id'] for row in actual], ['track-001'])
         self.assertEqual(audit['common_eligible_count'], 1)
-
-\n
