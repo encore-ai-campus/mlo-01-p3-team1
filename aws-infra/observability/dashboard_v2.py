@@ -377,10 +377,14 @@ def definitions():
                          'scale': {'range': ['#FFF0E9', '#E65776']}},
                'tooltip': [{'field': 'key', 'title': '서버'}, {'field': 'time.key', 'type': 'temporal', 'title': '구간'}, {'field': 'time.doc_count', 'title': '오류 줄 수'}]},
               [{'flatten': ['time.buckets'], 'as': ['time']}]), 0, 87, 48, 15)
-    health = {'rows': {'terms': {'field': 'host.name', 'size': 20}, 'aggs': {'units': {
-        'terms': {'field': 'ops.service', 'size': 40}, 'aggs': {'latest': latest(['ops.state'])}}}}}
-    add('service-state', '비활성 서비스 점검', 'LIVE 최근 3분에 수신한 unit별 최신 state가 active가 아닌 항목. inactive는 의도적인 중지일 수 있습니다.',
-        service_state_spec(source(query('service_health', live=True), health)), 24, 102, 24, 18)
+    # Keep the managed visualization ID stable; only replace the metric and its data.
+    error_hosts = {'rows': {'terms': {'field': 'host.name', 'size': 10,
+                                      'order': {'_count': 'desc'}}}}
+    add('service-state', '서버별 오류 TOP 10',
+        '선택 기간의 오류 로그 줄 수 상위 10개 서버. 여러 로그 줄이 하나의 장애일 수 있습니다.',
+        horizontal('서버별 오류 TOP 10', '선택 기간 · 오류 로그 줄 수 (독립 장애 건수 아님)',
+                   source(query(filters=[{'terms': {'log.level': ERRORS}}]), error_hosts),
+                   color=RED), 24, 102, 24, 18)
     forwarders = {'rows': {'terms': {'field': 'host.name', 'size': 20},
                           'aggs': {'last': {'max': {'field': '@timestamp'}},
                                    'latest': latest(['ops.queued_events', 'ops.rss_bytes', 'ops.active'])}}}

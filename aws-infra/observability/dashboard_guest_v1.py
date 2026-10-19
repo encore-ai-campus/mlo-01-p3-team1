@@ -73,7 +73,7 @@ def time_chart(title, subtitle, filters=(), interval="1h", breakdown=False):
     return chart(title, subtitle, source(EVENT_INDEX, agg, filters),
                  {"type": "line", "point": True, "strokeWidth": 2.3},
                  {"x": {"field": "key", "type": "temporal", "title": None},
-                  "y": {"field": value, "type": "quantitative", "title": "이벤트 수"},
+                  "y": {"field": value, "type": "quantitative", "title": None},
                   "color": color,
                   "tooltip": [{"field": "key", "type": "temporal", "title": "시간"}, *tooltip,
                               {"field": value, "type": "quantitative", "title": "건수"}]}, transforms)
@@ -95,7 +95,7 @@ def rating_chart():
                  source(EVENT_INDEX, agg, event_filter("RATING_CHANGED")),
                  {"type": "bar", "cornerRadiusEnd": 5, "color": BLUE},
                  {"x": {"field": "key", "type": "ordinal", "title": "별점 (1~5)"},
-                  "y": {"field": "doc_count", "type": "quantitative", "title": "평가 이벤트"},
+                  "y": {"field": "doc_count", "type": "quantitative", "title": None},
                   "tooltip": [{"field": "key", "title": "별점"},
                               {"field": "doc_count", "title": "건수"}]})
 
@@ -107,7 +107,7 @@ def methods_chart():
                  source(EVENT_INDEX, aggs, event_filter("LIKE", "DISLIKE")),
                  {"type": "bar", "cornerRadiusEnd": 3},
                  {"x": {"field": "key", "type": "nominal", "title": None, "axis": {"labelAngle": 0}},
-                  "y": {"field": "action.doc_count", "type": "quantitative", "title": "반응"},
+                  "y": {"field": "action.doc_count", "type": "quantitative", "title": None},
                   "color": {"field": "action.key", "type": "nominal",
                             "scale": {"domain": ["LIKE", "DISLIKE"], "range": [TEAL, RED]}},
                   "tooltip": [{"field": "key", "title": "추천 방식"},
@@ -176,7 +176,7 @@ def definitions():
         "제외 요청 상위 곡", "실제 제외 유지 수가 아닌 제외 발생 이력", "track_title",
         event_filter("EXCLUDED"), color=AMBER), 0, 117, 24, 15)
     add("exclusion-trend", "제외 및 복원", "시간별 제외/해제", time_chart(
-        "제외 행동의 시간별 변화", "제외·제외 취소 요청",
+        "제외 행동의 시간별 변화", "제외·제외 취소 이벤트 건수",
         event_filter("EXCLUDED", "EXCLUSION_CANCELLED"), breakdown=True),
         24, 117, 24, 15)
     add("pending", "피드백 전송 대기", "PostgreSQL outbox 현재 상태", card(

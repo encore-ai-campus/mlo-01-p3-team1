@@ -53,6 +53,20 @@ class DashboardEditorSafety(unittest.TestCase):
                            and a['y'] < b['y']+b['h'] and a['y']+a['h'] > b['y'])
                 self.assertFalse(overlap, panel['key']+' overlaps '+other['key'])
 
+    def test_server_error_top_ten_uses_selected_time_range(self):
+        panel = next(p for p in dashboard.definitions() if p['key'] == 'service-state')
+        self.assertEqual(panel['title'], '서버별 오류 TOP 10')
+        spec = panel['spec']
+        self.assertEqual(spec['data']['url']['index'], 'ops-mlo-*')
+        body = spec['data']['url']['body']
+        self.assertEqual(body['aggs']['rows']['terms'],
+                         {'field': 'host.name', 'size': 10, 'order': {'_count': 'desc'}})
+        self.assertIn({'terms': {'log.level': dashboard.ERRORS}},
+                      body['query']['bool']['filter'])
+        self.assertIn({'range': {'@timestamp': {'%timefilter%': True}}},
+                      body['query']['bool']['filter'])
+        self.assertEqual(spec['layer'][0]['encoding']['y']['axis']['labelAngle'], 0)
+
 
 if __name__ == '__main__':
     unittest.main()

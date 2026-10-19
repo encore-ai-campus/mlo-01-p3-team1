@@ -50,6 +50,21 @@ class GuestBehaviorTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, 'not_owned_or_changed'):
                 dashboard.publish(Client(), folder, dry_run=False)
 
+    def test_guest_charts_have_readable_horizontal_y_axis_text(self):
+        panels = {panel['key']: panel for panel in dashboard.definitions()}
+        # Quantitative Y-axis titles otherwise rotate vertically in Vega-Lite.
+        # Their units remain in the horizontal subtitles and tooltips.
+        for key in ('trend', 'exclusion-trend', 'rating-dist', 'rating-methods'):
+            spec = panels[key]['spec']
+            self.assertIsNone(spec['layer'][0]['encoding']['y']['title'], key)
+            self.assertEqual(spec['config']['axisY']['labelAngle'], 0, key)
+            self.assertIn('이벤트', spec['title']['subtitle'], key)
+        # Song names and other category names must also read horizontally.
+        for key in ('action-types', 'positive-tracks', 'negative-tracks',
+                    'transitions', 'genres', 'weather', 'themes', 'exclusions'):
+            spec = panels[key]['spec']
+            self.assertEqual(spec['layer'][0]['encoding']['y']['axis']['labelAngle'], 0, key)
+
 
 if __name__ == '__main__':
     unittest.main()
