@@ -1,0 +1,215 @@
+{
+  "schema_version": "TAIL_URL_COLLECTION_EXPORT_V1",
+  "scope": "URL_COLLECTION_ONLY_NO_REVIEW_NO_REGISTRATION",
+  "generated_at": "2026-10-18T05:35:30.629847+00:00",
+  "export_is_final_snapshot": true,
+  "collection_complete": false,
+  "catalog_count": 86485,
+  "input_target_count": 31708,
+  "prior_collected_track_count": 54777,
+  "prior_unique_video_count": 61933,
+  "new_candidate_track_count": 2637,
+  "new_unique_video_count": 2632,
+  "new_candidate_pair_count": 2715,
+  "source_pair_count_before_deduplication": 2730,
+  "duplicate_source_pairs_removed": 15,
+  "remaining_uncollected_count": 29071,
+  "cumulative_collected_track_count": 57414,
+  "new_video_overlap_with_prior_collection": 0,
+  "new_track_overlap_with_prior_collection": 0,
+  "individual_search_attempted_track_count": 1917,
+  "individual_search_completed_track_count": 1910,
+  "remaining_retry_required_track_count": 7,
+  "web_evidence_tuple_count": 1155,
+  "unselected_invalid_video_url_evidence_count": 1,
+  "source_counts": {
+    "WEB_SEARCH_URL_COLLECTION": {
+      "pairs": 990,
+      "tracks": 990,
+      "unique_videos": 990
+    },
+    "PUBLIC_METADATA_TAIL_EXPLICIT_CREDIT_URL_COLLECTION": {
+      "pairs": 806,
+      "tracks": 792,
+      "unique_videos": 761
+    },
+    "PUBLIC_METADATA_LATIN_DIACRITIC_URL_CANDIDATE": {
+      "pairs": 713,
+      "tracks": 691,
+      "unique_videos": 678
+    },
+    "WEB_SEARCH_RULE_CANDIDATE": {
+      "pairs": 150,
+      "tracks": 150,
+      "unique_videos": 150
+    },
+    "PUBLIC_YOUNIVERSE_TITLE_DURATION_URL_COLLECTION": {
+      "pairs": 11,
+      "tracks": 11,
+      "unique_videos": 10
+    },
+    "PUBLIC_METADATA_LATIN_DIACRITIC_DURATION_URL_CANDIDATE": {
+      "pairs": 38,
+      "tracks": 36,
+      "unique_videos": 36
+    },
+    "PUBLIC_METADATA_SAME_YEAR_REMASTER_ORDER_URL_CANDIDATE": {
+      "pairs": 7,
+      "tracks": 7,
+      "unique_videos": 7
+    }
+  },
+  "source_candidate_snapshots": [
+    {
+      "file": "laion-tail-candidates.jsonl",
+      "row_count": 806,
+      "sha256": "9adc9dd55c23b70b77613631f67e884c5c0034c19fab81914d90b4fe83f13609"
+    },
+    {
+      "file": "laion-latin-diacritic-candidates.jsonl",
+      "row_count": 713,
+      "sha256": "4664f4d1edbaa3570a25d7f73e92f14e9b02d1ae7f17b48fad4beb0e5d0bdb71"
+    },
+    {
+      "file": "laion-remaster-order-candidates.jsonl",
+      "row_count": 7,
+      "sha256": "c15fddf99d7f3ae029a98b5b3fd3963ec96b4ca9b6eb5c40f37261f7fb841381"
+    },
+    {
+      "file": "laion-latin-duration-candidates.jsonl",
+      "row_count": 38,
+      "sha256": "8a0658f516acb3acc521a373236ed2c6bc6541364d4724935d8ac0d0617ec819"
+    },
+    {
+      "file": "youniverse-candidates.jsonl",
+      "row_count": 11,
+      "sha256": "bc41bfb92cf09bf45ab40bbd8f506e738e603d77d3c22b19275e2c8ce13d4191"
+    },
+    {
+      "file": "web-part1-candidates.jsonl",
+      "row_count": 400,
+      "sha256": "0b97213caa2530269a11e97543141223034d8f706cd842676dc04d3dcf8fbe82"
+    },
+    {
+      "file": "web-part2-candidates.jsonl",
+      "row_count": 200,
+      "sha256": "c0e62b9ce9bbc63b73a683f31477b96f3f927a0e097497129a6462f7ada4876a"
+    },
+    {
+      "file": "web-part3-candidates.jsonl",
+      "row_count": 350,
+      "sha256": "a3ef13e5dd683e609c194ab100308bcfdc5ed5130f346a64513918e407f8dead"
+    },
+    {
+      "file": "web-part3-assist-candidates.jsonl",
+      "row_count": 50,
+      "sha256": "abc2b879dc79b29a1726bb303d4a653383b33b52b714c466c2b62868b2b9686f"
+    },
+    {
+      "file": "web-extra-candidates.jsonl",
+      "row_count": 5,
+      "sha256": "f56f105101d496105bb91cd50ec5fbe87f9675b2213afd17a0f7c99ef760854a"
+    },
+    {
+      "file": "auto-search-candidates.jsonl",
+      "row_count": 150,
+      "sha256": "d4cece88b21983c1ebf345d4a4ab8adac8e56518b54334ba08c0cee86533611e"
+    }
+  ],
+  "individual_search_progress": {
+    "1": {
+      "saved_count": 400,
+      "assigned_part": 1,
+      "target": 400,
+      "updated_at": "2026-10-18T05:33:21.632023+00:00",
+      "scope": "URL_COLLECTION_ONLY",
+      "completed_search_count": 589,
+      "status": "COMPLETE"
+    },
+    "2": {
+      "saved_count": 200,
+      "assigned_part": 2,
+      "target": 200,
+      "updated_at": "2026-10-18T05:17:42.518196+00:00",
+      "scope": "URL_COLLECTION_ONLY",
+      "metadata_review_performed": false,
+      "playback_review_performed": false,
+      "dashboard_registration_performed": false,
+      "complete": true,
+      "completed_at": "2026-10-18T05:30:14.631512+00:00",
+      "evidence_coverage": 200,
+      "candidate_sha256": "c0e62b9ce9bbc63b73a683f31477b96f3f927a0e097497129a6462f7ada4876a",
+      "baseline_video_overlap": 0,
+      "baseline_track_overlap": 0,
+      "other_current_candidate_video_overlap": 0
+    },
+    "3": {
+      "assigned_part": 3,
+      "goal": 350,
+      "collected_count": 350,
+      "unique_tracks": 350,
+      "unique_videos": 350,
+      "attempted_count": 483,
+      "status": "COMPLETE",
+      "updated_at": "2026-10-18T05:30:42.972136+00:00",
+      "metadata_review_performed": false,
+      "playback_review_performed": false,
+      "dashboard_registration_performed": false,
+      "rate_limit_events": 2,
+      "rate_limit_pause_seconds": 60,
+      "rate_limit_retry_this_round": false,
+      "evidence_coverage": 350,
+      "input_last_searched_position": 484,
+      "extra_input_used": false,
+      "prior_track_overlap": 0,
+      "prior_video_overlap": 0,
+      "local_format_integrity_passed": true
+    },
+    "3-assist": {
+      "saved_count": 50,
+      "assigned_part": 3,
+      "target": 50,
+      "updated_at": "2026-10-18T05:29:42.259052+00:00",
+      "scope": "URL_COLLECTION_ONLY",
+      "metadata_review_performed": false,
+      "playback_review_performed": false,
+      "dashboard_registration_performed": false,
+      "complete": true,
+      "completed_at": "2026-10-18T05:30:14.696608+00:00",
+      "evidence_coverage": 50,
+      "candidate_sha256": "abc2b879dc79b29a1726bb303d4a653383b33b52b714c466c2b62868b2b9686f",
+      "baseline_video_overlap": 0,
+      "baseline_track_overlap": 0,
+      "other_current_candidate_video_overlap": 0
+    }
+  },
+  "partial_public_source": {
+    "name": "YouNiverse",
+    "source_download_complete": false,
+    "full_source_checksum_verified": false,
+    "note": "Only complete JSONL lines from the saved compressed prefix were used; prefix SHA256 is recorded per row."
+  },
+  "metadata_review_performed": false,
+  "playback_review_performed": false,
+  "url_liveness_checked": false,
+  "dashboard_registration_performed": false,
+  "baseline_files_preserved_sha256": {
+    "remaining-uncollected.csv": "65628fd3e55893eead5013c40479e96d09b023951ddf06f11577afb671456ac7",
+    "youtube-residual-new-candidates.csv": "766ba4eb6e1acc6d06b28280d19adfae6dc41f5a3c036e30586d380505a83146",
+    "youtube-residual-new-urls.txt": "fdb06a27e0f94e64ddadea21c37134129b3b5f4f592c06903fe3e9e7ae7cbd52"
+  },
+  "files": {
+    "youtube-tail-new-candidates.csv": {
+      "sha256": "79075903616cceb8e42d526bf6e74118a7083cbc85872f629f1cd44b7d5dd860",
+      "bytes": 6068493
+    },
+    "youtube-tail-new-urls.txt": {
+      "sha256": "b64443c64f5b42a485a3554bbb54c9bb9fafdcce833354057025682fb0bff7a5",
+      "bytes": 118440
+    },
+    "remaining-uncollected.csv": {
+      "sha256": "4436a6611bcb01384f201487944e7fda969852845f0ca82ed5570f0eb6151f58",
+      "bytes": 5809151
+    }
+  }
+}

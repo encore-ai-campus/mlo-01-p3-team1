@@ -1,0 +1,40 @@
+# backend/recommendation/tests/test_dispatch.py 라우팅
+
+- 작성일/수정일: 2026-10-19
+- 담당: Codex / 추천 요청 분산 실행
+- 범위: R-05·Q-02, develop@c7917ce 이후 변경
+- 상세 기준→실제 호출/저장→검증·인계: `docs/development/추천_분산처리_변경_라우팅.md`
+- 실제 실행 설정·권한·종료/복구: `docs/runbook/추천_분산처리_인프라_인계.md`
+
+## AST 시그니처
+
+```python
+class DispatchTests(TransactionTestCase)
+DispatchTests.setUp(self)
+DispatchTests.job(self, method='RULE_BASED')
+DispatchTests.expire(self, job)
+DispatchTests.test_rule_lane_skips_gemini_and_compatibility_prefers_rule(self)
+DispatchTests.test_gemini_saturation_does_not_block_rule_lane(self)
+DispatchTests.test_recovery_fences_old_worker_and_has_a_bounded_budget(self)
+DispatchTests.test_ambiguous_call_is_not_retried_and_keeps_its_permit(self)
+DispatchTests.test_confirmed_response_releases_slot_but_interval_is_shared(self)
+DispatchTests.test_admission_counts_only_queued_jobs_and_is_per_lane(self)
+DispatchTests.test_heartbeat_cannot_extend_past_attempt_timeout(self)
+DispatchTests.test_status_observation_is_read_only_and_does_not_expose_input(self)
+DispatchTests.test_expired_lease_is_reported_as_attention(self)
+class QueueAdmissionApiTests(TransactionTestCase)
+QueueAdmissionApiTests.test_rejected_request_rolls_back_family_and_can_be_retried(self)
+class WorkerCommandTests(SimpleTestCase)
+WorkerCommandTests.test_once_forwards_lane_and_worker_identity(self)
+WorkerCommandTests.test_unsafe_heartbeat_configuration_is_rejected_before_database_use(self)
+WorkerCommandTests.test_worker_identity_cannot_inject_log_lines(self)
+WorkerCommandTests.test_sigterm_drains_current_job_and_stops_before_next_claim(self)
+class PostgresDispatchTests(DispatchTests)
+PostgresDispatchTests.concurrent(self, function, count=2)
+PostgresDispatchTests.test_same_job_is_claimed_by_exactly_one_session(self)
+PostgresDispatchTests.test_locked_job_is_skipped_instead_of_blocking_other_worker(self)
+PostgresDispatchTests.test_gemini_claim_limit_is_shared_across_sessions(self)
+PostgresDispatchTests.test_provider_start_interval_is_atomic_across_sessions(self)
+PostgresDispatchTests.test_admission_capacity_cannot_be_exceeded_by_two_api_sessions(self)
+PostgresDispatchTests.test_two_processes_finish_two_jobs_without_duplicate_results(self)
+```

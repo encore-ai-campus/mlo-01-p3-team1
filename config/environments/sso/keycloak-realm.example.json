@@ -1,0 +1,36 @@
+{
+  "realm": "cafe",
+  "enabled": true,
+  "registrationAllowed": false,
+  "resetPasswordAllowed": false,
+  "loginWithEmailAllowed": false,
+  "bruteForceProtected": true,
+  "accessTokenLifespan": 300,
+  "ssoSessionIdleTimeout": 600,
+  "ssoSessionMaxLifespan": 28800,
+  "groups": [{"name":"SUPER_ADMIN"}, {"name":"ADS_ADMIN"}, {"name":"OPS_ADMIN"}],
+  "clients": [
+    {
+      "clientId":"cafe-web", "enabled":true, "protocol":"openid-connect",
+      "publicClient":false, "clientAuthenticatorType":"client-secret",
+      "standardFlowEnabled":true, "implicitFlowEnabled":false,
+      "directAccessGrantsEnabled":false, "serviceAccountsEnabled":false,
+      "redirectUris":["https://cafe.example.org/api/auth/sso/callback"],
+      "webOrigins":["https://cafe.example.org"],
+      "attributes":{"pkce.code.challenge.method":"S256", "post.logout.redirect.uris":"https://cafe.example.org/login"},
+      "protocolMappers":[{"name":"admin-groups","protocol":"openid-connect","protocolMapper":"oidc-group-membership-mapper",
+        "config":{"claim.name":"groups","full.path":"false","id.token.claim":"true","access.token.claim":"true","userinfo.token.claim":"true"}}]
+    },
+    {
+      "clientId":"cafe-kibana", "enabled":true, "protocol":"openid-connect",
+      "publicClient":false, "clientAuthenticatorType":"client-secret",
+      "standardFlowEnabled":true, "implicitFlowEnabled":false,
+      "directAccessGrantsEnabled":false, "serviceAccountsEnabled":false,
+      "redirectUris":["https://ops.example.org/api/security/oidc/callback"],
+      "webOrigins":["https://ops.example.org"],
+      "attributes":{"post.logout.redirect.uris":"https://ops.example.org/security/logged_out"},
+      "protocolMappers":[{"name":"admin-groups","protocol":"openid-connect","protocolMapper":"oidc-group-membership-mapper",
+        "config":{"claim.name":"groups","full.path":"false","id.token.claim":"true","access.token.claim":"true","userinfo.token.claim":"true"}}]
+    }
+  ]
+}

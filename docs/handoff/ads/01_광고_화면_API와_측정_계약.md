@@ -1,15 +1,19 @@
 # 광고 화면·API·측정 인계 계약
 
 - 작성일: 2026-10-14
-- 수정일: 2026-10-14
-- 상태: 기존 제품/광고 정책의 구현 연결입니다. 아래 보완 필드명은 문서 개발 기준이며 실제 OpenAPI/서버 구현 완료가 아닙니다.
+- 수정일: 2026-10-15
+- 상태: 관리·공개 API와 MongoDB 원자 저장·5분 정책 배치의 코드 계약입니다. 화면·공유 서비스·운영 실행 완료와 구분합니다.
 - 기준: [광고 정책](../../product/3차_광고_운영_회의_결정사항_목록.md), [설계도](../../product/카페_음악_서비스_구현_설계도.md) 7/9절, [공통 계약](../../product/3차_공통_개발_계약과_검증_기준.md).
+
+## 2026-10-15 광고 로그 MongoDB 독립 관리
+
+최신 사용자 결정으로 광고 관리·측정·소진 로그는 광고 MongoDB에 저장합니다. PostgreSQL 전달과 공통 로그 테이블 규격은 사용하지 않습니다. 새 `log_record`와 기존 기록 보존·점검/스키마 적용은 [광고 로그 저장 계약](../../development/ads/MongoDB_광고_로그_저장_계약.md)을 따릅니다. 관리3+공개5+정책2 구조와 공유 ADMIN/guest 인증 경계는 유지합니다.
 
 ## 2026-10-14 광고 관리 간소화 적용
 
-사용자가 제공한 [간소화 원문](./04_광고_관리_간소화_인수인계서.md)과 [통합·추가 인계](./05_광고_간소화_통합과_추가_인계.md)를 현행 광고 기준으로 적용합니다. 첫 관리 단계는 ads/ad_assets/ad_admin_changes 세 컬렉션·MongoDB 이미지 Binary·관리 감사/멱등 응답 통합입니다. 3차는 카페 전용이며 관리자/사용자 업종 선택·태그 입력·업종별 매칭은 제공하지 않습니다. 해당 확장은4차로 분리합니다. 공개 제공/측정과 토큰/주기 통계/예산은 다음 구현 단계이며 전체3차 필수 범위와 기존 태스크 ID/직접 선행은 유지합니다. 이하 기존 확장 저장 표는 후속 검토 자료이며 지금 일괄 생성하지 않습니다.
+사용자가 제공한 [간소화 원문](./04_광고_관리_간소화_인수인계서.md)과 [통합·추가 인계](./05_광고_간소화_통합과_추가_인계.md)를 현행 광고 기준으로 적용합니다. 첫 관리 단계는 ads/ad_assets/ad_admin_changes 세 컬렉션·MongoDB 이미지 Binary·관리 감사/멱등 응답 통합입니다. 3차는 카페 전용이며 관리자/사용자 업종 선택·태그 입력·업종별 매칭은 제공하지 않습니다. 해당 확장은4차로 분리합니다. 공개 제공/측정과 5분 통계·예산 검증을 관리 3개+공개 5개+정책 2개 구조로 연결했습니다. 전체3차 필수 범위와 기존 태스크 ID/직접 선행은 유지합니다. 관리 화면은 별도 담당자가 연결합니다.
 
-3차는 카페 광고만 운영하고 위치·일정·paused·소재·예산 자격을 충족한 후보에서 높은 priority·위치별 동률 순환을 적용합니다. 업종/태그가 제공·측정의 전제가 아니며 최초 guest 발급·추천 미요청 집계·단가8/5/클릭추가15·중복/지연/보관은 유지합니다. 미연결 지표는 연동 대기, 실제 통계는 주기 집계하며 예산 제공 제어와 구분합니다. 첫 관리 로그는 ad_admin_changes 내부 log_relay로 전달합니다. 업종별 입력/태그/매칭/순환은4차 인계에서 정하고3차 API/DB/화면/검증의 선행 조건으로 넣지 않습니다.
+3차는 카페 광고만 운영하고 위치·일정·paused·소재·예산 자격을 충족한 후보에서 높은 priority·위치별 동률 순환을 적용합니다. 업종/태그가 제공·측정의 전제가 아니며 최초 guest 발급·추천 미요청 집계·단가8/5/클릭추가15·중복/지연/보관은 유지합니다. 미연결 지표는 연동 대기, 실제 통계는 주기 집계하며 예산 제공 제어와 구분합니다. 첫 관리 로그는 ad_admin_changes 내부 log_record에 MongoDB로 원자 저장합니다. 업종별 입력/태그/매칭/순환은4차 인계에서 정하고3차 API/DB/화면/검증의 선행 조건으로 넣지 않습니다.
 
 ## 1. 관리 화면과 공개 배치
 
@@ -17,14 +21,19 @@ B는 `/admin/ads`에서 게시/예약 수·오늘 노출/클릭의 4개 요약, 
 
 입력은 title·asset_id·link_url·placement(top/bottom)·starts_at·ends_at·priority입니다. 3차는 카페 전용이며 targeting_mode·target_tag_codes·tag_catalog_version 같은 업종/태그 필드를 저장하거나 입력받지 않습니다. 광고 한 기록의 위치는 하나이며 같은 asset의 양쪽 게시는 별도 두 ad_id입니다. 수정에는 `version`을 보내고 서버가 원자 조건 갱신합니다. 등록/수정/중단은 공통 `Idempotency-Key`와 요청 해시를 사용하며 같은 키/다른 본문은409입니다. 실제 충돌은 VERSION_CONFLICT/409와 최신 상태를 확인하는 흐름입니다. 제목 길이·priority 허용 범위 등 아직 없는 운영 숫자는 AD-M01/03에서 보완합니다.
 
+예산 입력은 `daily_budget_tokens`/`total_budget_tokens`를 함께 보내는 선택 쌍입니다. 두 값 모두 strict 양의 int64이며 명시 null은 거부합니다. 생략한 신규 광고는 두 값과 budget_version이 null이며 운영 제공 부적격입니다. 수정에서 생략하면 유지하고 두 값이 실제 변경될 때만 새 UUID budget_version을 부여합니다. 실예산 기본값은 만들지 않습니다.
+
 ```text
 paused이면 STOPPED
+그 외 now >= ends_at이면 ENDED (PERIOD_ENDED)
+그 외 현재 budget_version의 유효 소진 차단이면 ENDED (BUDGET_EXHAUSTED)
 그 외 now < starts_at이면 RESERVED
-그 외 starts_at <= now < ends_at이면 ACTIVE
-그 외 ENDED
+그 외 ACTIVE
 ```
 
-시각은 UTC 저장/응답·KST 관리 입력/표시입니다. `starts_at < ends_at`을 검사합니다. 상태는 조회 시각에 다시 계산하고 스케줄러 실행 결과만 믿지 않습니다. 단순 PUT은 paused를 해제하지 않으며 재개 API/버튼은 미정입니다. 첫 관리 단계의 저장/중단 성공은 ads와 ad_admin_changes의 감사/멱등 응답·내부 log_relay 상태를 같은 MongoDB 트랜잭션으로 커밋한 것입니다. 별도 outbox 컬렉션을 먼저 만들지 않습니다.
+`end_reason`은 조회 시 계산하는 읽기 전용 값입니다. 예산 기술 상태 갱신은 관리 version·actor를 바꾸지 않으며 일반 편집은 paused를 해제하지 않습니다.
+
+시각은 UTC 저장/응답·KST 관리 입력/표시입니다. `starts_at < ends_at`을 검사합니다. 상태는 조회 시각에 다시 계산하고 스케줄러 실행 결과만 믿지 않습니다. 단순 PUT은 paused를 해제하지 않으며 재개 API/버튼은 미정입니다. 첫 관리 단계의 저장/중단 성공은 ads와 ad_admin_changes의 감사/멱등 응답·내부 log_record 상태를 같은 MongoDB 트랜잭션으로 커밋한 것입니다. 별도 outbox 컬렉션을 먼저 만들지 않습니다.
 
 상단은 메뉴 아래/날씨 위, 하단은 본문 다음 일반 흐름입니다. 폭은 사용 가능100%/최대1536px, 높이는 top120px/bottom104px입니다. PC 권장2배 소재는3072×240/208, 모바일390px 폭에서도 높이는120/104px를 유지합니다. 사진 cover·HTML 제목/버튼·title 기반 alt, 키보드/반응형을 제공합니다. 별도 모바일 필수 업로드를 추가하지 않습니다.
 
@@ -37,7 +46,8 @@ paused이면 STOPPED
 | 메서드·경로 | 입력/반환·핵심 검사 | 접근/담당 |
 |---|---|---|
 | GET /api/ads | placement 필수, 재확인 시 delivery_id. ad·evaluated_at·valid_until | 공개, B 제공/C 연결 |
-| POST /api/ad-events | delivery_id·event_id·event_type·occurred_at. counted·처리 결과 | 공개 문맥/배달 검증, B |
+| POST /api/ad-events | delivery_id·event_id·event_type·occurred_at와 X-Ad-Delivery-Token. counted·처리 결과 | 공개 문맥/배달 검증, B |
+| GET /api/ad-deliveries/{delivery_id}/image | delivery_token query로 배달 proof·현재 자격 검사, no-store 이미지 | 공개 이미지, B/C |
 | GET /api/admin/ads | placement/status 필터·version. 누적 측정 미연결은 연동 대기 | ADMIN 광고 조회, B |
 | POST /api/admin/ad-assets | 정적 이미지 Binary 저장·asset_id·검사 결과. 실제 image_url 계약은 공개 조회 인계 | ADMIN 광고 변경, B/INF |
 | POST /api/admin/ads | 위 입력, 저장된 ad_id·version·서버 상태 | ADMIN 광고 변경, B |
@@ -59,13 +69,15 @@ ID는 불투명 문자열, JSON은 snake_case, 시각은 UTC Z입니다. 공개 
 3. 문맥/ADMIN 원본은 PostgreSQL에 유지하고 MongoDB에는 서버 검증된 내부 ID만 참조합니다. 쿠키 원문/로그인 비밀번호를 저장하거나 광고 DB에 계정을 복제하지 않습니다.
 4. 쿠키 저장 불가에서도 배너/링크 이동은 가능하며 측정은 MEASUREMENT_UNAVAILABLE로 운영 집계/예상 비용에서 제외합니다. 문맥 발급/조회는 광고/음악 행동 로그의 성공 지표가 아닙니다.
 
-## 4. 후속 공개 단계 — 카페 광고 선정·중단 3초·열린 화면
+## 4. 공개 단계 — 카페 광고 선정·중단 3초·열린 화면
 
 기간·paused·위치·사용 가능한 소재·예산 자격을 통과한 카페 광고 중 높은 priority를 우선하고 동률은 ad_id 코드 포인트 순으로 위치별 round-robin을 적용합니다. top/bottom 순환 상태는 분리하고 새 delivery 발급과 커서 이동을 같은 MongoDB 트랜잭션으로 기록합니다. 기존 delivery 재확인·관리 미리보기·멱등 재전송은 커서를 진행하지 않습니다.
 
-기존 delivery는 C가1초마다 같은 조회 경로에 delivery_id를 붙여 재확인합니다. MongoDB primary의 현재 광고 상태를 읽고 `valid_until <= min(evaluated_at+3초, ends_at)`을 발급합니다. 중단 커밋 시각 t_stop부터 새 제공은 차단하며 정상 활성 화면은 t_stop+3초 이내 숨깁니다. 이전 캐시/늦은 응답으로 기한을 연장하지 않고 C는 왕복시간을 보수적으로 차감합니다. 확인 실패/기한 종료 시 배너와 노출 타이머를 중단하고 탭 복귀에는 재확인부터 합니다. 숨김·재확인은 새 노출이 아닙니다.
+기존 delivery는 C가1초마다 같은 조회 경로에 delivery_id를 붙여 재확인합니다. MongoDB primary의 현재 광고 상태를 읽고 `valid_until <= min(evaluated_at+3초, 당시/현재 ends_at, display_expires_at)`을 발급합니다. 중단 커밋 시각 t_stop부터 새 제공은 차단하며 정상 활성 화면은 t_stop+3초 이내 숨깁니다. 이전 캐시/늦은 응답으로 기한을 연장하지 않고 C는 왕복시간을 보수적으로 차감합니다. 확인 실패/기한 종료 시 배너와 노출 타이머를 중단하고 탭 복귀에는 재확인부터 합니다. 숨김·재확인은 새 노출이 아닙니다.
 
-중단 전 발생한 유효 보고는300초 이내 수신 시 검사할 수 있고 중단 후 발생 보고는 화면 반영이 늦어도 제외합니다. 소재 수정 전 delivery의 향후 표시/무효화 세부는 AD-M06/15의 미정이며 당시 snapshot을 현재 소재로 덮지 않습니다. 3초 표시 기한·측정 지연300초·delivery 자체 수명·보관90일은 네 가지 별도 개념입니다.
+배달 표시 수명은 30분이며 광고 종료가 빠르면 단축합니다. display_expires_at과 300초 뒤 event_expires_at(보고 마감)을 분리하고 자정 단축은 기본 False입니다. 30분 만료는 새 배달 발급 조건이며 캠페인 종료가 아닙니다. 제목/이미지/링크 변경은 creative_version을 바꾸고 옛 배달의 새 표시/변경 이후 발생을 차단합니다. 위치·일정은 별도 검사하고 priority는 다음 선정부터 적용합니다. 수정·중단·종료 전의 당시 유효 발생은 300초 지연 내 검사하며 당시 snapshot과 최초 응답을 보존합니다.
+
+예산은 5분마다 원장을 검증해 일일/전체 소진을 확인한 최초 cutoff부터 신규/재확인/이미지를 차단합니다. occurred_at < cutoff인 유효 보고는 300초 이내 초과 인정하고 경계 이상은 제외합니다. 잔여 양수라도 다음 검증 전 초과할 수 있으며 최소 23/20 조건·예약은 없습니다. 자동 종료는 소진/게시 기간이고 수동 paused는 별도입니다. 짧은 표시 lease·지연 보고·배달 수명·자료 보관은 서로 다른 기준입니다.
 
 ## 5. 후속 측정·반복·예상 사용량과 주기 통계
 
@@ -75,4 +87,6 @@ ID는 불투명 문자열, JSON은 snake_case, 시각은 UTC Z입니다. 공개 
 
 delivery마다 각 종류 최초 유효 처리만 소비합니다. 새 delivery도 `(owner_guest_id, ad_id, placement, event_type)`의 서버 accepted_at부터 노출60초/클릭300초 동안 추가 인정하지 않습니다. 정확한 경계부터 인정하며 소재 버전 변경만으로 초기화하지 않습니다. 억제/재전송은 accepted_at을 연장하지 않고 이미 억제된 delivery를 창 종료 후 다시 성공 처리하지 않습니다. 노출/클릭 창은 별개입니다.
 
-집계 일자는 검증된 occurred_at의 KST 날짜입니다. received_at·processed_at·accepted_at을 따로 보존하고 오늘 합계와 광고별 누적을 구분합니다. 유효 노출 top8/bottom5, 인정 클릭15토큰을 예상 원장에 기록합니다. 조기 클릭은15만, 정상 노출 후 클릭은 top23/bottom20이며 중복/억제는0입니다. 실제 결제/잔액 차감은 수행하지 않습니다. 예산 수치/경계·예약/초과 처리 미정은 테스트용 명시 정책으로만 검증합니다.
+집계 일자는 검증된 occurred_at의 KST 날짜입니다. received_at·processed_at·accepted_at을 따로 보존하고 오늘 합계와 광고별 누적을 구분합니다. 유효 노출 top8/bottom5, 인정 클릭15토큰을 예상 원장에 기록합니다. 조기 클릭은15만, 정상 노출 후 클릭은 top23/bottom20이며 중복/억제는0입니다. 실제 결제/잔액 차감은 수행하지 않습니다. 관리 통계와 예산은 5분 주기로 검증/재계산하며 실제 예산액은 광고별 입력값입니다. ad_daily_metrics 재계산 교체 결과의 as_of·aggregation_status·coverage를 응답해 미연결 null/PENDING과 실제0을 구분합니다. KST 발생일 기준은 개발 정렬 계약이며 별도 예산값 승인으로 해석하지 않습니다.
+
+운영 정책 provider는 `domains.ads.runtime_policy.get_public_policy`를 명시 연결합니다. 배달1800초·분리 마감·예산 이력 검사를 사용하며 상태 누락은 부적격, 300초 초과 stale/future/잘못된 상태는 503입니다. callback은 MongoDB 트랜잭션 안에서 재실행되므로 외부 I/O를 금지합니다. 운영 watch·공유 guest·HTTPS·브라우저 확인은 별도 인계입니다.

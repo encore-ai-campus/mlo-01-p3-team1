@@ -1,0 +1,58 @@
+{
+  "schema_version": "YOUTUBE_100_VALIDATION_SHARE_V2",
+  "checked_at": "2026-10-16T08:54:16.623490+00:00",
+  "passed": true,
+  "unique_tracks": 100,
+  "unique_videos": 100,
+  "metadata_pass": 100,
+  "native_time_progress_pass": 100,
+  "weather_counts": {
+    "CLEAR": 20,
+    "CLOUDY": 20,
+    "OVERCAST": 20,
+    "RAIN": 20,
+    "SNOW": 20
+  },
+  "match_score_counts": {
+    "85": 64,
+    "100": 36
+  },
+  "kr_public_metadata_confirmed": 96,
+  "kr_public_metadata_unknown": 4,
+  "source_catalog_unchanged": true,
+  "csv_rows": 100,
+  "csv_sha256": "d548c1eb117ef998d53cabf98133938835e1e90cbbc11f18296de5f7ed75d3cd",
+  "root_corrections": [
+    {
+      "track_id": "1Fid2jjqsHViMX6xNH70hE",
+      "field": "album_match/score",
+      "before_score": 100,
+      "after_score": 85,
+      "reason": "Base album is supported; Expanded/Super Deluxe source edition remains unconfirmed."
+    },
+    {
+      "track_id": "4RvWPyQ5RL0ao9LPZeSouE",
+      "field": "album_match/score",
+      "before_score": 100,
+      "after_score": 85,
+      "reason": "Base album is supported; Expanded/Super Deluxe source edition remains unconfirmed."
+    }
+  ],
+  "applied": true,
+  "new_native_approved": 100,
+  "total_native_approved": 147,
+  "total_iframe_approved": 11,
+  "previous47_preserved": true,
+  "recommendation_catalog_unchanged": true,
+  "historical_application_date": "2026-10-16",
+  "csv_purpose": "READ_ONLY_REVIEW_EXPORT_NOT_REGISTRATION_INPUT",
+  "original_registration_csv": {
+    "sha256": "7ca6965e317732b6b0ab758d91eb626e917d3be39b7a3440fe4734e34eb75e7f",
+    "rows": 100,
+    "historical_expected_revision": 0,
+    "retained_locally": true,
+    "replay_requires_current_revision": true
+  },
+  "published_review_json_sha256": "6831418309e48fef81120a0b0f65a696ec626194aea30ea7d5f342f0d53c32cc",
+  "publication_date": "2026-10-19"
+}

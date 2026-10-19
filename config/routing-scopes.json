@@ -1,0 +1,67 @@
+{
+  "docs/backend-routing": [
+    "ad-server/backend"
+  ],
+  "docs/integration-routing": [
+    "backend/music/catalog.py",
+    "backend/music/test_occasion_publication.py",
+    "backend/recommendation/models.py",
+    "backend/recommendation/policy.py",
+    "backend/recommendation/occasion.py",
+    "backend/recommendation/service.py",
+    "backend/recommendation/management/commands/seed_c_demo.py",
+    "backend/recommendation/migrations/0005_catalog_publication.py",
+    "backend/recommendation/tests/test_api.py",
+    "backend/recommendation/tests/test_catalog_publication.py",
+    "backend/recommendation/tests/test_catalog_storage.py",
+    "backend/common/history_api.py",
+    "backend/common/music_api.py",
+    "backend/common/test_exclusion_history.py",
+    "tests/run_browser_integration.py",
+    "scripts/audit_routing.py",
+    "scripts/check_routing.py",
+    "backend/cafe/urls.py",
+    "backend/common/api.py",
+    "backend/common/test_youtube_admin.py",
+    "backend/common/tests.py",
+    "backend/common/youtube_review.py"
+  ],
+  "docs/music-playback-routing": [
+    "backend/recommendation/solver.py",
+    "backend/recommendation/worker.py",
+    "backend/recommendation/exact_search.py",
+    "backend/recommendation/candidate_index.py",
+    "backend/recommendation/matching.py",
+    "backend/recommendation/tests/test_exact_search.py",
+    "backend/recommendation/tests/test_candidate_index.py",
+    "backend/recommendation/youtube_registry.py",
+    "backend/recommendation/youtube_queue_api.py",
+    "backend/recommendation/tests/test_youtube_queue_api.py",
+    "backend/recommendation/tests/test_youtube_registry.py",
+    "backend/recommendation/tests/test_youtube_collected_links.py"
+  ],
+  "docs/admin-sso-routing": [
+    "backend/common/admin_roles.py",
+    "backend/common/sso.py",
+    "backend/common/sso_tokens.py",
+    "backend/common/sso_provision.py",
+    "backend/common/management/commands/provision_sso_admin.py",
+    "backend/common/management/commands/bootstrap_admin.py",
+    "backend/common/management/commands/prepare_runtime.py",
+    "backend/common/management/commands/check_runtime.py",
+    "backend/common/models.py",
+    "backend/common/identity.py",
+    "backend/common/test_admin_sso.py",
+    "backend/common/test_runtime.py",
+    "backend/cafe/settings.py",
+    "backend/common/migrations/0006_alter_guest_options_adminssoidentity.py",
+    "backend/common/admin_dashboards.py"
+  ],
+  "docs/recommendation-dispatch-routing": [
+    "backend/recommendation/dispatch.py",
+    "backend/recommendation/management/commands/run_recommendations.py",
+    "backend/recommendation/management/commands/check_recommendations.py",
+    "backend/recommendation/migrations/0006_distributed_dispatch.py",
+    "backend/recommendation/tests/test_dispatch.py"
+  ]
+}

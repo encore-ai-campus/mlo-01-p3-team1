@@ -1,0 +1,19 @@
+# Merge into each Elasticsearch node's config after license/TLS verification.
+# Keep existing service/native realms; no real secret belongs in this file.
+xpack.security.authc.token.enabled: true
+xpack.security.authc.realms.oidc.cafe_sso:
+  order: 2
+  rp.client_id: cafe-kibana
+  rp.response_type: code
+  rp.redirect_uri: https://ops.example.org/api/security/oidc/callback
+  rp.post_logout_redirect_uri: https://ops.example.org/security/logged_out
+  op.issuer: https://identity.example.org/realms/cafe
+  op.authorization_endpoint: https://identity.example.org/realms/cafe/protocol/openid-connect/auth
+  op.token_endpoint: https://identity.example.org/realms/cafe/protocol/openid-connect/token
+  op.jwkset_path: https://identity.example.org/realms/cafe/protocol/openid-connect/certs
+  op.userinfo_endpoint: https://identity.example.org/realms/cafe/protocol/openid-connect/userinfo
+  op.endsession_endpoint: https://identity.example.org/realms/cafe/protocol/openid-connect/logout
+  claims.principal: sub
+  claims.groups: groups
+  populate_user_metadata: false
+# Set xpack.security.authc.realms.oidc.cafe_sso.rp.client_secret via elasticsearch-keystore.

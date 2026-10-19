@@ -1,0 +1,973 @@
+{
+  "schema_version": "DASHBOARD_GENERAL_RESULT_EVIDENCE_V1",
+  "captured_date": "2026-10-16",
+  "is_test": true,
+  "preview_only": true,
+  "weather_is_fixed_test_fixture": true,
+  "catalog_version": "spotify-preview-b202fa49909b-general-c2478b153aa8",
+  "source_dataset_sha256": "b202fa49909b2d5cef71a04b1d21243cfeb36414535f2ca9272aa646721177bd",
+  "options": {
+    "vocal_option": "any",
+    "tempo_preference": "auto",
+    "weather_influence_mode": "ON",
+    "selected_theme_codes": [],
+    "selected_genre_codes": [],
+    "option_version": "options-music-v4",
+    "region_id": "demo-region"
+  },
+  "item_count": 47,
+  "total_ms": 10652228,
+  "validation_passed": false,
+  "verified_youtube_count": 0,
+  "items": [
+    {
+      "track_id": "000RDCYioLteXcutOjeweY",
+      "track_name": "Teeje Week",
+      "artists_name": "Jordan Sandhu",
+      "album_name": "Teeje Week",
+      "duration_ms": 190203,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "dfad11d0619a2e990b3d147c107fdff2fac338be3a60c185a2255ae04bd4d3db",
+      "genre_group_codes": [
+        "HIPHOP"
+      ],
+      "theme_codes": [],
+      "speed": "fastest",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "006Bi4j0yzwOc3y69GOlYV",
+      "track_name": "Computadores Fazem Arte",
+      "artists_name": "Chico Science;Nação Zumbi",
+      "album_name": "Da Lama Ao Caos",
+      "duration_ms": 193200,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "248c514224e3f571578da060956a0d6ba1115b56333b7b17ec7424cd118d10cb",
+      "genre_group_codes": [
+        "ROCK"
+      ],
+      "theme_codes": [],
+      "speed": "fast",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "00Vp4bBQAZ1s9KEIw5MjgQ",
+      "track_name": "I Gotta Feeling",
+      "artists_name": "Black Eyed Peas",
+      "album_name": "Tutti in piscina Canzoni per bambini",
+      "duration_ms": 289493,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "3d1a345fe45925f6f1ca621614540993df67d54b48b1c0646656f0d85902de0b",
+      "genre_group_codes": [
+        "ELECTRONIC_DANCE"
+      ],
+      "theme_codes": [],
+      "speed": "fast",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "00qaydBkSEAZAMkf75CfsU",
+      "track_name": "Rude Boy Dreams",
+      "artists_name": "The Skatalites",
+      "album_name": "Clash of the Ska Titans/Guns of Navarone",
+      "duration_ms": 235173,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "bafb802c179ffe32000e2c8a053d450cc68cba3e0cfa4d898ccb29a55e74f125",
+      "genre_group_codes": [
+        "REGGAE_SKA"
+      ],
+      "theme_codes": [],
+      "speed": "medium",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "010LzZsO4eqQUdUv1f1y9m",
+      "track_name": "Somos Instantes",
+      "artists_name": "Gabriel Elias;Vitor Kley",
+      "album_name": "Música Pra.curar Brasileira",
+      "duration_ms": 225877,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "3fef374fe37aa52b41ee8d239311d629a71ea6c3c159c38fe68f44288afe9c14",
+      "genre_group_codes": [
+        "REGGAE_SKA"
+      ],
+      "theme_codes": [],
+      "speed": "slow",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "012JFkVnfxxnL0dN29j73L",
+      "track_name": "Keep On Running - Remastered 2010",
+      "artists_name": "The Spencer Davis Group",
+      "album_name": "(60's) Sixties Collected Volume 2",
+      "duration_ms": 168280,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "da5b3fe4421581961c35dc43b4d9b2b6d723ae40f7a8c054ff02e712164cae98",
+      "genre_group_codes": [
+        "BLUES",
+        "RNB_SOUL_FUNK",
+        "ROCK"
+      ],
+      "theme_codes": [],
+      "speed": "fast",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "014DA3BdnmD3kI5pBogH7c",
+      "track_name": "Cứ Chill Thôi",
+      "artists_name": "Chillies;Suni Hạ Linh;Rhymastic",
+      "album_name": "Cứ Chill Thôi",
+      "duration_ms": 270000,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "64e6ff52621811b54b1b8b0c7abf1cff14bc5b6f22178f5ec2813106aa6f14fc",
+      "genre_group_codes": [
+        "POP"
+      ],
+      "theme_codes": [],
+      "speed": "medium",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "015ASDUjzFvQrKgVI23aki",
+      "track_name": "Night on the River",
+      "artists_name": "The Infamous Stringdusters",
+      "album_name": "Silver Sky",
+      "duration_ms": 213226,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "0a8a415ad12f2451ca16bfda24a9e8424389072b976a7a1957cb2588e2a99d13",
+      "genre_group_codes": [
+        "FOLK_COUNTRY"
+      ],
+      "theme_codes": [],
+      "speed": "medium",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "015SmK4Fvjv13dVwtGoMC0",
+      "track_name": "Dirge",
+      "artists_name": "Death In Vegas",
+      "album_name": "The Contino Sessions",
+      "duration_ms": 343866,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "8b8cb5bfc065375c67b042c2dc8c83f308485a1f617e40d17b7ddea047618d1b",
+      "genre_group_codes": [
+        "ELECTRONIC_DANCE"
+      ],
+      "theme_codes": [],
+      "speed": "medium",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "01R8E80wecrjrq6iwrdZx3",
+      "track_name": "Coração De Rua - Ao Vivo",
+      "artists_name": "Henrique & Juliano",
+      "album_name": "Manifesto Musical (Ao Vivo / Vol. 1)",
+      "duration_ms": 173415,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "535ed4645bc28e5e5096168b3cc173020f5358c41a5dd0f3da1e8de655e4c506",
+      "genre_group_codes": [
+        "LATIN"
+      ],
+      "theme_codes": [],
+      "speed": "fastest",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "01xqHIwd7hQLROgelUQ6w2",
+      "track_name": "Big Daddy Wiz",
+      "artists_name": "Wiz Khalifa;Girl Talk",
+      "album_name": "Pushin P - Top Rap",
+      "duration_ms": 131039,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "ed4e3a9287d8aeab6f3e3ec550429aec1f77a90ca28bbb193cad25414cb2fcbc",
+      "genre_group_codes": [
+        "ELECTRONIC_DANCE",
+        "HIPHOP"
+      ],
+      "theme_codes": [],
+      "speed": "medium",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "01yDjImCcOaHDT4uy6VOPw",
+      "track_name": "Brigada de Negro",
+      "artists_name": "Los Prisioneros",
+      "album_name": "La Voz de los '80 (Edición 30 Años)",
+      "duration_ms": 226442,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "ca6b3ebbbfdb26a154f94e6f02fab3cf3c5906fa4bb3a331616024909c973b22",
+      "genre_group_codes": [
+        "REGGAE_SKA",
+        "ROCK"
+      ],
+      "theme_codes": [],
+      "speed": "fast",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "01ymAdRAqv2YG5FTXmXTuz",
+      "track_name": "Carry Me On",
+      "artists_name": "Brookes Brothers;Chrom3",
+      "album_name": "Orange Lane",
+      "duration_ms": 249568,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "1621fa52d26de041026eec3f4041c2d9fa087b2e3fab203055ce5d5356905d47",
+      "genre_group_codes": [
+        "ELECTRONIC_DANCE"
+      ],
+      "theme_codes": [],
+      "speed": "fastest",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "022nJwdqNEHRazWpp55bWa",
+      "track_name": "Quinta Real - MTV Unplugged",
+      "artists_name": "PXNDX",
+      "album_name": "Panda MTV Unplugged (Live)",
+      "duration_ms": 245139,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "c364ac2b9638517736c7df595ea2211514f4a4b385015097500da2875e2eb1bf",
+      "genre_group_codes": [
+        "ROCK"
+      ],
+      "theme_codes": [],
+      "speed": "fastest",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "02GGlQrUckPW2fJmYVpU8l",
+      "track_name": "Filho do Mato (Versão Grave)",
+      "artists_name": "Os Barões Da Pisadinha",
+      "album_name": "Paredão Explode",
+      "duration_ms": 166051,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "c4dfb9a4a0ff95422df17e4f3032a4f25492a7db53fdd9f3ad65d43ab77de452",
+      "genre_group_codes": [
+        "LATIN"
+      ],
+      "theme_codes": [],
+      "speed": "fastest",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "02Q9pW0hdgO0OuzkxIRgG6",
+      "track_name": "Menina Linda",
+      "artists_name": "Tequila Baby",
+      "album_name": "Punk Rock Até Os Ossos",
+      "duration_ms": 214986,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "8c21402a68b80d4a32db19262d07ddd2416a7bc1547e41d8f458527d36751931",
+      "genre_group_codes": [
+        "ROCK"
+      ],
+      "theme_codes": [],
+      "speed": "fast",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "02VBYrHfVwfEWXk5DXyf0T",
+      "track_name": "Leave The Door Open",
+      "artists_name": "Bruno Mars;Anderson .Paak;Silk Sonic",
+      "album_name": "An Evening With Silk Sonic",
+      "duration_ms": 242096,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "c13a7545fe4e7b9d823599bc250a8fe3dd4747db5010788f8f3c5522b2bfa827",
+      "genre_group_codes": [
+        "ELECTRONIC_DANCE"
+      ],
+      "theme_codes": [],
+      "speed": "fast",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "02YAbVNakOle4LWElPxcc5",
+      "track_name": "Si He De Morir",
+      "artists_name": "Marc Anthony",
+      "album_name": "Otra Nota",
+      "duration_ms": 256666,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "c608a9a1d9de6ba5d46239a8a5a8f6c6e0ed16b5b1b1180f9ab9d75abb631cb6",
+      "genre_group_codes": [
+        "LATIN"
+      ],
+      "theme_codes": [],
+      "speed": "fastest",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "02fuv91GGA2FwaOTiKQVa7",
+      "track_name": "They Reminisce over You",
+      "artists_name": "Pete Rock;C.L. Smooth",
+      "album_name": "Rap Homage",
+      "duration_ms": 286693,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "019e23e5b996662ebf817665d243623c3c43c097ba94fa20f44b40fc7316b762",
+      "genre_group_codes": [
+        "JAZZ"
+      ],
+      "theme_codes": [],
+      "speed": "medium",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "02gKvoYVXSINVj1HP95yZ6",
+      "track_name": "Round, Round",
+      "artists_name": "Belouis Some",
+      "album_name": "Round, Round",
+      "duration_ms": 247773,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "7b86215f018b1d1f07aefbd67d6f89f3a3f72a8121f4253f7b5794376613a9d4",
+      "genre_group_codes": [
+        "POP"
+      ],
+      "theme_codes": [],
+      "speed": "fast",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "02uRToy7bttYcKCO3vIStA",
+      "track_name": "Hit That Jive",
+      "artists_name": "Gramatik",
+      "album_name": "SB2",
+      "duration_ms": 203050,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "2fbcc2f6ab725627c2cbbb6821f6ef32d167b5c579e04427482de8cf66811a8c",
+      "genre_group_codes": [
+        "ELECTRONIC_DANCE"
+      ],
+      "theme_codes": [],
+      "speed": "medium",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "02yEhcqA7tqfca3gwPxXdF",
+      "track_name": "No Te Vas - Remix",
+      "artists_name": "Nacho;Wisin;Noriel",
+      "album_name": "Perreo Tenebroso Vol. 3",
+      "duration_ms": 227226,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "8a1d8e19f91c26d3acbae442e295602e0da501fc0a76938b4c1d6c4c4cb714eb",
+      "genre_group_codes": [
+        "LATIN",
+        "REGGAE_SKA"
+      ],
+      "theme_codes": [],
+      "speed": "medium",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "0343bYQtSfznf6v90jRLRK",
+      "track_name": "Forever Young",
+      "artists_name": "John De Sohn;LIAMOO",
+      "album_name": "Made For You",
+      "duration_ms": 167911,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "fb2ea7dd3c37e947a1749d2219207c8a5d70b45683047c3e511575b572a49d60",
+      "genre_group_codes": [
+        "ELECTRONIC_DANCE"
+      ],
+      "theme_codes": [],
+      "speed": "fast",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "03I89EqsberXEAapUd1yWu",
+      "track_name": "All My Favorite Songs",
+      "artists_name": "Weezer;AJR",
+      "album_name": "Here to Forever - All New Indie",
+      "duration_ms": 170720,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "9aaa4e32415da550af91a243239c438d89279d17099f6e3da66c4a775815928b",
+      "genre_group_codes": [
+        "POP",
+        "ROCK"
+      ],
+      "theme_codes": [],
+      "speed": "medium",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "03N7wdRyQShcktyGpffq79",
+      "track_name": "Richest Man",
+      "artists_name": "Balsam Range",
+      "album_name": "Moxie and Mettle",
+      "duration_ms": 182500,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "b492a9da088e528ae8caf6558f59844e729401d7193ad3b3dca7f028fed66f23",
+      "genre_group_codes": [
+        "FOLK_COUNTRY"
+      ],
+      "theme_codes": [],
+      "speed": "fast",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "03PjRjDn7JNYY2P57QX8Q5",
+      "track_name": "Faking Love",
+      "artists_name": "Anitta;Saweetie",
+      "album_name": "New Pop Icons",
+      "duration_ms": 146933,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "289a038a4152c66491bedf6fe3732f0d3a935211163dc16a8fdef74b6e5f9c2e",
+      "genre_group_codes": [
+        "LATIN",
+        "RNB_SOUL_FUNK"
+      ],
+      "theme_codes": [],
+      "speed": "fast",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "03UnPfDS0FvZzi0Z3I7yue",
+      "track_name": "Okay",
+      "artists_name": "Limoblaze;Ada Ehi",
+      "album_name": "Okay",
+      "duration_ms": 155468,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "c615b281077cd4dfbe9c3be76b593a28fa4f5512b55373709f2396e216d0ea63",
+      "genre_group_codes": [
+        "AFROBEAT"
+      ],
+      "theme_codes": [],
+      "speed": "medium",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "03Y9Gez0KGG8zYY3KWIqdk",
+      "track_name": "Shattered Dreams",
+      "artists_name": "Johnny Hates Jazz",
+      "album_name": "The Very Best Of Johnny Hates Jazz",
+      "duration_ms": 209960,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "90cf7f9ca08cce99640b0443a84df04920083b2cd77c5895ecc29edfe5009b9e",
+      "genre_group_codes": [
+        "POP"
+      ],
+      "theme_codes": [],
+      "speed": "fast",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "03YUNUpazIbzwqJq2YSBvB",
+      "track_name": "Kilometre",
+      "artists_name": "Burna Boy",
+      "album_name": "Love, Damini",
+      "duration_ms": 152692,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "b967f89fad5a346aacdd1560256a4d7ae4bd28391396dc26e12230794a8897d1",
+      "genre_group_codes": [
+        "REGGAE_SKA"
+      ],
+      "theme_codes": [],
+      "speed": "medium",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "03eJ2DclFWXYU8GWgANdmZ",
+      "track_name": "bad vibes forever",
+      "artists_name": "XXXTENTACION;PnB Rock;Trippie Redd",
+      "album_name": "Bad Vibes Forever",
+      "duration_ms": 150475,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "64b0d16af1992b83d6d5d03d1e9200a8bc144d1482c8c6d08c21b9f0a5dfbbf4",
+      "genre_group_codes": [
+        "ROCK"
+      ],
+      "theme_codes": [],
+      "speed": "fast",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "03tF3P98XyiJrQhxx7q0M6",
+      "track_name": "Revolution 5",
+      "artists_name": "Roots Manuva;Charli 2na;Wayne Paul",
+      "album_name": "Dub Come Save Me",
+      "duration_ms": 252626,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "2ac0f8d01d918cec2d06a9afaca8b553067b6ea1a53c76e469b7e791644a78e6",
+      "genre_group_codes": [
+        "ELECTRONIC_DANCE"
+      ],
+      "theme_codes": [],
+      "speed": "medium",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "045eZUNgQ7hjemzvK7VS2l",
+      "track_name": "Tranquilízame",
+      "artists_name": "Ramona",
+      "album_name": "Cérès",
+      "duration_ms": 236563,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "5a2d12043c6272a04ebe3f0397ca1405fe5a5e2d4beea54e5c1104385d2a0924",
+      "genre_group_codes": [
+        "ROCK"
+      ],
+      "theme_codes": [],
+      "speed": "fastest",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "048KE72zqhDQpy7V7YOyRb",
+      "track_name": "Outra Vez",
+      "artists_name": "Painel de Controle",
+      "album_name": "Painel de Controle (Ao Vivo)",
+      "duration_ms": 246200,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "2cbbe00c9ea49207dc64b832eaa034db7f7e9f189617afbf0dd0d81b4bee7c8b",
+      "genre_group_codes": [
+        "LATIN"
+      ],
+      "theme_codes": [],
+      "speed": "medium",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "04CHEoMbrLOiX8co3EG5dO",
+      "track_name": "Thursday's Child Has Far To Go",
+      "artists_name": "TOMORROW X TOGETHER",
+      "album_name": "minisode 2: Thursday's Child",
+      "duration_ms": 211399,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "300d3fe43d9e3fedd4f699efdabadf8f1f9be135a5fa43bac17734ffd8dbe12d",
+      "genre_group_codes": [
+        "K-POP"
+      ],
+      "theme_codes": [],
+      "speed": "fastest",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "04fYoQSUTfPhVjyW8aXkix",
+      "track_name": "En Jannal Vandha",
+      "artists_name": "Yuvan Shankar Raja;Roshini;Priya Hemesh;Divya Vijay",
+      "album_name": "Theeratha Vilayaatu Pillai (Original Motion Picture Soundtrack)",
+      "duration_ms": 283480,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "990f06b3f661f8e7784a354dec47730887423e7f96b86a11572c105bce706ec9",
+      "genre_group_codes": [
+        "K-POP"
+      ],
+      "theme_codes": [],
+      "speed": "fast",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "04hjo1F3q8K5EtY9BQoX0w",
+      "track_name": "I'll Shut up Now (feat. Willie Nelson)",
+      "artists_name": "The Dirt Drifters;Willie Nelson",
+      "album_name": "This Is My Blood",
+      "duration_ms": 243880,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "44dc5c0cebe2e6250f72335b8894fcfb26e6dbd25e45ab54e5c04b3f70155a6b",
+      "genre_group_codes": [
+        "FOLK_COUNTRY"
+      ],
+      "theme_codes": [],
+      "speed": "medium",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "04qx1yENXdu9yN6zzRiVfP",
+      "track_name": "Perreito - Remix",
+      "artists_name": "Mariah Angeliq;Arcangel;Darell",
+      "album_name": "Última Misión Reggaeton",
+      "duration_ms": 213333,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "bfe2bf6bfc1e4d7fecf19ed289810f91964b3e4297456be083bec2b07d153b03",
+      "genre_group_codes": [
+        "LATIN"
+      ],
+      "theme_codes": [],
+      "speed": "fastest",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "0530i8KhAfzyJfHhjlSlUS",
+      "track_name": "Tordilho Negro",
+      "artists_name": "Os Serranos",
+      "album_name": "40 Anos - Sempre Gaúchos !",
+      "duration_ms": 309775,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "1bd1f18d98cfa23872e7077c3e58d4959ce1b2378e2400c26a555c2e7058f744",
+      "genre_group_codes": [
+        "LATIN"
+      ],
+      "theme_codes": [],
+      "speed": "medium",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "0572KbbV9g5j56X5ujG8Ax",
+      "track_name": "Superando Expectativas",
+      "artists_name": "Sudario",
+      "album_name": "Esquenta Pagodera do Sudario",
+      "duration_ms": 148149,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "ae5d552663bb020d53777c24c61feb5a66a36e7e70ca11ae07b08545dc160332",
+      "genre_group_codes": [
+        "LATIN"
+      ],
+      "theme_codes": [],
+      "speed": "fastest",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "05OYrX2wIpHZYVuy56Rce8",
+      "track_name": "What, Why, Where, When (featuring Styles)",
+      "artists_name": "DJ Envy",
+      "album_name": "The Desert Storm Mixtape: DJ Envy Blok Party Vol. 1",
+      "duration_ms": 195706,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "d21c02ca72bd705ef47a29016d916b157c7f549bc87f3214807dd55dbfbefe31",
+      "genre_group_codes": [
+        "ELECTRONIC_DANCE"
+      ],
+      "theme_codes": [],
+      "speed": "medium",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "05QsnIXjPo4ZUhvlV1JxfA",
+      "track_name": "Amanhã - Ao Vivo",
+      "artists_name": "Sorriso Maroto",
+      "album_name": "É Diferente (Ao Vivo)",
+      "duration_ms": 238960,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "6fc6d2be639209cf9ff21d9b8ca0bc957c3535cb6a50ba611ca76a57b10b5405",
+      "genre_group_codes": [
+        "LATIN"
+      ],
+      "theme_codes": [],
+      "speed": "fast",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "05f8Hg3RSfiPSCBQOtxl3i",
+      "track_name": "When the Levee Breaks - Remaster",
+      "artists_name": "Led Zeppelin",
+      "album_name": "Led Zeppelin IV (Deluxe Edition)",
+      "duration_ms": 428851,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "dce73d0e4277a37fb3ad6d7ee2fba5241da813fbe44976bf50df8ebc67a553dd",
+      "genre_group_codes": [
+        "ROCK"
+      ],
+      "theme_codes": [],
+      "speed": "fast",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "05fHQeRbCSjKVS6z0WbQKJ",
+      "track_name": "Every Time You Go Away - Radio Edit",
+      "artists_name": "Paul Young",
+      "album_name": "From Time To Time - The Singles Collection",
+      "duration_ms": 267000,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "41470010168be988cb2b62a4c1928f8557a4f33e104851055d799a4d36af107a",
+      "genre_group_codes": [
+        "ELECTRONIC_DANCE",
+        "POP"
+      ],
+      "theme_codes": [],
+      "speed": "fastest",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "05ngREvdGhL4Omvxw4Hjmo",
+      "track_name": "Guach Perry",
+      "artists_name": "Chancho En Piedra",
+      "album_name": "Peor Es Mascar Lauchas",
+      "duration_ms": 236693,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "59aad94b0b7e0393e99dd6ba4743e240304799c289b265f557114cd7be00c074",
+      "genre_group_codes": [
+        "REGGAE_SKA"
+      ],
+      "theme_codes": [],
+      "speed": "fast",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "05oFyvdztPdpwSwpoclD4c",
+      "track_name": "If You Leave - From \"Pretty In Pink\"",
+      "artists_name": "Orchestral Manoeuvres In The Dark",
+      "album_name": "If You Leave",
+      "duration_ms": 268546,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "abab8efcf04c7e00392df464bf3c0964beae0e3e502ebaff35de5a205acc576c",
+      "genre_group_codes": [
+        "POP"
+      ],
+      "theme_codes": [],
+      "speed": "fast",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "05y79YGqS94EQe0v29lHIo",
+      "track_name": "Soñando - Remastered",
+      "artists_name": "Kevin Martes 13",
+      "album_name": "Inmortal",
+      "duration_ms": 272000,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "fd2d03366a7033069995ec8bb7b42517794bf69dfbc9a45c9984f8c7c7a48630",
+      "genre_group_codes": [
+        "LATIN",
+        "REGGAE_SKA"
+      ],
+      "theme_codes": [],
+      "speed": "fastest",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    },
+    {
+      "track_id": "05zDB03E1WxCLyraJJ2I2r",
+      "track_name": "ラブ・ドラマティック (Funky Flag Version)",
+      "artists_name": "Masayuki Suzuki;伊原六花",
+      "album_name": "Funky Flag",
+      "duration_ms": 262946,
+      "occasion_status": "GENERAL",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "3ea7711b6b0f4d87a6fbce1458b58f419d1e5e6d8d86591997344f56040f42b9",
+      "genre_group_codes": [
+        "J-POP"
+      ],
+      "theme_codes": [],
+      "speed": "fast",
+      "scores": {
+        "W": "100.00",
+        "P": null,
+        "S": "100.00"
+      }
+    }
+  ]
+}

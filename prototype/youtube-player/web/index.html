@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>날씨 음악 · YouTube 로컬 재생 시험</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <header><p class="eyebrow">CAFE WEATHER MUSIC · LOCAL PROTOTYPE</p><h1>선곡표를 실제 영상으로 이어 듣기</h1><p>분석 자료 시험용 · 운영 READY 및 청취 검수 완료 자료가 아닙니다. Premium 적용과 실제 소리는 현재 브라우저에서 확인해 주세요.</p></header>
+  <main>
+    <section class="panel setup" aria-label="목록 선택">
+      <label>시험 날씨 <select id="weather"><option value="CLEAR">맑음</option><option value="CLOUDY">구름낌</option><option value="OVERCAST">흐림</option><option value="RAIN">비</option><option value="SNOW">눈</option></select></label>
+      <button id="reload">목록 불러오기</button><span id="summary" role="status">일반곡 선곡표를 읽는 중입니다.</span>
+      <p id="versions" class="muted"></p><p id="notice" role="status"></p>
+    </section>
+    <div class="columns">
+      <section class="panel playback" aria-label="재생 시험">
+        <h2>공식 YouTube 플레이어</h2>
+        <p id="current">아직 준비한 재생 큐가 없습니다.</p>
+        <div id="player-shell"><div id="player-placeholder">영상 매핑을 확정하고 시험 큐를 준비해 주세요.</div></div>
+        <p id="player-status" role="status">IDLE</p>
+        <div class="buttons"><button id="prepare-five">앞 5곡 큐 준비</button><button id="prepare-all">전체 큐 준비</button><button id="prepare-one">선택곡 1곡 시험</button><button id="restore" disabled>이전 위치 복원</button></div>
+        <div class="buttons"><button id="start" disabled>재생 시작 / 재개</button><button id="pause" disabled>일시정지</button><button id="previous" disabled>이전</button><button id="next" disabled>다음</button><button id="stop" disabled>정지</button><button id="retry" disabled>오류 후 다시 준비</button></div>
+        <p class="muted">큐 준비 후 시작 버튼을 눌러 주세요. 광고·버퍼링·영상 길이 차이로 실제 경과시간은 원본 합계와 다를 수 있습니다. 다른 탭으로 이동하면 일시정지합니다.</p>
+        <button id="export-log">시험 로그 내보내기</button><p id="log-status" class="muted"></p>
+      </section>
+      <section class="panel mapping" aria-label="선택곡 영상 매핑 검수">
+        <h2>선택곡 영상 매핑</h2><p id="selected">아래 목록에서 곡을 선택해 주세요.</p>
+        <p><a id="manual-search" target="_blank" rel="noopener">YouTube에서 수동 검색</a> <button id="api-search" disabled>API 후보 찾기</button></p><div id="candidates"></div>
+        <form id="mapping-form">
+          <label>실제 영상 URL 또는 11자 ID <input id="video-id" required autocomplete="off"></label>
+          <div class="buttons"><button id="preview-prepare" type="button">입력 영상 사전 시험</button><button id="preview-start" type="button" disabled>사전 시험 재생</button><button id="preview-stop" type="button" disabled>사전 시험 정지</button></div><p id="preview-status" class="muted">미확정 영상의 검수 전용 단일 시험입니다. 일반 재생 큐에 포함되지 않으며 자동으로 다음 곡을 재생하지 않습니다.</p>
+          <label>확인한 영상 제목 <input id="video-title" required maxlength="4000"></label>
+          <label>영상 채널 <input id="video-channel" required maxlength="4000"></label>
+          <label>영상 길이 (초) <input id="video-duration" type="number" min="0.001" step="0.001" required></label>
+          <label>검수자 식별값 (이메일 제외) <input id="reviewer" required maxlength="100"></label>
+          <label>원곡·버전·길이 대조 근거 <textarea id="verification-note" required maxlength="4000"></textarea></label>
+          <label class="check"><input id="confirmed" type="checkbox" required> 실제 단일 원곡 영상과 길이를 확인했고, 한국에서 삽입 재생 가능 여부를 점검했습니다.</label>
+          <button type="submit">영상 매핑 확정 저장</button>
+        </form>
+        <details><summary>매핑 JSON 가져오기 / 내보내기</summary><p class="muted">mappings 배열 또는 배열을 포함한 객체를 선택해 주세요. 확정 여부는 사람의 실제 확인 근거가 필요합니다.</p><input id="import-file" type="file" accept=".json,application/json"><button id="export-mappings">현재 매핑 내보내기</button></details>
+        <p id="mapping-message" role="status"></p>
+      </section>
+    </div>
+    <section class="panel"><h2>일반곡 선곡표와 영상 준비 현황</h2><p>GENERAL은 메타데이터 사전 검사 통과입니다. 원래 CSV 필드는 보존하며 영상 매핑이 추천 점수나 시즌 판정을 바꾸지 않습니다.</p><div class="table-wrap"><table><thead><tr><th>순번</th><th>곡 / 아티스트</th><th>시즌 판정</th><th>영상 매핑</th><th>선택</th></tr></thead><tbody id="tracks"></tbody></table></div></section>
+  </main>
+</body>
+</html>

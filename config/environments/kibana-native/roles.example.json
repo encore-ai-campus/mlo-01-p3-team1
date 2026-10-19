@@ -1,0 +1,24 @@
+{
+  "cafe_dashboard_reader": {
+    "elasticsearch": {
+      "cluster": [],
+      "indices": [
+        {
+          "names": [
+            "ops-mlo-*",
+            "analytics-mlo-guest-events-*",
+            "analytics-mlo-guest-summary-v1"
+          ],
+          "privileges": ["read", "view_index_metadata"]
+        }
+      ]
+    },
+    "kibana": [
+      {
+        "base": [],
+        "feature": {"dashboard": ["read"]},
+        "spaces": ["default"]
+      }
+    ]
+  }
+}

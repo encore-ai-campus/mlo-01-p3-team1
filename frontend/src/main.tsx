@@ -1,0 +1,10 @@
+import {createRoot} from 'react-dom/client';
+import {PublicPage} from './features/recommendation/PublicPage';
+import {Login,AdminPage} from './features/admin/AdminPages';
+import {AdsAdmin} from './features/admin-ads/AdsAdmin';
+import {YoutubeAdmin} from './features/admin/YoutubeAdmin';
+import './style.css';
+import './features/admin-ads/ads-admin.css';
+import './features/admin/admin-dashboard.css';
+const path=location.pathname;
+createRoot(document.getElementById('root')!).render(path==='/login'?<Login/>:path==='/admin/music/youtube'?<YoutubeAdmin/>:path==='/admin/music'||path==='/admin/feedback/exclusions'?<AdminPage path={path}/>:path==='/admin/ads'?<AdsAdmin/>:<PublicPage/>);

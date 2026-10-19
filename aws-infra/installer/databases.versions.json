@@ -1,0 +1,47 @@
+{
+  "postgresql": {
+    "major": 16,
+    "source": "Ubuntu noble-updates signed apt repository",
+    "packages": [
+      {
+        "name": "postgresql-16",
+        "version": "16.15-0ubuntu0.24.04.1",
+        "filename": "postgresql-16_16.15-0ubuntu0.24.04.1_amd64.deb",
+        "sha256": "d60ae76fb862cd4cca7bfdcdcdcc271c5e1d75f6b7915305ce2d962735a4b666"
+      },
+      {
+        "name": "postgresql-client-16",
+        "version": "16.15-0ubuntu0.24.04.1",
+        "filename": "postgresql-client-16_16.15-0ubuntu0.24.04.1_amd64.deb",
+        "sha256": "4796f72e1a7270ad8c17b1ecb025cd453f692b42c10aaf89f6b476da61761eac"
+      }
+    ]
+  },
+  "mongodb": {
+    "series": "8.0",
+    "source": "MongoDB official noble/mongodb-org/8.0 apt repository",
+    "signing_key_url": "https://pgp.mongodb.com/server-8.0.asc",
+    "signing_key_sha256": "8c467ea138207ee8d0cbbce3e005c82c73c81b3263e7909bdc36b9a1feff14f6",
+    "packages": [
+      {
+        "name": "mongodb-org-server",
+        "version": "8.0.34",
+        "filename": "mongodb-org-server_8.0.34_amd64.deb",
+        "sha256": "511c3ce30e32880f67e73dcda7ff8547cc196360ab73070cd96cbdad1bf4de84"
+      },
+      {
+        "name": "mongodb-mongosh",
+        "version": "2.13.0",
+        "filename": "mongodb-mongosh_2.13.0_amd64.deb",
+        "sha256": "63b71930a7065acd199fe68babba6dda2c045aa1786f6091089c595773638119"
+      }
+    ]
+  },
+  "references": [
+    "https://www.postgresql.org/docs/16/ssl-tcp.html",
+    "https://www.postgresql.org/docs/16/auth-pg-hba-conf.html",
+    "https://www.mongodb.com/docs/v8.0/tutorial/install-mongodb-on-ubuntu/",
+    "https://www.mongodb.com/docs/v8.0/tutorial/configure-ssl/",
+    "https://www.mongodb.com/docs/v8.0/core/localhost-exception/"
+  ]
+}

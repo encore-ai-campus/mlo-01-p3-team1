@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "analysis_version": "WEATHER_DIAGNOSTICS_20261016_V1",
+  "checks": {
+    "baseline_14_artifact_hashes_unchanged": true,
+    "source_sha256_unchanged": true,
+    "full_distribution_moments_and_quantiles_recomputed": true,
+    "full_pearson_matrix_recomputed": true,
+    "vif_independent_inverse_correlation_check": true,
+    "all_global_iqr_mad_counts_recomputed": true,
+    "threshold77_and80_independent_full_fraction_recalculation": true,
+    "all81_scenario_count_and_jaccard_reconciled": true,
+    "flags_base_id_set_equal": true,
+    "five_original_examples_exact180min": true,
+    "review_sample_500_unique": true
+  },
+  "base_tracks": 61931,
+  "global_flagged_tracks": 37922,
+  "global_flagged_feature_pairs": 53691,
+  "threshold_unmatched": {
+    "77": 8823,
+    "80": 10570
+  },
+  "profile_summary_sha256": "ae015d5ba6a50601d4bbf83439fcfbfb856e309a71589750a30a302c7c7f523f",
+  "sensitivity_summary_sha256": "8688d74f0a337ced51b2bc2401465970f27d94550d47fd7ced3c42bc7fcc17a5",
+  "nonlinear_limit": "sqrt(.5) SNOW 3 qualification decisions unresolved within declared1e-8 interval; kept as bounds, not silently accepted as exact"
+}
