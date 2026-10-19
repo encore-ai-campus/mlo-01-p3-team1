@@ -1,10 +1,10 @@
 # muther. - "오늘의 날씨를 들어보세요."
 ### *날씨와 취향을 담은 3시간의 선곡표*
-<img src="./docs/assets/screenshots/00-muther-logo.png" alt="뮤더 로고와 펭귄 — 오늘의 날씨를 들어보세요" width="270">
+<img src="./docs/assets/readme/00-muther-logo.png" alt="뮤더 로고와 펭귄 — 오늘의 날씨를 들어보세요" width="270">
 
 
 
-<img src="./docs/assets/screenshots/06-home-updated.png" alt="뮤더 메인 화면 — 광고·날씨·추천 플레이리스트" width="400">
+<img src="./docs/assets/readme/06-home-updated.png" alt="뮤더 메인 화면 — 광고·날씨·추천 플레이리스트" width="400">
 
 ## 1. 팀원 소개
 
@@ -321,13 +321,13 @@ docs/acceptance/  검증 결과와 증빙
 ### 서비스 접속·시연 화면
 
 
-<img src="./docs/assets/screenshots/02-guide-weather.png" alt="사용 안내 1단계 — 지역과 날씨" width="526">
+<img src="./docs/assets/readme/02-guide-weather.png" alt="사용 안내 1단계 — 지역과 날씨" width="526">
 
-<img src="./docs/assets/screenshots/03-guide-preferences.png" alt="사용 안내 2단계 — 음악 취향 선택" width="526">
+<img src="./docs/assets/readme/03-guide-preferences.png" alt="사용 안내 2단계 — 음악 취향 선택" width="526">
 
-<img src="./docs/assets/screenshots/04-guide-playlist.png" alt="사용 안내 3단계 — 선곡표 확인과 승인" width="526">
+<img src="./docs/assets/readme/04-guide-playlist.png" alt="사용 안내 3단계 — 선곡표 확인과 승인" width="526">
 
-<img src="./docs/assets/screenshots/05-playlist-result.png" alt="선곡표 결과와 YouTube 외부 연결 화면" width="526">
+<img src="./docs/assets/readme/05-playlist-result.png" alt="선곡표 결과와 YouTube 외부 연결 화면" width="526">
 
 ## 9. 한 줄 회고
 
