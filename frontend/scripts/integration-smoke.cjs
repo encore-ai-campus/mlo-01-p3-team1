@@ -8,6 +8,9 @@ const base=process.env.SMOKE_BASE_URL||'http://127.0.0.1:19073';
     const page=await browser.newPage({viewport:{width:1440,height:1000}});
     const errors=[];page.on('pageerror',error=>errors.push(error.message));
     await page.goto(base+'/');
+    // The public app now has a home screen; controls are on Today's Playlist.
+    await page.getByRole('link',{name:'오늘의 선곡',exact:true}).click();
+    await page.waitForURL('**/playlist');
     await page.getByRole('radio',{name:'반영하지 않음'}).check();
     const acceptedPromise=page.waitForResponse(response=>response.url().endsWith('/api/recommendation-jobs')&&response.request().method()==='POST');
     await page.getByRole('button',{name:'선곡표 받기',exact:true}).click();
@@ -28,15 +31,13 @@ const base=process.env.SMOKE_BASE_URL||'http://127.0.0.1:19073';
     await first.getByRole('button',{name:'제외',exact:true}).click();
     await page.getByText('이번 제외 곡 1개',{exact:false}).waitFor();
     await first.getByRole('button',{name:'제외 취소',exact:true}).click();
-    await page.getByRole('button',{name:/지역을 직접 선택하기/}).click();
+    // Region selectors are now visible without opening or closing a popover.
     await page.getByLabel('시·도',{exact:true}).selectOption('서울특별시');
     await page.getByLabel('시·군·구',{exact:true}).selectOption('성동구');
     await page.getByLabel('읍·면·동',{exact:true}).selectOption('region:1120065000');
-    await page.getByRole('button',{name:'이 지역으로 설정',exact:true}).click();
-    await page.getByRole('button',{name:/지역을 직접 선택하기/}).click();
+    await page.getByRole('button',{name:'선택한 지역으로 날씨 변경',exact:true}).click();
     await page.getByLabel('시·도',{exact:true}).selectOption('경기도');
     if(await page.getByLabel('시·군·구',{exact:true}).inputValue()||await page.getByLabel('읍·면·동',{exact:true}).inputValue())throw new Error('Changing province must clear child selections');
-    await page.getByRole('button',{name:'지역 선택 닫기',exact:true}).click();
     await page.setViewportSize({width:390,height:844});
     if(await page.evaluate(()=>document.body.scrollWidth>innerWidth))throw new Error('Region hierarchy must not overflow the mobile page');
     await page.setViewportSize({width:1440,height:1000});
