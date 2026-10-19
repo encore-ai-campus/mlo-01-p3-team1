@@ -6,7 +6,7 @@ export type Weather={
   source?:string;collected_at?:string;forecast_issued_at?:string;
   weather_code?:string;bundle_version?:string;recommendation_ready?:boolean;recommendation_error?:string;
   current?:{pty:number;sky:number|null;temperature?:number;observed_at?:string;status?:string};
-  segments:{pty:number;sky:number;status:string;start_at:string;end_at:string}[];
+  segments:{pty:number;sky:number|null;status:string;start_at:string;end_at:string;temperature?:number|null}[];
 };
 export function weatherLabel(pty?:number,sky?:number|null){
   if(pty===undefined)return '확인 불가';
@@ -17,20 +17,31 @@ const clock=(date:Date)=>date.toLocaleTimeString('ko-KR',{
   timeZone:'Asia/Seoul',hour:'2-digit',minute:'2-digit',hour12:false,
 });
 
+/** Use the observed temperature for the current hour and hourly forecast
+ * temperatures for later hours. Never invent an unavailable forecast. */
+export function forecastHours(weather:Weather|null){
+  const current=weather?.current?.status==='stale'||weather?.current?.status==='missing'?undefined:weather?.current;
+  const reference=weather?Date.parse(weather.as_of):NaN;
+  return Array.from({length:4},(_,hour)=>{
+    const at=Number.isFinite(reference)?new Date(reference+hour*3600000):null;
+    const segment=at?weather?.segments?.find(s=>
+      s.status==='valid'&&Date.parse(s.start_at)<=+at&&Date.parse(s.end_at)>+at):undefined;
+    return {
+      hour,at,
+      pty:hour===0?current?.pty??segment?.pty:segment?.pty,
+      sky:hour===0?current?.sky??segment?.sky:segment?.sky,
+      temperature:hour===0?current?.temperature:segment?.temperature,
+    };
+  });
+}
+
 export function WeatherPanel({region,regions,onRegion,regionLoading,regionError,onRegionsRetry,locked,weather,error,onRetry,widget,onGuide,onHideWidget}:{
   region:string;regions:RegionOption[];onRegion:(id:string)=>void;locked:boolean;
   weather:Weather|null;error:string;onRetry:()=>void;widget:boolean;onGuide:()=>void;onHideWidget:()=>void;
   regionLoading?:boolean;regionError?:string;onRegionsRetry?:()=>void;
 }){
   const selectedRegion=regions.find(row=>row.region_id===region);
-  const current=weather?.current?.status==='stale'||weather?.current?.status==='missing'?undefined:weather?.current;
-  const reference=weather?Date.parse(weather.as_of):NaN;
-  const forecast=Array.from({length:4},(_,hour)=>{
-    const at=Number.isFinite(reference)?new Date(reference+hour*3600000):null;
-    const segment=at?weather?.segments?.find(s=>s.status==='valid'&&Date.parse(s.start_at)<=+at&&Date.parse(s.end_at)>+at):undefined;
-    return {hour,at,pty:hour===0?current?.pty??segment?.pty:segment?.pty,
-      sky:hour===0?current?.sky??segment?.sky:segment?.sky};
-  });
+  const forecast=forecastHours(weather);
   return <section id="weather" className="weather-panel muther-weather-panel" aria-label="우리 동네 날씨와 지역 선택" data-guide="region">
     <div className="muther-region-side">
       <div className="muther-weather-title">
@@ -58,15 +69,15 @@ export function WeatherPanel({region,regions,onRegion,regionLoading,regionError,
         </span>
       </div>
       <div className="muther-forecast-cells" role="list" aria-label="시간대별 날씨 예보">
-        {forecast.map(({hour,at,pty,sky})=><div className={'muther-forecast-cell'+(hour===0?' current':'')} key={hour} role="listitem">
+        {forecast.map(({hour,at,pty,sky,temperature})=><div className={'muther-forecast-cell'+(hour===0?' current':'')} key={hour} role="listitem">
           <time dateTime={at?.toISOString()}>{at?(hour===0?'현재 ':'')+clock(at):hour===0?'현재':hour+'시간 후'}</time>
           <WeatherIcon pty={region?pty:undefined} sky={region?sky:undefined}/>
-          <strong>{hour===0&&current?.temperature!==undefined&&region?current.temperature+'°': '—'}</strong>
+          <strong>{region&&typeof temperature==='number'&&Number.isFinite(temperature)?temperature+'°':'—'}</strong>
           <span>{region?weatherLabel(pty,sky):'지역 미선택'}</span>
         </div>)}
       </div>
       <p className="muther-forecast-note" aria-live="polite">
-        {selectedRegion?selectedRegion.name+' · ':''}미제공 예보 기온은 —로 표시됩니다.
+        {selectedRegion?selectedRegion.name+' · ':''}미제공 시간대의 기온은 —로 표시됩니다.
       </p>
     </div>
     {widget&&<div className="guide-widget muther-guide-widget">
