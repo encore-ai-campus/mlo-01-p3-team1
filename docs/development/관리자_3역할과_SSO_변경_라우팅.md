@@ -81,3 +81,7 @@ SSO API에는 인증 redirect의 code/state가 포함되므로 운영 프록시/
 ## 최신 develop 대조와 업로드 — 2026-10-19
 
 사용자 요청으로 원격을 다시 fetch했고 develop@183ea87이 로컬 기준과 동일함을 확인했습니다(앞섬/뒤처짐 0/0). 업로드는 저장소의 develop 직접 푸시 금지 방침에 따라 codex/admin-sso-dashboards에서 수행합니다. 공통 관리자 헤더·음악/YouTube/제외 화면이 이번 역할/SSO UI와 연결돼 있으므로 관련 소스·디자인 라우팅·시안·검증 스크립트를 함께 포함합니다. 별도 광고 이미지 6종과 그 작업 라우팅, .env·로컬 계정·DB·실행 로그는 업로드 대상에서 제외합니다. develop 실제 병합/배포는 이번 업로드 범위에 포함하지 않습니다.
+
+## 병합 전 PostgreSQL CI 보완 — 2026-10-19
+
+사용자의 후속 병합/브랜치 삭제 요청으로 GitHub CI를 확인했고, PostgreSQL 제외 이력 회귀 2건이 403으로 실패했습니다. 테스트 계정이 개별 view_feedback만 갖고 있어 새 운영 환경의 단일 역할 정책을 통과하지 못한 것이 원인입니다. `backend/common/test_exclusion_history.py`의 setUp은 OPS_ADMIN을 명시하도록 바꿨고, 클래스에 LOCAL_DEMO=False를 고정해 로컬 SQLite 회귀에서도 운영 권한 경로를 반드시 검사합니다. revision/as_of 정합성 검사와 운영 권한 요구를 완화하지 않았습니다. 함수 시그니처는 그대로이며 코드 변경 근거는 이 절에 남깁니다. 실제 PostgreSQL 재검증은 GitHub CI로 확인한 뒤에만 병합합니다.
