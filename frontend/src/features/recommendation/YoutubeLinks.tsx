@@ -1,17 +1,22 @@
 import type {Track} from '../../shared/types';
-import {stopMusicEventPropagation, youtubeTrackDestination, youtubeTemporaryQueueUrl, type YoutubeTrackFields} from './youtubeDestinations';
+import {stopMusicEventPropagation, youtubeTrackDestination, youtubeTemporaryQueueUrl, type YoutubeTrackFields, type YoutubeLinkCandidate} from './youtubeDestinations';
 import './YoutubeLinks.css';
 
 type LinkedTrack = Track & YoutubeTrackFields;
 
-export function YoutubeTrackLink({track, excluded = false}: {track: LinkedTrack; excluded?: boolean}) {
-  const destination = youtubeTrackDestination(track);
+export function YoutubeTrackLink({track, excluded = false, mappings}: {track: LinkedTrack; excluded?: boolean; mappings?: YoutubeLinkCandidate[]}) {
+  const destination = youtubeTrackDestination(track, mappings);
   if (!destination || excluded) return <span className="youtube-track-link youtube-link-unavailable" aria-disabled="true">YouTube에서 찾기</span>;
-  return <a className="youtube-track-link" href={destination.href} target="_blank" rel="noopener noreferrer"
+  const alternatives = mappings?.filter(item => item.video_id !== new URL(destination.href).searchParams.get('v')) || [];
+  return <><a className="youtube-track-link" href={destination.href} target="_blank" rel="noopener noreferrer"
     onClick={stopMusicEventPropagation} aria-label={`${track.track_name} · ${destination.label} (새 탭)`}
-    title={destination.kind === 'search' ? '곡명과 아티스트로 검색합니다. 검색 결과에서 영상을 선택해 주세요.' : '확인한 YouTube 영상을 새 탭에서 엽니다.'}>
+    title={destination.kind === 'search' ? '곡명과 아티스트로 검색합니다. 검색 결과에서 영상을 선택해 주세요.' : destination.kind === 'candidate' ? '수집한 URL입니다. 곡 일치와 실제 재생은 아직 검수하지 않았습니다.' : '외부 재생을 확인한 영상을 새 탭에서 엽니다.'}>
     {destination.label}<span aria-hidden="true"> ↗</span>
-  </a>;
+  </a>{!!alternatives.length && <details className="youtube-track-alternatives" onClick={stopMusicEventPropagation}>
+    <summary>다른 수집 영상 {alternatives.length}개</summary>
+    {alternatives.map(item => <a key={item.video_id} className="youtube-track-link" href={`https://www.youtube.com/watch?v=${item.video_id}`} target="_blank" rel="noopener noreferrer" onClick={stopMusicEventPropagation}
+      aria-label={`${track.track_name} · ${item.video_id} · ${item.native_verified ? '외부 재생 확인' : '미검수'} (새 탭)`}>{item.native_verified ? '외부 재생 확인' : '미검수'} · {item.video_id} ↗</a>)}
+  </details>}</>;
 }
 
 export function YoutubePlaylistLinks({tracks, excludedIds, blockReason}: {

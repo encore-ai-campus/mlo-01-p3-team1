@@ -33,7 +33,12 @@
     "backend/recommendation/candidate_index.py",
     "backend/recommendation/matching.py",
     "backend/recommendation/tests/test_exact_search.py",
-    "backend/recommendation/tests/test_candidate_index.py"
+    "backend/recommendation/tests/test_candidate_index.py",
+    "backend/recommendation/youtube_registry.py",
+    "backend/recommendation/youtube_queue_api.py",
+    "backend/recommendation/tests/test_youtube_queue_api.py",
+    "backend/recommendation/tests/test_youtube_registry.py",
+    "backend/recommendation/tests/test_youtube_collected_links.py"
   ],
   "docs/admin-sso-routing": [
     "backend/common/admin_roles.py",

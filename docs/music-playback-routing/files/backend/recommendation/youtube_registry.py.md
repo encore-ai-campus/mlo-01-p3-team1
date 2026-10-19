@@ -1,5 +1,45 @@
 # backend/recommendation/youtube_registry.py 라우팅
 
+## 2026-10-19 수집 URL 공개 연결 — 현행
+
+- 담당: Codex root / U-01·M-06·Q-02 연결 수정
+- 브랜치/기준: feature/youtube-url-connection / develop a7dfafb
+- 작성/수정: 2026-10-19. 기존 수령 원문은 보존합니다. 아래 앞 단계 서술은 당시 구현 이력이며 이번 절이 현행입니다.
+- 계약·전체 검증: [수집 URL 연결 변경 라우팅](../../../../development/수집_URL_공개화면_연결_변경_라우팅.md).
+
+track_registries는 요청한 곡 ID만 중복 제거 후 500개 단위·한 연결에서 조회합니다. 로컬 SQLite와 운영 Django 공유 DB 어댑터를 그대로 사용하며 미등록 곡은 revision=0·빈 mappings입니다. SELECT 조건은 매개변수로 바인딩합니다. 새 함수는 검수·감사·곡 revision을 변경하지 않습니다.
+
+### AST 시그니처 — 검사 결과
+
+```python
+registry_path()
+access_code_path()
+initialize_access_code(rotate=False)
+validate_access_code(value)
+normalize_video_url(value)
+_now()
+_connection(write=False)
+_mapping(row)
+read_registry()
+track_registry(track_id)
+track_registries(track_ids)
+playback_candidates(track_id, excluded_video_ids=())
+verified_candidates(track_id, excluded_video_ids=())
+_revision(connection, track_id, expected)
+_audit(connection, track_id, video_id, action, revision)
+_note(value)
+register_mappings(rows, source='OPERATOR_URL')
+parse_mapping_csv(text)
+verify_mapping(track, video_id, expected_revision, identity_confirmed, playback_observed, duration_seconds, note='')
+verify_native_mapping(track, video_id, expected_revision, identity_confirmed, playback_observed, duration_seconds, note='', duration_difference_confirmed=False)
+block_mapping(track_id, video_id, expected_revision, reason)
+block_native_mapping(track_id, video_id, expected_revision, reason)
+seed_legacy_mappings(tracks)
+seed_native_reviewed_mappings(tracks)
+```
+
+## 앞 단계 기록
+
 - 작성일/수정일: 2026-10-16
 - 담당: API 키 없는 YouTube 등록·검수 백엔드 / 통합팀
 - 기준 브랜치/커밋: feature/ad-logic / f22f974

@@ -53,7 +53,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: '3.12', cache: pip, cache-dependency-path: 'backend/requirements.lock'}
       - run: python -m pip install -r backend/requirements.lock
-      - run: python -m backend.manage test backend.common.test_exclusion_history backend.music.test_occasion_publication backend.recommendation.tests.test_catalog_publication backend.recommendation.tests.test_dispatch backend.recommendation.tests.test_cancellation backend.recommendation.tests.test_shared_youtube_database --noinput --verbosity 2
+      - run: python -m backend.manage test backend.common.test_exclusion_history backend.music.test_occasion_publication backend.recommendation.tests.test_catalog_publication backend.recommendation.tests.test_dispatch backend.recommendation.tests.test_cancellation backend.recommendation.tests.test_shared_youtube_database backend.recommendation.tests.test_youtube_collected_links --noinput --verbosity 2
   ads:
     runs-on: ubuntu-latest
     timeout-minutes: 15

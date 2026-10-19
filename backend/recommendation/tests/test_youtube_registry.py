@@ -219,3 +219,12 @@ class YoutubeRegistryTests(SimpleTestCase):
         with self.assertRaises(DomainError):
             registry.verify_mapping(self.track, 'testVideo01', 1, True, True, 275, 'Video intro')
         self.assertEqual(registry.track_registry('track-one')['revision'], 1)
+
+    def test_batch_read_matches_local_single_track_registry_without_inserting_unknown_tracks(self):
+        self.register()
+        self.register(video='nextVideo02', revision=1)
+        expected = registry.track_registry(self.track['track_id'])
+        result = registry.track_registries([self.track['track_id'], 'unknown-track', self.track['track_id']])
+        self.assertEqual(result[self.track['track_id']], expected)
+        self.assertEqual(result['unknown-track'], {'track_id': 'unknown-track', 'revision': 0, 'mappings': []})
+        self.assertNotIn('unknown-track', registry.read_registry())
