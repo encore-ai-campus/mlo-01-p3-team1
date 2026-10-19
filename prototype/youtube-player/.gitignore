@@ -1,0 +1,6 @@
+data/mapping.json
+data/mapping.tmp
+logs/
+__pycache__/
+tests/__pycache__/
+tests/.test-tmp/

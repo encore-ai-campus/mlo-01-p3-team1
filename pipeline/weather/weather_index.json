@@ -1,0 +1,49 @@
+{
+  "mappings": {
+    "dynamic": "strict",
+    "properties": {
+      "observation": {
+        "type": "object",
+        "enabled": false
+      },
+      "forecast": {
+        "type": "object",
+        "enabled": false
+      },
+      "stream_state": {
+        "type": "object",
+        "enabled": false
+      },
+      "sky_context": {
+        "type": "object",
+        "enabled": false
+      },
+      "guidance": {
+        "type": "object",
+        "enabled": false
+      },
+      "music_weather": {
+        "type": "object",
+        "enabled": false
+      },
+      "nx": {
+        "type": "integer"
+      },
+      "ny": {
+        "type": "integer"
+      },
+      "base_complete": {
+        "type": "boolean"
+      },
+      "supplements_pending": {
+        "type": "boolean"
+      },
+      "evaluated_at": {
+        "type": "date"
+      },
+      "feature_rule_version": {
+        "type": "keyword"
+      }
+    }
+  }
+}

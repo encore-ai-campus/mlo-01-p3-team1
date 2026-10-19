@@ -1,0 +1,30 @@
+{
+  "schema_version": "YOUTUBE_URL_COLLECTION_PROGRESS_V1",
+  "collection_date": "2026-10-18",
+  "requested_count": 1000,
+  "raw_rows": 1000,
+  "unique_rows": 1000,
+  "part_counts": {
+    "1": 380,
+    "2": 285,
+    "3": 335
+  },
+  "issues": [],
+  "duplicates": [],
+  "scope": "URL_COLLECTION_ONLY",
+  "metadata_review_performed": false,
+  "playback_review_performed": false,
+  "dashboard_registration_performed": false,
+  "final_count": 1000,
+  "unique_tracks": 1000,
+  "unique_video_urls": 1000,
+  "discovery_evidence_coverage": 1000,
+  "export_readback_passed": true,
+  "csv_sha256": "af5fc1adab17d41ce47098fd6e3b58841187b2f34fb89649834f4ab6251ee002",
+  "txt_sha256": "1d7f779e575238ab2c4543bff35c46e6422358411729c55fbecb1bbd11cabc3b",
+  "selected_part_counts": {
+    "1": 380,
+    "2": 285,
+    "3": 335
+  }
+}

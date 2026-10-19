@@ -1,0 +1,49 @@
+# ad-server/backend/tests/test_ads_public_api.py
+
+- 작성일: 2026-10-15
+- 수정일: 2026-10-15
+- [원본 코드](../../../../../../ad-server/backend/tests/test_ads_public_api.py)
+
+DRF 실제 요청으로 공개3개 API·공통 guest 연결·CSRF/Origin·오류/헤더·엄격 입력·proof와 이미지 응답을 검증합니다. 상단만 bootstrap, 미연결 guest/정책503, 클라이언트 소유/환경 헤더 무시, 쿠키 불가 표시, finalizer 오류 가림을 확인합니다.
+
+PublicAdsApiTests는 서비스/저장소 대역이며 PublicAdsConnectedApiTests는 실제 공개 도메인과 메모리 저장소를 연결해 이미지·측정/재전송·위조 입력 무저장·중단 후 재확인/이미지 차단을 확인합니다. 실제 MongoDB·PostgreSQL·브라우저 배너 검증과 구분합니다.
+
+## AST 시그니처
+
+```python
+finalized_guest(request, *, bootstrap)
+cookieless_guest(request, *, bootstrap)
+unavailable_guest(request, *, bootstrap)
+class PublicAdsApiTests(SimpleTestCase)
+PublicAdsApiTests.setUp(self)
+PublicAdsApiTests.assert_error(self, response, status, code, fields=None)
+PublicAdsApiTests.test_top_bootstrap_finalizes_guest_cookie_even_without_ad(self)
+PublicAdsApiTests.test_bottom_reconfirmation_and_event_never_bootstrap_new_guest(self)
+PublicAdsApiTests.test_factory_uses_only_server_configuration_and_guest_reference(self)
+PublicAdsApiTests.test_unconnected_guest_fails_closed_before_policy_or_repository(self)
+PublicAdsApiTests.test_invalid_guest_objects_and_exceptions_are_masked_service_failures(self)
+PublicAdsApiTests.test_explicit_cookie_unavailable_context_can_still_request_display(self)
+PublicAdsApiTests.test_missing_operational_policy_fails_closed_without_mongo_connection(self)
+PublicAdsApiTests.test_bad_policy_type_and_provider_exception_are_masked(self)
+PublicAdsApiTests.test_query_requires_placement_and_rejects_unknown_or_duplicate_names(self)
+PublicAdsApiTests.test_invalid_placement_uses_shared_option_error(self)
+PublicAdsApiTests.test_reconfirmation_requires_proof_header_and_passes_opaque_values(self)
+PublicAdsApiTests.test_optional_issue_idempotency_key_is_forwarded_but_blank_rejected(self)
+PublicAdsApiTests.test_csrf_and_origin_reject_before_json_parsing_or_context_resolution(self)
+PublicAdsApiTests.test_event_header_required_without_reading_malformed_json(self)
+PublicAdsApiTests.test_event_valid_csrf_malformed_json_uses_common_422(self)
+PublicAdsApiTests.test_event_query_does_not_accept_server_fields(self)
+PublicAdsApiTests.test_event_forwards_exact_body_and_server_owner_then_returns_original_decision(self)
+PublicAdsApiTests.test_strict_event_domain_rejection_preserves_actual_field_names(self)
+PublicAdsApiTests.test_image_capability_returns_original_bytes_without_guest_cookie_or_bootstrap(self)
+PublicAdsApiTests.test_image_requires_one_query_proof_and_rejects_unknown_query(self)
+PublicAdsApiTests.test_image_invalid_proof_and_database_failures_use_safe_common_error(self)
+PublicAdsApiTests.test_domain_conflict_and_policy_failure_preserve_http_status(self)
+PublicAdsApiTests.test_guest_response_finalizer_failure_is_masked(self)
+PublicAdsApiTests.test_response_headers_apply_contract_only_when_explicitly_configured(self)
+class PublicAdsConnectedApiTests(SimpleTestCase)
+PublicAdsConnectedApiTests.setUp(self)
+PublicAdsConnectedApiTests.test_real_delivery_image_event_and_replay_use_one_atomic_usage_record(self)
+PublicAdsConnectedApiTests.test_real_domain_forbidden_event_fields_save_no_event_or_usage(self)
+PublicAdsConnectedApiTests.test_real_stop_hides_reconfirmed_ad_and_blocks_old_image_capability(self)
+```

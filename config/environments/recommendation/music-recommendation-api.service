@@ -1,0 +1,30 @@
+[Unit]
+Description=Music API (Django ASGI, Control host)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=control
+Group=control
+WorkingDirectory=/opt/music-apps/control
+Environment=PYTHONUNBUFFERED=1
+EnvironmentFile=/etc/music-cluster/control/database.env
+EnvironmentFile=/etc/music-cluster/control/application.env
+EnvironmentFile=/etc/music-cluster/control/recommendation.env
+ExecStart=/opt/music-apps/control/.venv/bin/python -m uvicorn backend.cafe.asgi:application --host ${API_BIND_HOST} --port 8000 --workers 1 --no-proxy-headers --no-access-log
+Restart=on-failure
+RestartSec=5
+KillSignal=SIGTERM
+KillMode=control-group
+TimeoutStopSec=210
+CPUWeight=200
+CPUQuota=100%
+MemoryHigh=768M
+MemoryMax=1G
+UMask=0027
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

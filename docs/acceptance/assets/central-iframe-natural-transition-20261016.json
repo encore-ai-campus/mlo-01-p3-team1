@@ -1,0 +1,26 @@
+{
+  "observed_at": "2026-10-16T07:16:49.654Z",
+  "previous_observed_track": "Somos Instantes",
+  "previous_observed_position": "5/47",
+  "current_observed_track": "Night on the River",
+  "current_observed_position": "8/47",
+  "skipped_between": [
+    "Keep On Running - Remastered 2010",
+    "Cứ Chill Thôi"
+  ],
+  "manual_next_clicked": false,
+  "center_text": "YouTube 연속 재생\n8/47곡\nNight on the River\nThe Infamous Stringdusters\n\nYouTube에서 재생 중이에요.\n\n이전\n일시 정지\n다음\n영상: The Infamous Stringdusters- Night on the River [OFFICIAL MUSIC VIDEO] · The Infamous Stringdusters\n재생하지 못한 곡 6곡\n선곡표 순서대로 자동 연결합니다. 브라우저에서 자동 재생을 막으면 재생을 한 번 눌러 주세요. 광고·재생 가능 여부는 YouTube에 따릅니다.",
+  "iframes": [
+    {
+      "allow": "autoplay; encrypted-media; fullscreen; picture-in-picture",
+      "height": 262,
+      "referrerPolicy": "strict-origin-when-cross-origin",
+      "src": "https://www.youtube.com/embed/?enablejsapi=1&playsinline=1&rel=0&origin=http%3A%2F%2F127.0.0.1%3A5174",
+      "title": "The Infamous Stringdusters- Night on the River [OFFICIAL MUSIC VIDEO]",
+      "width": 420
+    }
+  ],
+  "scope": "Observed PLAYING for track5 and later track8 without clicking Next; tracks6/7 explicitly recorded as embed failures.",
+  "physical_sound_verified": false,
+  "all_47_playthrough_verified": false
+}

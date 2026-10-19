@@ -1,0 +1,816 @@
+{
+  "schema_version": "YOUTUBE_CANDIDATE_RESEARCH_V1",
+  "research_date": "2026-10-16",
+  "source_file": "docs/acceptance/assets/dashboard-general-result-20261016.json",
+  "source_file_sha256": "233880987fe3436650368ada98a25a2c00a905a70659e7d2d1e135124326e280",
+  "assigned_slice": [
+    16,
+    32
+  ],
+  "source_positions": [
+    17,
+    32
+  ],
+  "record_count": 16,
+  "status": "CANDIDATES_PENDING_ROOT_BROWSER_VERIFICATION",
+  "verification_limitations": [
+    "웹검색의 공식 출처·아티스트·앨범·버전 근거를 확인한 후보입니다.",
+    "YouTube 실제 재생 길이·국내 가용성·실제 재생과 native 임시 목록 수용은 root 검증 전입니다.",
+    "platform_duration_seconds는 추정하지 않았습니다. 검색 썸네일 길이와 실제 플레이어 길이는 별도입니다.",
+    "채널명이 도구에서 None인 두 후보는 채널명을 null로 보존했습니다."
+  ],
+  "mappings": [
+    {
+      "source_position": 17,
+      "track_id": "02VBYrHfVwfEWXk5DXyf0T",
+      "source_track_name": "Leave The Door Open",
+      "source_artists": "Bruno Mars;Anderson .Paak;Silk Sonic",
+      "source_album_name": "An Evening With Silk Sonic",
+      "source_duration_ms": 242096,
+      "source_track": {
+        "track_id": "02VBYrHfVwfEWXk5DXyf0T",
+        "track_name": "Leave The Door Open",
+        "artists_name": "Bruno Mars;Anderson .Paak;Silk Sonic",
+        "album_name": "An Evening With Silk Sonic",
+        "duration_ms": 242096,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "c13a7545fe4e7b9d823599bc250a8fe3dd4747db5010788f8f3c5522b2bfa827",
+        "genre_group_codes": [
+          "ELECTRONIC_DANCE"
+        ],
+        "theme_codes": [],
+        "speed": "fast",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "youtube_video_id": "YwIblpZRT84",
+      "youtube_url": "https://www.youtube.com/watch?v=YwIblpZRT84",
+      "youtube_title": "Leave The Door Open",
+      "youtube_channel": "Bruno Mars",
+      "youtube_album_evidence": "An Evening With Silk Sonic",
+      "youtube_provider_evidence": "Aftermath Entertainment/Atlantic",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "verification_note": "자동 제공 음원 설명의 곡명·아티스트3명·앨범이 원본과 일치합니다. 실제 영상 길이·국내 가용성·전체 목록 포함 여부는 브라우저 재검증 전입니다.",
+      "checked_at": null,
+      "verified_by": null,
+      "research_date": "2026-10-16",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=YwIblpZRT84"
+      ],
+      "duration_evidence": {
+        "status": "NOT_OBSERVED",
+        "source_duration_seconds": 242.096,
+        "youtube_observed_seconds": null
+      }
+    },
+    {
+      "source_position": 18,
+      "track_id": "02YAbVNakOle4LWElPxcc5",
+      "source_track_name": "Si He De Morir",
+      "source_artists": "Marc Anthony",
+      "source_album_name": "Otra Nota",
+      "source_duration_ms": 256666,
+      "source_track": {
+        "track_id": "02YAbVNakOle4LWElPxcc5",
+        "track_name": "Si He De Morir",
+        "artists_name": "Marc Anthony",
+        "album_name": "Otra Nota",
+        "duration_ms": 256666,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "c608a9a1d9de6ba5d46239a8a5a8f6c6e0ed16b5b1b1180f9ab9d75abb631cb6",
+        "genre_group_codes": [
+          "LATIN"
+        ],
+        "theme_codes": [],
+        "speed": "fastest",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "youtube_video_id": "dESR5YkSgeg",
+      "youtube_url": "https://www.youtube.com/watch?v=dESR5YkSgeg",
+      "youtube_title": "Si He De Morir",
+      "youtube_channel": "Marc Anthony",
+      "youtube_album_evidence": "Otra Nota",
+      "youtube_provider_evidence": "Universal Music Group",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "verification_note": "자동 제공 음원 설명의 곡명·아티스트·Otra Nota 앨범이 일치합니다. 실제 영상 길이·국내 가용성·전체 목록 포함 여부는 브라우저 재검증 전입니다.",
+      "checked_at": null,
+      "verified_by": null,
+      "research_date": "2026-10-16",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=dESR5YkSgeg"
+      ],
+      "duration_evidence": {
+        "status": "NOT_OBSERVED",
+        "source_duration_seconds": 256.666,
+        "youtube_observed_seconds": null
+      }
+    },
+    {
+      "source_position": 19,
+      "track_id": "02fuv91GGA2FwaOTiKQVa7",
+      "source_track_name": "They Reminisce over You",
+      "source_artists": "Pete Rock;C.L. Smooth",
+      "source_album_name": "Rap Homage",
+      "source_duration_ms": 286693,
+      "source_track": {
+        "track_id": "02fuv91GGA2FwaOTiKQVa7",
+        "track_name": "They Reminisce over You",
+        "artists_name": "Pete Rock;C.L. Smooth",
+        "album_name": "Rap Homage",
+        "duration_ms": 286693,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "019e23e5b996662ebf817665d243623c3c43c097ba94fa20f44b40fc7316b762",
+        "genre_group_codes": [
+          "JAZZ"
+        ],
+        "theme_codes": [],
+        "speed": "medium",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "youtube_video_id": "LMXK2lie1C8",
+      "youtube_url": "https://www.youtube.com/watch?v=LMXK2lie1C8",
+      "youtube_title": "They Reminisce Over You",
+      "youtube_channel": "CL Smooth - Topic",
+      "youtube_album_evidence": "They Reminisce Over You",
+      "youtube_provider_evidence": "Warner Music Group - X5 Music Group",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "verification_note": "Pete Rock & C.L. Smooth 자동 제공 음원. 원본은 Rap Homage 편집 앨범이므로 동일 스튜디오 버전·길이 대조가 필요합니다. 실제 영상 길이·국내 가용성·전체 목록 포함 여부는 브라우저 재검증 전입니다.",
+      "checked_at": null,
+      "verified_by": null,
+      "research_date": "2026-10-16",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=LMXK2lie1C8"
+      ],
+      "duration_evidence": {
+        "status": "NOT_OBSERVED",
+        "source_duration_seconds": 286.693,
+        "youtube_observed_seconds": null
+      }
+    },
+    {
+      "source_position": 20,
+      "track_id": "02gKvoYVXSINVj1HP95yZ6",
+      "source_track_name": "Round, Round",
+      "source_artists": "Belouis Some",
+      "source_album_name": "Round, Round",
+      "source_duration_ms": 247773,
+      "source_track": {
+        "track_id": "02gKvoYVXSINVj1HP95yZ6",
+        "track_name": "Round, Round",
+        "artists_name": "Belouis Some",
+        "album_name": "Round, Round",
+        "duration_ms": 247773,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "7b86215f018b1d1f07aefbd67d6f89f3a3f72a8121f4253f7b5794376613a9d4",
+        "genre_group_codes": [
+          "POP"
+        ],
+        "theme_codes": [],
+        "speed": "fast",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "youtube_video_id": "OZ9U-EPZILI",
+      "youtube_url": "https://www.youtube.com/watch?v=OZ9U-EPZILI",
+      "youtube_title": "Round, Round",
+      "youtube_channel": "Belouis Some - Topic",
+      "youtube_album_evidence": "Round, Round",
+      "youtube_provider_evidence": "Warner Music Group - X5 Music Group",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "ROOT_CUA_YOUTUBE_SEARCH",
+      "verification_note": "root가 YouTube 실제 검색에서 공식 Topic, 곡명·앨범·레이블 설명과 4분8초 표시를 확인했습니다. 웹 open은 cache miss였으며 실제 재생 검증은 root가 별도로 수행합니다. 실제 영상 길이·국내 가용성·전체 목록 포함 여부는 브라우저 재검증 전입니다.",
+      "checked_at": null,
+      "verified_by": null,
+      "research_date": "2026-10-16",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=OZ9U-EPZILI",
+        "https://www.youtube.com/results?search_query=Belouis+Some+Round+Round+Topic"
+      ],
+      "duration_evidence": {
+        "status": "SEARCH_DISPLAY_OBSERVED_NOT_PLAYER_DURATION",
+        "source_duration_seconds": 247.773,
+        "youtube_observed_seconds": 248,
+        "observed_text": "4분8초",
+        "observer": "root CUA search"
+      }
+    },
+    {
+      "source_position": 21,
+      "track_id": "02uRToy7bttYcKCO3vIStA",
+      "source_track_name": "Hit That Jive",
+      "source_artists": "Gramatik",
+      "source_album_name": "SB2",
+      "source_duration_ms": 203050,
+      "source_track": {
+        "track_id": "02uRToy7bttYcKCO3vIStA",
+        "track_name": "Hit That Jive",
+        "artists_name": "Gramatik",
+        "album_name": "SB2",
+        "duration_ms": 203050,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "2fbcc2f6ab725627c2cbbb6821f6ef32d167b5c579e04427482de8cf66811a8c",
+        "genre_group_codes": [
+          "ELECTRONIC_DANCE"
+        ],
+        "theme_codes": [],
+        "speed": "medium",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "youtube_video_id": "dldqlKqO8oc",
+      "youtube_url": "https://www.youtube.com/watch?v=dldqlKqO8oc",
+      "youtube_title": "Hit That Jive",
+      "youtube_channel": "Gramatik",
+      "youtube_album_evidence": "SB2",
+      "youtube_provider_evidence": "Symphonic Distribution",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "verification_note": "자동 제공 음원에 Gramatik/SB2가 일치합니다. 공식 아티스트 Bandcamp SB#2도 동일곡 03:23을 표기하지만 YouTube 실제 길이는 미관측입니다. 실제 영상 길이·국내 가용성·전체 목록 포함 여부는 브라우저 재검증 전입니다.",
+      "checked_at": null,
+      "verified_by": null,
+      "research_date": "2026-10-16",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=dldqlKqO8oc",
+        "https://gramatik.bandcamp.com/album/sb-2"
+      ],
+      "duration_evidence": {
+        "status": "NOT_OBSERVED",
+        "source_duration_seconds": 203.05,
+        "youtube_observed_seconds": null
+      }
+    },
+    {
+      "source_position": 22,
+      "track_id": "02yEhcqA7tqfca3gwPxXdF",
+      "source_track_name": "No Te Vas - Remix",
+      "source_artists": "Nacho;Wisin;Noriel",
+      "source_album_name": "Perreo Tenebroso Vol. 3",
+      "source_duration_ms": 227226,
+      "source_track": {
+        "track_id": "02yEhcqA7tqfca3gwPxXdF",
+        "track_name": "No Te Vas - Remix",
+        "artists_name": "Nacho;Wisin;Noriel",
+        "album_name": "Perreo Tenebroso Vol. 3",
+        "duration_ms": 227226,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "8a1d8e19f91c26d3acbae442e295602e0da501fc0a76938b4c1d6c4c4cb714eb",
+        "genre_group_codes": [
+          "LATIN",
+          "REGGAE_SKA"
+        ],
+        "theme_codes": [],
+        "speed": "medium",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "youtube_video_id": "lWY2dMHob74",
+      "youtube_url": "https://www.youtube.com/watch?v=lWY2dMHob74",
+      "youtube_title": "No Te Vas (Remix)",
+      "youtube_channel": "Nacho",
+      "youtube_album_evidence": "No Te Vas",
+      "youtube_provider_evidence": "Universal Music Group",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "verification_note": "Nacho·Wisin·Noriel의 Remix 자동음원입니다. 원본은 Perreo Tenebroso Vol.3 편집 앨범이며 원본 리믹스 길이 확인이 필요합니다. 실제 영상 길이·국내 가용성·전체 목록 포함 여부는 브라우저 재검증 전입니다.",
+      "checked_at": null,
+      "verified_by": null,
+      "research_date": "2026-10-16",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=lWY2dMHob74"
+      ],
+      "duration_evidence": {
+        "status": "NOT_OBSERVED",
+        "source_duration_seconds": 227.226,
+        "youtube_observed_seconds": null
+      }
+    },
+    {
+      "source_position": 23,
+      "track_id": "0343bYQtSfznf6v90jRLRK",
+      "source_track_name": "Forever Young",
+      "source_artists": "John De Sohn;LIAMOO",
+      "source_album_name": "Made For You",
+      "source_duration_ms": 167911,
+      "source_track": {
+        "track_id": "0343bYQtSfznf6v90jRLRK",
+        "track_name": "Forever Young",
+        "artists_name": "John De Sohn;LIAMOO",
+        "album_name": "Made For You",
+        "duration_ms": 167911,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "fb2ea7dd3c37e947a1749d2219207c8a5d70b45683047c3e511575b572a49d60",
+        "genre_group_codes": [
+          "ELECTRONIC_DANCE"
+        ],
+        "theme_codes": [],
+        "speed": "fast",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "youtube_video_id": "26RVQMdfYyU",
+      "youtube_url": "https://www.youtube.com/watch?v=26RVQMdfYyU",
+      "youtube_title": "Forever Young",
+      "youtube_channel": "John Sohn",
+      "youtube_album_evidence": "Forever Young",
+      "youtube_provider_evidence": "Mashup",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "verification_note": "자동 제공 음원에 John De Sohn·LIAMOO와 Sony Music Sweden 라이선스가 명시됩니다. 원본 Made For You 재수록본과 동일 버전 길이 확인이 필요합니다. 실제 영상 길이·국내 가용성·전체 목록 포함 여부는 브라우저 재검증 전입니다.",
+      "checked_at": null,
+      "verified_by": null,
+      "research_date": "2026-10-16",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=26RVQMdfYyU"
+      ],
+      "duration_evidence": {
+        "status": "NOT_OBSERVED",
+        "source_duration_seconds": 167.911,
+        "youtube_observed_seconds": null
+      }
+    },
+    {
+      "source_position": 24,
+      "track_id": "03I89EqsberXEAapUd1yWu",
+      "source_track_name": "All My Favorite Songs",
+      "source_artists": "Weezer;AJR",
+      "source_album_name": "Here to Forever - All New Indie",
+      "source_duration_ms": 170720,
+      "source_track": {
+        "track_id": "03I89EqsberXEAapUd1yWu",
+        "track_name": "All My Favorite Songs",
+        "artists_name": "Weezer;AJR",
+        "album_name": "Here to Forever - All New Indie",
+        "duration_ms": 170720,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "9aaa4e32415da550af91a243239c438d89279d17099f6e3da66c4a775815928b",
+        "genre_group_codes": [
+          "POP",
+          "ROCK"
+        ],
+        "theme_codes": [],
+        "speed": "medium",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "youtube_video_id": "jFIXI6OekbY",
+      "youtube_url": "https://www.youtube.com/watch?v=jFIXI6OekbY",
+      "youtube_title": "All My Favorite Songs (feat. AJR)",
+      "youtube_channel": "weezer",
+      "youtube_album_evidence": "All My Favorite Songs (feat. AJR)",
+      "youtube_provider_evidence": "Crush Music/Atlantic",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "verification_note": "AJR 참여 자동음원이며 AJR 없는 OK Human 원곡 영상은 선택하지 않았습니다. 원본은 편집 앨범이므로 길이 대조가 필요합니다. 실제 영상 길이·국내 가용성·전체 목록 포함 여부는 브라우저 재검증 전입니다.",
+      "checked_at": null,
+      "verified_by": null,
+      "research_date": "2026-10-16",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=jFIXI6OekbY"
+      ],
+      "duration_evidence": {
+        "status": "NOT_OBSERVED",
+        "source_duration_seconds": 170.72,
+        "youtube_observed_seconds": null
+      }
+    },
+    {
+      "source_position": 25,
+      "track_id": "03N7wdRyQShcktyGpffq79",
+      "source_track_name": "Richest Man",
+      "source_artists": "Balsam Range",
+      "source_album_name": "Moxie and Mettle",
+      "source_duration_ms": 182500,
+      "source_track": {
+        "track_id": "03N7wdRyQShcktyGpffq79",
+        "track_name": "Richest Man",
+        "artists_name": "Balsam Range",
+        "album_name": "Moxie and Mettle",
+        "duration_ms": 182500,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "b492a9da088e528ae8caf6558f59844e729401d7193ad3b3dca7f028fed66f23",
+        "genre_group_codes": [
+          "FOLK_COUNTRY"
+        ],
+        "theme_codes": [],
+        "speed": "fast",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "youtube_video_id": "0PiZAPfq1Cg",
+      "youtube_url": "https://www.youtube.com/watch?v=0PiZAPfq1Cg",
+      "youtube_title": "Richest Man",
+      "youtube_channel": null,
+      "youtube_album_evidence": "Richest Man",
+      "youtube_provider_evidence": "Syntax Creative / Mountain Home Music Company",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "verification_note": "자동 제공 음원의 Balsam Range 곡·레이블을 확인했습니다. 검색 도구는 Official Artist Channel을 표시했으나 채널명은 None으로 반환해 실제 채널명 관측이 필요합니다. 원본 Moxie and Mettle 재수록본과 길이 대조가 필요합니다. 실제 영상 길이·국내 가용성·전체 목록 포함 여부는 브라우저 재검증 전입니다.",
+      "checked_at": null,
+      "verified_by": null,
+      "research_date": "2026-10-16",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=0PiZAPfq1Cg",
+        "https://syntaxcreative.com/music/balsam-range-richest-man/"
+      ],
+      "duration_evidence": {
+        "status": "NOT_OBSERVED",
+        "source_duration_seconds": 182.5,
+        "youtube_observed_seconds": null
+      }
+    },
+    {
+      "source_position": 26,
+      "track_id": "03PjRjDn7JNYY2P57QX8Q5",
+      "source_track_name": "Faking Love",
+      "source_artists": "Anitta;Saweetie",
+      "source_album_name": "New Pop Icons",
+      "source_duration_ms": 146933,
+      "source_track": {
+        "track_id": "03PjRjDn7JNYY2P57QX8Q5",
+        "track_name": "Faking Love",
+        "artists_name": "Anitta;Saweetie",
+        "album_name": "New Pop Icons",
+        "duration_ms": 146933,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "289a038a4152c66491bedf6fe3732f0d3a935211163dc16a8fdef74b6e5f9c2e",
+        "genre_group_codes": [
+          "LATIN",
+          "RNB_SOUL_FUNK"
+        ],
+        "theme_codes": [],
+        "speed": "fast",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "youtube_video_id": "LB23_dC24ZE",
+      "youtube_url": "https://www.youtube.com/watch?v=LB23_dC24ZE",
+      "youtube_title": "Anitta - Faking Love (feat. Saweetie) [Official Audio]",
+      "youtube_channel": "Anitta",
+      "youtube_album_evidence": null,
+      "youtube_provider_evidence": "Anitta Official Artist Channel",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "verification_note": "Anitta 공식 아티스트 채널의 Saweetie 참여 Official Audio입니다. 긴 Official Music Video는 선택하지 않았습니다. 원본 편집 앨범 수록본과 길이 대조가 필요합니다. 실제 영상 길이·국내 가용성·전체 목록 포함 여부는 브라우저 재검증 전입니다.",
+      "checked_at": null,
+      "verified_by": null,
+      "research_date": "2026-10-16",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=LB23_dC24ZE"
+      ],
+      "duration_evidence": {
+        "status": "NOT_OBSERVED",
+        "source_duration_seconds": 146.933,
+        "youtube_observed_seconds": null
+      }
+    },
+    {
+      "source_position": 27,
+      "track_id": "03UnPfDS0FvZzi0Z3I7yue",
+      "source_track_name": "Okay",
+      "source_artists": "Limoblaze;Ada Ehi",
+      "source_album_name": "Okay",
+      "source_duration_ms": 155468,
+      "source_track": {
+        "track_id": "03UnPfDS0FvZzi0Z3I7yue",
+        "track_name": "Okay",
+        "artists_name": "Limoblaze;Ada Ehi",
+        "album_name": "Okay",
+        "duration_ms": 155468,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "c615b281077cd4dfbe9c3be76b593a28fa4f5512b55373709f2396e216d0ea63",
+        "genre_group_codes": [
+          "AFROBEAT"
+        ],
+        "theme_codes": [],
+        "speed": "medium",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "youtube_video_id": "bEaO5HSIplw",
+      "youtube_url": "https://www.youtube.com/watch?v=bEaO5HSIplw",
+      "youtube_title": "Okay",
+      "youtube_channel": "Limoblaze",
+      "youtube_album_evidence": "Okay",
+      "youtube_provider_evidence": "DistroKid / Limoblaze Music",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "verification_note": "Limoblaze·Ada Ehi의 Okay 자동 제공 음원이며 2020-09-18 발매가 명시됩니다. 공식 MV보다 자동음원을 우선했습니다. 실제 영상 길이·국내 가용성·전체 목록 포함 여부는 브라우저 재검증 전입니다.",
+      "checked_at": null,
+      "verified_by": null,
+      "research_date": "2026-10-16",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=bEaO5HSIplw"
+      ],
+      "duration_evidence": {
+        "status": "NOT_OBSERVED",
+        "source_duration_seconds": 155.468,
+        "youtube_observed_seconds": null
+      }
+    },
+    {
+      "source_position": 28,
+      "track_id": "03Y9Gez0KGG8zYY3KWIqdk",
+      "source_track_name": "Shattered Dreams",
+      "source_artists": "Johnny Hates Jazz",
+      "source_album_name": "The Very Best Of Johnny Hates Jazz",
+      "source_duration_ms": 209960,
+      "source_track": {
+        "track_id": "03Y9Gez0KGG8zYY3KWIqdk",
+        "track_name": "Shattered Dreams",
+        "artists_name": "Johnny Hates Jazz",
+        "album_name": "The Very Best Of Johnny Hates Jazz",
+        "duration_ms": 209960,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "90cf7f9ca08cce99640b0443a84df04920083b2cd77c5895ecc29edfe5009b9e",
+        "genre_group_codes": [
+          "POP"
+        ],
+        "theme_codes": [],
+        "speed": "fast",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "youtube_video_id": "f3YwemoKWWI",
+      "youtube_url": "https://www.youtube.com/watch?v=f3YwemoKWWI",
+      "youtube_title": "Shattered Dreams",
+      "youtube_channel": null,
+      "youtube_album_evidence": "The Very Best Of Johnny Hates Jazz",
+      "youtube_provider_evidence": "Universal Music Group",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "verification_note": "원본과 동일한 The Very Best Of Johnny Hates Jazz 자동 제공 음원입니다. Remastered 2008 및 MV 대안은 선택하지 않았습니다. 검색 도구의 채널명이 None이라 실제 채널명 관측이 필요합니다. 실제 영상 길이·국내 가용성·전체 목록 포함 여부는 브라우저 재검증 전입니다.",
+      "checked_at": null,
+      "verified_by": null,
+      "research_date": "2026-10-16",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=f3YwemoKWWI"
+      ],
+      "duration_evidence": {
+        "status": "NOT_OBSERVED",
+        "source_duration_seconds": 209.96,
+        "youtube_observed_seconds": null
+      }
+    },
+    {
+      "source_position": 29,
+      "track_id": "03YUNUpazIbzwqJq2YSBvB",
+      "source_track_name": "Kilometre",
+      "source_artists": "Burna Boy",
+      "source_album_name": "Love, Damini",
+      "source_duration_ms": 152692,
+      "source_track": {
+        "track_id": "03YUNUpazIbzwqJq2YSBvB",
+        "track_name": "Kilometre",
+        "artists_name": "Burna Boy",
+        "album_name": "Love, Damini",
+        "duration_ms": 152692,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "b967f89fad5a346aacdd1560256a4d7ae4bd28391396dc26e12230794a8897d1",
+        "genre_group_codes": [
+          "REGGAE_SKA"
+        ],
+        "theme_codes": [],
+        "speed": "medium",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "youtube_video_id": "z49yRsIrW04",
+      "youtube_url": "https://www.youtube.com/watch?v=z49yRsIrW04",
+      "youtube_title": "Kilometre",
+      "youtube_channel": "Burna Boy",
+      "youtube_album_evidence": "Love, Damini",
+      "youtube_provider_evidence": "Spaceship/ Bad Habit/Atlantic Records",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "verification_note": "Burna Boy 공식 아티스트 자동 제공 음원, 원본과 Love, Damini 앨범이 일치합니다. 실제 영상 길이·국내 가용성·전체 목록 포함 여부는 브라우저 재검증 전입니다.",
+      "checked_at": null,
+      "verified_by": null,
+      "research_date": "2026-10-16",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=z49yRsIrW04"
+      ],
+      "duration_evidence": {
+        "status": "NOT_OBSERVED",
+        "source_duration_seconds": 152.692,
+        "youtube_observed_seconds": null
+      }
+    },
+    {
+      "source_position": 30,
+      "track_id": "03eJ2DclFWXYU8GWgANdmZ",
+      "source_track_name": "bad vibes forever",
+      "source_artists": "XXXTENTACION;PnB Rock;Trippie Redd",
+      "source_album_name": "Bad Vibes Forever",
+      "source_duration_ms": 150475,
+      "source_track": {
+        "track_id": "03eJ2DclFWXYU8GWgANdmZ",
+        "track_name": "bad vibes forever",
+        "artists_name": "XXXTENTACION;PnB Rock;Trippie Redd",
+        "album_name": "Bad Vibes Forever",
+        "duration_ms": 150475,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "64b0d16af1992b83d6d5d03d1e9200a8bc144d1482c8c6d08c21b9f0a5dfbbf4",
+        "genre_group_codes": [
+          "ROCK"
+        ],
+        "theme_codes": [],
+        "speed": "fast",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "youtube_video_id": "eOV0rr1P3WQ",
+      "youtube_url": "https://www.youtube.com/watch?v=eOV0rr1P3WQ",
+      "youtube_title": "bad vibes forever (feat. PnB Rock & Trippie Redd)",
+      "youtube_channel": "XXXTENTACION",
+      "youtube_album_evidence": "Bad Vibes Forever",
+      "youtube_provider_evidence": "EMPIRE Distribution",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "verification_note": "XXXTENTACION·PnB Rock·Trippie Redd 자동 제공 음원, 원본 Bad Vibes Forever 앨범이 일치합니다. 실제 영상 길이·국내 가용성·전체 목록 포함 여부는 브라우저 재검증 전입니다.",
+      "checked_at": null,
+      "verified_by": null,
+      "research_date": "2026-10-16",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=eOV0rr1P3WQ"
+      ],
+      "duration_evidence": {
+        "status": "NOT_OBSERVED",
+        "source_duration_seconds": 150.475,
+        "youtube_observed_seconds": null
+      }
+    },
+    {
+      "source_position": 31,
+      "track_id": "03tF3P98XyiJrQhxx7q0M6",
+      "source_track_name": "Revolution 5",
+      "source_artists": "Roots Manuva;Charli 2na;Wayne Paul",
+      "source_album_name": "Dub Come Save Me",
+      "source_duration_ms": 252626,
+      "source_track": {
+        "track_id": "03tF3P98XyiJrQhxx7q0M6",
+        "track_name": "Revolution 5",
+        "artists_name": "Roots Manuva;Charli 2na;Wayne Paul",
+        "album_name": "Dub Come Save Me",
+        "duration_ms": 252626,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "2ac0f8d01d918cec2d06a9afaca8b553067b6ea1a53c76e469b7e791644a78e6",
+        "genre_group_codes": [
+          "ELECTRONIC_DANCE"
+        ],
+        "theme_codes": [],
+        "speed": "medium",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "youtube_video_id": "Vwp0s6crl9Q",
+      "youtube_url": "https://www.youtube.com/watch?v=Vwp0s6crl9Q",
+      "youtube_title": "Revolution 5",
+      "youtube_channel": "Roots Manuva - Topic",
+      "youtube_album_evidence": "Dub Come Save Me",
+      "youtube_provider_evidence": "Ninja Tune / Big Dada",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "verification_note": "Roots Manuva·Charli 2na·Wayne Paul 자동 제공 음원, 원본 Dub Come Save Me 앨범이 일치합니다. 실제 영상 길이·국내 가용성·전체 목록 포함 여부는 브라우저 재검증 전입니다.",
+      "checked_at": null,
+      "verified_by": null,
+      "research_date": "2026-10-16",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=Vwp0s6crl9Q"
+      ],
+      "duration_evidence": {
+        "status": "NOT_OBSERVED",
+        "source_duration_seconds": 252.626,
+        "youtube_observed_seconds": null
+      }
+    },
+    {
+      "source_position": 32,
+      "track_id": "045eZUNgQ7hjemzvK7VS2l",
+      "source_track_name": "Tranquilízame",
+      "source_artists": "Ramona",
+      "source_album_name": "Cérès",
+      "source_duration_ms": 236563,
+      "source_track": {
+        "track_id": "045eZUNgQ7hjemzvK7VS2l",
+        "track_name": "Tranquilízame",
+        "artists_name": "Ramona",
+        "album_name": "Cérès",
+        "duration_ms": 236563,
+        "occasion_status": "GENERAL",
+        "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+        "occasion_decision_version": "5a2d12043c6272a04ebe3f0397ca1405fe5a5e2d4beea54e5c1104385d2a0924",
+        "genre_group_codes": [
+          "ROCK"
+        ],
+        "theme_codes": [],
+        "speed": "fastest",
+        "scores": {
+          "W": "100.00",
+          "P": null,
+          "S": "100.00"
+        }
+      },
+      "youtube_video_id": "4TsTRnjA8rA",
+      "youtube_url": "https://www.youtube.com/watch?v=4TsTRnjA8rA",
+      "youtube_title": "Tranquilízame",
+      "youtube_channel": "RAMONA Oficial",
+      "youtube_album_evidence": "Cérès",
+      "youtube_provider_evidence": "ONErpm / Ramona",
+      "platform_duration_seconds": null,
+      "match_status": "CANDIDATE",
+      "match_method": "WEB_SEARCH_PRIMARY_YOUTUBE",
+      "verification_note": "공식 아티스트 자동 제공 음원, Ramona 및 Cérès 앨범이 일치합니다. 비공식 재업로드 9AWimQIB2ug는 선택하지 않았습니다. 실제 영상 길이·국내 가용성·전체 목록 포함 여부는 브라우저 재검증 전입니다.",
+      "checked_at": null,
+      "verified_by": null,
+      "research_date": "2026-10-16",
+      "evidence_urls": [
+        "https://www.youtube.com/watch?v=4TsTRnjA8rA"
+      ],
+      "duration_evidence": {
+        "status": "NOT_OBSERVED",
+        "source_duration_seconds": 236.563,
+        "youtube_observed_seconds": null
+      }
+    }
+  ]
+}

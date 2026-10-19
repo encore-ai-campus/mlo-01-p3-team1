@@ -1,0 +1,27 @@
+# Review template only. Never install with unresolved @ markers.
+[Unit]
+Description=Team FastAPI web (reviewed application contract required)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=exec
+User=control
+Group=control
+UMask=0077
+WorkingDirectory=@WORKING_DIRECTORY@
+EnvironmentFile=/etc/music-cluster/control/database.env
+ExecStart=:@WEB_EXEC_START@
+Restart=on-failure
+RestartSec=5
+KillMode=control-group
+KillSignal=SIGTERM
+TimeoutStopSec=@STOP_TIMEOUT_SECONDS@
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/music-cluster/control
+
+[Install]
+WantedBy=multi-user.target

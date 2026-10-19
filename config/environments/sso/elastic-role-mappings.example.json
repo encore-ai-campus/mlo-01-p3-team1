@@ -1,0 +1,12 @@
+{
+  "cafe_super_admin": {
+    "enabled":true, "roles":["cafe_super_admin"],
+    "rules":{"all":[{"field":{"realm.name":"cafe_sso"}},{"field":{"groups":"SUPER_ADMIN"}},
+      {"except":{"field":{"groups":["ADS_ADMIN","OPS_ADMIN"]}}}]}
+  },
+  "cafe_operations": {
+    "enabled":true, "roles":["cafe_operations"],
+    "rules":{"all":[{"field":{"realm.name":"cafe_sso"}},{"field":{"groups":"OPS_ADMIN"}},
+      {"except":{"field":{"groups":["ADS_ADMIN","SUPER_ADMIN"]}}}]}
+  }
+}

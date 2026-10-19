@@ -1,0 +1,6752 @@
+{
+  "schema_version": "GENERAL_POOL_REPAIR_RESULT_V1",
+  "captured_at": "2026-10-16T06:42:09.011861+00:00",
+  "status": "SUCCEEDED",
+  "is_test": true,
+  "preview_only": true,
+  "validation_passed": false,
+  "catalog_version": "spotify-preview-b202fa49909b-general-c2478b153aa8-yt-39c5056603a0",
+  "source_dataset_sha256": "b202fa49909b2d5cef71a04b1d21243cfeb36414535f2ca9272aa646721177bd",
+  "options": {
+    "vocal_option": "any",
+    "tempo_preference": "auto",
+    "weather_influence_mode": "ON",
+    "selected_theme_codes": [
+      "BRIGHT",
+      "DREAMY",
+      "EMOTIONAL",
+      "PEACEFUL"
+    ],
+    "selected_genre_codes": [
+      "CLASSICAL",
+      "J-POP",
+      "K-POP",
+      "NEWAGE",
+      "OPERA"
+    ],
+    "option_version": "options-music-v4",
+    "region_id": "demo-region"
+  },
+  "item_count": 45,
+  "total_ms": 10560186,
+  "search_diagnostics": {
+    "catalog_count": 86485,
+    "common_eligible_count": 6818,
+    "common_rejected_count": 79667,
+    "common_eligible_total_ms": 1685175437,
+    "weather_rejected_count": 3562,
+    "off_missing_preference_count": 0,
+    "candidate_count": 3256,
+    "candidate_total_ms": 807879234,
+    "solver_status": "FEASIBLE_GREEDY_PREVIEW",
+    "window_size": 400,
+    "genre_share_stage": null
+  },
+  "selected_genre_coverage": {
+    "CLASSICAL": 1,
+    "J-POP": 32,
+    "K-POP": 10,
+    "NEWAGE": 2,
+    "OPERA": 1
+  },
+  "verified_youtube_count": 3,
+  "items": [
+    {
+      "track_id": "04CHEoMbrLOiX8co3EG5dO",
+      "track_name": "Thursday's Child Has Far To Go",
+      "artists_id": null,
+      "artists_name": "TOMORROW X TOGETHER",
+      "album_id": null,
+      "album_name": "minisode 2: Thursday's Child",
+      "album_release_date": null,
+      "duration_ms": 211399,
+      "explicit": false,
+      "genre": "k-pop",
+      "energy": 7,
+      "mode": true,
+      "acousticness": 4,
+      "mood": null,
+      "speed": "fastest",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/04CHEoMbrLOiX8co3EG5dO",
+      "raw_energy": "0.762",
+      "raw_acousticness": "0.049",
+      "raw_valence": "0.668",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "300d3fe43d9e3fedd4f699efdabadf8f1f9be135a5fa43bac17734ffd8dbe12d",
+      "genre_group_codes": [
+        "K-POP"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "youtube_video_id": "phT2MJAn1KY",
+      "youtube_match_status": "VERIFIED",
+      "youtube_mapping_snapshot": {
+        "track_id": "04CHEoMbrLOiX8co3EG5dO",
+        "source_track_name": "Thursday's Child Has Far To Go",
+        "source_artists": "TOMORROW X TOGETHER",
+        "source_album_name": "minisode 2: Thursday's Child",
+        "source_duration_ms": 211399,
+        "youtube_video_id": "phT2MJAn1KY",
+        "youtube_title": "Thursday's Child Has Far To Go",
+        "youtube_channel": "TOMORROW X TOGETHER - Topic",
+        "platform_duration_seconds": 211,
+        "match_status": "VERIFIED",
+        "verification_note": "공식 아티스트/Topic/레이블의 곡·아티스트·버전 메타데이터와 한국 제공 상태 OK를 대조하고, 네이티브 목록에서 영상ID·순서를 확인했습니다. 파형/전곡 청취 검수가 아닙니다.",
+        "verified_by": "Codex mapping team / metadata and native queue review",
+        "checked_at": "2026-10-16T06:10:33.378936+00:00",
+        "match_method": "PRIMARY_METADATA_AND_NATIVE_QUEUE_INCLUSION",
+        "mapping_version": "youtube47-clear-user-replacement-20261016.1"
+      },
+      "youtube_mappings_sha256": "39c5056603a08372320835465a75b7d7fd73a58c1d438b07ef3b5bce15174b68",
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "05zDB03E1WxCLyraJJ2I2r",
+      "track_name": "ラブ・ドラマティック (Funky Flag Version)",
+      "artists_id": null,
+      "artists_name": "Masayuki Suzuki;伊原六花",
+      "album_id": null,
+      "album_name": "Funky Flag",
+      "album_release_date": null,
+      "duration_ms": 262946,
+      "explicit": false,
+      "genre": "j-pop",
+      "energy": 7,
+      "mode": true,
+      "acousticness": 25,
+      "mood": null,
+      "speed": "fast",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/05zDB03E1WxCLyraJJ2I2r",
+      "raw_energy": "0.796",
+      "raw_acousticness": "0.257",
+      "raw_valence": "0.802",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "3ea7711b6b0f4d87a6fbce1458b58f419d1e5e6d8d86591997344f56040f42b9",
+      "genre_group_codes": [
+        "J-POP"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "youtube_video_id": "OVBl7cdP8zk",
+      "youtube_match_status": "VERIFIED",
+      "youtube_mapping_snapshot": {
+        "track_id": "05zDB03E1WxCLyraJJ2I2r",
+        "source_track_name": "ラブ・ドラマティック (Funky Flag Version)",
+        "source_artists": "Masayuki Suzuki;伊原六花",
+        "source_album_name": "Funky Flag",
+        "source_duration_ms": 262946,
+        "youtube_video_id": "OVBl7cdP8zk",
+        "youtube_title": "Love Dramatic (Funky Flag Version)",
+        "youtube_channel": "Masayuki Suzuki - Topic",
+        "platform_duration_seconds": 263,
+        "match_status": "VERIFIED",
+        "verification_note": "공식 아티스트/Topic/레이블의 곡·아티스트·버전 메타데이터와 한국 제공 상태 OK를 대조하고, 네이티브 목록에서 영상ID·순서를 확인했습니다. 파형/전곡 청취 검수가 아닙니다.",
+        "verified_by": "Codex mapping team / metadata and native queue review",
+        "checked_at": "2026-10-16T06:10:33.378936+00:00",
+        "match_method": "PRIMARY_METADATA_AND_NATIVE_QUEUE_INCLUSION",
+        "mapping_version": "youtube47-clear-user-replacement-20261016.1"
+      },
+      "youtube_mappings_sha256": "39c5056603a08372320835465a75b7d7fd73a58c1d438b07ef3b5bce15174b68",
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "0kykvs5YmjQlqQnfdjfvfJ",
+      "track_name": "Cocula",
+      "artists_id": null,
+      "artists_name": "Ernesto Cortazar;Manuel Esperón;Plácido Domingo;Bebu Silvetti;Miami Symphonic Strings",
+      "album_id": null,
+      "album_name": "Plácido Domingo - The Latin Album Collection",
+      "album_release_date": null,
+      "duration_ms": 182653,
+      "explicit": false,
+      "genre": "new-age;opera",
+      "energy": 6,
+      "mode": true,
+      "acousticness": 43,
+      "mood": null,
+      "speed": "fast",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/0kykvs5YmjQlqQnfdjfvfJ",
+      "raw_energy": "0.621",
+      "raw_acousticness": "0.437",
+      "raw_valence": "0.758",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "a1e1289b19c90fa76076ea1bf316fec0491557be13e3d7d60af81145164e11b4",
+      "genre_group_codes": [
+        "NEWAGE",
+        "OPERA"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "2KooICJ6tnKIcXkF2TyJzS",
+      "track_name": "Simple Things (feat. Rebecca Lynn Howard)",
+      "artists_id": null,
+      "artists_name": "Jim Brickman;Rebecca Lynn Howard",
+      "album_id": null,
+      "album_name": "Greatest Hits",
+      "album_release_date": null,
+      "duration_ms": 209933,
+      "explicit": false,
+      "genre": "new-age",
+      "energy": 5,
+      "mode": true,
+      "acousticness": 21,
+      "mood": null,
+      "speed": "medium",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/2KooICJ6tnKIcXkF2TyJzS",
+      "raw_energy": "0.596",
+      "raw_acousticness": "0.213",
+      "raw_valence": "0.618",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "b6dfad0e6506c09e613b062be68f682402217d69fc65bd307266950eb046e5e8",
+      "genre_group_codes": [
+        "NEWAGE"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "61cxfQqN4UOhCpNsj3mBl5",
+      "track_name": "Alunguraen Kulunguraen",
+      "artists_id": null,
+      "artists_name": "Prasanna;Namitha Babu",
+      "album_id": null,
+      "album_name": "Chandi Veeran (Original Motion Picture Soundtrack)",
+      "album_release_date": null,
+      "duration_ms": 270000,
+      "explicit": false,
+      "genre": "classical;indian",
+      "energy": 7,
+      "mode": true,
+      "acousticness": 31,
+      "mood": null,
+      "speed": "fastest",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/61cxfQqN4UOhCpNsj3mBl5",
+      "raw_energy": "0.703",
+      "raw_acousticness": "0.313",
+      "raw_valence": "0.598",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "4a1bbfa5889a96f8c6025b47fba5452375d352c09a58eadb313b6e866facafc0",
+      "genre_group_codes": [
+        "CLASSICAL"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "04fYoQSUTfPhVjyW8aXkix",
+      "track_name": "En Jannal Vandha",
+      "artists_id": null,
+      "artists_name": "Yuvan Shankar Raja;Roshini;Priya Hemesh;Divya Vijay",
+      "album_id": null,
+      "album_name": "Theeratha Vilayaatu Pillai (Original Motion Picture Soundtrack)",
+      "album_release_date": null,
+      "duration_ms": 283480,
+      "explicit": false,
+      "genre": "k-pop;pop-film",
+      "energy": 6,
+      "mode": true,
+      "acousticness": 7,
+      "mood": null,
+      "speed": "fast",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/04fYoQSUTfPhVjyW8aXkix",
+      "raw_energy": "0.654",
+      "raw_acousticness": "0.0706",
+      "raw_valence": "0.624",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "990f06b3f661f8e7784a354dec47730887423e7f96b86a11572c105bce706ec9",
+      "genre_group_codes": [
+        "K-POP"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "youtube_video_id": "NfAA9FAaO7M",
+      "youtube_match_status": "VERIFIED",
+      "youtube_mapping_snapshot": {
+        "track_id": "04fYoQSUTfPhVjyW8aXkix",
+        "source_track_name": "En Jannal Vandha",
+        "source_artists": "Yuvan Shankar Raja;Roshini;Priya Hemesh;Divya Vijay",
+        "source_album_name": "Theeratha Vilayaatu Pillai (Original Motion Picture Soundtrack)",
+        "source_duration_ms": 283480,
+        "youtube_video_id": "NfAA9FAaO7M",
+        "youtube_title": "En Jannal Vandha",
+        "youtube_channel": "Yuvan Shankar Raja - Topic",
+        "platform_duration_seconds": 283,
+        "match_status": "VERIFIED",
+        "verification_note": "공식 아티스트/Topic/레이블의 곡·아티스트·버전 메타데이터와 한국 제공 상태 OK를 대조하고, 네이티브 목록에서 영상ID·순서를 확인했습니다. 파형/전곡 청취 검수가 아닙니다.",
+        "verified_by": "Codex mapping team / metadata and native queue review",
+        "checked_at": "2026-10-16T06:10:33.378936+00:00",
+        "match_method": "PRIMARY_METADATA_AND_NATIVE_QUEUE_INCLUSION",
+        "mapping_version": "youtube47-clear-user-replacement-20261016.1"
+      },
+      "youtube_mappings_sha256": "39c5056603a08372320835465a75b7d7fd73a58c1d438b07ef3b5bce15174b68",
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "06Eg6t8LArE1jfz4YFQxj9",
+      "track_name": "口がすべって",
+      "artists_id": null,
+      "artists_name": "Mr.Children",
+      "album_id": null,
+      "album_name": "SUPERMARKET FANTASY",
+      "album_release_date": null,
+      "duration_ms": 251320,
+      "explicit": false,
+      "genre": "j-rock",
+      "energy": 6,
+      "mode": true,
+      "acousticness": 11,
+      "mood": null,
+      "speed": "medium",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/06Eg6t8LArE1jfz4YFQxj9",
+      "raw_energy": "0.675",
+      "raw_acousticness": "0.116",
+      "raw_valence": "0.558",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "fe9c57dd2168ee5ddb67c00941eefb872c9b77737b5e10f60d0717b928a8afc9",
+      "genre_group_codes": [
+        "J-POP",
+        "ROCK"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "07QgdwIdejvYEvsiMT8iFD",
+      "track_name": "マンハッタンでブレックファスト",
+      "artists_id": null,
+      "artists_name": "Seiko Matsuda",
+      "album_id": null,
+      "album_name": "Windy Shadow",
+      "album_release_date": null,
+      "duration_ms": 269146,
+      "explicit": false,
+      "genre": "j-idol;techno",
+      "energy": 6,
+      "mode": true,
+      "acousticness": 23,
+      "mood": null,
+      "speed": "fast",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/07QgdwIdejvYEvsiMT8iFD",
+      "raw_energy": "0.673",
+      "raw_acousticness": "0.23",
+      "raw_valence": "0.621",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "354168392d82fc69f37cffa3663d19feef470659d7a13ea1b331373ed8c47a4c",
+      "genre_group_codes": [
+        "ELECTRONIC_DANCE",
+        "J-POP"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "080sJ3SvQBXeGO6q1oIF6z",
+      "track_name": "I miss you -refrain-",
+      "artists_id": null,
+      "artists_name": "Shota Shimizu",
+      "album_id": null,
+      "album_name": "ALL SINGLES BEST",
+      "album_release_date": null,
+      "duration_ms": 329346,
+      "explicit": false,
+      "genre": "j-pop",
+      "energy": 6,
+      "mode": true,
+      "acousticness": 23,
+      "mood": null,
+      "speed": "medium",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/080sJ3SvQBXeGO6q1oIF6z",
+      "raw_energy": "0.666",
+      "raw_acousticness": "0.234",
+      "raw_valence": "0.585",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "95bc1e247fc17d320eb610707d5b6bc28ca1d15b0818a4d39f5c35fa89e11f9e",
+      "genre_group_codes": [
+        "J-POP"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "09SsT6U26aWDG3VeiZUA4e",
+      "track_name": "Erkekler De Yanar",
+      "artists_id": null,
+      "artists_name": "Nazan Öncel",
+      "album_id": null,
+      "album_name": "Sokak Kızı",
+      "album_release_date": null,
+      "duration_ms": 230320,
+      "explicit": false,
+      "genre": "j-pop;jazz;turkish",
+      "energy": 7,
+      "mode": true,
+      "acousticness": 0,
+      "mood": null,
+      "speed": "medium",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/09SsT6U26aWDG3VeiZUA4e",
+      "raw_energy": "0.77",
+      "raw_acousticness": "0.00263",
+      "raw_valence": "0.784",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "55bd75bf025114074d9dd49453cebf488cc3467fdb80929856b62a29454a5812",
+      "genre_group_codes": [
+        "J-POP",
+        "JAZZ"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "0ALVjqa35c93VuOb5bOlAV",
+      "track_name": "Yuugure no Tori - TV Size",
+      "artists_id": null,
+      "artists_name": "Shinsei Kamattechan",
+      "album_id": null,
+      "album_name": "Yuugure no Tori (TV Size)",
+      "album_release_date": null,
+      "duration_ms": 92879,
+      "explicit": false,
+      "genre": "j-rock",
+      "energy": 6,
+      "mode": true,
+      "acousticness": 5,
+      "mood": null,
+      "speed": "fastest",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/0ALVjqa35c93VuOb5bOlAV",
+      "raw_energy": "0.625",
+      "raw_acousticness": "0.0555",
+      "raw_valence": "0.646",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "8114f86712c151480c188187e6d19237efbb9dec0c97c0abb35dda4aba2121e6",
+      "genre_group_codes": [
+        "J-POP",
+        "ROCK"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "0Bvp54lGzbK6OueNgtiOxY",
+      "track_name": "旅立ち",
+      "artists_id": null,
+      "artists_name": "GReeeeN",
+      "album_id": null,
+      "album_name": "旅立ち",
+      "album_release_date": null,
+      "duration_ms": 261213,
+      "explicit": false,
+      "genre": "j-rock",
+      "energy": 7,
+      "mode": true,
+      "acousticness": 2,
+      "mood": null,
+      "speed": "medium",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/0Bvp54lGzbK6OueNgtiOxY",
+      "raw_energy": "0.706",
+      "raw_acousticness": "0.0269",
+      "raw_valence": "0.85",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "65e699f6abecfd4c42c6a8fcc6138dde10130ee203cc4404d1ce6ab9e8201ec3",
+      "genre_group_codes": [
+        "J-POP",
+        "ROCK"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "0CI3up9Rf5tZq5MxfJG2oB",
+      "track_name": "Polladha Ulagam (From \"Maaran\")",
+      "artists_id": null,
+      "artists_name": "Dhanush;Arivu;G. V. Prakash",
+      "album_id": null,
+      "album_name": "Polladha Ulagam (From \"Maaran\")",
+      "album_release_date": null,
+      "duration_ms": 235447,
+      "explicit": false,
+      "genre": "k-pop",
+      "energy": 7,
+      "mode": true,
+      "acousticness": 2,
+      "mood": null,
+      "speed": "fast",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/0CI3up9Rf5tZq5MxfJG2oB",
+      "raw_energy": "0.771",
+      "raw_acousticness": "0.023",
+      "raw_valence": "0.628",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "a9ea3fff0a57c137a00fab837d2e20f72db33efce439480c73450b77e5be1532",
+      "genre_group_codes": [
+        "K-POP"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "0Ca4nK97pypPdmpZcUeGZb",
+      "track_name": "Taikutsuwo Saienshinaide",
+      "artists_id": null,
+      "artists_name": "Eve",
+      "album_id": null,
+      "album_name": "Kaizin",
+      "album_release_date": null,
+      "duration_ms": 228728,
+      "explicit": false,
+      "genre": "anime",
+      "energy": 7,
+      "mode": true,
+      "acousticness": 3,
+      "mood": null,
+      "speed": "fast",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/0Ca4nK97pypPdmpZcUeGZb",
+      "raw_energy": "0.723",
+      "raw_acousticness": "0.0379",
+      "raw_valence": "0.557",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "891d386a366585141546777b685c6c13a4864297c779ae97f7c36d8fe8ded5c9",
+      "genre_group_codes": [
+        "J-POP"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "0CguRnSNJQQR5ydaT8vU7R",
+      "track_name": "Mere Baba",
+      "artists_id": null,
+      "artists_name": "Jubin Nautiyal",
+      "album_id": null,
+      "album_name": "Mere Baba",
+      "album_release_date": null,
+      "duration_ms": 240953,
+      "explicit": false,
+      "genre": "k-pop",
+      "energy": 7,
+      "mode": true,
+      "acousticness": 23,
+      "mood": null,
+      "speed": "medium",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/0CguRnSNJQQR5ydaT8vU7R",
+      "raw_energy": "0.768",
+      "raw_acousticness": "0.235",
+      "raw_valence": "0.629",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "6df320b078508e13ac2373955a8c01d527ea09dac0c84e31077c28d6f1383ba3",
+      "genre_group_codes": [
+        "K-POP"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "0EmYZZ8OqeALedVhijSjsg",
+      "track_name": "CROWN",
+      "artists_id": null,
+      "artists_name": "TOMORROW X TOGETHER",
+      "album_id": null,
+      "album_name": "The Dream Chapter: STAR",
+      "album_release_date": null,
+      "duration_ms": 230706,
+      "explicit": false,
+      "genre": "k-pop",
+      "energy": 8,
+      "mode": true,
+      "acousticness": 4,
+      "mood": null,
+      "speed": "fast",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/0EmYZZ8OqeALedVhijSjsg",
+      "raw_energy": "0.8",
+      "raw_acousticness": "0.0497",
+      "raw_valence": "0.58",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "f35a374defbdb35d7b6b4b3aac98ddb9a354fcfd1165335eee05ec0b8029fad0",
+      "genre_group_codes": [
+        "K-POP"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "0FcugfDDQLytPUHZemedU5",
+      "track_name": "四月のラブレター",
+      "artists_id": null,
+      "artists_name": "Seiko Matsuda",
+      "album_id": null,
+      "album_name": "Candy",
+      "album_release_date": null,
+      "duration_ms": 184320,
+      "explicit": false,
+      "genre": "j-idol;techno",
+      "energy": 7,
+      "mode": true,
+      "acousticness": 23,
+      "mood": null,
+      "speed": "fast",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/0FcugfDDQLytPUHZemedU5",
+      "raw_energy": "0.757",
+      "raw_acousticness": "0.232",
+      "raw_valence": "0.614",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "1d7fe82e3ce5716e2ed19e8e2cfd1a707ef8749e11c54c4e35ff3f6b89f2ffc0",
+      "genre_group_codes": [
+        "ELECTRONIC_DANCE",
+        "J-POP"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "0Iod4IHv2ZJy4tzxTDIM34",
+      "track_name": "Moon Light Lover",
+      "artists_id": null,
+      "artists_name": "サザンオールスターズ",
+      "album_id": null,
+      "album_name": "Young Love",
+      "album_release_date": null,
+      "duration_ms": 294493,
+      "explicit": false,
+      "genre": "j-pop",
+      "energy": 6,
+      "mode": true,
+      "acousticness": 26,
+      "mood": null,
+      "speed": "fast",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/0Iod4IHv2ZJy4tzxTDIM34",
+      "raw_energy": "0.676",
+      "raw_acousticness": "0.263",
+      "raw_valence": "0.678",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "cf032f3ef308df9b730682be95fb3b9d4caf35439b82c78b209542f30004ed0b",
+      "genre_group_codes": [
+        "J-POP"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "0JP0A0QQNqQLfJw9k62PK0",
+      "track_name": "Boyfriend -partⅡ-",
+      "artists_id": null,
+      "artists_name": "Flower",
+      "album_id": null,
+      "album_name": "F",
+      "album_release_date": null,
+      "duration_ms": 301120,
+      "explicit": false,
+      "genre": "j-idol",
+      "energy": 7,
+      "mode": true,
+      "acousticness": 43,
+      "mood": null,
+      "speed": "fast",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/0JP0A0QQNqQLfJw9k62PK0",
+      "raw_energy": "0.737",
+      "raw_acousticness": "0.433",
+      "raw_valence": "0.74",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "5ae9e1d6e8e3afe5a4fbce7c3df51bdf9dfd16cb49795ff279059fba9103c559",
+      "genre_group_codes": [
+        "J-POP"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "0JnOpiUieuk9SdRv7Fkw2P",
+      "track_name": "恋泥棒。",
+      "artists_id": null,
+      "artists_name": "『ユイカ』",
+      "album_id": null,
+      "album_name": "恋泥棒。",
+      "album_release_date": null,
+      "duration_ms": 219643,
+      "explicit": false,
+      "genre": "j-pop",
+      "energy": 7,
+      "mode": true,
+      "acousticness": 4,
+      "mood": null,
+      "speed": "medium",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/0JnOpiUieuk9SdRv7Fkw2P",
+      "raw_energy": "0.718",
+      "raw_acousticness": "0.0483",
+      "raw_valence": "0.813",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "f464fb3f03530a24cc92f1109bfb1572268a0b489a67c484a58716c806fe74ae",
+      "genre_group_codes": [
+        "J-POP"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "0MnPdlWm7MSSUnEamZp5lX",
+      "track_name": "星が泳ぐ",
+      "artists_id": null,
+      "artists_name": "Macaroni Empitsu",
+      "album_id": null,
+      "album_name": "星が泳ぐ",
+      "album_release_date": null,
+      "duration_ms": 239078,
+      "explicit": false,
+      "genre": "anime;j-pop;j-rock",
+      "energy": 7,
+      "mode": true,
+      "acousticness": 2,
+      "mood": null,
+      "speed": "medium",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/0MnPdlWm7MSSUnEamZp5lX",
+      "raw_energy": "0.743",
+      "raw_acousticness": "0.0265",
+      "raw_valence": "0.649",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "4361ed68eeb818392dff2bdc3a87369b3618da56f38c7217ea2a0d586af6c685",
+      "genre_group_codes": [
+        "J-POP",
+        "ROCK"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "0NFjUVEW0ndIiodGuMhHQU",
+      "track_name": "Ready For Love",
+      "artists_id": null,
+      "artists_name": "BLACKPINK",
+      "album_id": null,
+      "album_name": "BORN PINK",
+      "album_release_date": null,
+      "duration_ms": 184677,
+      "explicit": false,
+      "genre": "k-pop",
+      "energy": 6,
+      "mode": true,
+      "acousticness": 1,
+      "mood": null,
+      "speed": "medium",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/0NFjUVEW0ndIiodGuMhHQU",
+      "raw_energy": "0.682",
+      "raw_acousticness": "0.0146",
+      "raw_valence": "0.551",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "1a0e5b449605d61201a476441e8b8f5f6cf7565cf9343537c7cb96863d13d176",
+      "genre_group_codes": [
+        "K-POP"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "0TKh7b5rpmvydOl9FvSyXL",
+      "track_name": "Nahna Na Nah",
+      "artists_id": null,
+      "artists_name": "Yuvan Shankar Raja;Devan Ekambaram",
+      "album_id": null,
+      "album_name": "Biriyani (Original Motion Picture Soundtrack)",
+      "album_release_date": null,
+      "duration_ms": 267640,
+      "explicit": false,
+      "genre": "k-pop",
+      "energy": 5,
+      "mode": true,
+      "acousticness": 22,
+      "mood": null,
+      "speed": "medium",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/0TKh7b5rpmvydOl9FvSyXL",
+      "raw_energy": "0.594",
+      "raw_acousticness": "0.223",
+      "raw_valence": "0.593",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "48468dc1d222352c9b4b6502d33079d2383246908b51995f55430430c9078d89",
+      "genre_group_codes": [
+        "K-POP"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "0VqrJpAJvPdviMI41ZvO2u",
+      "track_name": "Sol De Paz - Calitown Remix",
+      "artists_id": null,
+      "artists_name": "Strike",
+      "album_id": null,
+      "album_name": "Collab",
+      "album_release_date": null,
+      "duration_ms": 201173,
+      "explicit": false,
+      "genre": "j-rock",
+      "energy": 7,
+      "mode": true,
+      "acousticness": 4,
+      "mood": null,
+      "speed": "medium",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/0VqrJpAJvPdviMI41ZvO2u",
+      "raw_energy": "0.798",
+      "raw_acousticness": "0.0491",
+      "raw_valence": "0.842",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "b00c314c5e350701faf02d0f57c16e8535e6cde48507295af11a6e66c1f4ffd7",
+      "genre_group_codes": [
+        "J-POP",
+        "ROCK"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "0ZiO07cHvb675UDaKB1iix",
+      "track_name": "コイワズライ",
+      "artists_id": null,
+      "artists_name": "Aimer",
+      "album_id": null,
+      "album_name": "Sun Dance",
+      "album_release_date": null,
+      "duration_ms": 235160,
+      "explicit": false,
+      "genre": "anime;j-pop;j-rock",
+      "energy": 5,
+      "mode": true,
+      "acousticness": 30,
+      "mood": null,
+      "speed": "medium",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/0ZiO07cHvb675UDaKB1iix",
+      "raw_energy": "0.5",
+      "raw_acousticness": "0.3",
+      "raw_valence": "0.773",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "95b2ecc1e6b64fdf158b6ba2c511c05464d5a54f579aba7709569fba7a218703",
+      "genre_group_codes": [
+        "J-POP",
+        "ROCK"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "0acGt1Ozv8kZtecgsU4Wlo",
+      "track_name": "幽霊失格",
+      "artists_id": null,
+      "artists_name": "Creep Hyp",
+      "album_id": null,
+      "album_name": "夜にしがみついて、朝で溶かして",
+      "album_release_date": null,
+      "duration_ms": 255640,
+      "explicit": false,
+      "genre": "j-pop;j-rock",
+      "energy": 6,
+      "mode": true,
+      "acousticness": 6,
+      "mood": null,
+      "speed": "medium",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/0acGt1Ozv8kZtecgsU4Wlo",
+      "raw_energy": "0.699",
+      "raw_acousticness": "0.0679",
+      "raw_valence": "0.662",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "f4bb9f0e95f4983ea22695ffb51be38c0930bbe7c49e6646d4de34ad69c40fee",
+      "genre_group_codes": [
+        "J-POP",
+        "ROCK"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "0anw2y6ifCI7QS8Cj5Ph7x",
+      "track_name": "君が扇いでくれた",
+      "artists_id": null,
+      "artists_name": "Nogizaka46",
+      "album_id": null,
+      "album_name": "生まれてから初めて見た夢 (Complete Edition)",
+      "album_release_date": null,
+      "duration_ms": 244400,
+      "explicit": false,
+      "genre": "j-idol;j-pop",
+      "energy": 7,
+      "mode": true,
+      "acousticness": 0,
+      "mood": null,
+      "speed": "medium",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/0anw2y6ifCI7QS8Cj5Ph7x",
+      "raw_energy": "0.786",
+      "raw_acousticness": "0.00974",
+      "raw_valence": "0.684",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "20f6c7224f541e0d22da833267ae5b71809d0ef6ec38135edf7a0f4ca48355eb",
+      "genre_group_codes": [
+        "J-POP"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "0axnhwSiZbfnSSpTHss0W8",
+      "track_name": "一千一秒物語",
+      "artists_id": null,
+      "artists_name": "Seiko Matsuda",
+      "album_id": null,
+      "album_name": "風立ちぬ",
+      "album_release_date": null,
+      "duration_ms": 262186,
+      "explicit": false,
+      "genre": "j-idol;techno",
+      "energy": 7,
+      "mode": true,
+      "acousticness": 27,
+      "mood": null,
+      "speed": "fast",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/0axnhwSiZbfnSSpTHss0W8",
+      "raw_energy": "0.704",
+      "raw_acousticness": "0.274",
+      "raw_valence": "0.619",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "9af71b20d3bedf08bd0d9107cbf5d3127d430fe915a13663313f15d3549454d7",
+      "genre_group_codes": [
+        "ELECTRONIC_DANCE",
+        "J-POP"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "0cEill2tVJ38caZlb3LyFy",
+      "track_name": "damn",
+      "artists_id": null,
+      "artists_name": "Fujii Kaze",
+      "album_id": null,
+      "album_name": "damn",
+      "album_release_date": null,
+      "duration_ms": 259237,
+      "explicit": false,
+      "genre": "j-pop",
+      "energy": 7,
+      "mode": true,
+      "acousticness": 0,
+      "mood": null,
+      "speed": "fast",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/0cEill2tVJ38caZlb3LyFy",
+      "raw_energy": "0.758",
+      "raw_acousticness": "0.00348",
+      "raw_valence": "0.695",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "17be87c4ee08c1adb205621dd10839e996fa96ba5b4101e04b4f452fa548b381",
+      "genre_group_codes": [
+        "J-POP"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "0cx3DUvLuL7iTJ6aUzAZNx",
+      "track_name": "Happy",
+      "artists_id": null,
+      "artists_name": "All Ok",
+      "album_id": null,
+      "album_name": "Happy",
+      "album_release_date": null,
+      "duration_ms": 221960,
+      "explicit": false,
+      "genre": "k-pop",
+      "energy": 6,
+      "mode": true,
+      "acousticness": 43,
+      "mood": null,
+      "speed": "fastest",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/0cx3DUvLuL7iTJ6aUzAZNx",
+      "raw_energy": "0.604",
+      "raw_acousticness": "0.436",
+      "raw_valence": "0.602",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "47ff9fbbbf3788ecac156adba3e41232130fb92b15161742f18159a6b3806765",
+      "genre_group_codes": [
+        "K-POP"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "0ddbXUxKVScdcSCcPeVVqm",
+      "track_name": "メレンゲ",
+      "artists_id": null,
+      "artists_name": "Macaroni Empitsu",
+      "album_id": null,
+      "album_name": "ハッピーエンドへの期待は",
+      "album_release_date": null,
+      "duration_ms": 237193,
+      "explicit": false,
+      "genre": "anime;j-pop;j-rock",
+      "energy": 6,
+      "mode": true,
+      "acousticness": 1,
+      "mood": null,
+      "speed": "medium",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/0ddbXUxKVScdcSCcPeVVqm",
+      "raw_energy": "0.68",
+      "raw_acousticness": "0.0154",
+      "raw_valence": "0.656",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "0b21f8552ef3c41ce9fe3a6c9f2f30466c4633d502de82488db56b9e9b22eb92",
+      "genre_group_codes": [
+        "J-POP",
+        "ROCK"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "0g3Nep5KmsTCCaw7GfWTKW",
+      "track_name": "Answers",
+      "artists_id": null,
+      "artists_name": "mol-74",
+      "album_id": null,
+      "album_name": "Answers",
+      "album_release_date": null,
+      "duration_ms": 265333,
+      "explicit": false,
+      "genre": "j-rock",
+      "energy": 6,
+      "mode": true,
+      "acousticness": 15,
+      "mood": null,
+      "speed": "fast",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/0g3Nep5KmsTCCaw7GfWTKW",
+      "raw_energy": "0.652",
+      "raw_acousticness": "0.154",
+      "raw_valence": "0.667",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "3430cd1a9eaa96f74acdf6e6f27c7deb7e6b45d5bf09434f1509a265ac9f178e",
+      "genre_group_codes": [
+        "J-POP",
+        "ROCK"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "0kI9yiyBUK4eiDz6Q38XXu",
+      "track_name": "Mirror",
+      "artists_id": null,
+      "artists_name": "Mr.Children",
+      "album_id": null,
+      "album_name": "深海",
+      "album_release_date": null,
+      "duration_ms": 178733,
+      "explicit": false,
+      "genre": "j-pop;j-rock",
+      "energy": 5,
+      "mode": true,
+      "acousticness": 23,
+      "mood": null,
+      "speed": "fast",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/0kI9yiyBUK4eiDz6Q38XXu",
+      "raw_energy": "0.527",
+      "raw_acousticness": "0.232",
+      "raw_valence": "0.659",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "219cac4838c51f9d9dd0500758beda85489c775be150b6db8214104789b0aa73",
+      "genre_group_codes": [
+        "J-POP",
+        "ROCK"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "0nwTMzpatarzvLvtwwzdCt",
+      "track_name": "Thunderous",
+      "artists_id": null,
+      "artists_name": "Stray Kids",
+      "album_id": null,
+      "album_name": "NOEASY",
+      "album_release_date": null,
+      "duration_ms": 183266,
+      "explicit": false,
+      "genre": "k-pop",
+      "energy": 7,
+      "mode": true,
+      "acousticness": 21,
+      "mood": null,
+      "speed": "fastest",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/0nwTMzpatarzvLvtwwzdCt",
+      "raw_energy": "0.786",
+      "raw_acousticness": "0.213",
+      "raw_valence": "0.79",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "7b1d4dcb8a682c710ba204e5d7698aded64cd0b1449fe23eab5dcd30976256ca",
+      "genre_group_codes": [
+        "K-POP"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "0owmJNkGcGNq4hb6qt3ufd",
+      "track_name": "She Wants Me (To Be Loved)",
+      "artists_id": null,
+      "artists_name": "The Happy Fits",
+      "album_id": null,
+      "album_name": "What Could Be Better",
+      "album_release_date": null,
+      "duration_ms": 199413,
+      "explicit": false,
+      "genre": "j-pop;j-rock",
+      "energy": 7,
+      "mode": true,
+      "acousticness": 10,
+      "mood": null,
+      "speed": "fast",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/0owmJNkGcGNq4hb6qt3ufd",
+      "raw_energy": "0.727",
+      "raw_acousticness": "0.109",
+      "raw_valence": "0.727",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "59c48a7d96b258bdd1f2fdcd7b5cbc2a718918dad0695e911debf982f483bda6",
+      "genre_group_codes": [
+        "J-POP",
+        "ROCK"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "0u8vLdKjqe63Lrs8bTw6ka",
+      "track_name": "A Raposa e as Uvas",
+      "artists_id": null,
+      "artists_name": "Reginaldo Rossi",
+      "album_id": null,
+      "album_name": "20 Super Sucessos, Vol. 3",
+      "album_release_date": null,
+      "duration_ms": 226561,
+      "explicit": false,
+      "genre": "forro;j-pop;sertanejo",
+      "energy": 6,
+      "mode": true,
+      "acousticness": 41,
+      "mood": null,
+      "speed": "fast",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/0u8vLdKjqe63Lrs8bTw6ka",
+      "raw_energy": "0.619",
+      "raw_acousticness": "0.419",
+      "raw_valence": "0.874",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "35cfe04833061d4d6ae846870448c25faf5cd55ec99332fa34953371b4798af0",
+      "genre_group_codes": [
+        "J-POP",
+        "LATIN"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "0vb21Y15llmTPEqw5m7KAW",
+      "track_name": "Aathichoodi",
+      "artists_id": null,
+      "artists_name": "Vijay Antony;Dinesh",
+      "album_id": null,
+      "album_name": "Tn07 Al 4777 (Original Motion Picture Soundtrack)",
+      "album_release_date": null,
+      "duration_ms": 251210,
+      "explicit": false,
+      "genre": "k-pop;pop-film",
+      "energy": 7,
+      "mode": true,
+      "acousticness": 34,
+      "mood": null,
+      "speed": "fast",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/0vb21Y15llmTPEqw5m7KAW",
+      "raw_energy": "0.738",
+      "raw_acousticness": "0.348",
+      "raw_valence": "0.737",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "0863b53882e736d2c6f4a5d7ef79ae4131e8ec0ceafd9bdc61220bb71ed28015",
+      "genre_group_codes": [
+        "K-POP"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "0xWl3d2OOeKJvbebz5lUlm",
+      "track_name": "生命線",
+      "artists_id": null,
+      "artists_name": "ReoNa",
+      "album_id": null,
+      "album_name": "生命線",
+      "album_release_date": null,
+      "duration_ms": 255520,
+      "explicit": false,
+      "genre": "anime",
+      "energy": 6,
+      "mode": true,
+      "acousticness": 7,
+      "mood": null,
+      "speed": "fastest",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/0xWl3d2OOeKJvbebz5lUlm",
+      "raw_energy": "0.67",
+      "raw_acousticness": "0.0709",
+      "raw_valence": "0.551",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "0488512dee332c46d07fe48158a45f9f368a6c613d23d049263da1c583e8c4c0",
+      "genre_group_codes": [
+        "J-POP"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "0yNpA8tDur1BTufgrcBI5n",
+      "track_name": "リバーシブルー",
+      "artists_id": null,
+      "artists_name": "Creep Hyp",
+      "album_id": null,
+      "album_name": "リバーシブルー",
+      "album_release_date": null,
+      "duration_ms": 212773,
+      "explicit": false,
+      "genre": "j-rock",
+      "energy": 7,
+      "mode": true,
+      "acousticness": 4,
+      "mood": null,
+      "speed": "fast",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/0yNpA8tDur1BTufgrcBI5n",
+      "raw_energy": "0.735",
+      "raw_acousticness": "0.0462",
+      "raw_valence": "0.9",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "e57634c576b127560a8fc540798af5fdd1db762f8be7a0758fa42ea0edb11c29",
+      "genre_group_codes": [
+        "J-POP",
+        "ROCK"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "0zGGlvdqrADbHtSQH9u0s5",
+      "track_name": "イヤフォン・ライオット",
+      "artists_id": null,
+      "artists_name": "Shiritsu Ebisu Chugaku",
+      "album_id": null,
+      "album_name": "私立恵比寿中学",
+      "album_release_date": null,
+      "duration_ms": 240053,
+      "explicit": false,
+      "genre": "j-idol",
+      "energy": 7,
+      "mode": true,
+      "acousticness": 0,
+      "mood": null,
+      "speed": "fast",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/0zGGlvdqrADbHtSQH9u0s5",
+      "raw_energy": "0.761",
+      "raw_acousticness": "0.00662",
+      "raw_valence": "0.814",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "d2a879aaa1c709913b229e11497c550087b4e0bab9e2e6301a4b15a8774243e5",
+      "genre_group_codes": [
+        "J-POP"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "0zK545STj6P7qbFSpCK9pp",
+      "track_name": "No Matter What - Remastered 2010",
+      "artists_id": null,
+      "artists_name": "Badfinger",
+      "album_id": null,
+      "album_name": "No Dice (Remastered 2010 / Deluxe Edition)",
+      "album_release_date": null,
+      "duration_ms": 180546,
+      "explicit": false,
+      "genre": "j-rock;power-pop;psych-rock",
+      "energy": 7,
+      "mode": true,
+      "acousticness": 17,
+      "mood": null,
+      "speed": "fast",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/0zK545STj6P7qbFSpCK9pp",
+      "raw_energy": "0.743",
+      "raw_acousticness": "0.177",
+      "raw_valence": "0.78",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "c91237f4824a6626fe5ef299ef7ea4d6b5ac8e19e3e403c3aa442c5ed6557629",
+      "genre_group_codes": [
+        "J-POP",
+        "POP",
+        "ROCK"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "13XhAfxKL5VbQ32TFU3fOn",
+      "track_name": "Bawa Daku - Duet Version",
+      "artists_id": null,
+      "artists_name": "Tompi;Dian Sastrowardoyo",
+      "album_id": null,
+      "album_name": "Romansa",
+      "album_release_date": null,
+      "duration_ms": 249862,
+      "explicit": false,
+      "genre": "j-rock",
+      "energy": 7,
+      "mode": true,
+      "acousticness": 47,
+      "mood": null,
+      "speed": "fastest",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/13XhAfxKL5VbQ32TFU3fOn",
+      "raw_energy": "0.75",
+      "raw_acousticness": "0.478",
+      "raw_valence": "0.842",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "883704def904901eff3c647569a02eaa33e414b5bc0333068f0117907768d325",
+      "genre_group_codes": [
+        "J-POP",
+        "ROCK"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "13kn1edTUChfFQTbBhenIM",
+      "track_name": "Destiny Epic Rap",
+      "artists_id": null,
+      "artists_name": "Zarcort",
+      "album_id": null,
+      "album_name": "Destiny Epic Rap",
+      "album_release_date": null,
+      "duration_ms": 175104,
+      "explicit": false,
+      "genre": "anime",
+      "energy": 7,
+      "mode": true,
+      "acousticness": 54,
+      "mood": null,
+      "speed": "medium",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/13kn1edTUChfFQTbBhenIM",
+      "raw_energy": "0.781",
+      "raw_acousticness": "0.544",
+      "raw_valence": "0.611",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "4786f837d4b0dd48aafb0409a1786a5491748716097a6f0e5aba0786a2f3c412",
+      "genre_group_codes": [
+        "J-POP"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "17AMSGEgRRbE67Vj0uxEF5",
+      "track_name": "青空のゆくえ",
+      "artists_id": null,
+      "artists_name": "Shogo Hamada",
+      "album_id": null,
+      "album_name": "The History of Shogo Hamada“Since 1975”",
+      "album_release_date": null,
+      "duration_ms": 351573,
+      "explicit": false,
+      "genre": "j-rock",
+      "energy": 7,
+      "mode": true,
+      "acousticness": 0,
+      "mood": null,
+      "speed": "medium",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/17AMSGEgRRbE67Vj0uxEF5",
+      "raw_energy": "0.745",
+      "raw_acousticness": "0.00149",
+      "raw_valence": "0.662",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "08faca89efc7e54912dfb50981331a32bd7a801b7577ff5038011e8a5d353f46",
+      "genre_group_codes": [
+        "J-POP",
+        "ROCK"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    },
+    {
+      "track_id": "17XgbDzWTso7Vw42ug1yfS",
+      "track_name": "Yoruwahonoka",
+      "artists_id": null,
+      "artists_name": "Eve",
+      "album_id": null,
+      "album_name": "Yoruwahonoka",
+      "album_release_date": null,
+      "duration_ms": 191850,
+      "explicit": false,
+      "genre": "anime",
+      "energy": 7,
+      "mode": true,
+      "acousticness": 1,
+      "mood": null,
+      "speed": "fast",
+      "main_inst": null,
+      "instrumental": false,
+      "play_url": "https://open.spotify.com/track/17XgbDzWTso7Vw42ug1yfS",
+      "raw_energy": "0.712",
+      "raw_acousticness": "0.0131",
+      "raw_valence": "0.653",
+      "instrumental_review_value": null,
+      "instrumental_source": "AUTO",
+      "occasion_status": "GENERAL",
+      "decision_source": "RULE_SCREEN",
+      "occasion_policy_version": "OCCASION_GENERAL_20261016_V1",
+      "occasion_decision_version": "6d66fb9112668643d04859a36ff644a66874b22d872e80c265f8c0fda99030d6",
+      "genre_group_codes": [
+        "J-POP"
+      ],
+      "theme_codes": [],
+      "occasion_decisions_sha256": "c2478b153aa8bee652fb9d7505dfa78621be37a9bd660094f01384f544788760",
+      "cover_image_url": null,
+      "preview_clear_score_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+      "preview_clear_w": [
+        100,
+        1
+      ],
+      "scores": {
+        "W": "100.00",
+        "P": "50.00",
+        "S": "87.50"
+      },
+      "scores_exact": {
+        "W": [
+          100,
+          1
+        ],
+        "P": [
+          50,
+          1
+        ],
+        "S": [
+          175,
+          2
+        ]
+      },
+      "score_evidence": {
+        "W": [
+          100,
+          1
+        ],
+        "pattern": "CLEAR_PRIMARY",
+        "E": [
+          100,
+          1
+        ],
+        "A": [
+          100,
+          1
+        ],
+        "V": [
+          100,
+          1
+        ],
+        "M": [
+          100,
+          1
+        ],
+        "attempts": [
+          {
+            "pattern": "CLEAR_PRIMARY",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              100,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          },
+          {
+            "pattern": "CLEAR_SUPPORT",
+            "E": [
+              100,
+              1
+            ],
+            "A": [
+              100,
+              1
+            ],
+            "V": [
+              100,
+              1
+            ],
+            "M": [
+              100,
+              1
+            ],
+            "W": [
+              80,
+              1
+            ],
+            "core_pass": [
+              1,
+              1
+            ],
+            "threshold_pass": [
+              1,
+              1
+            ]
+          }
+        ]
+      },
+      "reason": null
+    }
+  ]
+}

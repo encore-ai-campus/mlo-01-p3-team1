@@ -1,0 +1,51 @@
+# Local AWS credentials and environment files (use existing external profiles).
+.aws/
+.env
+.env.*
+*.env
+*.env.*
+credentials
+credentials.*
+.npmrc
+
+# Account bindings, execution receipts, secrets and downloaded tools.
+/config/project.json
+/config/*.local.json
+.private/
+.state/
+.local/
+.tools/
+distributions/
+
+# Keys, certificates, credential exports and installation payloads.
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.crt
+*.cer
+*.der
+*.zip
+*.tgz
+*.tar
+*.tar.gz
+*.tfstate
+*.tfstate.*
+*.log
+*.bak
+
+# Python, editor and OS artifacts.
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+.DS_Store
+.idea/
+.vscode/
+node_modules/

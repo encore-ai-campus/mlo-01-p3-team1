@@ -1,0 +1,93 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "One direct cross-account VPC peering connection; route stacks are owned independently by both accounts.",
+  "Metadata": {
+    "ProjectCodeVersion": "0.3.20",
+    "AWSToolsMetrics": {
+      "AWSAgentToolkit": "aws-cloudformation@3"
+    },
+    "com.aws.cloudformation.Context": {
+      "ref": [
+        "../README.md",
+        "../SECURITY.md",
+        "../../docs/handoff/infra/README.md"
+      ],
+      "must": [
+        "Five independent accounts; 14 private EC2 nodes; three physical AZ IDs.",
+        "No local VM operations. No secrets or CA private key in templates."
+      ]
+    }
+  },
+  "Parameters": {
+    "VpcId": {
+      "Type": "String",
+      "AllowedPattern": "vpc-[0-9a-f]+"
+    },
+    "PeerVpcId": {
+      "Type": "String",
+      "AllowedPattern": "vpc-[0-9a-f]+"
+    },
+    "PeerOwnerId": {
+      "Type": "String",
+      "AllowedPattern": "[0-9]{12}"
+    },
+    "PeerRoleArn": {
+      "Type": "String",
+      "AllowedPattern": "arn:aws:iam::[0-9]{12}:role/[A-Za-z0-9-]+"
+    }
+  },
+  "Resources": {
+    "Peer": {
+      "Type": "AWS::EC2::VPCPeeringConnection",
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Direct peering: no transit via encore1 and no shared NAT.",
+          "must": [
+            "CIDRs must not overlap."
+          ]
+        }
+      },
+      "Properties": {
+        "VpcId": {
+          "Ref": "VpcId"
+        },
+        "PeerVpcId": {
+          "Ref": "PeerVpcId"
+        },
+        "PeerOwnerId": {
+          "Ref": "PeerOwnerId"
+        },
+        "PeerRoleArn": {
+          "Ref": "PeerRoleArn"
+        },
+        "AssumeRoleRegion": "ap-northeast-2",
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "mlo-p3-team1"
+          },
+          {
+            "Key": "Environment",
+            "Value": "aws-dev"
+          },
+          {
+            "Key": "Node",
+            "Value": "shared"
+          },
+          {
+            "Key": "Role",
+            "Value": "infrastructure"
+          }
+        ]
+      }
+    }
+  },
+  "Outputs": {
+    "PeeringId": {
+      "Value": {
+        "Ref": "Peer"
+      },
+      "Description": "Direct peering ID for route stacks"
+    }
+  }
+}

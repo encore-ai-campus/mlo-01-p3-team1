@@ -1,0 +1,255 @@
+{
+  "sample_selection_version": "LLM_REVIEW_TARGET_SAMPLE_20261016_V1",
+  "seed": "weather-music-review-target-20261016-v1",
+  "policy_version": "WEATHER_SCORE_PROPOSAL_20261016_V2",
+  "status": "REVIEW_TARGET_ONLY_NOT_SENT_NOT_API_PAYLOAD",
+  "model_version": null,
+  "source": {
+    "path": "C:\\Users\\이해나\\Downloads\\spotify_dataset (1).csv",
+    "sha256": "b202fa49909b2d5cef71a04b1d21243cfeb36414535f2ca9272aa646721177bd",
+    "policy_sha256": "def75d6885d04464b58bcb60b8148482ecb394de23151e4b4830f25f15626622"
+  },
+  "input_hashes": {
+    "C:\\Users\\이해나\\Downloads\\spotify_dataset (1).csv": "b202fa49909b2d5cef71a04b1d21243cfeb36414535f2ca9272aa646721177bd",
+    "analysis\\weather_music_20261016\\policy.json": "def75d6885d04464b58bcb60b8148482ecb394de23151e4b4830f25f15626622",
+    "analysis\\weather_music_20261016\\summary.json": "61532e41b6c3a26ac4d7783cf4c5a65de4ea46950f0de090a9f0b908b8b39e47",
+    "analysis\\weather_music_20261016\\diagnostics_20261016\\profile_review_flags.csv": "75bdc4daf8a44f99cb52d44c899b97c104f63762fd43e34c0d88c09c93258cf8",
+    "analysis\\weather_music_20261016\\diagnostics_20261016\\profile_summary.json": "ae015d5ba6a50601d4bbf83439fcfbfb856e309a71589750a30a302c7c7f523f",
+    "analysis\\weather_music_20261016\\diagnostics_20261016\\profile_review_criteria.csv": "6e74aec8ff79e3b305d1ae773ed2f602994c9423ada6f71861385f8d550ae1a7",
+    "analysis\\weather_music_20261016\\diagnostics_20261016\\pertrack_sensitivity_flags.csv": "7de20fdadb5ebf40abb83f1cd80249104aa29c92f2353ae74551cd657dae6107",
+    "analysis\\weather_music_20261016\\diagnostics_20261016\\sensitivity_summary.json": "8688d74f0a337ced51b2bc2401465970f27d94550d47fd7ced3c42bc7fcc17a5",
+    "analysis\\weather_music_20261016\\diagnostics_20261016\\baseline_manifest.json": "a35e667451c63c70496589a0ed1932883c943679e2eb3b931741bd377eff7b4d",
+    "analysis\\weather_music_20261016\\pools\\CLEAR.csv": "5e5bd65aba4805cb7bf88372b1fdf84840ef91b3b6b7be6d8cde1a5e18a9d189",
+    "analysis\\weather_music_20261016\\pools\\CLOUDY.csv": "e60ccd8b8658cbb8721578d5be13b2314f429dc9fe4bebc0a52a2998d3ec0147",
+    "analysis\\weather_music_20261016\\pools\\OVERCAST.csv": "dbd5cf3906dc0870ad3c6443de8f8a07bfddf8a54012c6e603a0489548de00c9",
+    "analysis\\weather_music_20261016\\pools\\RAIN.csv": "4368d420e083319ebda844fad177836e2e04ab199437d1f0fd74ffe0a09733ad",
+    "analysis\\weather_music_20261016\\pools\\SNOW.csv": "6aa19a4137a094dac62b88e7655d7549341ce1f9fdc4312d3452d83018f04a91"
+  },
+  "script_sha256": "cd06a1e2373bd9b2ad60ba22a971a47ea16e71e6a52b7acc615b9c6b94f8d21a",
+  "output_csv": {
+    "path": "analysis/weather_music_20261016/diagnostics_20261016/llm_review_sample.csv",
+    "sha256": "9961f25daa5bb2baaaeb5903c98f5a2411ceeeae7a1e33b8936e139929ec49d0",
+    "rows": 500
+  },
+  "denominators": {
+    "raw_rows": 114000,
+    "raw_unique_track_ids": 89741,
+    "frozen_v2_pool_union_unique_ids": 61931,
+    "sensitivity_unique_ids": 61931
+  },
+  "selection_rules": {
+    "order": [
+      "SENSITIVITY_PRIORITY",
+      "GLOBAL_IQR_MAD_FEATURE_ROUND_ROBIN",
+      "SUPPORT_ONLY_NO_PRIMARY_IN_ANY_WEATHER",
+      "BALANCED_COMPARISON_CONTROL"
+    ],
+    "maximum_quotas": {
+      "sensitivity": 150,
+      "global_review_flags": 100,
+      "support_only": 100
+    },
+    "comparison_minimum": 150,
+    "total_exact": 500,
+    "sensitivity_rank": [
+      "scenario_pass_flip_count DESC",
+      "any_weather_changed_count DESC",
+      "track_id ASC"
+    ],
+    "global_flag_feature_order": [
+      "acousticness",
+      "danceability",
+      "tempo",
+      "loudness",
+      "speechiness",
+      "liveness",
+      "duration_ms",
+      "instrumentalness"
+    ],
+    "global_flag_rank": "One unused ID per feature per round; SHA256(seed,NUL,namespace,NUL,track_id), then ID",
+    "support_only": "No *_PRIMARY in pass_pattern_ids in any weather; SHA256 support-only order",
+    "comparison_balance": "Round-robin nonempty genre x speed x weather x representative_pattern cells. Cells and IDs use deterministic SHA256 order; selected IDs are globally skipped.",
+    "overlap_rule": "Earlier strata own the ID; unmet problem-group quota is filled only by comparison/control tracks.",
+    "multi_label_note": "Genre/weather/pattern memberships can overlap. Balanced cell traversal does not establish representative marginal probabilities."
+  },
+  "actual_counts": {
+    "strata": {
+      "SENSITIVITY_PRIORITY": 150,
+      "GLOBAL_IQR_MAD_FEATURE_ROUND_ROBIN": 100,
+      "SUPPORT_ONLY_NO_PRIMARY_IN_ANY_WEATHER": 100,
+      "BALANCED_COMPARISON_CONTROL": 150
+    },
+    "global_flag_selection_feature": {
+      "acousticness": 13,
+      "danceability": 13,
+      "tempo": 13,
+      "loudness": 13,
+      "speechiness": 12,
+      "liveness": 12,
+      "duration_ms": 12,
+      "instrumentalness": 12
+    },
+    "sample_genre_memberships": {
+      "AFROBEAT": 11,
+      "BLUES": 65,
+      "CLASSICAL": 18,
+      "ELECTRONIC_DANCE": 111,
+      "FOLK_COUNTRY": 38,
+      "GOSPEL": 7,
+      "HIPHOP": 12,
+      "J-POP": 24,
+      "JAZZ": 64,
+      "K-POP": 14,
+      "LATIN": 53,
+      "METAL": 54,
+      "NEWAGE": 19,
+      "OPERA": 14,
+      "POP": 23,
+      "REGGAE_SKA": 21,
+      "RNB_SOUL_FUNK": 22,
+      "ROCK": 45
+    },
+    "sample_speed": {
+      "slow": 104,
+      "medium": 124,
+      "fast": 176,
+      "fastest": 96
+    },
+    "sample_weather_memberships": {
+      "CLOUDY": 383,
+      "OVERCAST": 274,
+      "RAIN": 198,
+      "SNOW": 213,
+      "CLEAR": 159
+    },
+    "sample_pattern_memberships": {
+      "CLEAR_PRIMARY": 131,
+      "CLEAR_SUPPORT": 28,
+      "CLOUDY_PRIMARY": 245,
+      "CLOUDY_SUPPORT": 138,
+      "OVERCAST_PRIMARY": 236,
+      "OVERCAST_SUPPORT": 38,
+      "RAIN_PRIMARY": 188,
+      "RAIN_SUPPORT": 10,
+      "SNOW_PRIMARY": 182,
+      "SNOW_SUPPORT": 31
+    },
+    "support_only_available_in_baseline": 14413,
+    "sample_tracks_with_any_global_flag": 362,
+    "sample_tracks_with_sensitivity_flip": 398
+  },
+  "comparison_balance_diagnostics": {
+    "track_count": 150,
+    "genre_memberships": {
+      "AFROBEAT": 11,
+      "BLUES": 16,
+      "CLASSICAL": 5,
+      "ELECTRONIC_DANCE": 17,
+      "FOLK_COUNTRY": 5,
+      "GOSPEL": 5,
+      "HIPHOP": 10,
+      "J-POP": 11,
+      "JAZZ": 11,
+      "K-POP": 10,
+      "LATIN": 14,
+      "METAL": 9,
+      "NEWAGE": 10,
+      "OPERA": 9,
+      "POP": 11,
+      "REGGAE_SKA": 13,
+      "RNB_SOUL_FUNK": 17,
+      "ROCK": 16
+    },
+    "speed": {
+      "fastest": 38,
+      "slow": 43,
+      "medium": 41,
+      "fast": 28
+    },
+    "weather_memberships": {
+      "CLEAR": 84,
+      "CLOUDY": 112,
+      "SNOW": 58,
+      "OVERCAST": 83,
+      "RAIN": 53
+    },
+    "pattern_memberships": {
+      "CLEAR_PRIMARY": 66,
+      "CLEAR_SUPPORT": 18,
+      "CLOUDY_PRIMARY": 93,
+      "CLOUDY_SUPPORT": 19,
+      "OVERCAST_PRIMARY": 65,
+      "OVERCAST_SUPPORT": 18,
+      "RAIN_PRIMARY": 44,
+      "RAIN_SUPPORT": 9,
+      "SNOW_PRIMARY": 34,
+      "SNOW_SUPPORT": 24
+    },
+    "note": "These overlapping marginal counts describe the deterministic cell-balanced comparison sample, not random inclusion probabilities."
+  },
+  "sensitivity_input_interpretation": {
+    "pertrack_field_definitions": {
+      "path": "pertrack_sensitivity_flags.csv",
+      "row_count": 61931,
+      "scenario_pass_flip_count": "Sum of weather-level pass/fail flips across all nonbaseline scenarios; may exceed scenario count",
+      "any_weather_changed_count": "Number of nonbaseline scenarios changing at least1 weather decision",
+      "baseline_min_abs_score_margin_to75": "Minimum over weather representatives with a core-passing pattern; diagnostic raw maxima without core are excluded",
+      "interpretation": "Review prioritization only; not an error label, recommendation failure label or listening ground truth",
+      "tracks_with_any_flip": 39414,
+      "maximum_any_changed_count": 22
+    },
+    "assumptions": {
+      "one_at_a_time": true,
+      "full_factorial": false,
+      "weight_change": "One weather and one weight multiplied relatively by0.9/1.1; all4 weights then normalized to100; applies to both patterns",
+      "width_change": "One weather and one continuous feature width multiplied by0.9/1.1 in both patterns",
+      "power_formula": "F=100*(1-q)^p; p0.5 gentler, p2 steeper; q=min(1,d/h)",
+      "exp_formula": "F=100*(exp(-k*q)-exp(-k))/(1-exp(-k))",
+      "mode_curve": "Binary mode match100 else0 unchanged",
+      "nonlinear_numeric_tolerance": 1e-08,
+      "nonlinear_ambiguity": "Boundary interval lower/upper results are reported; terminal0/100 components, integer power and rational square-root identities are exactly rechecked where available; remaining transcendental/irrational comparisons are float diagnostics",
+      "rational_numeric_method": "Exact Fraction V2 baseline and exact recomposition of every threshold/core-near rational scenario row; non-boundary rows use float with1e-8 diagnostic margin",
+      "ranking": "For perturbed float calculations scores rounded to10 decimals for ranking only, ID asc tie; qualification is evaluated before ranking rounding; top200 retention depends on deterministic ID tie order, not unique optimum",
+      "no_listening_labels": true,
+      "no_quality_or_causal_inference": true,
+      "no_new_scenario_3h_csv": true
+    },
+    "scenario_count_including_baseline": 81,
+    "use": "Nominal pass-change counts prioritize review under this finite scenario set; unresolved nonlinear boundary diagnostics in sensitivity_summary remain limitations, not error labels or probabilities."
+  },
+  "checks": {
+    "exactly_500_rows": true,
+    "duplicate_track_ids": 0,
+    "all_sample_ids_in_frozen_base": true,
+    "baseline_pool_union_equals_61931": true,
+    "sensitivity_ids_equal_pool_union": true,
+    "all_source_factual_strings_exactly_preserved": true,
+    "all_proposals_and_llm_y_are_null": true,
+    "no_llm_api_called": true,
+    "all_inputs_unchanged": true,
+    "saved_csv_reloaded_and_verified": true
+  },
+  "numeric_provenance": {
+    "sample_factual_values": "Exact original CSV strings, including raw audio values; never model estimates",
+    "pool_serialization_format_differences_by_feature": {
+      "energy": 5,
+      "loudness": 53,
+      "acousticness": 19,
+      "instrumentalness": 19977,
+      "liveness": 2,
+      "valence": 2,
+      "tempo": 435
+    },
+    "pool_numeric_correspondence_check": "Finite numeric values compared with relative/absolute tolerance 1e-12 only for existing pool serialization; original source strings are used in sample output."
+  },
+  "interpretation_limits": [
+    "500 is a diagnostic review-target sample size, not an API request count, approved budget or inference batch size.",
+    "All rows are NOT_SENT. LLM proposal values, weather y and model fields are null. No human listening validation was performed.",
+    "The problem-enriched and balanced-comparison sample is not a random representative sample; population error rates cannot be estimated from it.",
+    "IQR/MAD flags identify distribution review targets, not confirmed errors; none are automatically deleted or corrected.",
+    "Sensitivity counts depend on the selected scenario set and its numeric boundary treatment; they are not error rates, failure probabilities or listening labels.",
+    "This file is not reusable as an LLM API payload. Baseline rule scores, expected weather memberships and representative patterns are human diagnostic context, not ground truth and must not be forwarded as target answers.",
+    "If a future payload is implemented, use an explicit field allowlist and separate evidence/field proposals. Do not train or self-validate weather suitability using generated labels as listening truth.",
+    "Raw facts, source/provenance and current policy are preserved. The sample does not approve READY catalog publication or overwrite reviewed fields."
+  ]
+}

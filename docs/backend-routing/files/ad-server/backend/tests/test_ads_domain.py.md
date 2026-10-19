@@ -1,0 +1,69 @@
+# ad-server/backend/tests/test_ads_domain.py
+
+- 작성일: 2026-10-15
+- 수정일: 2026-10-15
+- [원본 코드](../../../../../../ad-server/backend/tests/test_ads_domain.py)
+
+메모리 트랜잭션 대역을 사용해 서비스 동작을 검증합니다. 상태 경계·멱등 재생/경합·version/no-op·중단과 PUT·원본 보존·실패 시 롤백·미정 입력 거절·UTC 정규화·이미지 디코딩/해시·불변 PENDING payload를 확인합니다.
+
+입력은 고정 clock/id·광고/이미지/actor fixture이며 출력은 assertion 결과입니다. 이 메모리 검증은 MongoDB driver/replica set의 실제 실행 근거와 구분합니다. AST 목록의 중첩 commit/fixture는 테스트 지원 코드입니다.
+
+예산 선택 쌍·새 opaque 버전·생략/no-op/멱등·감사/rollback·수동 paused 유지와 서버 전용 자동 종료/사유를 추가 검증합니다.
+
+현행 로그 구조와 이전 자료 보존은 [광고 로그 저장 계약](../../../../../development/ads/MongoDB_광고_로그_저장_계약.md)을 따릅니다.
+
+## AST 시그니처
+
+```python
+class MemoryRepository
+MemoryRepository.__init__(self)
+MemoryRepository.run(self, callback)
+MemoryRepository.get_mutation(self, source, actor, operation, scope, key_hash)
+MemoryRepository.get_asset(self, asset_id)
+MemoryRepository.get_ad(self, ad_id)
+MemoryRepository.insert_asset(self, document)
+MemoryRepository.insert_ad(self, document)
+MemoryRepository.insert_mutation(self, document)
+MemoryRepository.replace_ad(self, ad_id, expected_version, document)
+image_bytes(image_format='PNG')
+class AdsDomainTests(SimpleTestCase)
+AdsDomainTests.setUp(self)
+AdsDomainTests.create(self)
+AdsDomainTests.test_status_inclusive_start_exclusive_end_and_pause(self)
+AdsDomainTests.test_create_replay_preserves_original_status_and_does_not_duplicate(self)
+AdsDomainTests.test_idempotency_conflict_changes_nothing(self)
+AdsDomainTests.test_update_replay_precedes_version_check_and_snapshot_is_immutable(self)
+AdsDomainTests.test_noop_does_not_increment_version_or_updated_at(self)
+AdsDomainTests.test_stop_and_put_preserve_paused_and_original_asset(self)
+AdsDomainTests.test_upload_replay_uses_bytes_hash_and_actor_namespace(self)
+AdsDomainTests.test_second_stop_is_noop_and_replay_uses_first_response(self)
+AdsDomainTests.test_audit_failure_rolls_back_ad_and_asset(self)
+AdsDomainTests.test_conditional_write_failure_rolls_back_and_records_no_success(self)
+AdsDomainTests.test_unknown_tag_boolean_priority_and_invalid_duration_rejected(self)
+AdsDomainTests.test_normalized_utc_inputs_hash_the_same(self)
+AdsDomainTests.test_missing_asset_and_tampered_sha_are_not_accepted(self)
+AdsDomainTests.test_image_limit_decode_and_animation_validation(self)
+AdsDomainTests.test_log_payload_is_locally_stored_immutable_and_has_no_image_or_auth_secret(self)
+AdsDomainTests.test_budget_fields_are_optional_pair_and_do_not_expand_required_edit_fields(self)
+AdsDomainTests.test_budget_pair_missing_one_field_is_rejected_before_storage(self)
+AdsDomainTests.test_budgets_are_strict_positive_bson_int64_and_cannot_be_cleared_with_null(self)
+AdsDomainTests.test_request_cannot_choose_budget_version(self)
+AdsDomainTests.test_unconfigured_create_stores_null_budgets_without_inventing_operating_values(self)
+AdsDomainTests.test_budget_create_records_amounts_and_version_in_immutable_success_and_audit(self)
+AdsDomainTests.test_production_id_factory_creates_uuid_budget_version(self)
+AdsDomainTests.test_edit_without_budget_fields_preserves_existing_budget_and_its_version(self)
+AdsDomainTests.test_priority_or_period_edit_preserves_budget_version(self)
+AdsDomainTests.test_budget_only_edit_changes_version_and_audit_without_changing_creative(self)
+AdsDomainTests.test_unchanged_explicit_budget_is_noop_and_keeps_original_budget_version(self)
+AdsDomainTests.test_legacy_ad_without_budget_fields_can_be_read_and_configured(self)
+AdsDomainTests.test_legacy_edit_with_omitted_budgets_does_not_backfill_a_budget(self)
+AdsDomainTests.test_budget_update_replay_retains_original_response_after_another_budget_edit(self)
+AdsDomainTests.test_same_create_key_with_changed_budget_conflicts_without_new_ad(self)
+AdsDomainTests.test_budget_change_failure_rolls_back_amounts_version_and_audit(self)
+AdsDomainTests.test_budget_changes_preserve_manual_pause_and_record_no_resume(self)
+AdsDomainTests.test_automatic_budget_end_uses_current_budget_version_and_effective_interval(self)
+AdsDomainTests.test_total_budget_end_has_no_automatic_time_release_and_pause_has_priority(self)
+AdsDomainTests.test_management_response_distinguishes_budget_end_period_end_and_manual_stop(self)
+AdsDomainTests.test_technical_budget_end_is_preserved_by_edit_and_only_new_budget_version_rechecks_it(self)
+AdsDomainTests.test_automatic_budget_state_and_end_reason_are_server_fields_only(self)
+```
