@@ -5,6 +5,10 @@ from backend.recommendation.models import YoutubeMapping, YoutubeReviewAudit, Yo
 
 
 class SharedYoutubeDatabaseTests(TestCase):
+    def test_registry_backend_setting_is_available(self):
+        from django.conf import settings
+        self.assertIn(settings.YOUTUBE_REGISTRY_BACKEND, {'local', 'database', 'disabled'})
+
     @override_settings(LOCAL_DEMO=False, YOUTUBE_REGISTRY_BACKEND='database')
     def test_production_registry_uses_django_db_and_preserves_actor(self):
         from backend.recommendation.youtube_database import review_actor

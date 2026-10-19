@@ -88,6 +88,9 @@ GEMINI_ENABLED = os.environ.get('GEMINI_ENABLED') == '1'
 GEMINI_TIMEOUT_MS = int(os.environ.get('GEMINI_TIMEOUT_MS', '0'))
 GEMINI_MAX_CANDIDATES = int(os.environ.get('GEMINI_MAX_CANDIDATES', '0'))
 # Known-video playback is keyless by default. Official search is an explicit option.
+YOUTUBE_REGISTRY_BACKEND = os.environ.get('YOUTUBE_REGISTRY_BACKEND', 'local' if LOCAL_DEMO else 'disabled')
+if YOUTUBE_REGISTRY_BACKEND not in {'local', 'database', 'disabled'}:
+    raise ImproperlyConfigured('YOUTUBE_REGISTRY_BACKEND must be local, database or disabled')
 YOUTUBE_PLAYBACK_MODE = os.environ.get('YOUTUBE_PLAYBACK_MODE', 'KEYLESS')
 if YOUTUBE_PLAYBACK_MODE not in {'KEYLESS', 'OPTIONAL_SEARCH'}:
     raise ImproperlyConfigured('YOUTUBE_PLAYBACK_MODE must be KEYLESS or OPTIONAL_SEARCH')
