@@ -2208,5 +2208,3 @@ def solve_window(candidates, deadline, selected_genres=(), min_selected_share=0,
     except TimeoutError:
         raise DomainError('SEARCH_INCOMPLETE', '정해진 시간 안에 탐색을 완료하지 못했어요.', 503) from None
     return original()
-
-\n
