@@ -155,17 +155,6 @@ flowchart TB
 
 ## 6. ERD 및 데이터 저장 구조
 
-### 전체 저장 구조
-
-| 저장소 | 저장하는 데이터 | 주요 연결 기준 |
-|---|---|---|
-| PostgreSQL | 음악·검수·출처, 추천 조건·작업·선곡표, 익명 이용자·관리자, 피드백·이벤트, 지역·주소 매핑 | 곡 ID, 카탈로그 버전, 추천 계열·작업·선곡표 ID, 지역·격자 |
-| MongoDB | 광고·이미지, 제공·측정 기록, 예상 사용량·예산 상태·일별 통계, 관리 이력 | 광고·이미지·제공·이벤트 ID |
-| Elasticsearch | 격자별 최신 날씨와 추천에 사용하는 공통 특징 | 격자 좌표 `nx`, `ny` |
-| 로컬 SQLite | YouTube 영상 매핑과 검수 이력 | 곡 ID와 영상 ID. 로컬 시험 전용 |
-
-아래 구조는 BRD·PRD가 참조하는 구현 커밋 `183ea87` 기준이다. 관계형 데이터는 테이블명과 주요 컬럼·자료형·키를, MongoDB와 Elasticsearch는 문서 구조와 참조 ID를 표시했다. PK는 기본 키, FK는 DB 외래 키, UK는 고유 키다. JSON 내부 값과 일반 ID 참조를 DB 외래 키로 표시하지 않는다. 4차 사용자 계정·결제는 현재 구조에 포함하지 않는다.
-
 ### 음악·검수 ERD
 
 음악 속성은 아래 4개 테이블에 저장한다. 자료형은 PostgreSQL 기준이며, 검수·출처·적재 상태는 별도 테이블에서 관리한다.
@@ -215,40 +204,10 @@ erDiagram
     }
 ```
 
-| 테이블 | 기본 키 | 역할 |
-|---|---|---|
-| music_album | album_key | 앨범 정보 |
-| music_track | track_id | 곡·아티스트·음악 특성값과 앨범 참조 |
-| music_tag | tag_id | 장르·분위기·악기 공통 사전 |
-| track_tag | track_id + tag_id | 곡과 태그의 복수 연결·승인 상태 |
-
-검수와 원본 추적에 사용하는 테이블은 다음과 같다.
-
-| 테이블 | 키·연결 | 주요 컬럼과 자료형 |
-|---|---|---|
-| `common_review` | `track_id` PK·FK → `music_track` | `revision` integer, `status` varchar, `reason` text, `updated_at` timestamptz |
-| `common_reviewchange` | `id` varchar PK, `actor_id` FK → 관리자 계정. `track_id`는 text 참조 ID | `revision` integer, `snapshot` jsonb, `occurred_at` timestamptz |
-| `common_musicsource` | `sha256` varchar PK | `schema` varchar, `raw_path` text, `archive` jsonb, `created_at` timestamptz |
-| `common_trackorigin` | `track_id` PK·FK → `music_track`, `source_id` FK → `common_musicsource.sha256` | 곡과 원본 파일의 연결 |
-| `music_import_run` | `source_sha256` varchar PK. 원본 해시로 식별하며 FK는 아님 | `source_schema_version` varchar, `total_count`·`processed_count`·`error_count` integer, `last_track_id` text NULL, `completed` boolean, `updated_at` timestamptz |
-
-곡 하나는 검수 상태·원본 연결을 각각 최대 하나씩 가진다. 검수 변경 이력은 당시 값을 `snapshot`에 남기며, 적재 진행 상태는 음악 속성 테이블과 분리한다.
 
 참조: [음악 ORM](https://github.com/encore-ai-campus/mlo-01-p3-team1/blob/183ea87c7fb6f9878da51e51eb5c6408699374ee/backend/music/models.py), [공통 ORM](https://github.com/encore-ai-campus/mlo-01-p3-team1/blob/183ea87c7fb6f9878da51e51eb5c6408699374ee/backend/common/models.py), [음악 테이블 설계](https://github.com/encore-ai-campus/mlo-01-p3-team1/blob/183ea87c7fb6f9878da51e51eb5c6408699374ee/docs/handoff/music/테이블_구조_설계.md).
 
-</details>
 
-| SQLite 테이블 | 키·연결 | 컬럼과 자료형 |
-|---|---|---|
-| `track_revision` | `track_id` text PK | `revision` integer |
-| `mapping` | 복합 PK(`track_id`, `video_id`), `track_id` FK → `track_revision` | `status` text(CANDIDATE/VERIFIED/BLOCKED), `source`·`note`·`reason` text, `identity_confirmed`·`playback_observed` integer, `duration_seconds` real NULL, `observed_at` text NULL, `updated_at` text |
-| `review_audit` | `id` integer PK. `track_id`·`video_id`는 text 참조 ID | `action` text, `revision` integer, `created_at` text |
-
-`mapping`에는 외부 재생 연결 검수용 `native_verified` integer, `native_duration_seconds` real NULL, `native_observed_at` text NULL, `native_source`·`native_reason` text도 있다. 영상 매핑의 곡 ID는 PostgreSQL 음악 테이블과 같은 식별자를 사용하지만 DB 간 외래 키는 없다. 운영용 영상 검수 저장소로 간주하지 않는다.
-
-참조: [영상 매핑 저장 코드](https://github.com/encore-ai-campus/mlo-01-p3-team1/blob/183ea87c7fb6f9878da51e51eb5c6408699374ee/backend/recommendation/youtube_registry.py).
-
-</details>
 
 ### 추천·피드백 ERD
 
@@ -323,7 +282,7 @@ erDiagram
     }
 ```
 
-`common_feedbackstate`는 (`playlist_id`, `target_kind`, `track_id`) 조합이 고유하다. 선곡표의 곡 목록은 `snapshot` JSON에 저장하며 별도 선곡표–곡 연결 테이블은 없다. 카탈로그의 `tracks`도 JSON 스냅샷이므로 현재 음악 행을 외래 키로 연결한 것으로 해석하지 않는다.
+
 
 피드백 변경 이벤트와 전달·반영 상태는 다음 구조로 관리한다.
 
@@ -367,26 +326,6 @@ erDiagram
     }
 ```
 
-`Outbox`는 업무 이벤트의 전송 대기 상태, `Projection`은 이벤트 반영 기록, `ProjectedState`는 반영 후 상태를 저장한다. 현재 평가값을 담는 `common_feedbackstate`와 변경 시점의 내용을 남기는 `common_feedbackevent`를 구분한다.
-
-<details>
-<summary>이용자·관리자와 처리 보조 테이블</summary>
-
-| 테이블 | 키·주요 컬럼과 자료형 | 역할·제약 |
-|---|---|---|
-| `common_guest` | `id` varchar PK, `token_hash` varchar UK, `expires_at`·`created_at` timestamptz, `active` boolean | 비로그인 이용자 식별. `Family.owner_id` 등과 ID로 대조하며 FK는 없음 |
-| `auth_user`·`auth_group`·`auth_permission` 및 연결 테이블 | 관리자 계정 ID, 그룹·권한 ID | Django 인증의 관리자·권한 구조. `manage_music`·`manage_ads`·`view_feedback`을 구분하며 4차 일반 사용자 계정과 분리 |
-| `common_adminaction` | `id` bigint PK, `actor_id` FK → 관리자, `scope` text, `key`·`fingerprint` varchar, `response` jsonb, `status` smallint | (`actor_id`, `scope`, `key`) 고유. 같은 관리 요청의 중복 처리 방지 |
-| `common_streamrecord` | `stream_key` text PK, `event_id` varchar, `envelope` jsonb, `received_at` timestamptz | Kafka의 topic·partition·offset별 수신 기록. `event_id`는 FK가 아님 |
-| `common_eventsnapshot` | `id` varchar PK, `kind` varchar, `data` jsonb | 이벤트에 연결된 당시 자료 |
-| `recommendation_ownerlock` | `owner_id` text PK | 같은 소유자의 처리 충돌 제어 |
-| `recommendation_idempotency` | `id` bigint PK, `owner_id`·`scope`·`key` text, `body`·`response` jsonb, `status` smallint | (`owner_id`, `scope`, `key`) 고유. 같은 요청에 대한 응답 보관 |
-| `recommendation_pendingevent` | `event_id` text PK, `event_type` text, `payload` jsonb, `occurred_at` timestamptz | 추천 측의 이벤트 인계 대기. 공통 Outbox와 연결 방식 구분 |
-| `recommendation_demofeedback` | `id` bigint PK, `playlist_id` FK, `target_kind`·`track_id` text, `value` jsonb NULL, `revision` integer, `last_event_id` text NULL, `updated_at` timestamptz | 로컬 CSV 프리뷰용. 공통 피드백과 별도 테이블이며 (`playlist_id`, `target_kind`, `track_id`) 고유 |
-
-`recommendation_job`에는 작업자 처리권 관리를 위한 `lease_token` text NULL, `lease_generation` integer, `lease_expires_at` timestamptz NULL과 외부 모델 호출 기록인 `provider_attempted` boolean, `provider_diagnostics` jsonb도 있다.
-
-</details>
 
 참조: [추천 ORM](https://github.com/encore-ai-campus/mlo-01-p3-team1/blob/183ea87c7fb6f9878da51e51eb5c6408699374ee/backend/recommendation/models.py), [공통 ORM](https://github.com/encore-ai-campus/mlo-01-p3-team1/blob/183ea87c7fb6f9878da51e51eb5c6408699374ee/backend/common/models.py), [인증·DB 설정](https://github.com/encore-ai-campus/mlo-01-p3-team1/blob/183ea87c7fb6f9878da51e51eb5c6408699374ee/backend/cafe/settings.py).
 
@@ -436,26 +375,11 @@ erDiagram
     }
 ```
 
-`region.weather_region_code`와 `road_address(road_id, main_no, sub_no)`에 조회 인덱스가 있다. 지역과 도로명주소는 코드·격자로 연결하며 둘 사이의 FK는 없다. `metadata`는 매핑 자료의 메타데이터를 저장한다.
-
-날씨 최신 상태는 `WEATHER_INDEX`로 지정한 Elasticsearch 인덱스에 저장한다. 문서 ID는 `nx_ny` 형식이며, 아래 필드는 `es_latest.py`의 실제 저장 구조를 따른다.
-
-| 필드 | JSON 자료형 | 내용 |
-|---|---|---|
-| `_id` | string | 격자 식별자. 예: `60_127` |
-| `schema_version`, `revision` | number(정수) | 문서 규격·갱신 버전 |
-| `state_hash` | string | 저장된 날씨 행의 해시 |
-| `rows` | array | 출처·발표시각·대상시각·항목별 정규화 날씨 |
-| `view` | object | 관측·예보와 추천용 날씨 특징을 묶은 조회 자료 |
-| `stored_at` | string(날짜·시각) | 저장 시각 |
-
-지역 매핑의 격자로 날씨 문서를 조회한다. DB 간 FK는 없으며, Elasticsearch의 `_seq_no`·`_primary_term`으로 동시 갱신을 제어한다. 조회 시에는 날씨 유효기간을 다시 검사한다. 현재 경로에 사용하지 않는 과거 날씨 MongoDB·원문 파일 보관 구조는 포함하지 않았다.
-
 참조: [지역·주소 DDL](https://github.com/encore-ai-campus/mlo-01-p3-team1/blob/183ea87c7fb6f9878da51e51eb5c6408699374ee/pipeline/weather/mapping_postgres.sql), [격자별 날씨 저장·조회](https://github.com/encore-ai-campus/mlo-01-p3-team1/blob/183ea87c7fb6f9878da51e51eb5c6408699374ee/pipeline/weather/es_latest.py).
 
 ### 광고 컬렉션 구조
 
-광고는 MongoDB에 저장한다. 아래 화살표는 문서의 ID 참조이며 RDB의 외래 키가 아니다.
+광고는 MongoDB에 저장한다.
 
 ```mermaid
 flowchart LR
@@ -470,22 +394,7 @@ flowchart LR
     AD -->|last_ad_id| ROTATION[ad_rotation_state]
 ```
 
-전 컬렉션의 `_id`는 string 식별자이며, 아래 표는 주요 필드다. `date`는 BSON 날짜, `object`는 중첩 문서다.
 
-| 컬렉션 | 주요 필드와 자료형 | 역할·고유 조건 |
-|---|---|---|
-| `ads` | `asset_id`·`title`·`link_url`·`placement` string, `starts_at`·`ends_at` date, `priority`·`version` integer, `paused` bool, `stopped_at` date/null | 광고 내용·게시 기간·중단 상태. 예산·차단 관련 필드도 보유 |
-| `ad_assets` | `image_bytes` binData, `mime_type`·`sha256` string, `byte_size`·`width`·`height` integer, `uploaded_by_account_id` string | 광고 이미지 원본·규격·등록자 |
-| `ad_admin_changes` | `ad_id` string/null, `asset_id`·`actor_account_id`·`operation` string, `before_snapshot` object/null, `after_snapshot` object, `log_relay`·`log_record` object | 등록·수정·중단 이력과 로그 전달·저장 정보. 관리자·요청 키로 중복 관리 |
-| `ad_deliveries` | `ad_id`·`placement` string, `owner_guest_id` string/null, `ad_snapshot` object, `issued_at`·`event_expires_at` date, `claims` object | 실제 제공한 광고와 측정 자격. (`owner_guest_id`, `placement`, `request_key_hash`, `is_test`)에 부분 고유 인덱스 적용 |
-| `ad_events` | `event_id`·`delivery_id`·`ad_id`·`event_type` string, `occurred_at`·`received_at`·`processed_at` date, `result` string, `counted` bool | 노출·클릭 판정. `event_id` 고유, `_id`와 동일 |
-| `ad_repeat_windows` | `owner_guest_id`·`ad_id`·`placement`·`event_type` string, `accepted_at` date, `revision` integer | 같은 이용자의 반복 측정 억제. 이용자·광고·위치·유형·시험 여부 조합 고유 |
-| `ad_estimated_usage_ledger` | `event_id`·`delivery_id`·`ad_id`·`metric_date_kst` string, `unit_tokens`·`estimated_tokens` integer, `status` string | 인정된 이벤트의 예상 사용량. `event_id` 고유. 실제 결제·잔액 원장은 아님 |
-| `ad_budget_states` | `ad_id`·`budget_version`·`metric_date_kst` string, `daily_budget_tokens`·`total_budget_tokens`·`daily_tokens`·`total_tokens` integer, `verified_at` date | 일일·누적 예산과 소진 검증 상태. (`ad_id`, `budget_version`, `metric_date_kst`, `is_test`) 고유 |
-| `ad_daily_metrics` | `ad_id`·`placement`·`metric_date_kst`·`source` string, `impressions`·`clicks`·`estimated_tokens` integer, `as_of` date | 광고별 일별 노출·클릭·예상 사용량 집계. (`ad_id`, `placement`, `metric_date_kst`, `is_test`) 고유 |
-| `ad_rotation_state` | `placement`·`last_ad_id` string, `revision` integer, `updated_at` date | 광고 위치별 순환 제공 상태. (`placement`, `is_test`) 고유 |
-
-광고의 관리자·익명 이용자 ID는 공통 인증 정보와 연결하지만 MongoDB와 PostgreSQL 사이의 FK는 없다. 관리·측정 문서의 로그 전달 정보도 두 DB에 대한 원자적 동시 쓰기를 뜻하지 않는다.
 
 참조: [관리 컬렉션 스키마](https://github.com/encore-ai-campus/mlo-01-p3-team1/blob/183ea87c7fb6f9878da51e51eb5c6408699374ee/ad-server/backend/domains/ads/schemas/management_manifest.json), [제공·측정 스키마](https://github.com/encore-ai-campus/mlo-01-p3-team1/blob/183ea87c7fb6f9878da51e51eb5c6408699374ee/ad-server/backend/domains/ads/schemas/public_manifest.json), [예산·통계 스키마](https://github.com/encore-ai-campus/mlo-01-p3-team1/blob/183ea87c7fb6f9878da51e51eb5c6408699374ee/ad-server/backend/domains/ads/schemas/policy_manifest.json).
 
