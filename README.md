@@ -142,8 +142,6 @@ flowchart TB
 
 ## 5. 요구사항 명세서
 
-[PRD v0.2](./docs/PRD.md)에 기능 ID·우선순위·품질 요구사항·수용 기준을 정리했다. `active`는 적용할 요구사항, `local_demo`는 로컬 보조 검증 범위이며 구현 완료를 뜻하지 않는다.
-
 | 영역 | 핵심 기준 |
 |---|---|
 | 날씨·취향 | 초기 날씨 선택은 ON이며 지역 미설정은 OFF로 처리한다. ON의 조회 장애를 임의로 OFF로 바꾸지 않는다. 테마·장르는 복수 선택하고 미선택·전체 선택을 같은 유효 조건으로 해석한다. |
@@ -155,11 +153,22 @@ flowchart TB
 
 현행 입력·광고 기준은 [통합 정합성 기록](https://github.com/encore-ai-campus/mlo-01-p3-team1/blob/183ea87c7fb6f9878da51e51eb5c6408699374ee/docs/development/통합_정합성_수정_변경_라우팅.md)과 [광고 정책의 확정 절](https://github.com/encore-ai-campus/mlo-01-p3-team1/blob/183ea87c7fb6f9878da51e51eb5c6408699374ee/docs/development/ads/광고_미정_정책_결정_가이드.md)을 확인한다. 보존된 초기 계약·비교 초안을 현행 규정으로 그대로 적용하지 않는다.
 
-## 6. ERD
+## 6. ERD 및 데이터 저장 구조
 
-### 음악 관계형 데이터 구조
+### 전체 저장 구조
 
-음악 속성을 저장하는 4개 테이블의 컬럼·자료형·키·주요 제약을 표시했다. 참조 기준은 [음악 ORM](https://github.com/encore-ai-campus/mlo-01-p3-team1/blob/183ea87c7fb6f9878da51e51eb5c6408699374ee/backend/music/models.py)이며, 자료형은 PostgreSQL 기준으로 표기했다. 업무·피드백·영상 매핑·적재 운영 테이블은 별도다.
+| 저장소 | 저장하는 데이터 | 주요 연결 기준 |
+|---|---|---|
+| PostgreSQL | 음악·검수·출처, 추천 조건·작업·선곡표, 익명 이용자·관리자, 피드백·이벤트, 지역·주소 매핑 | 곡 ID, 카탈로그 버전, 추천 계열·작업·선곡표 ID, 지역·격자 |
+| MongoDB | 광고·이미지, 제공·측정 기록, 예상 사용량·예산 상태·일별 통계, 관리 이력 | 광고·이미지·제공·이벤트 ID |
+| Elasticsearch | 격자별 최신 날씨와 추천에 사용하는 공통 특징 | 격자 좌표 `nx`, `ny` |
+| 로컬 SQLite | YouTube 영상 매핑과 검수 이력 | 곡 ID와 영상 ID. 로컬 시험 전용 |
+
+아래 구조는 BRD·PRD가 참조하는 구현 커밋 `183ea87` 기준이다. 관계형 데이터는 테이블명과 주요 컬럼·자료형·키를, MongoDB와 Elasticsearch는 문서 구조와 참조 ID를 표시했다. PK는 기본 키, FK는 DB 외래 키, UK는 고유 키다. JSON 내부 값과 일반 ID 참조를 DB 외래 키로 표시하지 않는다. 4차 사용자 계정·결제는 현재 구조에 포함하지 않는다.
+
+### 음악·검수 ERD
+
+음악 속성은 아래 4개 테이블에 저장한다. 자료형은 PostgreSQL 기준이며, 검수·출처·적재 상태는 별도 테이블에서 관리한다.
 
 ```mermaid
 erDiagram
@@ -213,7 +222,272 @@ erDiagram
 | music_tag | tag_id | 장르·분위기·악기 공통 사전 |
 | track_tag | track_id + tag_id | 곡과 태그의 복수 연결·승인 상태 |
 
-**테이블 분리와 컬럼 의미는 [음악 테이블 설계](https://github.com/encore-ai-campus/mlo-01-p3-team1/blob/183ea87c7fb6f9878da51e51eb5c6408699374ee/docs/handoff/music/테이블_구조_설계.md)를 함께 참고한다.*
+검수와 원본 추적에 사용하는 테이블은 다음과 같다.
+
+| 테이블 | 키·연결 | 주요 컬럼과 자료형 |
+|---|---|---|
+| `common_review` | `track_id` PK·FK → `music_track` | `revision` integer, `status` varchar, `reason` text, `updated_at` timestamptz |
+| `common_reviewchange` | `id` varchar PK, `actor_id` FK → 관리자 계정. `track_id`는 text 참조 ID | `revision` integer, `snapshot` jsonb, `occurred_at` timestamptz |
+| `common_musicsource` | `sha256` varchar PK | `schema` varchar, `raw_path` text, `archive` jsonb, `created_at` timestamptz |
+| `common_trackorigin` | `track_id` PK·FK → `music_track`, `source_id` FK → `common_musicsource.sha256` | 곡과 원본 파일의 연결 |
+| `music_import_run` | `source_sha256` varchar PK. 원본 해시로 식별하며 FK는 아님 | `source_schema_version` varchar, `total_count`·`processed_count`·`error_count` integer, `last_track_id` text NULL, `completed` boolean, `updated_at` timestamptz |
+
+곡 하나는 검수 상태·원본 연결을 각각 최대 하나씩 가진다. 검수 변경 이력은 당시 값을 `snapshot`에 남기며, 적재 진행 상태는 음악 속성 테이블과 분리한다.
+
+참조: [음악 ORM](https://github.com/encore-ai-campus/mlo-01-p3-team1/blob/183ea87c7fb6f9878da51e51eb5c6408699374ee/backend/music/models.py), [공통 ORM](https://github.com/encore-ai-campus/mlo-01-p3-team1/blob/183ea87c7fb6f9878da51e51eb5c6408699374ee/backend/common/models.py), [음악 테이블 설계](https://github.com/encore-ai-campus/mlo-01-p3-team1/blob/183ea87c7fb6f9878da51e51eb5c6408699374ee/docs/handoff/music/테이블_구조_설계.md).
+
+</details>
+
+| SQLite 테이블 | 키·연결 | 컬럼과 자료형 |
+|---|---|---|
+| `track_revision` | `track_id` text PK | `revision` integer |
+| `mapping` | 복합 PK(`track_id`, `video_id`), `track_id` FK → `track_revision` | `status` text(CANDIDATE/VERIFIED/BLOCKED), `source`·`note`·`reason` text, `identity_confirmed`·`playback_observed` integer, `duration_seconds` real NULL, `observed_at` text NULL, `updated_at` text |
+| `review_audit` | `id` integer PK. `track_id`·`video_id`는 text 참조 ID | `action` text, `revision` integer, `created_at` text |
+
+`mapping`에는 외부 재생 연결 검수용 `native_verified` integer, `native_duration_seconds` real NULL, `native_observed_at` text NULL, `native_source`·`native_reason` text도 있다. 영상 매핑의 곡 ID는 PostgreSQL 음악 테이블과 같은 식별자를 사용하지만 DB 간 외래 키는 없다. 운영용 영상 검수 저장소로 간주하지 않는다.
+
+참조: [영상 매핑 저장 코드](https://github.com/encore-ai-campus/mlo-01-p3-team1/blob/183ea87c7fb6f9878da51e51eb5c6408699374ee/backend/recommendation/youtube_registry.py).
+
+</details>
+
+### 추천·피드백 ERD
+
+`Family`는 같은 시작 조건으로 만든 추천 결과의 계열이다. 조건·제외·승인 상태를 유지하고, 각 추천 시도는 `Job`, 성공 결과는 `Playlist`에 저장한다. 아래 그림은 주요 업무 컬럼을 표시했다.
+
+```mermaid
+erDiagram
+    recommendation_catalog ||--|| recommendation_catalogpublication : catalog_id
+    recommendation_catalog ||--o{ recommendation_job : catalog_id
+    recommendation_family ||--o{ recommendation_job : family_id
+    recommendation_family ||--o{ recommendation_playlist : family_id
+    recommendation_job ||--o| recommendation_playlist : job_id
+    recommendation_playlist ||--o{ common_feedbackstate : playlist_id
+
+    recommendation_catalog {
+        text version PK
+        jsonb tracks "곡별 데이터 스냅샷"
+        text sha256
+        text source_ref
+        text source_sha256
+        boolean is_test
+        boolean ready
+        timestamptz created_at
+    }
+    recommendation_catalogpublication {
+        bigint id PK "DB가 부여한 등록 순서"
+        text catalog_id FK, UK "카탈로그당 한 건"
+    }
+    recommendation_family {
+        text id PK
+        text owner_id "익명 이용자 참조 ID·FK 아님"
+        jsonb options
+        jsonb raw_selection
+        jsonb allowed_genres
+        jsonb allowed_speeds
+        text policy_version
+        text mapping_version
+        jsonb excluded
+        jsonb excluded_items
+        integer exclusion_revision
+        text approved_playlist_id "NULL 허용·FK 아님"
+        integer approval_revision
+    }
+    recommendation_job {
+        text id PK
+        text family_id FK
+        text catalog_id FK
+        text parent_id "NULL 허용·부모 결과 참조 ID"
+        text method
+        text status
+        jsonb input
+        jsonb error "NULL 허용"
+        text request_id
+        timestamptz created_at
+    }
+    recommendation_playlist {
+        text id PK
+        text job_id FK, UK
+        text family_id FK
+        jsonb snapshot "당시 곡·조건·날씨·판정 근거"
+        timestamptz created_at
+    }
+    common_feedbackstate {
+        bigint id PK
+        text playlist_id FK
+        varchar target_kind
+        text track_id "곡 참조 ID·FK 아님"
+        jsonb value "NULL은 미평가"
+        integer revision
+        varchar last_event_id "NULL 허용·FK 아님"
+        timestamptz updated_at
+    }
+```
+
+`common_feedbackstate`는 (`playlist_id`, `target_kind`, `track_id`) 조합이 고유하다. 선곡표의 곡 목록은 `snapshot` JSON에 저장하며 별도 선곡표–곡 연결 테이블은 없다. 카탈로그의 `tracks`도 JSON 스냅샷이므로 현재 음악 행을 외래 키로 연결한 것으로 해석하지 않는다.
+
+피드백 변경 이벤트와 전달·반영 상태는 다음 구조로 관리한다.
+
+```mermaid
+erDiagram
+    common_feedbackevent ||--o| common_outbox : event_id
+    common_feedbackevent ||--o| common_projection : event_id
+    common_feedbackevent ||--o{ common_projectedstate : event_id
+
+    common_feedbackevent {
+        varchar event_id PK
+        varchar event_type
+        varchar owner_id "참조 ID·FK 아님"
+        varchar family_id "참조 ID·FK 아님"
+        varchar source_playlist_id "NULL 허용·FK 아님"
+        text track_id "NULL 허용·FK 아님"
+        jsonb payload
+        timestamptz occurred_at
+        boolean is_test
+    }
+    common_outbox {
+        varchar event_id PK, FK
+        jsonb envelope
+        varchar state "기본 PENDING"
+        integer attempts
+        varchar lease_token "NULL 허용"
+        timestamptz lease_until "NULL 허용"
+        timestamptz published_at "NULL 허용"
+        varchar last_error
+    }
+    common_projection {
+        varchar event_id PK, FK
+        timestamptz applied_at
+    }
+    common_projectedstate {
+        text target_key PK
+        integer revision
+        jsonb value "NULL 허용"
+        varchar event_id FK
+        boolean is_test
+    }
+```
+
+`Outbox`는 업무 이벤트의 전송 대기 상태, `Projection`은 이벤트 반영 기록, `ProjectedState`는 반영 후 상태를 저장한다. 현재 평가값을 담는 `common_feedbackstate`와 변경 시점의 내용을 남기는 `common_feedbackevent`를 구분한다.
+
+<details>
+<summary>이용자·관리자와 처리 보조 테이블</summary>
+
+| 테이블 | 키·주요 컬럼과 자료형 | 역할·제약 |
+|---|---|---|
+| `common_guest` | `id` varchar PK, `token_hash` varchar UK, `expires_at`·`created_at` timestamptz, `active` boolean | 비로그인 이용자 식별. `Family.owner_id` 등과 ID로 대조하며 FK는 없음 |
+| `auth_user`·`auth_group`·`auth_permission` 및 연결 테이블 | 관리자 계정 ID, 그룹·권한 ID | Django 인증의 관리자·권한 구조. `manage_music`·`manage_ads`·`view_feedback`을 구분하며 4차 일반 사용자 계정과 분리 |
+| `common_adminaction` | `id` bigint PK, `actor_id` FK → 관리자, `scope` text, `key`·`fingerprint` varchar, `response` jsonb, `status` smallint | (`actor_id`, `scope`, `key`) 고유. 같은 관리 요청의 중복 처리 방지 |
+| `common_streamrecord` | `stream_key` text PK, `event_id` varchar, `envelope` jsonb, `received_at` timestamptz | Kafka의 topic·partition·offset별 수신 기록. `event_id`는 FK가 아님 |
+| `common_eventsnapshot` | `id` varchar PK, `kind` varchar, `data` jsonb | 이벤트에 연결된 당시 자료 |
+| `recommendation_ownerlock` | `owner_id` text PK | 같은 소유자의 처리 충돌 제어 |
+| `recommendation_idempotency` | `id` bigint PK, `owner_id`·`scope`·`key` text, `body`·`response` jsonb, `status` smallint | (`owner_id`, `scope`, `key`) 고유. 같은 요청에 대한 응답 보관 |
+| `recommendation_pendingevent` | `event_id` text PK, `event_type` text, `payload` jsonb, `occurred_at` timestamptz | 추천 측의 이벤트 인계 대기. 공통 Outbox와 연결 방식 구분 |
+| `recommendation_demofeedback` | `id` bigint PK, `playlist_id` FK, `target_kind`·`track_id` text, `value` jsonb NULL, `revision` integer, `last_event_id` text NULL, `updated_at` timestamptz | 로컬 CSV 프리뷰용. 공통 피드백과 별도 테이블이며 (`playlist_id`, `target_kind`, `track_id`) 고유 |
+
+`recommendation_job`에는 작업자 처리권 관리를 위한 `lease_token` text NULL, `lease_generation` integer, `lease_expires_at` timestamptz NULL과 외부 모델 호출 기록인 `provider_attempted` boolean, `provider_diagnostics` jsonb도 있다.
+
+</details>
+
+참조: [추천 ORM](https://github.com/encore-ai-campus/mlo-01-p3-team1/blob/183ea87c7fb6f9878da51e51eb5c6408699374ee/backend/recommendation/models.py), [공통 ORM](https://github.com/encore-ai-campus/mlo-01-p3-team1/blob/183ea87c7fb6f9878da51e51eb5c6408699374ee/backend/common/models.py), [인증·DB 설정](https://github.com/encore-ai-campus/mlo-01-p3-team1/blob/183ea87c7fb6f9878da51e51eb5c6408699374ee/backend/cafe/settings.py).
+
+### 지역·날씨 저장 구조
+
+지역·도로명주소와 기상 격자 매핑은 PostgreSQL의 `weather_mapping` 스키마에 저장한다.
+
+```mermaid
+erDiagram
+    road ||--o{ road_address : road_id
+
+    region {
+        text id PK
+        text weather_region_code "NULL 허용"
+        text name
+        text address
+        integer nx "1~149"
+        integer ny "1~253"
+        jsonb payload
+    }
+    road {
+        bigint id PK
+        text road_code
+        text sido
+        text sigungu
+        text eup_myeon
+        text name
+        text search_text
+    }
+    road_address {
+        bigint id PK
+        text address_code UK
+        bigint road_id FK
+        integer main_no
+        integer sub_no
+        text underground
+        text admin_codes
+        text admin_names
+        text weather_region_code "NULL 허용"
+        integer nx "NULL 허용"
+        integer ny "NULL 허용"
+        text mapping_status
+    }
+    metadata {
+        text name PK
+        text value
+    }
+```
+
+`region.weather_region_code`와 `road_address(road_id, main_no, sub_no)`에 조회 인덱스가 있다. 지역과 도로명주소는 코드·격자로 연결하며 둘 사이의 FK는 없다. `metadata`는 매핑 자료의 메타데이터를 저장한다.
+
+날씨 최신 상태는 `WEATHER_INDEX`로 지정한 Elasticsearch 인덱스에 저장한다. 문서 ID는 `nx_ny` 형식이며, 아래 필드는 `es_latest.py`의 실제 저장 구조를 따른다.
+
+| 필드 | JSON 자료형 | 내용 |
+|---|---|---|
+| `_id` | string | 격자 식별자. 예: `60_127` |
+| `schema_version`, `revision` | number(정수) | 문서 규격·갱신 버전 |
+| `state_hash` | string | 저장된 날씨 행의 해시 |
+| `rows` | array | 출처·발표시각·대상시각·항목별 정규화 날씨 |
+| `view` | object | 관측·예보와 추천용 날씨 특징을 묶은 조회 자료 |
+| `stored_at` | string(날짜·시각) | 저장 시각 |
+
+지역 매핑의 격자로 날씨 문서를 조회한다. DB 간 FK는 없으며, Elasticsearch의 `_seq_no`·`_primary_term`으로 동시 갱신을 제어한다. 조회 시에는 날씨 유효기간을 다시 검사한다. 현재 경로에 사용하지 않는 과거 날씨 MongoDB·원문 파일 보관 구조는 포함하지 않았다.
+
+참조: [지역·주소 DDL](https://github.com/encore-ai-campus/mlo-01-p3-team1/blob/183ea87c7fb6f9878da51e51eb5c6408699374ee/pipeline/weather/mapping_postgres.sql), [격자별 날씨 저장·조회](https://github.com/encore-ai-campus/mlo-01-p3-team1/blob/183ea87c7fb6f9878da51e51eb5c6408699374ee/pipeline/weather/es_latest.py).
+
+### 광고 컬렉션 구조
+
+광고는 MongoDB에 저장한다. 아래 화살표는 문서의 ID 참조이며 RDB의 외래 키가 아니다.
+
+```mermaid
+flowchart LR
+    ASSET[ad_assets] -->|asset_id| AD[ads]
+    AD -->|ad_id| DELIVERY[ad_deliveries]
+    DELIVERY -->|delivery_id| EVENT[ad_events]
+    EVENT -->|event_id| LEDGER[ad_estimated_usage_ledger]
+    AD -->|ad_id| CHANGE[ad_admin_changes]
+    AD -->|ad_id| BUDGET[ad_budget_states]
+    AD -->|ad_id| METRIC[ad_daily_metrics]
+    AD -->|ad_id| REPEAT[ad_repeat_windows]
+    AD -->|last_ad_id| ROTATION[ad_rotation_state]
+```
+
+전 컬렉션의 `_id`는 string 식별자이며, 아래 표는 주요 필드다. `date`는 BSON 날짜, `object`는 중첩 문서다.
+
+| 컬렉션 | 주요 필드와 자료형 | 역할·고유 조건 |
+|---|---|---|
+| `ads` | `asset_id`·`title`·`link_url`·`placement` string, `starts_at`·`ends_at` date, `priority`·`version` integer, `paused` bool, `stopped_at` date/null | 광고 내용·게시 기간·중단 상태. 예산·차단 관련 필드도 보유 |
+| `ad_assets` | `image_bytes` binData, `mime_type`·`sha256` string, `byte_size`·`width`·`height` integer, `uploaded_by_account_id` string | 광고 이미지 원본·규격·등록자 |
+| `ad_admin_changes` | `ad_id` string/null, `asset_id`·`actor_account_id`·`operation` string, `before_snapshot` object/null, `after_snapshot` object, `log_relay`·`log_record` object | 등록·수정·중단 이력과 로그 전달·저장 정보. 관리자·요청 키로 중복 관리 |
+| `ad_deliveries` | `ad_id`·`placement` string, `owner_guest_id` string/null, `ad_snapshot` object, `issued_at`·`event_expires_at` date, `claims` object | 실제 제공한 광고와 측정 자격. (`owner_guest_id`, `placement`, `request_key_hash`, `is_test`)에 부분 고유 인덱스 적용 |
+| `ad_events` | `event_id`·`delivery_id`·`ad_id`·`event_type` string, `occurred_at`·`received_at`·`processed_at` date, `result` string, `counted` bool | 노출·클릭 판정. `event_id` 고유, `_id`와 동일 |
+| `ad_repeat_windows` | `owner_guest_id`·`ad_id`·`placement`·`event_type` string, `accepted_at` date, `revision` integer | 같은 이용자의 반복 측정 억제. 이용자·광고·위치·유형·시험 여부 조합 고유 |
+| `ad_estimated_usage_ledger` | `event_id`·`delivery_id`·`ad_id`·`metric_date_kst` string, `unit_tokens`·`estimated_tokens` integer, `status` string | 인정된 이벤트의 예상 사용량. `event_id` 고유. 실제 결제·잔액 원장은 아님 |
+| `ad_budget_states` | `ad_id`·`budget_version`·`metric_date_kst` string, `daily_budget_tokens`·`total_budget_tokens`·`daily_tokens`·`total_tokens` integer, `verified_at` date | 일일·누적 예산과 소진 검증 상태. (`ad_id`, `budget_version`, `metric_date_kst`, `is_test`) 고유 |
+| `ad_daily_metrics` | `ad_id`·`placement`·`metric_date_kst`·`source` string, `impressions`·`clicks`·`estimated_tokens` integer, `as_of` date | 광고별 일별 노출·클릭·예상 사용량 집계. (`ad_id`, `placement`, `metric_date_kst`, `is_test`) 고유 |
+| `ad_rotation_state` | `placement`·`last_ad_id` string, `revision` integer, `updated_at` date | 광고 위치별 순환 제공 상태. (`placement`, `is_test`) 고유 |
+
+광고의 관리자·익명 이용자 ID는 공통 인증 정보와 연결하지만 MongoDB와 PostgreSQL 사이의 FK는 없다. 관리·측정 문서의 로그 전달 정보도 두 DB에 대한 원자적 동시 쓰기를 뜻하지 않는다.
+
+참조: [관리 컬렉션 스키마](https://github.com/encore-ai-campus/mlo-01-p3-team1/blob/183ea87c7fb6f9878da51e51eb5c6408699374ee/ad-server/backend/domains/ads/schemas/management_manifest.json), [제공·측정 스키마](https://github.com/encore-ai-campus/mlo-01-p3-team1/blob/183ea87c7fb6f9878da51e51eb5c6408699374ee/ad-server/backend/domains/ads/schemas/public_manifest.json), [예산·통계 스키마](https://github.com/encore-ai-campus/mlo-01-p3-team1/blob/183ea87c7fb6f9878da51e51eb5c6408699374ee/ad-server/backend/domains/ads/schemas/policy_manifest.json).
 
 ## 7. 주요 프로시저
 
@@ -246,42 +520,49 @@ erDiagram
 
 ### 폴더 구조
 
+BRD·PRD가 참조하는 구현 커밋 `183ea87`의 주요 폴더 구조다. 현재 `main`과 로컬 작업본은 문서 중심이며, 아래 서비스 코드는 해당 구현 커밋에서 확인할 수 있다.
+
 ```text
 .
 ├─ README.md
 ├─ AGENTS.md
 ├─ CONTRIBUTING.md
+├─ frontend/                   공개·관리자 화면
+├─ backend/
+│  ├─ cafe/                    Django 설정
+│  ├─ common/                  인증·권한·피드백·공통 처리
+│  ├─ music/                   음악 데이터·적재
+│  ├─ recommendation/          추천·선곡표·YouTube 연결
+│  └─ weather/                 날씨·지역 조회 API
+├─ ad-server/                  광고 API·MongoDB·집계
+├─ pipeline/
+│  ├─ weather/                 날씨 수집·정제·발행
+│  ├─ music/                   음악 데이터 처리
+│  └─ feedback/                피드백 이벤트 처리
+├─ music_playback/             일반곡 판정·선곡표 구성 보조
+├─ aws-infra/                  AWS 인프라 설치·설정·모니터링
+├─ deployment/aws/             앱 배포 설정
+├─ config/                     입력 계약·환경 설정
+├─ scripts/                    실행·관리 스크립트
+├─ tests/                      테스트
+├─ .github/workflows/          CI 워크플로
+├─ analysis/                   분석·검증 자료
+├─ prototype/                  YouTube 플레이어 시제품
 └─ docs/
-   ├─ BRD.md                   사업 요구사항 초안
-   ├─ PRD.md                   제품 요구사항 초안
+   ├─ BRD.md                   사업 요구사항
+   ├─ PRD.md                   제품 요구사항
    ├─ product/                 기능·추천·계약·구현 태스크
    │  └─ archive/              이전 정책 이력
    ├─ contracts/               기계 판독 계약
-   ├─ fixtures/                문서 단계의 고정 예시
-   ├─ handoff/
-   │  ├─ ads/                  광고 인계
-   │  ├─ infra/                로컬·AWS 인프라 인계
-   │  ├─ music/                음악 규격·테이블·선곡 규칙
-   │  └─ weather/              날씨 수집·정제·저장 인계
-   └─ assets/
-      ├─ mockups/              화면 시안
-      └─ penguin/              공통 펭귄 원본
+   ├─ fixtures/                고정 예시·검증 자료
+   ├─ handoff/                 음악·날씨·광고·인프라 인계
+   ├─ development/             구현·변경 기록
+   ├─ acceptance/              검증 결과와 증빙
+   ├─ runbook/                 실행·운영·복구 절차
+   └─ assets/                  화면 시안·안내 이미지 등 문서 자산
 ```
 
-위 구조는 로컬 문서 작업본이다. BRD·PRD가 참조한 구현 커밋에는 다음 경로가 있다.
-
-```text
-frontend/          공개·관리 화면
-backend/           공통·음악·추천·날씨 API와 작업자
-ad-server/         광고 API·MongoDB·집계 작업자
-pipeline/          날씨·음악·피드백 처리
-music_playback/    일반곡 판정·선곡표 구성 보조
-deployment/aws/   AWS 앱 배포 설정
-docs/development/ 구현·변경 기록
-docs/acceptance/  검증 결과와 증빙
-```
-
-**전체 구조와 실행·인계 절차는 [참조 구현 트리](https://github.com/encore-ai-campus/mlo-01-p3-team1/tree/183ea87c7fb6f9878da51e51eb5c6408699374ee)와 그 안의 `docs/runbook/`을 확인한다. 위 코드 경로가 현재 로컬 문서 폴더에 모두 존재한다는 뜻은 아니다.*
+참조: [구현 트리](https://github.com/encore-ai-campus/mlo-01-p3-team1/tree/183ea87c7fb6f9878da51e51eb5c6408699374ee), [실행·운영 안내](https://github.com/encore-ai-campus/mlo-01-p3-team1/tree/183ea87c7fb6f9878da51e51eb5c6408699374ee/docs/runbook).
 
 ## 8. 수행결과(테스트/시연 페이지)
 
@@ -299,7 +580,7 @@ docs/acceptance/  검증 결과와 증빙
 
 **89,741개는 최초 원본의 고유 ID 수이며, 89,740개는 필수 이름 누락 1곡을 격리한 정상 곡 수다. 과거 발행 수치를 최신 GENERAL 적격곡 수로 사용하지 않는다.*
 
-근거: [BRD의 현재 확인 상태](./docs/BRD.md), [AWS 적재·발행·추천 기록](https://github.com/encore-ai-campus/mlo-01-p3-team1/blob/183ea87c7fb6f9878da51e51eb5c6408699374ee/docs/development/INF_AWS_앱배포_변경_라우팅.md), [통합 검증 기록](https://github.com/encore-ai-campus/mlo-01-p3-team1/blob/183ea87c7fb6f9878da51e51eb5c6408699374ee/docs/development/통합_정합성_수정_변경_라우팅.md).
+참조: [BRD의 현재 확인 상태](./docs/BRD.md), [AWS 적재·발행·추천 기록](https://github.com/encore-ai-campus/mlo-01-p3-team1/blob/183ea87c7fb6f9878da51e51eb5c6408699374ee/docs/development/INF_AWS_앱배포_변경_라우팅.md), [통합 검증 기록](https://github.com/encore-ai-campus/mlo-01-p3-team1/blob/183ea87c7fb6f9878da51e51eb5c6408699374ee/docs/development/통합_정합성_수정_변경_라우팅.md).
 
 ### 테스트와 평가 기준
 
