@@ -1,4 +1,5 @@
-import {Icon,WeatherIcon} from './Icons';
+import {Icon} from './Icons';
+import {MusicWeatherHeaderLogo} from './MusicWeatherHeaderLogo';
 import './header-brand.css';
 
 type Page='home'|'playlist';
@@ -16,6 +17,8 @@ export function Header({login=false,showGuide,isDemo=false,musicSource,weatherIs
       <span className="muther-wordmark" aria-hidden="true"><span className="muther-wordmark-mu">mu</span><span className="muther-wordmark-ther">ther</span><span className="muther-wordmark-dot">.</span></span>
       <span className="muther-description">오늘의 날씨를 들어보세요</span>
     </a>
+    {!login&&<a className="muther-header-logo-link" href="/" aria-label="MUSIC X WEATHER 홈으로 이동"
+      onClick={event=>selectPage(event,'home')}><MusicWeatherHeaderLogo/></a>}
     {login?<nav aria-label="로그인 메뉴"><a className="home-link" href="/"><Icon name="home"/>선곡 페이지로 <Icon name="arrow"/></a></nav>:
       <nav className="muther-header-nav" aria-label="주 메뉴">
         <a href="/" aria-current={currentPage==='home'?'page':undefined}
@@ -28,6 +31,5 @@ export function Header({login=false,showGuide,isDemo=false,musicSource,weatherIs
     {isDemo&&!login&&<span className="demo-note" title={'음악: '+(musicSource==='CSV'?'제공 CSV의 실제 곡 정보':'로컬 자료')+' · 날씨: '+(weatherSource||'지역 선택 후 조회')}>
       로컬 데모 · {weatherSource||'날씨 확인 전'}
     </span>}
-    <span className="muther-signature"><WeatherIcon pty={0} sky={3}/><span>MUSIC <span className="muther-signature-cross">×</span> WEATHER</span></span>
   </header>;
 }
