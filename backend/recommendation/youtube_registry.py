@@ -97,6 +97,12 @@ def _now():
 
 @contextmanager
 def _connection(write=False):
+    if not settings.LOCAL_DEMO:
+        require(getattr(settings, 'YOUTUBE_REGISTRY_BACKEND', 'disabled') == 'database', 'POLICY_NOT_READY', '공유 영상 연결 저장소의 운영 연결을 기다리고 있어요.', 503)
+        from .youtube_database import registry_connection
+        with registry_connection(write) as connection:
+            yield connection
+        return
     target = registry_path()
     try:
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -195,6 +201,11 @@ def _revision(connection, track_id, expected):
 
 
 def _audit(connection, track_id, video_id, action, revision):
+    if not settings.LOCAL_DEMO:
+        from .youtube_database import review_actor
+        connection.execute('INSERT INTO review_audit(track_id,video_id,action,revision,created_at,actor) VALUES(?,?,?,?,?,?)',
+                           (track_id, video_id, action, revision, _now(), review_actor.get()))
+        return
     connection.execute('INSERT INTO review_audit(track_id,video_id,action,revision,created_at) VALUES(?,?,?,?,?)',
                        (track_id, video_id, action, revision, _now()))
 

@@ -127,3 +127,42 @@ class PendingEvent(models.Model):
     event_type = models.TextField()
     payload = models.JSONField()
     occurred_at = models.DateTimeField(auto_now_add=True)
+
+class YoutubeTrackRevision(models.Model):
+    track_id = models.TextField(primary_key=True)
+    revision = models.PositiveIntegerField(default=0, db_default=0)
+    class Meta:
+        db_table = 'youtube_track_revision'
+
+
+class YoutubeMapping(models.Model):
+    track = models.ForeignKey(YoutubeTrackRevision, db_column='track_id', on_delete=models.PROTECT)
+    video_id = models.CharField(max_length=11)
+    status = models.CharField(max_length=12)
+    source = models.TextField()
+    note = models.TextField(default='', db_default='')
+    reason = models.TextField(default='', db_default='')
+    identity_confirmed = models.PositiveSmallIntegerField(default=0, db_default=0)
+    playback_observed = models.PositiveSmallIntegerField(default=0, db_default=0)
+    duration_seconds = models.FloatField(null=True)
+    observed_at = models.TextField(null=True)
+    updated_at = models.TextField()
+    native_verified = models.PositiveSmallIntegerField(default=0, db_default=0)
+    native_duration_seconds = models.FloatField(null=True)
+    native_observed_at = models.TextField(null=True)
+    native_source = models.TextField(default='', db_default='')
+    native_reason = models.TextField(default='', db_default='')
+    class Meta:
+        db_table = 'youtube_mapping'
+        constraints = [models.UniqueConstraint(fields=['track','video_id'],name='youtube_track_video_unique')]
+
+
+class YoutubeReviewAudit(models.Model):
+    track_id = models.TextField(db_index=True)
+    video_id = models.CharField(max_length=11)
+    action = models.TextField()
+    revision = models.PositiveIntegerField()
+    created_at = models.TextField()
+    actor = models.TextField(default='system', db_default='system')
+    class Meta:
+        db_table = 'youtube_review_audit'
