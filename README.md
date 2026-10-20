@@ -1,6 +1,6 @@
 # muther. - "오늘의 날씨를 들어보세요."
 ### *날씨와 취향을 담은 3시간의 선곡표*
-<img src="./docs/assets/readme/00-music-weather-logo.png" alt="MUSIC X WEATHER 로고" width="270">
+<img src="./docs/assets/readme/00-muther-penguin-logo.png" alt="뮤더 로고와 펭귄 — 오늘의 날씨를 들어보세요" width="270">
 
 
 
