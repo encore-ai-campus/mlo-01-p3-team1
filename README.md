@@ -1,10 +1,8 @@
+
 # muther. - "오늘의 날씨를 들어보세요."
 ### *날씨와 취향을 담은 3시간의 선곡표*
-<img src="./docs/assets/readme/00-muther-penguin-logo.png" alt="뮤더 로고와 펭귄 — 오늘의 날씨를 들어보세요" width="270">
+<img src="./docs/assets/readme/muther-banner-tagline.png" alt="뮤더 — 오늘의 날씨를 들어보세요" width="100%">
 
-
-
-<img src="./docs/assets/readme/06-home-current.png" alt="뮤더 메인 화면 — 광고·날씨·추천 플레이리스트" width="400">
 
 ## 1. 팀원 소개
 
@@ -524,16 +522,19 @@ BRD·PRD가 참조하는 구현 커밋 `183ea87`의 주요 폴더 구조다. 현
 
 <img src="./docs/assets/readme/05-playlist-result.png" alt="선곡표 결과와 YouTube 외부 연결 화면" width="526">
 
+<img src="./docs/assets/readme/06-home-current.png" alt="뮤더 메인 화면 — 광고·날씨·추천 플레이리스트" width="400">
+
+
 ## 9. 한 줄 회고
 
 | 담당 | 한 줄 회고 |
 |---|---|
 | 안길찬 | 작성 대기 |
 | 김건우 | 작성 대기 |
-| 김민서 | 작성 대기 |
+| 김민서 | 기획의 흐름을 파악해볼 수 있는 좋은 경험이었습니다. |
 | 오재석 | 작성 대기 |
 | 이인건 | 작성 대기 |
 
 ## 10. PPT 링크
 
-발표 자료 링크 등록 대기.
+https://docs.google.com/presentation/d/1mM93YUYQdoKe0RlKQcM3khmC_5YpL9koXLoOcZh4oco/edit?usp=sharing
