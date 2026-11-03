@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "principal_id": "example-owner",
+  "allowed_store_ids": ["example-cafe"],
+  "categories": ["CE7", "CT1", "SC4", "SW8", "AT4"],
+  "max_pages_per_category": 3,
+  "stores": [
+    {
+      "store_id": "example-cafe",
+      "owner_id": "example-owner",
+      "name": "설정 예시 매장 - 실제 운영 자료 아님",
+      "longitude": 127.0,
+      "latitude": 37.5,
+      "nx": 60,
+      "ny": 127,
+      "version": "example-v1",
+      "updated_at": "2026-11-03T09:00:00+09:00",
+      "interior_tags": ["조용한 전시형 공간"],
+      "preferred_moods": ["차분함"],
+      "usage_tags": ["대화"],
+      "excluded_tags": []
+    }
+  ]
+}
