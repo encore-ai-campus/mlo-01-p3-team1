@@ -1,3 +1,0 @@
-# Optional MCP process dependency; install only in an approved isolated environment.
-mcp==1.30.0
-
