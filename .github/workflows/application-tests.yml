@@ -55,7 +55,9 @@ jobs:
       - run: python -m pip install -r backend/requirements.lock
       - run: python -m backend.manage test backend.common.test_exclusion_history backend.music.test_occasion_publication backend.recommendation.tests.test_catalog_publication --noinput --verbosity 2
   ads:
-    runs-on: ubuntu-latest
+    # MongoDB 8.0 kernel detection: actions/runner-images#15005, SERVER-131779.
+    # Keep the MongoDB major version; use the recommended temporary CI runner.
+    runs-on: ubuntu-22.04
     timeout-minutes: 15
     env:
       PYTHONUTF8: '1'
@@ -80,6 +82,7 @@ jobs:
             exit "$status"
           }
           trap report_mongo_failure EXIT
+          uname -r
           docker run -d --name ads-ci -p 127.0.0.1:27018:27018 mongo:8.0 mongod --port 27018 --bind_ip_all --replSet ads-rs
           for attempt in $(seq 1 30); do
             if docker exec ads-ci mongosh --port 27018 --quiet --eval 'db.adminCommand({ping:1})' >/dev/null 2>&1; then break; fi

@@ -135,4 +135,6 @@ SDK 미설치 환경은 stdio 3개를 건너뜀. 전체 검증 판단에는 SDK�
 
 11월 3일 `feature/weather` 2회와 11월 4일 `feature/mood-mcp` 1회 모두 광고용 임시 MongoDB 기동 단계에서 실패. 광고 테스트 본문은 미실행이며 다른 3개 검사는 통과. 10월 18일 성공 시점과 검사 설정은 같고 MongoDB 이미지·GitHub 실행 환경은 변경된 상태.
 
-정확한 종료 원인을 확인하기 위해 `.github/workflows/application-tests.yml`의 MongoDB 기동 실패 시 컨테이너 상태·종료 코드와 최근 로그를 출력하도록 추가. 기존 검사·실패 판정·컨테이너 정리 유지. 세부 원인과 후속 결과는 재검사 후 이 절에 갱신.
+진단 커밋 `89c7321`의 [실행 기록](https://github.com/encore-ai-campus/mlo-01-p3-team1/actions/runs/41750542127)에서 종료 코드 1, `OOMKilled=false`, MongoDB fatal ID `12257600` 확인. MongoDB의 Linux 커널 버전 검사 때문에 기동 중 종료됨. GitHub 실행 환경의 Ubuntu 커널 표기와 MongoDB의 호환 판정 문제는 [runner-images #15005](https://github.com/actions/runner-images/issues/15005), [SERVER-131779](https://jira.mongodb.org/browse/SERVER-131779)에 보고된 현상과 일치.
+
+공식 실행 환경 담당자가 제시한 임시 조치에 따라 광고 검사만 `ubuntu-22.04`에서 실행. MongoDB 8.0과 기존 광고 검사는 유지하고 시작 시 커널 버전, 실패 시 컨테이너 상태·종료 코드·최근 로그를 출력. 수정 후 검사 결과는 후속 실행에서 확인. MongoDB 수정 릴리스로 전환할 때는 해당 호환 문제 해결과 기존 광고 검증을 확인한 뒤 실행 환경을 재검토.
