@@ -71,6 +71,15 @@ jobs:
       - run: uv sync --locked --project ad-server/backend
       - name: Start isolated MongoDB replica set
         run: |
+          report_mongo_failure() {
+            status=$?
+            if [ "$status" -ne 0 ]; then
+              docker inspect --format 'state={{json .State}} image={{.Image}}' ads-ci || true
+              docker logs --tail 200 ads-ci || true
+            fi
+            exit "$status"
+          }
+          trap report_mongo_failure EXIT
           docker run -d --name ads-ci -p 127.0.0.1:27018:27018 mongo:8.0 mongod --port 27018 --bind_ip_all --replSet ads-rs
           for attempt in $(seq 1 30); do
             if docker exec ads-ci mongosh --port 27018 --quiet --eval 'db.adminCommand({ping:1})' >/dev/null 2>&1; then break; fi
