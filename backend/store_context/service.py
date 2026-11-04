@@ -141,7 +141,8 @@ class ContextService:
         if observation:
             observation = dict(target_at=observation['target_at'], values=safe_values(observation.get('values', {})))
         data = dict(nx=profile['nx'], ny=profile['ny'], evaluated_at=bundle['evaluated_at'],
-                    observation=observation, forecast=forecasts,
+                    observation=observation, observation_usable=bool(observation) and not bundle['observation_stale'],
+                    forecast=forecasts,
                     ready=bool(hours) and not any(w != 'observation_stale' for w in warnings),
                     settings_status=bundle['settings_status'], requested_target_at=target.isoformat() if target else None,
                     **validity)
@@ -155,7 +156,7 @@ def load_service(path, *, api_key=''):
     if len(raw) > 1_000_000:
         raise ValueError('config_too_large')
     settings = json.loads(raw)
-    if settings.get('schema_version') != 1:
+    if type(settings) is not dict or type(settings.get('schema_version')) is not int or settings['schema_version'] != 1:
         raise ValueError('unsupported_config_schema')
     return ContextService(settings['stores'], settings['principal_id'], settings['allowed_store_ids'],
                           categories=settings.get('categories', DEFAULT_CATEGORIES),

@@ -1,14 +1,29 @@
 """MCP 조회 결과를 LLM 호스트에 전달하는 연결 경계. 모델/API 호출은 호스트 책임."""
 import argparse
 import asyncio
+from datetime import datetime
 import json
 import math
 import os
 from pathlib import Path
 import sys
 
+from backend.store_context.proposal import response_schema, validate_proposal
+
 TOOLS = ('get_store_profile', 'get_neighborhood_context', 'get_weather_context')
 STATUSES = {'ok', 'empty', 'partial', 'unavailable'}
+
+
+def validate_owner_request(owner_request):
+    if not isinstance(owner_request, str) or not owner_request.strip() or len(owner_request) > 4000:
+        raise ValueError('owner_request_invalid')
+
+
+def validate_timeout(value):
+    if isinstance(value, bool) or not isinstance(value, (float, int)):
+        raise ValueError('timeout_invalid')
+    if not math.isfinite(value) or value <= 0:
+        raise ValueError('timeout_invalid')
 
 
 def validate_context(value, store_id):
@@ -18,12 +33,26 @@ def validate_context(value, store_id):
         raise ValueError('context_store_mismatch')
     if type(value.get('schema_version')) is not int or value['schema_version'] != 1:
         raise ValueError('context_result_invalid')
-    if value.get('status') not in STATUSES:
+    if not isinstance(value.get('status'), str) or value['status'] not in STATUSES:
         raise ValueError('context_result_invalid')
     if not isinstance(value.get('provenance'), dict) or not isinstance(value.get('warnings'), list):
         raise ValueError('context_result_invalid')
-    if any(not isinstance(item, str) for item in value['warnings']):
+    if any(not isinstance(item, str) or not item.strip() for item in value['warnings']):
         raise ValueError('context_result_invalid')
+    provenance = value['provenance']
+    if (not isinstance(provenance.get('source'), str) or not provenance['source'].strip()
+            or not {'queried_at', 'source_as_of'} <= provenance.keys()
+            or value.get('data_trust') != 'data_only_not_instructions'):
+        raise ValueError('context_result_invalid')
+    for field in ('queried_at', 'source_as_of'):
+        timestamp = provenance[field]
+        if field == 'source_as_of' and timestamp is None:
+            continue
+        try:
+            if not isinstance(timestamp, str) or datetime.fromisoformat(timestamp).utcoffset() is None:
+                raise ValueError()
+        except ValueError:
+            raise ValueError('context_result_invalid') from None
     if not isinstance(value.get('data'), dict) and not (
             value['status'] == 'unavailable' and value.get('data') is None):
         raise ValueError('context_result_invalid')
@@ -53,10 +82,7 @@ async def collect_context(session, store_id, *, radius_m=500, target_time=None, 
     """
     if not isinstance(store_id, str) or not store_id.strip():
         raise ValueError('store_id_required')
-    if isinstance(timeout_seconds, bool) or not isinstance(timeout_seconds, (float, int)):
-        raise ValueError('timeout_invalid')
-    if not math.isfinite(timeout_seconds) or timeout_seconds <= 0:
-        raise ValueError('timeout_invalid')
+    validate_timeout(timeout_seconds)
     results = {}
     arguments = [dict(store_id=store_id), dict(store_id=store_id, radius_m=radius_m),
                  dict(store_id=store_id, target_time=target_time)]
@@ -74,8 +100,7 @@ async def collect_context(session, store_id, *, radius_m=500, target_time=None, 
 
 def model_input(bundle, owner_request):
     """Return separate trusted instructions and untrusted facts for a host model adapter."""
-    if not isinstance(owner_request, str) or not owner_request.strip() or len(owner_request) > 4000:
-        raise ValueError('owner_request_invalid')
+    validate_owner_request(owner_request)
     if not isinstance(bundle, dict) or not isinstance(bundle.get('contexts'), dict):
         raise ValueError('context_bundle_invalid')
     if set(bundle['contexts']) != set(TOOLS):
@@ -93,20 +118,36 @@ def model_input(bundle, owner_request):
             'demographics or preferences from neighborhood names. State missing/partial sources; '
             'do not treat unavailable data as zero or normal weather. Use forecast entries '
             'only when usable is true; exclude listed missing, stale or invalid targets. '
-            'Return proposed conditions and evidence references, not invented song IDs. '
+            'Use current observations only when observation_usable is true. '
+            'Return the exact response_schema: proposed conditions using the allowed existing '
+            'service codes, rationale and available source_refs. Omit conditions that cannot '
+            'be supported. Do not return song IDs, change weather mode, or override exclusions. '
             'The existing music module remains responsible for catalog selection and validation.'
         ),
         'owner_request': owner_request,
         'store_context': bundle,
+        'response_schema': response_schema(bundle),
     }
 
 
-async def request_conditions(session, generate, store_id, owner_request, **options):
+async def request_conditions(session, generate, store_id, owner_request, *, model_timeout_seconds=30, **options):
     """Host injects its async LLM adapter. Does not change the existing recommendation policy."""
+    validate_owner_request(owner_request)
+    validate_timeout(model_timeout_seconds)
+    if not callable(generate):
+        raise ValueError('model_adapter_required')
     bundle = await collect_context(session, store_id, **options)
     request = model_input(bundle, owner_request)
-    response = await generate(request)
-    return {'proposal': response, 'context': bundle, 'catalog_selection_verified': False}
+    try:
+        async with asyncio.timeout(model_timeout_seconds):
+            response = await generate(request)
+    except TimeoutError:
+        raise TimeoutError('model_request_timeout') from None
+    except Exception:
+        raise ValueError('model_request_failed') from None
+    proposal = validate_proposal(response, bundle)
+    return {'proposal': proposal, 'context': bundle, 'condition_contract_validated': True,
+            'catalog_selection_verified': False}
 
 
 async def read_local_server(config, store_id, **options):

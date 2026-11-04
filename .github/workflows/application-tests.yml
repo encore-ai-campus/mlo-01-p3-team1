@@ -10,6 +10,18 @@ concurrency:
   group: application-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 jobs:
+  mcp:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env: {PYTHONUTF8: '1'}
+    steps:
+      - uses: actions/checkout@v4
+        with: {persist-credentials: false}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12', cache: pip, cache-dependency-path: 'backend/store_context/requirements.txt'}
+      - run: python -m pip install -r backend/store_context/requirements.txt
+      - run: python -m pip check
+      - run: python -m unittest tests.test_store_context tests.test_store_context_client tests.test_store_context_mcp -v
   common:
     runs-on: ubuntu-latest
     timeout-minutes: 15

@@ -10,6 +10,7 @@ def create_server(service):
     # 일반 서비스·단위 검증에서 MCP SDK 설치를 강제하지 않음.
     from mcp.server.fastmcp import FastMCP
     from mcp.types import ToolAnnotations
+    from pydantic import StrictInt
     mcp = FastMCP('cafe-store-context')
     annotations = ToolAnnotations(readOnlyHint=True, destructiveHint=False,
                                   idempotentHint=True, openWorldHint=True)
@@ -20,7 +21,7 @@ def create_server(service):
         return service.get_store_profile(store_id)
 
     @mcp.tool(annotations=annotations)
-    def get_neighborhood_context(store_id: str, radius_m: int = 500) -> dict[str, Any]:
+    def get_neighborhood_context(store_id: str, radius_m: StrictInt = 500) -> dict[str, Any]:
         """주변 업종별 건수·거리 조회. 반경 50~2000m. 전체 상권/고객 취향 추정 금지."""
         return service.get_neighborhood_context(store_id, radius_m)
 

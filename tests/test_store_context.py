@@ -6,7 +6,7 @@ from unittest.mock import patch
 from urllib.error import URLError
 
 from backend.store_context.kakao import KakaoPlaces, ProviderFailure
-from backend.store_context.service import ContextService
+from backend.store_context.service import ContextService, load_service
 from pipeline.weather.common import OBS, FORECAST
 from pipeline.weather.projection import project_grid
 
@@ -79,6 +79,12 @@ class StoreContextTests(unittest.TestCase):
                         dict(latitude=100), dict(preferred_moods='quiet')]:
             with self.assertRaises((ValueError, TypeError)):
                 ContextService([dict(PROFILE, **changes)], 'owner', ['cafe'])
+
+    def test_configuration_schema_rejects_boolean_and_non_object(self):
+        for settings in ({'schema_version': True}, {'schema_version': 1.0}, [], None):
+            with patch('backend.store_context.service.Path.read_bytes', return_value=json.dumps(settings).encode()):
+                with self.assertRaisesRegex(ValueError, 'unsupported_config_schema'):
+                    load_service('test-config-not-read')
 
     def test_radius_rejected_before_external_call(self):
         provider = KakaoPlaces('fake', transport=lambda p: self.fail('unexpected call'))
@@ -187,9 +193,11 @@ class StoreContextTests(unittest.TestCase):
         fresh = make_service().get_weather_context('cafe')
         self.assertEqual(fresh['status'], 'ok')
         self.assertTrue(fresh['data']['ready'])
+        self.assertTrue(fresh['data']['observation_usable'])
         stale = make_service(clock=lambda: NOW + timedelta(hours=3)).get_weather_context('cafe')
         self.assertEqual(stale['status'], 'partial')
         self.assertFalse(stale['data']['ready'])
+        self.assertFalse(stale['data']['observation_usable'])
         self.assertIn('stale_targets', stale['warnings'])
 
     def test_weather_rejects_other_or_invalid_grid_before_enrichment(self):

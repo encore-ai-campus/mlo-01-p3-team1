@@ -6,6 +6,7 @@ from pathlib import Path
 import sys
 import unittest
 from unittest.mock import patch
+from tests.test_store_context_client import valid_proposal
 
 
 @unittest.skipUnless(importlib.util.find_spec('mcp'), 'MCP SDK is not installed')
@@ -39,18 +40,28 @@ class StdioMcpTests(unittest.IsolatedAsyncioTestCase):
                     self.assertTrue(denied.isError)
                     bad_radius = await client.call_tool('get_neighborhood_context', {'store_id': 'cafe', 'radius_m': 5000})
                     self.assertTrue(bad_radius.isError)
+                    for radius in (True, '500', 500.0):
+                        bad_type = await client.call_tool('get_neighborhood_context', {'store_id': 'cafe', 'radius_m': radius})
+                        self.assertTrue(bad_type.isError)
                     from backend.store_context.client import request_conditions
                     captured = []
 
                     async def host_adapter(payload):
                         captured.append(payload)
-                        return {'conditions': ['quiet'], 'source': 'test_adapter_not_real_llm'}
+                        return valid_proposal('cafe')
 
                     result = await request_conditions(client, host_adapter, 'cafe', '대화하기 좋은 음악')
                     self.assertEqual(result['context']['status'], 'ok')
                     self.assertFalse(result['catalog_selection_verified'])
+                    self.assertTrue(result['condition_contract_validated'])
                     weather = captured[0]['store_context']['contexts']['get_weather_context']['data']
                     self.assertTrue(all(hour['usable'] for hour in weather['forecast']))
+
+                    async def invalid_host_adapter(payload):
+                        return {'track_ids': ['invented-id']}
+
+                    with self.assertRaisesRegex(ValueError, 'condition_proposal_invalid'):
+                        await request_conditions(client, invalid_host_adapter, 'cafe', '대화하기 좋은 음악')
 
     async def test_real_cli_configuration_without_external_providers(self):
         from backend.store_context.client import read_local_server
@@ -92,7 +103,7 @@ class StdioMcpTests(unittest.IsolatedAsyncioTestCase):
             self.assertFalse(weather['ready'])
             self.assertTrue(weather['forecast'])
             self.assertTrue(all(not hour['usable'] for hour in weather['forecast']))
-            return {'source': 'test_adapter_not_real_llm'}
+            return valid_proposal('cafe')
 
         async with asyncio.timeout(30):
             async with stdio_client(parameters) as (reader, writer):
